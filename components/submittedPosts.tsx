@@ -18,8 +18,6 @@ const contractConfig = {
     contractInterface: escrowABI['abi'], // contract abi in json or JS format
 };
 
-// const defaultIdentifier = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ "default", "0x", "0x" ]);
-
 const SubmittedPosts: React.FC<Props> = props => {
 
     // Wagmi address/contract info
@@ -32,79 +30,6 @@ const SubmittedPosts: React.FC<Props> = props => {
 
     const [submittedBountyPosts, setSubmittedBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
-    // const [bountyIdentifier, setBountyIdentifier] = React.useState(defaultIdentifier);
-    
-    // const [openContest, setOpenContest] = React.useState(false);
-    // const [openPay, setOpenPay] = React.useState(false);
-    // const [bountyAppId, setBountyAppId] = React.useState("default");
-    // const [hunterAddress, setHunterAddress] = React.useState("0x0000000000000000000000000000000000000000");
-    // const [ancillaryData, setAncillaryData] = React.useState("0x0000000000000000000000000000000000000000");
-    // const [umaData, setUmaData] = React.useState({
-    //     proposer: "0x0000000000000000000000000000000000000000",
-    //     identifier: "100",
-    //     timestamp: 10000,
-    //     ancillaryData: "default",
-    //     request: ethers.utils.AbiCoder.prototype.encode(
-    //         ['string', 'string', 'string'],
-    //         ["default", "default", "default"]
-    //       )
-    // });
-    // const bountyExpirationTime = 2*7*24*60*60;
-    // const bondAmt = ethers.utils.parseUnits("0.1", "ether"); // Hard-coded (for now) bondAmt
-    // const oracleAddress = "0xAa04b5D40574Fb8C001249B24d1c6B35a207F0bD"; // Kovan Testnet Skinny Optimistic Oracle; probably need to change this bc kovan deprecated
-    // const wethAddress = "0xd0A1E359811322d97991E03f863a0C30C2cF029C"; // WETH Kovan
-
-
-    // commented out code for initiateDispute and payout functions--bugs here with how to set umaData request default data and the like
-    // have to fix some things on contract end too!
-
-
-    // this creates and sends the initiateDispute func call tx
-    // const { config: initiateDisputeConfig } = usePrepareContractWrite({...contractConfig, functionName: 'initiateDispute', args: [bountyAppId, hunterAddress, oracleAddress, bondAmt, ancillaryData, wethAddress], enabled: false, });
-    // const { data: initiateDisputeData, error: initiateDisputeError, isLoading: isInitiateDisputeLoading, isSuccess: isInitiateDisputeSuccess, write: initiateDispute } = useContractWrite(initiateDisputeConfig);
-    // // isSuccess === true when the initiateDispute tx has been confirmed
-    // const { data: initiateDisputeTxData, isSuccess: initiateDisputeTxSuccess, error: initiateDisputeTxError } = useWaitForTransaction({ hash: initiateDisputeData?.hash, enabled: false,});
-
-    // this creates and sends the payout func call tx
-
-    // const { config: payoutConfig } = usePrepareContractWrite({...contractConfig, functionName: 'payout', args: [bountyAppId, hunterAddress, umaData.timestamp, umaData.ancillaryData, umaData.request], enabled: false,});
-    // const { data: payoutData, error: payoutError, isLoading: isPayoutLoading, isSuccess: isPayoutSuccess, write: payout } = useContractWrite(payoutConfig);
-    // // isSuccess === true when the payout tx has been confirmed
-    // const { data: payoutTxData, isSuccess: payoutTxSuccess, error: payoutTxError } = useWaitForTransaction({ hash: payoutData?.hash, enabled: false,});
-
-    // const { data: bountyProgressData, error: bountyProgressError, isLoading: isBountyProgressLoading, isSuccess: isBountyProgressSuccess, refetch: bountyProgress } = useContractRead({...contractConfig, functionName: 'progress', args: [bountyIdentifier], enabled: false, }); // watch causing error not sure why rn
-
-    // const handleCloseContestFalse = () => {
-    //     setOpenContest(false);
-    // };
-
-    // const handleCloseContestTrue = (bountyAppId: string, hunterAddress: string, workLinks: Array<string>, postLinks: Array<string>) => {
-    //     setOpenContest(false);
-    //     const thisAncillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications?" + " Work: " + workLinks.toString() + ", Specification: " +  postLinks.toString() + ", p1:0, p2:1, p3:0.5";
-    //     setAncillaryData(thisAncillaryData);
-    //     setBountyAppId(bountyAppId);
-    //     setHunterAddress(hunterAddress);
-    //     // initiateDispute?.();
-    // };
-
-    // const handleClosePayFalse = () => {
-    //     setOpenPay(false);
-    // };
-
-    // const handleClosePayTrue = (bountyAppId: string, hunterAddress: string) => {
-    //     setOpenPay(false);
-    //     setBountyAppId(bountyAppId);
-    //     setHunterAddress(hunterAddress);
-    //     // payout?.();
-    // };
-
-    // const handleClickOpenContest = () => {
-    //     setOpenContest(true);
-    // };
-
-    // const handleClickOpenPay = () => {
-    //     setOpenPay(true);
-    // };
     
     const { data, loading, error, startPolling } = useQuery(GETWORKSUBMITTEDPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, });
     startPolling(10000);
