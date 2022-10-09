@@ -4,7 +4,6 @@ import axios from 'axios';
 import NestedAccordian from './nestedAccordion';
 
 type Props = {
-    // postIds: Array<any>;
     postId: string;
     existsApplied: Map<string, boolean>;
     existsSubmitted: Map<string, boolean>;
