@@ -1,0 +1,841 @@
+{
+  "compiler": {
+    "version": "0.8.13+commit.abaa5c0e"
+  },
+  "language": "Solidity",
+  "output": {
+    "abi": [
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "_tokenName",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "_tokenSymbol",
+            "type": "string"
+          },
+          {
+            "internalType": "uint8",
+            "name": "_tokenDecimals",
+            "type": "uint8"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "newMember",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "manager",
+            "type": "address"
+          }
+        ],
+        "name": "AddedSharedMember",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "spender",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "name": "Approval",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "oldMember",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "manager",
+            "type": "address"
+          }
+        ],
+        "name": "RemovedSharedMember",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "newMember",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "manager",
+            "type": "address"
+          }
+        ],
+        "name": "ResetExclusiveMember",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "name": "Transfer",
+        "type": "event"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          }
+        ],
+        "name": "addBurner",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "newMember",
+            "type": "address"
+          }
+        ],
+        "name": "addMember",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          }
+        ],
+        "name": "addMinter",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "spender",
+            "type": "address"
+          }
+        ],
+        "name": "allowance",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "spender",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "approve",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          }
+        ],
+        "name": "balanceOf",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "name": "burn",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "recipient",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "name": "burnFrom",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "decimals",
+        "outputs": [
+          {
+            "internalType": "uint8",
+            "name": "",
+            "type": "uint8"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "spender",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "subtractedValue",
+            "type": "uint256"
+          }
+        ],
+        "name": "decreaseAllowance",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          }
+        ],
+        "name": "getMember",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "memberToCheck",
+            "type": "address"
+          }
+        ],
+        "name": "holdsRole",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "spender",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "addedValue",
+            "type": "uint256"
+          }
+        ],
+        "name": "increaseAllowance",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "recipient",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "name": "mint",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "name",
+        "outputs": [
+          {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "memberToRemove",
+            "type": "address"
+          }
+        ],
+        "name": "removeMember",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          }
+        ],
+        "name": "renounceMembership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "newMember",
+            "type": "address"
+          }
+        ],
+        "name": "resetMember",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          }
+        ],
+        "name": "resetOwner",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "symbol",
+        "outputs": [
+          {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "totalSupply",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "recipient",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "transfer",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "recipient",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "transferFrom",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      }
+    ],
+    "devdoc": {
+      "kind": "dev",
+      "methods": {
+        "addBurner(address)": {
+          "details": "The caller must have the Owner role.",
+          "params": {
+            "account": "The address to which the Burner role is added."
+          }
+        },
+        "addMember(uint256,address)": {
+          "details": "Reverts if `roleId` does not represent an initialized, SharedRole or if the caller is not a member of the managing role for `roleId`.",
+          "params": {
+            "newMember": "the new SharedRole member.",
+            "roleId": "the SharedRole membership to modify."
+          }
+        },
+        "addMinter(address)": {
+          "details": "The caller must have the Owner role.",
+          "params": {
+            "account": "The address to which the Minter role is added."
+          }
+        },
+        "allowance(address,address)": {
+          "details": "See {IERC20-allowance}."
+        },
+        "approve(address,uint256)": {
+          "details": "See {IERC20-approve}. NOTE: If `amount` is the maximum `uint256`, the allowance is not updated on `transferFrom`. This is semantically equivalent to an infinite approval. Requirements: - `spender` cannot be the zero address."
+        },
+        "balanceOf(address)": {
+          "details": "See {IERC20-balanceOf}."
+        },
+        "burn(uint256)": {
+          "details": "Burns `value` tokens owned by `msg.sender`.",
+          "params": {
+            "value": "amount of tokens to burn."
+          }
+        },
+        "burnFrom(address,uint256)": {
+          "details": "Burns `value` tokens owned by `recipient`.",
+          "params": {
+            "recipient": "address to burn tokens from.",
+            "value": "amount of tokens to burn."
+          },
+          "returns": {
+            "_0": "True if the burn succeeded, or False."
+          }
+        },
+        "constructor": {
+          "params": {
+            "_tokenDecimals": "The number of decimals to define token precision.",
+            "_tokenName": "The name which describes the new token.",
+            "_tokenSymbol": "The ticker abbreviation of the name. Ideally < 5 chars."
+          }
+        },
+        "decimals()": {
+          "details": "Returns the number of decimals used to get its user representation. For example, if `decimals` equals `2`, a balance of `505` tokens should be displayed to a user as `5.05` (`505 / 10 ** 2`). Tokens usually opt for a value of 18, imitating the relationship between Ether and Wei. This is the value {ERC20} uses, unless this function is overridden; NOTE: This information is only used for _display_ purposes: it in no way affects any of the arithmetic of the contract, including {IERC20-balanceOf} and {IERC20-transfer}."
+        },
+        "decreaseAllowance(address,uint256)": {
+          "details": "Atomically decreases the allowance granted to `spender` by the caller. This is an alternative to {approve} that can be used as a mitigation for problems described in {IERC20-approve}. Emits an {Approval} event indicating the updated allowance. Requirements: - `spender` cannot be the zero address. - `spender` must have allowance for the caller of at least `subtractedValue`."
+        },
+        "getMember(uint256)": {
+          "details": "Reverts if `roleId` does not represent an initialized, exclusive role.",
+          "params": {
+            "roleId": "the ExclusiveRole membership to check."
+          },
+          "returns": {
+            "_0": "the address of the current ExclusiveRole member."
+          }
+        },
+        "holdsRole(uint256,address)": {
+          "details": "Reverts if roleId does not correspond to an initialized role.",
+          "params": {
+            "memberToCheck": "the address to check.",
+            "roleId": "the Role to check."
+          },
+          "returns": {
+            "_0": "True if `memberToCheck` is a member of `roleId`."
+          }
+        },
+        "increaseAllowance(address,uint256)": {
+          "details": "Atomically increases the allowance granted to `spender` by the caller. This is an alternative to {approve} that can be used as a mitigation for problems described in {IERC20-approve}. Emits an {Approval} event indicating the updated allowance. Requirements: - `spender` cannot be the zero address."
+        },
+        "mint(address,uint256)": {
+          "details": "Mints `value` tokens to `recipient`, returning true on success.",
+          "params": {
+            "recipient": "address to mint to.",
+            "value": "amount of tokens to mint."
+          },
+          "returns": {
+            "_0": "True if the mint succeeded, or False."
+          }
+        },
+        "name()": {
+          "details": "Returns the name of the token."
+        },
+        "removeMember(uint256,address)": {
+          "details": "Reverts if `roleId` does not represent an initialized, SharedRole or if the caller is not a member of the managing role for `roleId`.",
+          "params": {
+            "memberToRemove": "the current SharedRole member to remove.",
+            "roleId": "the SharedRole membership to modify."
+          }
+        },
+        "renounceMembership(uint256)": {
+          "details": "Reverts if the caller is not a member of the role for `roleId` or if `roleId` is not an initialized, SharedRole.",
+          "params": {
+            "roleId": "the SharedRole membership to modify."
+          }
+        },
+        "resetMember(uint256,address)": {
+          "details": "Reverts if the caller is not a member of the managing role for `roleId` or if `roleId` is not an initialized, ExclusiveRole.",
+          "params": {
+            "newMember": "the new ExclusiveRole member.",
+            "roleId": "the ExclusiveRole membership to modify."
+          }
+        },
+        "resetOwner(address)": {
+          "details": "The caller must have the Owner role.",
+          "params": {
+            "account": "The new holder of the Owner role."
+          }
+        },
+        "symbol()": {
+          "details": "Returns the symbol of the token, usually a shorter version of the name."
+        },
+        "totalSupply()": {
+          "details": "See {IERC20-totalSupply}."
+        },
+        "transfer(address,uint256)": {
+          "details": "See {IERC20-transfer}. Requirements: - `recipient` cannot be the zero address. - the caller must have a balance of at least `amount`."
+        },
+        "transferFrom(address,address,uint256)": {
+          "details": "See {IERC20-transferFrom}. Emits an {Approval} event indicating the updated allowance. This is not required by the EIP. See the note at the beginning of {ERC20}. NOTE: Does not update the allowance if the current allowance is the maximum `uint256`. Requirements: - `sender` and `recipient` cannot be the zero address. - `sender` must have a balance of at least `amount`. - the caller must have allowance for ``sender``'s tokens of at least `amount`."
+        }
+      },
+      "title": "An ERC20 with permissioned burning and minting. The contract deployer will initially be the owner who is capable of adding new roles.",
+      "version": 1
+    },
+    "userdoc": {
+      "kind": "user",
+      "methods": {
+        "addBurner(address)": {
+          "notice": "Add Burner role to account."
+        },
+        "addMember(uint256,address)": {
+          "notice": "Adds `newMember` to the shared role, `roleId`."
+        },
+        "addMinter(address)": {
+          "notice": "Add Minter role to account."
+        },
+        "constructor": {
+          "notice": "Constructs the ExpandedERC20."
+        },
+        "getMember(uint256)": {
+          "notice": "Gets the current holder of the exclusive role, `roleId`."
+        },
+        "holdsRole(uint256,address)": {
+          "notice": "Whether `memberToCheck` is a member of roleId."
+        },
+        "removeMember(uint256,address)": {
+          "notice": "Removes `memberToRemove` from the shared role, `roleId`."
+        },
+        "renounceMembership(uint256)": {
+          "notice": "Removes caller from the role, `roleId`."
+        },
+        "resetMember(uint256,address)": {
+          "notice": "Changes the exclusive role holder of `roleId` to `newMember`."
+        },
+        "resetOwner(address)": {
+          "notice": "Reset Owner role to account."
+        }
+      },
+      "version": 1
+    }
+  },
+  "settings": {
+    "compilationTarget": {
+      "lib/protocol/packages/core/contracts/common/implementation/ExpandedERC20.sol": "ExpandedERC20"
+    },
+    "evmVersion": "london",
+    "libraries": {},
+    "metadata": {
+      "bytecodeHash": "ipfs"
+    },
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "remappings": [
+      ":@openzeppelin/=lib/openzeppelin-contracts/",
+      ":ds-test/=lib/forge-std/lib/ds-test/src/",
+      ":forge-std/=lib/forge-std/src/",
+      ":openzeppelin-contracts/=lib/openzeppelin-contracts/",
+      ":protocol/=lib/protocol/",
+      ":uma-implementation/=lib/protocol/packages/core/contracts/oracle/implementation/",
+      ":uma-interface/=lib/protocol/packages/core/contracts/oracle/interfaces/"
+    ]
+  },
+  "sources": {
+    "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol": {
+      "keccak256": "0xc4bd4cdf3901aef67b2e5be256fd24305f4d7ed8de4b3240920be12991c983f3",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://deed1df0fe3885669b67518d3d21d30b3744098050fa3866e1f522003239a674",
+        "dweb:/ipfs/QmVPhZPRGadMK6f3A86ihUXC1urZXRTaRGihyXSgdToV8Q"
+      ]
+    },
+    "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol": {
+      "keccak256": "0x61437cb513a887a1bbad006e7b1c8b414478427d33de47c5600af3c748f108da",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://2c3d0973630ed74f2b5ce3944677a885dc70ec32fc83b35f55045a10224da32b",
+        "dweb:/ipfs/QmbefZ5RoEZKNHXCALfh683PnaNYzKPcKMFjyY1DVAgq8A"
+      ]
+    },
+    "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
+      "keccak256": "0x8de418a5503946cabe331f35fe242d3201a73f67f77aaeb7110acb1f30423aca",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://5a376d3dda2cb70536c0a45c208b29b34ac560c4cb4f513a42079f96ba47d2dd",
+        "dweb:/ipfs/QmZQg6gn1sUpM8wHzwNvSnihumUCAhxD119MpXeKp8B9s8"
+      ]
+    },
+    "lib/openzeppelin-contracts/contracts/utils/Context.sol": {
+      "keccak256": "0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://6df0ddf21ce9f58271bdfaa85cde98b200ef242a05a3f85c2bc10a8294800a92",
+        "dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/common/implementation/ExpandedERC20.sol": {
+      "keccak256": "0x8201459d3f78a1f97da7c421f2fbb859924d4facfc5fc235ba65d85bf12b2229",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://990c055523abe059c0e3e9dc0d631b17db960899dbfcfb2c562bc1ed9de8f140",
+        "dweb:/ipfs/QmNgQP68bBrZvP2Rs4TdpESS3LFxqGgtTELZ1wm5mZqh4K"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/common/implementation/MultiRole.sol": {
+      "keccak256": "0x134c5a2f847832705be631f2b4eb2a3e23a91a2f0e63560abb481e85eeebfae6",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://f1267c6ad560d1eb896575919ecca13759bf50bb82d1215e03fc1f0424ec37a6",
+        "dweb:/ipfs/QmXewGxpSmSMGYmT6ZUyxCVzy2cybxicbnyCn8w87m5mo3"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/common/interfaces/ExpandedIERC20.sol": {
+      "keccak256": "0xb8252039cba45f1c19cd677f150a9823a5d6e1845cad90e3041d97c96f273c26",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://95106656c95e12c30a2a4c482a859df6df55c3b56bb9f7835eb5c685ca3175d3",
+        "dweb:/ipfs/QmcuJoX7T53vTCDcQK8WcCJdT1LzHS35vPmSVfg1DG32cd"
+      ]
+    }
+  },
+  "version": 1
+}

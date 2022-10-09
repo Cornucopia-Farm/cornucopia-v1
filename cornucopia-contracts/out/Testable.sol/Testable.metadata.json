@@ -1,0 +1,129 @@
+{
+  "compiler": {
+    "version": "0.8.13+commit.abaa5c0e"
+  },
+  "language": "Solidity",
+  "output": {
+    "abi": [
+      {
+        "inputs": [],
+        "name": "getCurrentTime",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "time",
+            "type": "uint256"
+          }
+        ],
+        "name": "setCurrentTime",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "timerAddress",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ],
+    "devdoc": {
+      "kind": "dev",
+      "methods": {
+        "constructor": {
+          "params": {
+            "_timerAddress": "Contract that stores the current time in a testing environment. Must be set to 0x0 for production environments that use live time."
+          }
+        },
+        "getCurrentTime()": {
+          "returns": {
+            "_0": "uint for the current Testable timestamp."
+          }
+        },
+        "setCurrentTime(uint256)": {
+          "details": "Will revert if not running in test mode.",
+          "params": {
+            "time": "timestamp to set current Testable time to."
+          }
+        }
+      },
+      "title": "Base class that provides time overrides, but only if being run in test mode.",
+      "version": 1
+    },
+    "userdoc": {
+      "kind": "user",
+      "methods": {
+        "constructor": {
+          "notice": "Constructs the Testable contract. Called by child contracts."
+        },
+        "getCurrentTime()": {
+          "notice": "Gets the current time. Will return the last time set in `setCurrentTime` if running in test mode. Otherwise, it will return the block timestamp."
+        },
+        "setCurrentTime(uint256)": {
+          "notice": "Sets the current time."
+        }
+      },
+      "version": 1
+    }
+  },
+  "settings": {
+    "compilationTarget": {
+      "lib/protocol/packages/core/contracts/common/implementation/Testable.sol": "Testable"
+    },
+    "evmVersion": "london",
+    "libraries": {},
+    "metadata": {
+      "bytecodeHash": "ipfs"
+    },
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "remappings": [
+      ":@openzeppelin/=lib/openzeppelin-contracts/",
+      ":ds-test/=lib/forge-std/lib/ds-test/src/",
+      ":forge-std/=lib/forge-std/src/",
+      ":openzeppelin-contracts/=lib/openzeppelin-contracts/",
+      ":protocol/=lib/protocol/",
+      ":uma-implementation/=lib/protocol/packages/core/contracts/oracle/implementation/",
+      ":uma-interface/=lib/protocol/packages/core/contracts/oracle/interfaces/"
+    ]
+  },
+  "sources": {
+    "lib/protocol/packages/core/contracts/common/implementation/Testable.sol": {
+      "keccak256": "0x0254b45747293bb800373a58d123969adec0428f7be79dc941cab10fcad09918",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://537d694e3753596f507d071f283be9caeaad0010c444c9c9955d729affeb4907",
+        "dweb:/ipfs/QmZ1WfVTBao11QaN6aygMhnt45UjRq77ZwfKPFmHiVSdaJ"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/common/implementation/Timer.sol": {
+      "keccak256": "0x9e0dd7389718bd5d1da910273a6f4cee98ee22bfc0c92bde0f0955c0e23adb5e",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://7ddac8d3cb76f8811156a11a7702d7c05b15a0f18c22b5abdc318723193f9266",
+        "dweb:/ipfs/QmPxL7AU8NkURJaZ6WxXNcw88wGMSoPX4jbt7SMdPJqtYv"
+      ]
+    }
+  },
+  "version": 1
+}

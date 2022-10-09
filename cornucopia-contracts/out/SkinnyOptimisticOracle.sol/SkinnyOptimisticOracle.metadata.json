@@ -1,0 +1,1735 @@
+{
+  "compiler": {
+    "version": "0.8.13+commit.abaa5c0e"
+  },
+  "language": "Solidity",
+  "output": {
+    "abi": [
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_liveness",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "_finderAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "_timerAddress",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "requester",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint32",
+            "name": "timestamp",
+            "type": "uint32"
+          },
+          {
+            "indexed": false,
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "proposer",
+                "type": "address"
+              },
+              {
+                "internalType": "address",
+                "name": "disputer",
+                "type": "address"
+              },
+              {
+                "internalType": "contract IERC20",
+                "name": "currency",
+                "type": "address"
+              },
+              {
+                "internalType": "bool",
+                "name": "settled",
+                "type": "bool"
+              },
+              {
+                "internalType": "int256",
+                "name": "proposedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "int256",
+                "name": "resolvedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "expirationTime",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "reward",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "finalFee",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "bond",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "customLiveness",
+                "type": "uint256"
+              }
+            ],
+            "indexed": false,
+            "internalType": "struct SkinnyOptimisticOracleInterface.Request",
+            "name": "request",
+            "type": "tuple"
+          }
+        ],
+        "name": "DisputePrice",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "requester",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint32",
+            "name": "timestamp",
+            "type": "uint32"
+          },
+          {
+            "indexed": false,
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "proposer",
+                "type": "address"
+              },
+              {
+                "internalType": "address",
+                "name": "disputer",
+                "type": "address"
+              },
+              {
+                "internalType": "contract IERC20",
+                "name": "currency",
+                "type": "address"
+              },
+              {
+                "internalType": "bool",
+                "name": "settled",
+                "type": "bool"
+              },
+              {
+                "internalType": "int256",
+                "name": "proposedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "int256",
+                "name": "resolvedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "expirationTime",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "reward",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "finalFee",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "bond",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "customLiveness",
+                "type": "uint256"
+              }
+            ],
+            "indexed": false,
+            "internalType": "struct SkinnyOptimisticOracleInterface.Request",
+            "name": "request",
+            "type": "tuple"
+          }
+        ],
+        "name": "ProposePrice",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "requester",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint32",
+            "name": "timestamp",
+            "type": "uint32"
+          },
+          {
+            "indexed": false,
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "proposer",
+                "type": "address"
+              },
+              {
+                "internalType": "address",
+                "name": "disputer",
+                "type": "address"
+              },
+              {
+                "internalType": "contract IERC20",
+                "name": "currency",
+                "type": "address"
+              },
+              {
+                "internalType": "bool",
+                "name": "settled",
+                "type": "bool"
+              },
+              {
+                "internalType": "int256",
+                "name": "proposedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "int256",
+                "name": "resolvedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "expirationTime",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "reward",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "finalFee",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "bond",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "customLiveness",
+                "type": "uint256"
+              }
+            ],
+            "indexed": false,
+            "internalType": "struct SkinnyOptimisticOracleInterface.Request",
+            "name": "request",
+            "type": "tuple"
+          }
+        ],
+        "name": "RequestPrice",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "requester",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint32",
+            "name": "timestamp",
+            "type": "uint32"
+          },
+          {
+            "indexed": false,
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "proposer",
+                "type": "address"
+              },
+              {
+                "internalType": "address",
+                "name": "disputer",
+                "type": "address"
+              },
+              {
+                "internalType": "contract IERC20",
+                "name": "currency",
+                "type": "address"
+              },
+              {
+                "internalType": "bool",
+                "name": "settled",
+                "type": "bool"
+              },
+              {
+                "internalType": "int256",
+                "name": "proposedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "int256",
+                "name": "resolvedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "expirationTime",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "reward",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "finalFee",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "bond",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "customLiveness",
+                "type": "uint256"
+              }
+            ],
+            "indexed": false,
+            "internalType": "struct SkinnyOptimisticOracleInterface.Request",
+            "name": "request",
+            "type": "tuple"
+          }
+        ],
+        "name": "Settle",
+        "type": "event"
+      },
+      {
+        "inputs": [],
+        "name": "ancillaryBytesLimit",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "defaultLiveness",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "requester",
+            "type": "address"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "timestamp",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "proposer",
+                "type": "address"
+              },
+              {
+                "internalType": "address",
+                "name": "disputer",
+                "type": "address"
+              },
+              {
+                "internalType": "contract IERC20",
+                "name": "currency",
+                "type": "address"
+              },
+              {
+                "internalType": "bool",
+                "name": "settled",
+                "type": "bool"
+              },
+              {
+                "internalType": "int256",
+                "name": "proposedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "int256",
+                "name": "resolvedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "expirationTime",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "reward",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "finalFee",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "bond",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "customLiveness",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct SkinnyOptimisticOracleInterface.Request",
+            "name": "request",
+            "type": "tuple"
+          }
+        ],
+        "name": "disputePrice",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "totalBond",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "timestamp",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "proposer",
+                "type": "address"
+              },
+              {
+                "internalType": "address",
+                "name": "disputer",
+                "type": "address"
+              },
+              {
+                "internalType": "contract IERC20",
+                "name": "currency",
+                "type": "address"
+              },
+              {
+                "internalType": "bool",
+                "name": "settled",
+                "type": "bool"
+              },
+              {
+                "internalType": "int256",
+                "name": "proposedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "int256",
+                "name": "resolvedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "expirationTime",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "reward",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "finalFee",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "bond",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "customLiveness",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct SkinnyOptimisticOracleInterface.Request",
+            "name": "request",
+            "type": "tuple"
+          },
+          {
+            "internalType": "address",
+            "name": "disputer",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "requester",
+            "type": "address"
+          }
+        ],
+        "name": "disputePriceFor",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "totalBond",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "finder",
+        "outputs": [
+          {
+            "internalType": "contract FinderInterface",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "getCurrentTime",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "requester",
+            "type": "address"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "timestamp",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "proposer",
+                "type": "address"
+              },
+              {
+                "internalType": "address",
+                "name": "disputer",
+                "type": "address"
+              },
+              {
+                "internalType": "contract IERC20",
+                "name": "currency",
+                "type": "address"
+              },
+              {
+                "internalType": "bool",
+                "name": "settled",
+                "type": "bool"
+              },
+              {
+                "internalType": "int256",
+                "name": "proposedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "int256",
+                "name": "resolvedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "expirationTime",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "reward",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "finalFee",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "bond",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "customLiveness",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct SkinnyOptimisticOracleInterface.Request",
+            "name": "request",
+            "type": "tuple"
+          }
+        ],
+        "name": "getState",
+        "outputs": [
+          {
+            "internalType": "enum OptimisticOracleInterface.State",
+            "name": "",
+            "type": "uint8"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "requester",
+            "type": "address"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "timestamp",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "proposer",
+                "type": "address"
+              },
+              {
+                "internalType": "address",
+                "name": "disputer",
+                "type": "address"
+              },
+              {
+                "internalType": "contract IERC20",
+                "name": "currency",
+                "type": "address"
+              },
+              {
+                "internalType": "bool",
+                "name": "settled",
+                "type": "bool"
+              },
+              {
+                "internalType": "int256",
+                "name": "proposedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "int256",
+                "name": "resolvedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "expirationTime",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "reward",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "finalFee",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "bond",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "customLiveness",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct SkinnyOptimisticOracleInterface.Request",
+            "name": "request",
+            "type": "tuple"
+          }
+        ],
+        "name": "hasPrice",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "requester",
+            "type": "address"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "timestamp",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "proposer",
+                "type": "address"
+              },
+              {
+                "internalType": "address",
+                "name": "disputer",
+                "type": "address"
+              },
+              {
+                "internalType": "contract IERC20",
+                "name": "currency",
+                "type": "address"
+              },
+              {
+                "internalType": "bool",
+                "name": "settled",
+                "type": "bool"
+              },
+              {
+                "internalType": "int256",
+                "name": "proposedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "int256",
+                "name": "resolvedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "expirationTime",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "reward",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "finalFee",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "bond",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "customLiveness",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct SkinnyOptimisticOracleInterface.Request",
+            "name": "request",
+            "type": "tuple"
+          },
+          {
+            "internalType": "int256",
+            "name": "proposedPrice",
+            "type": "int256"
+          }
+        ],
+        "name": "proposePrice",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "totalBond",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "requester",
+            "type": "address"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "timestamp",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "proposer",
+                "type": "address"
+              },
+              {
+                "internalType": "address",
+                "name": "disputer",
+                "type": "address"
+              },
+              {
+                "internalType": "contract IERC20",
+                "name": "currency",
+                "type": "address"
+              },
+              {
+                "internalType": "bool",
+                "name": "settled",
+                "type": "bool"
+              },
+              {
+                "internalType": "int256",
+                "name": "proposedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "int256",
+                "name": "resolvedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "expirationTime",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "reward",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "finalFee",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "bond",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "customLiveness",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct SkinnyOptimisticOracleInterface.Request",
+            "name": "request",
+            "type": "tuple"
+          },
+          {
+            "internalType": "address",
+            "name": "proposer",
+            "type": "address"
+          },
+          {
+            "internalType": "int256",
+            "name": "proposedPrice",
+            "type": "int256"
+          }
+        ],
+        "name": "proposePriceFor",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "totalBond",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "timestamp",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          },
+          {
+            "internalType": "contract IERC20",
+            "name": "currency",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "reward",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "bond",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "customLiveness",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "proposer",
+            "type": "address"
+          },
+          {
+            "internalType": "int256",
+            "name": "proposedPrice",
+            "type": "int256"
+          }
+        ],
+        "name": "requestAndProposePriceFor",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "totalBond",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "timestamp",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          },
+          {
+            "internalType": "contract IERC20",
+            "name": "currency",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "reward",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "bond",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "customLiveness",
+            "type": "uint256"
+          }
+        ],
+        "name": "requestPrice",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "totalBond",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "name": "requests",
+        "outputs": [
+          {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "time",
+            "type": "uint256"
+          }
+        ],
+        "name": "setCurrentTime",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "requester",
+            "type": "address"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "timestamp",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "proposer",
+                "type": "address"
+              },
+              {
+                "internalType": "address",
+                "name": "disputer",
+                "type": "address"
+              },
+              {
+                "internalType": "contract IERC20",
+                "name": "currency",
+                "type": "address"
+              },
+              {
+                "internalType": "bool",
+                "name": "settled",
+                "type": "bool"
+              },
+              {
+                "internalType": "int256",
+                "name": "proposedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "int256",
+                "name": "resolvedPrice",
+                "type": "int256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "expirationTime",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "reward",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "finalFee",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "bond",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "customLiveness",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct SkinnyOptimisticOracleInterface.Request",
+            "name": "request",
+            "type": "tuple"
+          }
+        ],
+        "name": "settle",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "payout",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "resolvedPrice",
+            "type": "int256"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          },
+          {
+            "internalType": "address",
+            "name": "requester",
+            "type": "address"
+          }
+        ],
+        "name": "stampAncillaryData",
+        "outputs": [
+          {
+            "internalType": "bytes",
+            "name": "",
+            "type": "bytes"
+          }
+        ],
+        "stateMutability": "pure",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "timerAddress",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ],
+    "devdoc": {
+      "kind": "dev",
+      "methods": {
+        "constructor": {
+          "params": {
+            "_finderAddress": "finder to use to get addresses of DVM contracts.",
+            "_liveness": "default liveness applied to each price request.",
+            "_timerAddress": "address of the timer contract. Should be 0x0 in prod."
+          }
+        },
+        "disputePrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))": {
+          "params": {
+            "ancillaryData": "ancillary data of the price being requested.",
+            "identifier": "price identifier to identify the existing request.",
+            "request": "price request parameters whose hash must match the request that the caller wants to             dispute.",
+            "requester": "sender of the initial price request.",
+            "timestamp": "timestamp to identify the existing request."
+          },
+          "returns": {
+            "totalBond": "the amount that's pulled from the caller's wallet as a bond. The bond will be returned to the disputer once settled if the dispute was valid (the proposal was incorrect)."
+          }
+        },
+        "disputePriceFor(bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),address,address)": {
+          "params": {
+            "ancillaryData": "ancillary data of the price being requested.",
+            "disputer": "address to set as the disputer.",
+            "identifier": "price identifier to identify the existing request.",
+            "request": "price request parameters whose hash must match the request that the caller wants to              dispute.",
+            "requester": "sender of the initial price request.",
+            "timestamp": "timestamp to identify the existing request."
+          },
+          "returns": {
+            "totalBond": "the amount that's pulled from the caller's wallet as a bond. The bond will be returned to the disputer once settled if the dispute was valid (the proposal was incorrect)."
+          }
+        },
+        "getCurrentTime()": {
+          "returns": {
+            "_0": "uint for the current Testable timestamp."
+          }
+        },
+        "getState(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))": {
+          "params": {
+            "ancillaryData": "ancillary data of the price being requested.",
+            "identifier": "price identifier to identify the existing request.",
+            "request": "price request parameters.",
+            "requester": "sender of the initial price request.",
+            "timestamp": "timestamp to identify the existing request."
+          },
+          "returns": {
+            "_0": "the State."
+          }
+        },
+        "hasPrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))": {
+          "params": {
+            "ancillaryData": "ancillary data of the price being requested.",
+            "identifier": "price identifier to identify the existing request.",
+            "request": "price request parameters. The hash of these parameters must match with the request hash that is associated with the price request unique ID {requester, identifier, timestamp, ancillaryData}, or this method will revert.",
+            "requester": "sender of the initial price request.",
+            "timestamp": "timestamp to identify the existing request."
+          },
+          "returns": {
+            "_0": "boolean indicating true if price exists and false if not."
+          }
+        },
+        "proposePrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),int256)": {
+          "params": {
+            "ancillaryData": "ancillary data of the price being requested.",
+            "identifier": "price identifier to identify the existing request.",
+            "proposedPrice": "price being proposed.",
+            "request": "price request parameters whose hash must match the request that the caller wants to propose a price for.",
+            "requester": "sender of the initial price request.",
+            "timestamp": "timestamp to identify the existing request."
+          },
+          "returns": {
+            "totalBond": "the amount that's pulled from the caller's wallet as a bond. The bond will be returned to the proposer once settled if the proposal is correct."
+          }
+        },
+        "proposePriceFor(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),address,int256)": {
+          "params": {
+            "ancillaryData": "ancillary data of the price being requested.",
+            "identifier": "price identifier to identify the existing request.",
+            "proposedPrice": "price being proposed.",
+            "proposer": "address to set as the proposer.",
+            "request": "price request parameters whose hash must match the request that the caller wants to propose a price for.",
+            "requester": "sender of the initial price request.",
+            "timestamp": "timestamp to identify the existing request."
+          },
+          "returns": {
+            "totalBond": "the amount that's pulled from the caller's wallet as a bond. The bond will be returned to the proposer once settled if the proposal is correct."
+          }
+        },
+        "requestAndProposePriceFor(bytes32,uint32,bytes,address,uint256,uint256,uint256,address,int256)": {
+          "details": "The caller is the requester, but the proposer can be customized.",
+          "params": {
+            "ancillaryData": "ancillary data of the price being requested.",
+            "bond": "custom proposal bond to set for request. If set to 0, defaults to the final fee.",
+            "currency": "ERC20 token used for payment of rewards and fees. Must be approved for use with the DVM.",
+            "customLiveness": "custom proposal liveness to set for request.",
+            "identifier": "price identifier to identify the existing request.",
+            "proposedPrice": "price being proposed.",
+            "proposer": "address to set as the proposer.",
+            "reward": "reward offered to a successful proposer. Will be pulled from the caller. Note: this can be 0,               which could make sense if the contract requests and proposes the value in the same call or               provides its own reward system.",
+            "timestamp": "timestamp to identify the existing request."
+          },
+          "returns": {
+            "totalBond": "the amount that's pulled from the caller's wallet as a bond. The bond will be returned to the proposer once settled if the proposal is correct."
+          }
+        },
+        "requestPrice(bytes32,uint32,bytes,address,uint256,uint256,uint256)": {
+          "params": {
+            "ancillaryData": "ancillary data representing additional args being passed with the price request.",
+            "bond": "custom proposal bond to set for request. If set to 0, defaults to the final fee.",
+            "currency": "ERC20 token used for payment of rewards and fees. Must be approved for use with the DVM.",
+            "customLiveness": "custom proposal liveness to set for request.",
+            "identifier": "price identifier being requested.",
+            "reward": "reward offered to a successful proposer. Will be pulled from the caller. Note: this can be 0,               which could make sense if the contract requests and proposes the value in the same call or               provides its own reward system.",
+            "timestamp": "timestamp of the price being requested."
+          },
+          "returns": {
+            "totalBond": "default bond + final fee that the proposer and disputer will be required to pay."
+          }
+        },
+        "setCurrentTime(uint256)": {
+          "details": "Will revert if not running in test mode.",
+          "params": {
+            "time": "timestamp to set current Testable time to."
+          }
+        },
+        "settle(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))": {
+          "params": {
+            "ancillaryData": "ancillary data of the price being requested.",
+            "identifier": "price identifier to identify the existing request.",
+            "request": "price request parameters whose hash must match the request that the caller wants to              settle.",
+            "requester": "sender of the initial price request.",
+            "timestamp": "timestamp to identify the existing request."
+          },
+          "returns": {
+            "payout": "the amount that the \"winner\" (proposer or disputer) receives on settlement. This amount includes the returned bonds as well as additional rewards.",
+            "resolvedPrice": "the price that the request settled to."
+          }
+        },
+        "stampAncillaryData(bytes,address)": {
+          "params": {
+            "ancillaryData": "ancillary data of the price being requested.",
+            "requester": "sender of the initial price request."
+          },
+          "returns": {
+            "_0": "the stamped ancillary bytes."
+          }
+        }
+      },
+      "title": "Optimistic Oracle with a different interface and fewer features that emphasizes gas cost reductions.",
+      "version": 1
+    },
+    "userdoc": {
+      "kind": "user",
+      "methods": {
+        "constructor": {
+          "notice": "Constructor."
+        },
+        "disputePrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))": {
+          "notice": "Disputes a price request with an active proposal where caller is the disputer."
+        },
+        "disputePriceFor(bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),address,address)": {
+          "notice": "Disputes a price request with an active proposal on another address' behalf. Note: this address will receive any rewards that come from this dispute. However, any bonds are pulled from the caller."
+        },
+        "getCurrentTime()": {
+          "notice": "Gets the current time. Will return the last time set in `setCurrentTime` if running in test mode. Otherwise, it will return the block timestamp."
+        },
+        "getState(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))": {
+          "notice": "Computes the current state of a price request. See the State enum for more details."
+        },
+        "hasPrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))": {
+          "notice": "Checks if a given request has resolved, expired or been settled (i.e the optimistic oracle has a price)."
+        },
+        "proposePrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),int256)": {
+          "notice": "Proposes a price value where caller is the proposer."
+        },
+        "proposePriceFor(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),address,int256)": {
+          "notice": "Proposes a price value on another address' behalf. Note: this address will receive any rewards that come from this proposal. However, any bonds are pulled from the caller."
+        },
+        "requestAndProposePriceFor(bytes32,uint32,bytes,address,uint256,uint256,uint256,address,int256)": {
+          "notice": "Combines logic of requestPrice and proposePrice while taking advantage of gas savings from not having to overwrite Request params that a normal requestPrice() => proposePrice() flow would entail. Note: The proposer will receive any rewards that come from this proposal. However, any bonds are pulled from the caller."
+        },
+        "requestPrice(bytes32,uint32,bytes,address,uint256,uint256,uint256)": {
+          "notice": "Requests a new price."
+        },
+        "setCurrentTime(uint256)": {
+          "notice": "Sets the current time."
+        },
+        "settle(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))": {
+          "notice": "Attempts to settle an outstanding price request. Will revert if it isn't settleable."
+        },
+        "stampAncillaryData(bytes,address)": {
+          "notice": "Generates stamped ancillary data in the format that it would be used in the case of a price dispute."
+        }
+      },
+      "notice": "Pre-DVM escalation contract that allows faster settlement.",
+      "version": 1
+    }
+  },
+  "settings": {
+    "compilationTarget": {
+      "lib/protocol/packages/core/contracts/oracle/implementation/SkinnyOptimisticOracle.sol": "SkinnyOptimisticOracle"
+    },
+    "evmVersion": "london",
+    "libraries": {},
+    "metadata": {
+      "bytecodeHash": "ipfs"
+    },
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "remappings": [
+      ":@openzeppelin/=lib/openzeppelin-contracts/",
+      ":ds-test/=lib/forge-std/lib/ds-test/src/",
+      ":forge-std/=lib/forge-std/src/",
+      ":openzeppelin-contracts/=lib/openzeppelin-contracts/",
+      ":protocol/=lib/protocol/",
+      ":uma-implementation/=lib/protocol/packages/core/contracts/oracle/implementation/",
+      ":uma-interface/=lib/protocol/packages/core/contracts/oracle/interfaces/"
+    ]
+  },
+  "sources": {
+    "lib/openzeppelin-contracts/contracts/access/Ownable.sol": {
+      "keccak256": "0x24e0364e503a9bbde94c715d26573a76f14cd2a202d45f96f52134ab806b67b9",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://e12cbaa7378fd9b62280e4e1d164bedcb4399ce238f5f98fc0eefb7e50577981",
+        "dweb:/ipfs/QmXRoFGUgfsaRkoPT5bxNMtSayKTQ8GZATLPXf69HcRA51"
+      ]
+    },
+    "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol": {
+      "keccak256": "0x61437cb513a887a1bbad006e7b1c8b414478427d33de47c5600af3c748f108da",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://2c3d0973630ed74f2b5ce3944677a885dc70ec32fc83b35f55045a10224da32b",
+        "dweb:/ipfs/QmbefZ5RoEZKNHXCALfh683PnaNYzKPcKMFjyY1DVAgq8A"
+      ]
+    },
+    "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol": {
+      "keccak256": "0xc3d946432c0ddbb1f846a0d3985be71299df331b91d06732152117f62f0be2b5",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://4632c341a06ba5c079b51ca5a915efab4e6ab57735b37839b3e8365ff806a43e",
+        "dweb:/ipfs/QmTHT3xHYed2wajEoA5qu7ii2BxLpPhQZHwAhtLK5Z7ANK"
+      ]
+    },
+    "lib/openzeppelin-contracts/contracts/utils/Address.sol": {
+      "keccak256": "0xe9abc4c299ea6f0f5b357c26c573f26de46eea260d8bc28c950d2dfb92c50178",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://5a2261f75a2930e4cdd0320a1ed0337b0ed4ca32877a7bef6252433a47337205",
+        "dweb:/ipfs/Qmaa5mykZdKWHexRbjrrvdVKR1ctU8dymDrmtWGsZ1vWhL"
+      ]
+    },
+    "lib/openzeppelin-contracts/contracts/utils/Context.sol": {
+      "keccak256": "0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://6df0ddf21ce9f58271bdfaa85cde98b200ef242a05a3f85c2bc10a8294800a92",
+        "dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3"
+      ]
+    },
+    "lib/openzeppelin-contracts/contracts/utils/math/SafeMath.sol": {
+      "keccak256": "0xa2f576be637946f767aa56601c26d717f48a0aff44f82e46f13807eea1009a21",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://973868f808e88e21a1a0a01d4839314515ee337ad096286c88e41b74dcc11fc2",
+        "dweb:/ipfs/QmfYuZxRfx2J2xdk4EXN7jKg4bUYEMTaYk9BAw9Bqn4o2Y"
+      ]
+    },
+    "lib/openzeppelin-contracts/contracts/utils/math/SignedSafeMath.sol": {
+      "keccak256": "0x62f53f262fabbbc6d8ab49488d8fce36370351aff2b8d3898d499d68995a71c2",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://efd599513c2f313a3f5e9536beb2b80a0d2b3dd34202c174a707d81b7dc751ce",
+        "dweb:/ipfs/QmdDiENVFSyWjfFskNLnViMH77DHg3oDthkSZk7dMzNNKB"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/common/implementation/AddressWhitelist.sol": {
+      "keccak256": "0xc1f20b925f9d37230aaf7bbee536f9a9b08e4772864f0a243ff1b69b54710fee",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://55bc6782bd269463214dbafa8702b2ff33910fd4a51ab24d775aabb15e278bcc",
+        "dweb:/ipfs/QmV41DnGByGBtg8gk7MG6Nr3xYo5R5varZ8cewywdKNATQ"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/common/implementation/AncillaryData.sol": {
+      "keccak256": "0x8ff33ac32d3e6de25de9e0ac2c0ff9a621f187fa97e9ee84092b327471baa3ce",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://0bbaed49756e8cf7ef405e132f441cd7a735ac6186a200b0179147e7d137b74a",
+        "dweb:/ipfs/QmeSBJX5a61LZPxbkUKS2NF4LSxemgDwjD65fCAmyP7PX2"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/common/implementation/FixedPoint.sol": {
+      "keccak256": "0x996b97cc4fa5da4064e3aee500edc6972485d59a9334ceec81155e2c2f484dae",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://8d7c028926dc2b27e7dc103363dca8a43f60b3351f4a14bcb702660f95c68663",
+        "dweb:/ipfs/QmXz4ieFjP5RxJ35F8GbPryYEGvFmxc4Gqx8EK7N57ixzT"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/common/implementation/Lockable.sol": {
+      "keccak256": "0xcd34b3f83b61a096b53020749f327096d5cacd89c2393d947595afb934496ad4",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://aef5cb31ab23e1e6baad76130c29aff1ee3fcda3c4ffc80e0a5294341a253934",
+        "dweb:/ipfs/QmNyso4UszNxE6un3Cqc3R7KiBmZzdWNULvjBDfnLRAmwc"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/common/implementation/Testable.sol": {
+      "keccak256": "0x0254b45747293bb800373a58d123969adec0428f7be79dc941cab10fcad09918",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://537d694e3753596f507d071f283be9caeaad0010c444c9c9955d729affeb4907",
+        "dweb:/ipfs/QmZ1WfVTBao11QaN6aygMhnt45UjRq77ZwfKPFmHiVSdaJ"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/common/implementation/Timer.sol": {
+      "keccak256": "0x9e0dd7389718bd5d1da910273a6f4cee98ee22bfc0c92bde0f0955c0e23adb5e",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://7ddac8d3cb76f8811156a11a7702d7c05b15a0f18c22b5abdc318723193f9266",
+        "dweb:/ipfs/QmPxL7AU8NkURJaZ6WxXNcw88wGMSoPX4jbt7SMdPJqtYv"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/common/interfaces/AddressWhitelistInterface.sol": {
+      "keccak256": "0x22fb8588dff1d5cff76a28111d6c9b190765d99facd93c8ff3b54771f245c0d8",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://5ecd993f00de290a3c7bf21da23a9439cf2ccb22028316df92b79780ac8aa533",
+        "dweb:/ipfs/QmTZ7x7U4EEzTacqapzSdFs2np5WNsqm4XeUBqzQxxDJei"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/oracle/implementation/Constants.sol": {
+      "keccak256": "0x36dcec83c5ac265b759b6a5559ec76088ce24854bf590ba66f808e8ecb59b97e",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://b6f16b1705220fe3692cca201d65993046b4cbb6dddbc35508c489606575bfc2",
+        "dweb:/ipfs/QmdHvPibiSD7j9VJg73DaDPFBsCsWSxKpZJnVCSTErVTHC"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/oracle/implementation/SkinnyOptimisticOracle.sol": {
+      "keccak256": "0xc828d9dc514754b2d1d68faaee5c60803504d9df48d0ace629c453e8c058a49f",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://9c97c38e45d4ac464779eae552c0d6ca31758098d923af647277c222b833718d",
+        "dweb:/ipfs/Qmc1u4tcNLe22xhPeaY7roeG1XdmgwGoJoZe15CTyC65oU"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/oracle/interfaces/FinderInterface.sol": {
+      "keccak256": "0x9166fbfe08e954eb86d33c114fcde7ce4fd0dda5d9d28b31210582bfc769fa86",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://e611e12bcaaebfdf65b67c566ff1d34708e757f01a445bd87c55862e89383b81",
+        "dweb:/ipfs/QmYNSq5oopTShdS6j4VWKqoLxmQSRKmWebCxw6K4LfmKrf"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/oracle/interfaces/IdentifierWhitelistInterface.sol": {
+      "keccak256": "0x9ae86a30dd1a8c03fb2c6d27be570bb30c4c0b13ac63cde8620b7e4b51d88dc9",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://a71d2aff48e075ecab56a9c9767775d1d77e04ec9191fed124e71003220549e3",
+        "dweb:/ipfs/QmYPWsZXro6fzqpZY6UxQ5X8znEXfLp2sun8oXzdz8bTyc"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/oracle/interfaces/OptimisticOracleInterface.sol": {
+      "keccak256": "0x92e7280c1abd5f0c4fcd20247fc1b8428aaf4eeea59439c074d15fdaf9c64989",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://8d12bbcf0a91cef63c4767bffd047254599c5a1fce38e5e81d3005e102fdeef8",
+        "dweb:/ipfs/QmTkd3AG9gdvBZq3HKCUW8eErvkguM2QqE3nUDGfvye3Yi"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/oracle/interfaces/OracleAncillaryInterface.sol": {
+      "keccak256": "0xd58b41fe1e389f7871db7c04f2c05c1aac1d0455bbc521534da81fd657016a1f",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://cc532e9c550bb1bba0daa33fda748590cd06ce94a9566fe65dac04e7d40977bc",
+        "dweb:/ipfs/QmZKvfRW2LJFt5MWZbKuU9ujkXnS2hkPUJVj8wwJWcuZGX"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/oracle/interfaces/SkinnyOptimisticOracleInterface.sol": {
+      "keccak256": "0x91d21e44a97b719106e8f97b99399a3d8dc3697badd01df06518892f38fe033f",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://68c350c822b256b43543ac4dd3dd1413ed95f25a9415d5dba4c562cd11d55716",
+        "dweb:/ipfs/QmZyYeBnM59oPmWcK1KERNayg7xuHv12sLzzmqC42Lq76a"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/oracle/interfaces/StoreInterface.sol": {
+      "keccak256": "0xbb73671684309c91ad5ef3da1474051d03f2e7d5882bed7f5c4317e5d4c768df",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://32386544d3119fd0187a8c4e8b01c739f508ab863faa04345cabc2544081f9e8",
+        "dweb:/ipfs/QmYszDURs1x75rsejZkGt9zCkASXnJtufbNsL3XHe2eJPQ"
+      ]
+    }
+  },
+  "version": 1
+}

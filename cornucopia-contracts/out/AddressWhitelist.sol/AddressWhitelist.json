@@ -1,0 +1,2932 @@
+{
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "addedAddress",
+          "type": "address"
+        }
+      ],
+      "name": "AddedToWhitelist",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "removedAddress",
+          "type": "address"
+        }
+      ],
+      "name": "RemovedFromWhitelist",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newElement",
+          "type": "address"
+        }
+      ],
+      "name": "addToWhitelist",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getWhitelist",
+      "outputs": [
+        {
+          "internalType": "address[]",
+          "name": "activeWhitelist",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "elementToCheck",
+          "type": "address"
+        }
+      ],
+      "name": "isOnWhitelist",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "elementToRemove",
+          "type": "address"
+        }
+      ],
+      "name": "removeFromWhitelist",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "whitelist",
+      "outputs": [
+        {
+          "internalType": "enum AddressWhitelist.Status",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "whitelistIndices",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x608060405234801561001057600080fd5b5061001a33610032565b6000805460ff60a01b1916600160a01b179055610082565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b6108cd806100916000396000f3fe608060405234801561001057600080fd5b50600436106100935760003560e01c80638da5cb5b116100665780638da5cb5b146101085780639b19251a14610119578063d01f63f514610149578063e43252d71461015e578063f2fde38b1461017157600080fd5b806337797c08146100985780633a3ab672146100c8578063715018a6146100eb5780638ab1d681146100f5575b600080fd5b6100ab6100a636600461073b565b610184565b6040516001600160a01b0390911681526020015b60405180910390f35b6100db6100d6366004610754565b6101ae565b60405190151581526020016100bf565b6100f36101ee565b005b6100f3610103366004610754565b61022d565b6000546001600160a01b03166100ab565b61013c610127366004610754565b60016020526000908152604090205460ff1681565b6040516100bf919061079a565b61015161030a565b6040516100bf91906107c2565b6100f361016c366004610754565b6104a0565b6100f361017f366004610754565b6105fa565b6002818154811061019457600080fd5b6000918252602090912001546001600160a01b0316905081565b60006101b8610692565b60016001600160a01b03831660009081526001602052604090205460ff1660028111156101e7576101e7610784565b1492915050565b6000546001600160a01b031633146102215760405162461bcd60e51b81526004016102189061080f565b60405180910390fd5b61022b60006106eb565b565b610235610692565b6102476000805460ff60a01b19169055565b6000546001600160a01b031633146102715760405162461bcd60e51b81526004016102189061080f565b60026001600160a01b03821660009081526001602052604090205460ff1660028111156102a0576102a0610784565b146102ef576001600160a01b038116600081815260016020526040808220805460ff19166002179055517fcdd2e9b91a56913d370075169cefa1602ba36be5301664f752192bb1709df7579190a25b6103076000805460ff60a01b1916600160a01b179055565b50565b6060610314610692565b6000805b6002548110156103985760018060006002848154811061033a5761033a610844565b60009182526020808320909101546001600160a01b0316835282019290925260400190205460ff16600281111561037357610373610784565b0361038657816103828161085a565b9250505b806103908161085a565b915050610318565b508067ffffffffffffffff8111156103b2576103b2610881565b6040519080825280602002602001820160405280156103db578160200160208202803683370190505b5091506000905060005b60025481101561049b5760006002828154811061040457610404610844565b6000918252602090912001546001600160a01b0316905060016001600160a01b03821660009081526001602052604090205460ff16600281111561044a5761044a610784565b03610488578084848151811061046257610462610844565b6001600160a01b0390921660209283029190910190910152826104848161085a565b9350505b50806104938161085a565b9150506103e5565b505090565b6104a8610692565b6104ba6000805460ff60a01b19169055565b6000546001600160a01b031633146104e45760405162461bcd60e51b81526004016102189061080f565b60016001600160a01b03821660009081526001602052604090205460ff16600281111561051357610513610784565b146102ef576001600160a01b03811660009081526001602052604081205460ff16600281111561054557610545610784565b0361059657600280546001810182556000919091527f405787fa12a823e0f2b7631cc41b3ba8828b3321ca811111fa75cd3aa3bb5ace0180546001600160a01b0319166001600160a01b0383161790555b6001600160a01b0381166000818152600160208190526040808320805460ff1916909217909155517fa850ae9193f515cbae8d35e8925bd2be26627fc91bce650b8652ed254e9cab039190a26103076000805460ff60a01b1916600160a01b179055565b6000546001600160a01b031633146106245760405162461bcd60e51b81526004016102189061080f565b6001600160a01b0381166106895760405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201526564647265737360d01b6064820152608401610218565b610307816106eb565b600054600160a01b900460ff1661022b5760405162461bcd60e51b815260206004820152601f60248201527f5265656e7472616e637947756172643a207265656e7472616e742063616c6c006044820152606401610218565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b60006020828403121561074d57600080fd5b5035919050565b60006020828403121561076657600080fd5b81356001600160a01b038116811461077d57600080fd5b9392505050565b634e487b7160e01b600052602160045260246000fd5b60208101600383106107bc57634e487b7160e01b600052602160045260246000fd5b91905290565b6020808252825182820181905260009190848201906040850190845b818110156108035783516001600160a01b0316835292840192918401916001016107de565b50909695505050505050565b6020808252818101527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572604082015260600190565b634e487b7160e01b600052603260045260246000fd5b60006001820161087a57634e487b7160e01b600052601160045260246000fd5b5060010190565b634e487b7160e01b600052604160045260246000fdfea2646970667358221220410345f53fb2bec920fe1212ad4d346d259c2bf767da8e8aa67ca2361d5b1f1a64736f6c634300080d0033",
+    "sourceMap": "264:3029:14:-:0;;;;;;;;;;;;-1:-1:-1;921:32:5;719:10:11;921:18:5;:32::i;:::-;874:11:18;:18;;-1:-1:-1;;;;874:18:18;-1:-1:-1;;;874:18:18;;;264:3029:14;;2270:187:5;2343:16;2362:6;;-1:-1:-1;;;;;2378:17:5;;;-1:-1:-1;;;;;;2378:17:5;;;;;;2410:40;;2362:6;;;;;;;2410:40;;2343:16;2410:40;2333:124;2270:187;:::o;264:3029:14:-;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x608060405234801561001057600080fd5b50600436106100935760003560e01c80638da5cb5b116100665780638da5cb5b146101085780639b19251a14610119578063d01f63f514610149578063e43252d71461015e578063f2fde38b1461017157600080fd5b806337797c08146100985780633a3ab672146100c8578063715018a6146100eb5780638ab1d681146100f5575b600080fd5b6100ab6100a636600461073b565b610184565b6040516001600160a01b0390911681526020015b60405180910390f35b6100db6100d6366004610754565b6101ae565b60405190151581526020016100bf565b6100f36101ee565b005b6100f3610103366004610754565b61022d565b6000546001600160a01b03166100ab565b61013c610127366004610754565b60016020526000908152604090205460ff1681565b6040516100bf919061079a565b61015161030a565b6040516100bf91906107c2565b6100f361016c366004610754565b6104a0565b6100f361017f366004610754565b6105fa565b6002818154811061019457600080fd5b6000918252602090912001546001600160a01b0316905081565b60006101b8610692565b60016001600160a01b03831660009081526001602052604090205460ff1660028111156101e7576101e7610784565b1492915050565b6000546001600160a01b031633146102215760405162461bcd60e51b81526004016102189061080f565b60405180910390fd5b61022b60006106eb565b565b610235610692565b6102476000805460ff60a01b19169055565b6000546001600160a01b031633146102715760405162461bcd60e51b81526004016102189061080f565b60026001600160a01b03821660009081526001602052604090205460ff1660028111156102a0576102a0610784565b146102ef576001600160a01b038116600081815260016020526040808220805460ff19166002179055517fcdd2e9b91a56913d370075169cefa1602ba36be5301664f752192bb1709df7579190a25b6103076000805460ff60a01b1916600160a01b179055565b50565b6060610314610692565b6000805b6002548110156103985760018060006002848154811061033a5761033a610844565b60009182526020808320909101546001600160a01b0316835282019290925260400190205460ff16600281111561037357610373610784565b0361038657816103828161085a565b9250505b806103908161085a565b915050610318565b508067ffffffffffffffff8111156103b2576103b2610881565b6040519080825280602002602001820160405280156103db578160200160208202803683370190505b5091506000905060005b60025481101561049b5760006002828154811061040457610404610844565b6000918252602090912001546001600160a01b0316905060016001600160a01b03821660009081526001602052604090205460ff16600281111561044a5761044a610784565b03610488578084848151811061046257610462610844565b6001600160a01b0390921660209283029190910190910152826104848161085a565b9350505b50806104938161085a565b9150506103e5565b505090565b6104a8610692565b6104ba6000805460ff60a01b19169055565b6000546001600160a01b031633146104e45760405162461bcd60e51b81526004016102189061080f565b60016001600160a01b03821660009081526001602052604090205460ff16600281111561051357610513610784565b146102ef576001600160a01b03811660009081526001602052604081205460ff16600281111561054557610545610784565b0361059657600280546001810182556000919091527f405787fa12a823e0f2b7631cc41b3ba8828b3321ca811111fa75cd3aa3bb5ace0180546001600160a01b0319166001600160a01b0383161790555b6001600160a01b0381166000818152600160208190526040808320805460ff1916909217909155517fa850ae9193f515cbae8d35e8925bd2be26627fc91bce650b8652ed254e9cab039190a26103076000805460ff60a01b1916600160a01b179055565b6000546001600160a01b031633146106245760405162461bcd60e51b81526004016102189061080f565b6001600160a01b0381166106895760405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201526564647265737360d01b6064820152608401610218565b610307816106eb565b600054600160a01b900460ff1661022b5760405162461bcd60e51b815260206004820152601f60248201527f5265656e7472616e637947756172643a207265656e7472616e742063616c6c006044820152606401610218565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b60006020828403121561074d57600080fd5b5035919050565b60006020828403121561076657600080fd5b81356001600160a01b038116811461077d57600080fd5b9392505050565b634e487b7160e01b600052602160045260246000fd5b60208101600383106107bc57634e487b7160e01b600052602160045260246000fd5b91905290565b6020808252825182820181905260009190848201906040850190845b818110156108035783516001600160a01b0316835292840192918401916001016107de565b50909695505050505050565b6020808252818101527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572604082015260600190565b634e487b7160e01b600052603260045260246000fd5b60006001820161087a57634e487b7160e01b600052601160045260246000fd5b5060010190565b634e487b7160e01b600052604160045260246000fdfea2646970667358221220410345f53fb2bec920fe1212ad4d346d259c2bf767da8e8aa67ca2361d5b1f1a64736f6c634300080d0033",
+    "sourceMap": "264:3029:14:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;428:33;;;;;;:::i;:::-;;:::i;:::-;;;-1:-1:-1;;;;;363:32:40;;;345:51;;333:2;318:18;428:33:14;;;;;;;;1818:166;;;;;;:::i;:::-;;:::i;:::-;;;863:14:40;;856:22;838:41;;826:2;811:18;1818:166:14;698:187:40;1668:101:5;;;:::i;:::-;;1333:279:14;;;;;;:::i;:::-;;:::i;1036:85:5:-;1082:7;1108:6;-1:-1:-1;;;;;1108:6:5;1036:85;;378:43:14;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;:::i;2537:754::-;;;:::i;:::-;;;;;;;:::i;705:490::-;;;;;;:::i;:::-;;:::i;1918:198:5:-;;;;;;:::i;:::-;;:::i;428:33:14:-;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;;;;428:33:14;;-1:-1:-1;428:33:14;:::o;1818:166::-;1916:4;1603:19:18;:17;:19::i;:::-;1968:9:14::1;-1:-1:-1::0;;;;;1939:25:14;::::1;;::::0;;;:9:::1;:25;::::0;;;;;::::1;;:38;::::0;::::1;;;;;;:::i;:::-;;::::0;1818:166;-1:-1:-1;;1818:166:14:o;1668:101:5:-;1082:7;1108:6;-1:-1:-1;;;;;1108:6:5;719:10:11;1248:23:5;1240:68;;;;-1:-1:-1;;;1240:68:5;;;;;;;:::i;:::-;;;;;;;;;1732:30:::1;1759:1;1732:18;:30::i;:::-;1668:101::o:0;1333:279:14:-;1317:19:18;:17;:19::i;:::-;1346:17;2459:5;2445:19;;-1:-1:-1;;;;2445:19:18;;;2335:136;1346:17;1082:7:5;1108:6;-1:-1:-1;;;;;1108:6:5;719:10:11;1248:23:5::1;1240:68;;;;-1:-1:-1::0;;;1240:68:5::1;;;;;;;:::i;:::-;1474:10:14::2;-1:-1:-1::0;;;;;1444:26:14;::::2;;::::0;;;:9:::2;:26;::::0;;;;;::::2;;:40;::::0;::::2;;;;;;:::i;:::-;;1440:166;;-1:-1:-1::0;;;;;1500:26:14;::::2;;::::0;;;:9:::2;:26;::::0;;;;;:39;;-1:-1:-1;;1500:39:14::2;1529:10;1500:39;::::0;;1558:37;::::2;::::0;1500:26;1558:37:::2;1440:166;1384:20:18::0;2658:11;:18;;-1:-1:-1;;;;2658:18:18;-1:-1:-1;;;2658:18:18;;;2477:206;1384:20;1333:279:14;:::o;2537:754::-;2612:32;1603:19:18;:17;:19::i;:::-;2701::14::1;2739:9:::0;2734:173:::1;2758:16;:23:::0;2754:27;::::1;2734:173;;;2840:9;2806::::0;:30:::1;2816:16;2833:1;2816:19;;;;;;;;:::i;:::-;;::::0;;;::::1;::::0;;;;;::::1;::::0;-1:-1:-1;;;;;2816:19:14::1;2806:30:::0;;;::::1;::::0;;;;;;;;;::::1;;:43;::::0;::::1;;;;;;:::i;:::-;::::0;2802:95:::1;;2869:13:::0;::::1;::::0;::::1;:::i;:::-;;;;2802:95;2783:3:::0;::::1;::::0;::::1;:::i;:::-;;;;2734:173;;;;2979:11;2965:26;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;::::0;-1:-1:-1;2965:26:14::1;;2947:44;;3015:1;3001:15;;3031:9;3026:259;3050:16;:23:::0;3046:27;::::1;3026:259;;;3094:12;3109:16;3126:1;3109:19;;;;;;;;:::i;:::-;;::::0;;;::::1;::::0;;;::::1;::::0;-1:-1:-1;;;;;3109:19:14::1;::::0;-1:-1:-1;3109:19:14;-1:-1:-1;;;;;3146:15:14;::::1;;::::0;;;:9:::1;:15;::::0;;;;;::::1;;:28;::::0;::::1;;;;;;:::i;:::-;::::0;3142:133:::1;;3225:4;3194:15;3210:11;3194:28;;;;;;;;:::i;:::-;-1:-1:-1::0;;;;;3194:35:14;;::::1;:28;::::0;;::::1;::::0;;;;;;;:35;3247:13;::::1;::::0;::::1;:::i;:::-;;;;3142:133;-1:-1:-1::0;3075:3:14;::::1;::::0;::::1;:::i;:::-;;;;3026:259;;;;2646:645;2537:754:::0;:::o;705:490::-;1317:19:18;:17;:19::i;:::-;1346:17;2459:5;2445:19;;-1:-1:-1;;;;2445:19:18;;;2335:136;1346:17;1082:7:5;1108:6;-1:-1:-1;;;;;1108:6:5;719:10:11;1248:23:5::1;1240:68;;;;-1:-1:-1::0;;;1240:68:5::1;;;;;;;:::i;:::-;880:9:14::2;-1:-1:-1::0;;;;;855:21:14;::::2;;::::0;;;:9:::2;:21;::::0;;;;;::::2;;:34;::::0;::::2;;;;;;:::i;:::-;851:71:::0;905:7:::2;851:71;-1:-1:-1::0;;;;;1005:21:14;::::2;1030:11;1005:21:::0;;;:9:::2;:21;::::0;;;;;::::2;;:36;::::0;::::2;;;;;;:::i;:::-;::::0;1001:100:::2;;1057:16;:33:::0;;::::2;::::0;::::2;::::0;;-1:-1:-1;1057:33:14;;;;;::::2;::::0;;-1:-1:-1;;;;;;1057:33:14::2;-1:-1:-1::0;;;;;1057:33:14;::::2;;::::0;;1001:100:::2;-1:-1:-1::0;;;;;1111:21:14;::::2;;::::0;;;1135:9:::2;1111:21;::::0;;;;;;;:33;;-1:-1:-1;;1111:33:14::2;::::0;;::::2;::::0;;;1160:28;::::2;::::0;1111:21;1160:28:::2;1384:20:18::0;2658:11;:18;;-1:-1:-1;;;;2658:18:18;-1:-1:-1;;;2658:18:18;;;2477:206;1918:198:5;1082:7;1108:6;-1:-1:-1;;;;;1108:6:5;719:10:11;1248:23:5;1240:68;;;;-1:-1:-1;;;1240:68:5;;;;;;;:::i;:::-;-1:-1:-1;;;;;2006:22:5;::::1;1998:73;;;::::0;-1:-1:-1;;;1998:73:5;;3094:2:40;1998:73:5::1;::::0;::::1;3076:21:40::0;3133:2;3113:18;;;3106:30;3172:34;3152:18;;;3145:62;-1:-1:-1;;;3223:18:40;;;3216:36;3269:19;;1998:73:5::1;2892:402:40::0;1998:73:5::1;2081:28;2100:8;2081:18;:28::i;2143:186:18:-:0;2275:11;;-1:-1:-1;;;2275:11:18;;;;2267:55;;;;-1:-1:-1;;;2267:55:18;;3501:2:40;2267:55:18;;;3483:21:40;3540:2;3520:18;;;3513:30;3579:33;3559:18;;;3552:61;3630:18;;2267:55:18;3299:355:40;2270:187:5;2343:16;2362:6;;-1:-1:-1;;;;;2378:17:5;;;-1:-1:-1;;;;;;2378:17:5;;;;;;2410:40;;2362:6;;;;;;;2410:40;;2343:16;2410:40;2333:124;2270:187;:::o;14:180:40:-;73:6;126:2;114:9;105:7;101:23;97:32;94:52;;;142:1;139;132:12;94:52;-1:-1:-1;165:23:40;;14:180;-1:-1:-1;14:180:40:o;407:286::-;466:6;519:2;507:9;498:7;494:23;490:32;487:52;;;535:1;532;525:12;487:52;561:23;;-1:-1:-1;;;;;613:31:40;;603:42;;593:70;;659:1;656;649:12;593:70;682:5;407:286;-1:-1:-1;;;407:286:40:o;890:127::-;951:10;946:3;942:20;939:1;932:31;982:4;979:1;972:15;1006:4;1003:1;996:15;1022:340;1166:2;1151:18;;1199:1;1188:13;;1178:144;;1244:10;1239:3;1235:20;1232:1;1225:31;1279:4;1276:1;1269:15;1307:4;1304:1;1297:15;1178:144;1331:25;;;1022:340;:::o;1367:658::-;1538:2;1590:21;;;1660:13;;1563:18;;;1682:22;;;1509:4;;1538:2;1761:15;;;;1735:2;1720:18;;;1509:4;1804:195;1818:6;1815:1;1812:13;1804:195;;;1883:13;;-1:-1:-1;;;;;1879:39:40;1867:52;;1974:15;;;;1939:12;;;;1915:1;1833:9;1804:195;;;-1:-1:-1;2016:3:40;;1367:658;-1:-1:-1;;;;;;1367:658:40:o;2030:356::-;2232:2;2214:21;;;2251:18;;;2244:30;2310:34;2305:2;2290:18;;2283:62;2377:2;2362:18;;2030:356::o;2391:127::-;2452:10;2447:3;2443:20;2440:1;2433:31;2483:4;2480:1;2473:15;2507:4;2504:1;2497:15;2523:232;2562:3;2583:17;;;2580:140;;2642:10;2637:3;2633:20;2630:1;2623:31;2677:4;2674:1;2667:15;2705:4;2702:1;2695:15;2580:140;-1:-1:-1;2747:1:40;2736:13;;2523:232::o;2760:127::-;2821:10;2816:3;2812:20;2809:1;2802:31;2852:4;2849:1;2842:15;2876:4;2873:1;2866:15",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "addToWhitelist(address)": "e43252d7",
+    "getWhitelist()": "d01f63f5",
+    "isOnWhitelist(address)": "3a3ab672",
+    "owner()": "8da5cb5b",
+    "removeFromWhitelist(address)": "8ab1d681",
+    "renounceOwnership()": "715018a6",
+    "transferOwnership(address)": "f2fde38b",
+    "whitelist(address)": "9b19251a",
+    "whitelistIndices(uint256)": "37797c08"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.13+commit.abaa5c0e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"addedAddress\",\"type\":\"address\"}],\"name\":\"AddedToWhitelist\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"removedAddress\",\"type\":\"address\"}],\"name\":\"RemovedFromWhitelist\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newElement\",\"type\":\"address\"}],\"name\":\"addToWhitelist\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getWhitelist\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"activeWhitelist\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"elementToCheck\",\"type\":\"address\"}],\"name\":\"isOnWhitelist\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"elementToRemove\",\"type\":\"address\"}],\"name\":\"removeFromWhitelist\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"whitelist\",\"outputs\":[{\"internalType\":\"enum AddressWhitelist.Status\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"whitelistIndices\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"addToWhitelist(address)\":{\"params\":{\"newElement\":\"the new address to add.\"}},\"getWhitelist()\":{\"details\":\"Note: This method skips over, but still iterates through addresses. It is possible for this call to run out of gas if a large number of addresses have been removed. To reduce the likelihood of this unlikely scenario, we can modify the implementation so that when addresses are removed, the last addresses in the array is moved to the empty index.\",\"returns\":{\"activeWhitelist\":\"the list of addresses on the whitelist.\"}},\"isOnWhitelist(address)\":{\"params\":{\"elementToCheck\":\"the address to check.\"},\"returns\":{\"_0\":\"True if `elementToCheck` is on the whitelist, or False.\"}},\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"removeFromWhitelist(address)\":{\"params\":{\"elementToRemove\":\"the existing address to remove.\"}},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner.\"},\"transferOwnership(address)\":{\"details\":\"Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner.\"}},\"title\":\"A contract to track a whitelist of addresses.\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"addToWhitelist(address)\":{\"notice\":\"Adds an address to the whitelist.\"},\"getWhitelist()\":{\"notice\":\"Gets all addresses that are currently included in the whitelist.\"},\"isOnWhitelist(address)\":{\"notice\":\"Checks whether an address is on the whitelist.\"},\"removeFromWhitelist(address)\":{\"notice\":\"Removes an address from the whitelist.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"lib/protocol/packages/core/contracts/common/implementation/AddressWhitelist.sol\":\"AddressWhitelist\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/=lib/openzeppelin-contracts/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/\",\":protocol/=lib/protocol/\",\":uma-implementation/=lib/protocol/packages/core/contracts/oracle/implementation/\",\":uma-interface/=lib/protocol/packages/core/contracts/oracle/interfaces/\"]},\"sources\":{\"lib/openzeppelin-contracts/contracts/access/Ownable.sol\":{\"keccak256\":\"0x24e0364e503a9bbde94c715d26573a76f14cd2a202d45f96f52134ab806b67b9\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://e12cbaa7378fd9b62280e4e1d164bedcb4399ce238f5f98fc0eefb7e50577981\",\"dweb:/ipfs/QmXRoFGUgfsaRkoPT5bxNMtSayKTQ8GZATLPXf69HcRA51\"]},\"lib/openzeppelin-contracts/contracts/utils/Context.sol\":{\"keccak256\":\"0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6df0ddf21ce9f58271bdfaa85cde98b200ef242a05a3f85c2bc10a8294800a92\",\"dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3\"]},\"lib/protocol/packages/core/contracts/common/implementation/AddressWhitelist.sol\":{\"keccak256\":\"0xc1f20b925f9d37230aaf7bbee536f9a9b08e4772864f0a243ff1b69b54710fee\",\"license\":\"AGPL-3.0-only\",\"urls\":[\"bzz-raw://55bc6782bd269463214dbafa8702b2ff33910fd4a51ab24d775aabb15e278bcc\",\"dweb:/ipfs/QmV41DnGByGBtg8gk7MG6Nr3xYo5R5varZ8cewywdKNATQ\"]},\"lib/protocol/packages/core/contracts/common/implementation/Lockable.sol\":{\"keccak256\":\"0xcd34b3f83b61a096b53020749f327096d5cacd89c2393d947595afb934496ad4\",\"license\":\"AGPL-3.0-only\",\"urls\":[\"bzz-raw://aef5cb31ab23e1e6baad76130c29aff1ee3fcda3c4ffc80e0a5294341a253934\",\"dweb:/ipfs/QmNyso4UszNxE6un3Cqc3R7KiBmZzdWNULvjBDfnLRAmwc\"]},\"lib/protocol/packages/core/contracts/common/interfaces/AddressWhitelistInterface.sol\":{\"keccak256\":\"0x22fb8588dff1d5cff76a28111d6c9b190765d99facd93c8ff3b54771f245c0d8\",\"license\":\"AGPL-3.0-only\",\"urls\":[\"bzz-raw://5ecd993f00de290a3c7bf21da23a9439cf2ccb22028316df92b79780ac8aa533\",\"dweb:/ipfs/QmTZ7x7U4EEzTacqapzSdFs2np5WNsqm4XeUBqzQxxDJei\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.13+commit.abaa5c0e"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "addedAddress",
+              "type": "address",
+              "indexed": true
+            }
+          ],
+          "type": "event",
+          "name": "AddedToWhitelist",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address",
+              "indexed": true
+            },
+            {
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address",
+              "indexed": true
+            }
+          ],
+          "type": "event",
+          "name": "OwnershipTransferred",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "removedAddress",
+              "type": "address",
+              "indexed": true
+            }
+          ],
+          "type": "event",
+          "name": "RemovedFromWhitelist",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "newElement",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "addToWhitelist"
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getWhitelist",
+          "outputs": [
+            {
+              "internalType": "address[]",
+              "name": "activeWhitelist",
+              "type": "address[]"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "elementToCheck",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "isOnWhitelist",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "owner",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "elementToRemove",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "removeFromWhitelist"
+        },
+        {
+          "inputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "renounceOwnership"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "transferOwnership"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "whitelist",
+          "outputs": [
+            {
+              "internalType": "enum AddressWhitelist.Status",
+              "name": "",
+              "type": "uint8"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "whitelistIndices",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ]
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {
+          "addToWhitelist(address)": {
+            "params": {
+              "newElement": "the new address to add."
+            }
+          },
+          "getWhitelist()": {
+            "details": "Note: This method skips over, but still iterates through addresses. It is possible for this call to run out of gas if a large number of addresses have been removed. To reduce the likelihood of this unlikely scenario, we can modify the implementation so that when addresses are removed, the last addresses in the array is moved to the empty index.",
+            "returns": {
+              "activeWhitelist": "the list of addresses on the whitelist."
+            }
+          },
+          "isOnWhitelist(address)": {
+            "params": {
+              "elementToCheck": "the address to check."
+            },
+            "returns": {
+              "_0": "True if `elementToCheck` is on the whitelist, or False."
+            }
+          },
+          "owner()": {
+            "details": "Returns the address of the current owner."
+          },
+          "removeFromWhitelist(address)": {
+            "params": {
+              "elementToRemove": "the existing address to remove."
+            }
+          },
+          "renounceOwnership()": {
+            "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+          },
+          "transferOwnership(address)": {
+            "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+          }
+        },
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {
+          "addToWhitelist(address)": {
+            "notice": "Adds an address to the whitelist."
+          },
+          "getWhitelist()": {
+            "notice": "Gets all addresses that are currently included in the whitelist."
+          },
+          "isOnWhitelist(address)": {
+            "notice": "Checks whether an address is on the whitelist."
+          },
+          "removeFromWhitelist(address)": {
+            "notice": "Removes an address from the whitelist."
+          }
+        },
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        ":@openzeppelin/=lib/openzeppelin-contracts/",
+        ":ds-test/=lib/forge-std/lib/ds-test/src/",
+        ":forge-std/=lib/forge-std/src/",
+        ":openzeppelin-contracts/=lib/openzeppelin-contracts/",
+        ":protocol/=lib/protocol/",
+        ":uma-implementation/=lib/protocol/packages/core/contracts/oracle/implementation/",
+        ":uma-interface/=lib/protocol/packages/core/contracts/oracle/interfaces/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "lib/protocol/packages/core/contracts/common/implementation/AddressWhitelist.sol": "AddressWhitelist"
+      },
+      "libraries": {}
+    },
+    "sources": {
+      "lib/openzeppelin-contracts/contracts/access/Ownable.sol": {
+        "keccak256": "0x24e0364e503a9bbde94c715d26573a76f14cd2a202d45f96f52134ab806b67b9",
+        "urls": [
+          "bzz-raw://e12cbaa7378fd9b62280e4e1d164bedcb4399ce238f5f98fc0eefb7e50577981",
+          "dweb:/ipfs/QmXRoFGUgfsaRkoPT5bxNMtSayKTQ8GZATLPXf69HcRA51"
+        ],
+        "license": "MIT"
+      },
+      "lib/openzeppelin-contracts/contracts/utils/Context.sol": {
+        "keccak256": "0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7",
+        "urls": [
+          "bzz-raw://6df0ddf21ce9f58271bdfaa85cde98b200ef242a05a3f85c2bc10a8294800a92",
+          "dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3"
+        ],
+        "license": "MIT"
+      },
+      "lib/protocol/packages/core/contracts/common/implementation/AddressWhitelist.sol": {
+        "keccak256": "0xc1f20b925f9d37230aaf7bbee536f9a9b08e4772864f0a243ff1b69b54710fee",
+        "urls": [
+          "bzz-raw://55bc6782bd269463214dbafa8702b2ff33910fd4a51ab24d775aabb15e278bcc",
+          "dweb:/ipfs/QmV41DnGByGBtg8gk7MG6Nr3xYo5R5varZ8cewywdKNATQ"
+        ],
+        "license": "AGPL-3.0-only"
+      },
+      "lib/protocol/packages/core/contracts/common/implementation/Lockable.sol": {
+        "keccak256": "0xcd34b3f83b61a096b53020749f327096d5cacd89c2393d947595afb934496ad4",
+        "urls": [
+          "bzz-raw://aef5cb31ab23e1e6baad76130c29aff1ee3fcda3c4ffc80e0a5294341a253934",
+          "dweb:/ipfs/QmNyso4UszNxE6un3Cqc3R7KiBmZzdWNULvjBDfnLRAmwc"
+        ],
+        "license": "AGPL-3.0-only"
+      },
+      "lib/protocol/packages/core/contracts/common/interfaces/AddressWhitelistInterface.sol": {
+        "keccak256": "0x22fb8588dff1d5cff76a28111d6c9b190765d99facd93c8ff3b54771f245c0d8",
+        "urls": [
+          "bzz-raw://5ecd993f00de290a3c7bf21da23a9439cf2ccb22028316df92b79780ac8aa533",
+          "dweb:/ipfs/QmTZ7x7U4EEzTacqapzSdFs2np5WNsqm4XeUBqzQxxDJei"
+        ],
+        "license": "AGPL-3.0-only"
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "lib/protocol/packages/core/contracts/common/implementation/AddressWhitelist.sol",
+    "id": 22476,
+    "exportedSymbols": {
+      "AddressWhitelist": [
+        22475
+      ],
+      "AddressWhitelistInterface": [
+        25658
+      ],
+      "Context": [
+        21881
+      ],
+      "Lockable": [
+        24800
+      ],
+      "Ownable": [
+        20682
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "42:3252:14",
+    "nodes": [
+      {
+        "id": 22259,
+        "nodeType": "PragmaDirective",
+        "src": "42:23:14",
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ]
+      },
+      {
+        "id": 22260,
+        "nodeType": "ImportDirective",
+        "src": "67:53:14",
+        "absolutePath": "lib/protocol/packages/core/contracts/common/interfaces/AddressWhitelistInterface.sol",
+        "file": "../interfaces/AddressWhitelistInterface.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 22476,
+        "sourceUnit": 25659,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 22261,
+        "nodeType": "ImportDirective",
+        "src": "121:52:14",
+        "absolutePath": "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        "file": "@openzeppelin/contracts/access/Ownable.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 22476,
+        "sourceUnit": 20683,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 22262,
+        "nodeType": "ImportDirective",
+        "src": "174:24:14",
+        "absolutePath": "lib/protocol/packages/core/contracts/common/implementation/Lockable.sol",
+        "file": "./Lockable.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 22476,
+        "sourceUnit": 24801,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 22475,
+        "nodeType": "ContractDefinition",
+        "src": "264:3029:14",
+        "nodes": [
+          {
+            "id": 22273,
+            "nodeType": "EnumDefinition",
+            "src": "344:29:14",
+            "canonicalName": "AddressWhitelist.Status",
+            "members": [
+              {
+                "id": 22270,
+                "name": "None",
+                "nameLocation": "358:4:14",
+                "nodeType": "EnumValue",
+                "src": "358:4:14"
+              },
+              {
+                "id": 22271,
+                "name": "In",
+                "nameLocation": "364:2:14",
+                "nodeType": "EnumValue",
+                "src": "364:2:14"
+              },
+              {
+                "id": 22272,
+                "name": "Out",
+                "nameLocation": "368:3:14",
+                "nodeType": "EnumValue",
+                "src": "368:3:14"
+              }
+            ],
+            "name": "Status",
+            "nameLocation": "349:6:14"
+          },
+          {
+            "id": 22278,
+            "nodeType": "VariableDeclaration",
+            "src": "378:43:14",
+            "constant": false,
+            "functionSelector": "9b19251a",
+            "mutability": "mutable",
+            "name": "whitelist",
+            "nameLocation": "412:9:14",
+            "scope": 22475,
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_enum$_Status_$22273_$",
+              "typeString": "mapping(address => enum AddressWhitelist.Status)"
+            },
+            "typeName": {
+              "id": 22277,
+              "keyType": {
+                "id": 22274,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "386:7:14",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "378:26:14",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_enum$_Status_$22273_$",
+                "typeString": "mapping(address => enum AddressWhitelist.Status)"
+              },
+              "valueType": {
+                "id": 22276,
+                "nodeType": "UserDefinedTypeName",
+                "pathNode": {
+                  "id": 22275,
+                  "name": "Status",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 22273,
+                  "src": "397:6:14"
+                },
+                "referencedDeclaration": 22273,
+                "src": "397:6:14",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_enum$_Status_$22273",
+                  "typeString": "enum AddressWhitelist.Status"
+                }
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "id": 22281,
+            "nodeType": "VariableDeclaration",
+            "src": "428:33:14",
+            "constant": false,
+            "functionSelector": "37797c08",
+            "mutability": "mutable",
+            "name": "whitelistIndices",
+            "nameLocation": "445:16:14",
+            "scope": 22475,
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_array$_t_address_$dyn_storage",
+              "typeString": "address[]"
+            },
+            "typeName": {
+              "baseType": {
+                "id": 22279,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "428:7:14",
+                "stateMutability": "nonpayable",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "id": 22280,
+              "nodeType": "ArrayTypeName",
+              "src": "428:9:14",
+              "typeDescriptions": {
+                "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                "typeString": "address[]"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "id": 22285,
+            "nodeType": "EventDefinition",
+            "src": "468:53:14",
+            "anonymous": false,
+            "eventSelector": "a850ae9193f515cbae8d35e8925bd2be26627fc91bce650b8652ed254e9cab03",
+            "name": "AddedToWhitelist",
+            "nameLocation": "474:16:14",
+            "parameters": {
+              "id": 22284,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 22283,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "addedAddress",
+                  "nameLocation": "507:12:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 22285,
+                  "src": "491:28:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 22282,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "491:7:14",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "490:30:14"
+            }
+          },
+          {
+            "id": 22289,
+            "nodeType": "EventDefinition",
+            "src": "526:59:14",
+            "anonymous": false,
+            "eventSelector": "cdd2e9b91a56913d370075169cefa1602ba36be5301664f752192bb1709df757",
+            "name": "RemovedFromWhitelist",
+            "nameLocation": "532:20:14",
+            "parameters": {
+              "id": 22288,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 22287,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "removedAddress",
+                  "nameLocation": "569:14:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 22289,
+                  "src": "553:30:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 22286,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "553:7:14",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "552:32:14"
+            }
+          },
+          {
+            "id": 22335,
+            "nodeType": "FunctionDefinition",
+            "src": "705:490:14",
+            "body": {
+              "id": 22334,
+              "nodeType": "Block",
+              "src": "792:403:14",
+              "statements": [
+                {
+                  "condition": {
+                    "commonType": {
+                      "typeIdentifier": "t_enum$_Status_$22273",
+                      "typeString": "enum AddressWhitelist.Status"
+                    },
+                    "id": 22305,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "baseExpression": {
+                        "id": 22300,
+                        "name": "whitelist",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 22278,
+                        "src": "855:9:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_address_$_t_enum$_Status_$22273_$",
+                          "typeString": "mapping(address => enum AddressWhitelist.Status)"
+                        }
+                      },
+                      "id": 22302,
+                      "indexExpression": {
+                        "id": 22301,
+                        "name": "newElement",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 22292,
+                        "src": "865:10:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "IndexAccess",
+                      "src": "855:21:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_Status_$22273",
+                        "typeString": "enum AddressWhitelist.Status"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "==",
+                    "rightExpression": {
+                      "expression": {
+                        "id": 22303,
+                        "name": "Status",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 22273,
+                        "src": "880:6:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_enum$_Status_$22273_$",
+                          "typeString": "type(enum AddressWhitelist.Status)"
+                        }
+                      },
+                      "id": 22304,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "memberName": "In",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 22271,
+                      "src": "880:9:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_Status_$22273",
+                        "typeString": "enum AddressWhitelist.Status"
+                      }
+                    },
+                    "src": "855:34:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 22308,
+                  "nodeType": "IfStatement",
+                  "src": "851:71:14",
+                  "trueBody": {
+                    "id": 22307,
+                    "nodeType": "Block",
+                    "src": "891:31:14",
+                    "statements": [
+                      {
+                        "functionReturnParameters": 22299,
+                        "id": 22306,
+                        "nodeType": "Return",
+                        "src": "905:7:14"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "condition": {
+                    "commonType": {
+                      "typeIdentifier": "t_enum$_Status_$22273",
+                      "typeString": "enum AddressWhitelist.Status"
+                    },
+                    "id": 22314,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "baseExpression": {
+                        "id": 22309,
+                        "name": "whitelist",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 22278,
+                        "src": "1005:9:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_address_$_t_enum$_Status_$22273_$",
+                          "typeString": "mapping(address => enum AddressWhitelist.Status)"
+                        }
+                      },
+                      "id": 22311,
+                      "indexExpression": {
+                        "id": 22310,
+                        "name": "newElement",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 22292,
+                        "src": "1015:10:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "IndexAccess",
+                      "src": "1005:21:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_Status_$22273",
+                        "typeString": "enum AddressWhitelist.Status"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "==",
+                    "rightExpression": {
+                      "expression": {
+                        "id": 22312,
+                        "name": "Status",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 22273,
+                        "src": "1030:6:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_enum$_Status_$22273_$",
+                          "typeString": "type(enum AddressWhitelist.Status)"
+                        }
+                      },
+                      "id": 22313,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "memberName": "None",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 22270,
+                      "src": "1030:11:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_Status_$22273",
+                        "typeString": "enum AddressWhitelist.Status"
+                      }
+                    },
+                    "src": "1005:36:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 22322,
+                  "nodeType": "IfStatement",
+                  "src": "1001:100:14",
+                  "trueBody": {
+                    "id": 22321,
+                    "nodeType": "Block",
+                    "src": "1043:58:14",
+                    "statements": [
+                      {
+                        "expression": {
+                          "arguments": [
+                            {
+                              "id": 22318,
+                              "name": "newElement",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 22292,
+                              "src": "1079:10:14",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            ],
+                            "expression": {
+                              "id": 22315,
+                              "name": "whitelistIndices",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 22281,
+                              "src": "1057:16:14",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_array$_t_address_$dyn_storage",
+                                "typeString": "address[] storage ref"
+                              }
+                            },
+                            "id": 22317,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "push",
+                            "nodeType": "MemberAccess",
+                            "src": "1057:21:14",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_arraypush_nonpayable$_t_array$_t_address_$dyn_storage_ptr_$_t_address_$returns$__$bound_to$_t_array$_t_address_$dyn_storage_ptr_$",
+                              "typeString": "function (address[] storage pointer,address)"
+                            }
+                          },
+                          "id": 22319,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1057:33:14",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_tuple$__$",
+                            "typeString": "tuple()"
+                          }
+                        },
+                        "id": 22320,
+                        "nodeType": "ExpressionStatement",
+                        "src": "1057:33:14"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "expression": {
+                    "id": 22328,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "baseExpression": {
+                        "id": 22323,
+                        "name": "whitelist",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 22278,
+                        "src": "1111:9:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_address_$_t_enum$_Status_$22273_$",
+                          "typeString": "mapping(address => enum AddressWhitelist.Status)"
+                        }
+                      },
+                      "id": 22325,
+                      "indexExpression": {
+                        "id": 22324,
+                        "name": "newElement",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 22292,
+                        "src": "1121:10:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "1111:21:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_Status_$22273",
+                        "typeString": "enum AddressWhitelist.Status"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "expression": {
+                        "id": 22326,
+                        "name": "Status",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 22273,
+                        "src": "1135:6:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_enum$_Status_$22273_$",
+                          "typeString": "type(enum AddressWhitelist.Status)"
+                        }
+                      },
+                      "id": 22327,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "memberName": "In",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 22271,
+                      "src": "1135:9:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_Status_$22273",
+                        "typeString": "enum AddressWhitelist.Status"
+                      }
+                    },
+                    "src": "1111:33:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_Status_$22273",
+                      "typeString": "enum AddressWhitelist.Status"
+                    }
+                  },
+                  "id": 22329,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1111:33:14"
+                },
+                {
+                  "eventCall": {
+                    "arguments": [
+                      {
+                        "id": 22331,
+                        "name": "newElement",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 22292,
+                        "src": "1177:10:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 22330,
+                      "name": "AddedToWhitelist",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 22285,
+                      "src": "1160:16:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
+                        "typeString": "function (address)"
+                      }
+                    },
+                    "id": 22332,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1160:28:14",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 22333,
+                  "nodeType": "EmitStatement",
+                  "src": "1155:33:14"
+                }
+              ]
+            },
+            "baseFunctions": [
+              25639
+            ],
+            "documentation": {
+              "id": 22290,
+              "nodeType": "StructuredDocumentation",
+              "src": "591:109:14",
+              "text": " @notice Adds an address to the whitelist.\n @param newElement the new address to add."
+            },
+            "functionSelector": "e43252d7",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "arguments": [],
+                "id": 22296,
+                "kind": "modifierInvocation",
+                "modifierName": {
+                  "id": 22295,
+                  "name": "nonReentrant",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 24766,
+                  "src": "767:12:14"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "767:14:14"
+              },
+              {
+                "id": 22298,
+                "kind": "modifierInvocation",
+                "modifierName": {
+                  "id": 22297,
+                  "name": "onlyOwner",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 20624,
+                  "src": "782:9:14"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "782:9:14"
+              }
+            ],
+            "name": "addToWhitelist",
+            "nameLocation": "714:14:14",
+            "overrides": {
+              "id": 22294,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "758:8:14"
+            },
+            "parameters": {
+              "id": 22293,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 22292,
+                  "mutability": "mutable",
+                  "name": "newElement",
+                  "nameLocation": "737:10:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 22335,
+                  "src": "729:18:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 22291,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "729:7:14",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "728:20:14"
+            },
+            "returnParameters": {
+              "id": 22299,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "792:0:14"
+            },
+            "scope": 22475,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "id": 22366,
+            "nodeType": "FunctionDefinition",
+            "src": "1333:279:14",
+            "body": {
+              "id": 22365,
+              "nodeType": "Block",
+              "src": "1430:182:14",
+              "statements": [
+                {
+                  "condition": {
+                    "commonType": {
+                      "typeIdentifier": "t_enum$_Status_$22273",
+                      "typeString": "enum AddressWhitelist.Status"
+                    },
+                    "id": 22351,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "baseExpression": {
+                        "id": 22346,
+                        "name": "whitelist",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 22278,
+                        "src": "1444:9:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_address_$_t_enum$_Status_$22273_$",
+                          "typeString": "mapping(address => enum AddressWhitelist.Status)"
+                        }
+                      },
+                      "id": 22348,
+                      "indexExpression": {
+                        "id": 22347,
+                        "name": "elementToRemove",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 22338,
+                        "src": "1454:15:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "IndexAccess",
+                      "src": "1444:26:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_Status_$22273",
+                        "typeString": "enum AddressWhitelist.Status"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "!=",
+                    "rightExpression": {
+                      "expression": {
+                        "id": 22349,
+                        "name": "Status",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 22273,
+                        "src": "1474:6:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_enum$_Status_$22273_$",
+                          "typeString": "type(enum AddressWhitelist.Status)"
+                        }
+                      },
+                      "id": 22350,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "memberName": "Out",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 22272,
+                      "src": "1474:10:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_Status_$22273",
+                        "typeString": "enum AddressWhitelist.Status"
+                      }
+                    },
+                    "src": "1444:40:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 22364,
+                  "nodeType": "IfStatement",
+                  "src": "1440:166:14",
+                  "trueBody": {
+                    "id": 22363,
+                    "nodeType": "Block",
+                    "src": "1486:120:14",
+                    "statements": [
+                      {
+                        "expression": {
+                          "id": 22357,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftHandSide": {
+                            "baseExpression": {
+                              "id": 22352,
+                              "name": "whitelist",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 22278,
+                              "src": "1500:9:14",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_mapping$_t_address_$_t_enum$_Status_$22273_$",
+                                "typeString": "mapping(address => enum AddressWhitelist.Status)"
+                              }
+                            },
+                            "id": 22354,
+                            "indexExpression": {
+                              "id": 22353,
+                              "name": "elementToRemove",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 22338,
+                              "src": "1510:15:14",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            },
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": true,
+                            "nodeType": "IndexAccess",
+                            "src": "1500:26:14",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_enum$_Status_$22273",
+                              "typeString": "enum AddressWhitelist.Status"
+                            }
+                          },
+                          "nodeType": "Assignment",
+                          "operator": "=",
+                          "rightHandSide": {
+                            "expression": {
+                              "id": 22355,
+                              "name": "Status",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 22273,
+                              "src": "1529:6:14",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_type$_t_enum$_Status_$22273_$",
+                                "typeString": "type(enum AddressWhitelist.Status)"
+                              }
+                            },
+                            "id": 22356,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "memberName": "Out",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 22272,
+                            "src": "1529:10:14",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_enum$_Status_$22273",
+                              "typeString": "enum AddressWhitelist.Status"
+                            }
+                          },
+                          "src": "1500:39:14",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_enum$_Status_$22273",
+                            "typeString": "enum AddressWhitelist.Status"
+                          }
+                        },
+                        "id": 22358,
+                        "nodeType": "ExpressionStatement",
+                        "src": "1500:39:14"
+                      },
+                      {
+                        "eventCall": {
+                          "arguments": [
+                            {
+                              "id": 22360,
+                              "name": "elementToRemove",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 22338,
+                              "src": "1579:15:14",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            ],
+                            "id": 22359,
+                            "name": "RemovedFromWhitelist",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 22289,
+                            "src": "1558:20:14",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
+                              "typeString": "function (address)"
+                            }
+                          },
+                          "id": 22361,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1558:37:14",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_tuple$__$",
+                            "typeString": "tuple()"
+                          }
+                        },
+                        "id": 22362,
+                        "nodeType": "EmitStatement",
+                        "src": "1553:42:14"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "baseFunctions": [
+              25644
+            ],
+            "documentation": {
+              "id": 22336,
+              "nodeType": "StructuredDocumentation",
+              "src": "1201:127:14",
+              "text": " @notice Removes an address from the whitelist.\n @param elementToRemove the existing address to remove."
+            },
+            "functionSelector": "8ab1d681",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "arguments": [],
+                "id": 22342,
+                "kind": "modifierInvocation",
+                "modifierName": {
+                  "id": 22341,
+                  "name": "nonReentrant",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 24766,
+                  "src": "1405:12:14"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1405:14:14"
+              },
+              {
+                "id": 22344,
+                "kind": "modifierInvocation",
+                "modifierName": {
+                  "id": 22343,
+                  "name": "onlyOwner",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 20624,
+                  "src": "1420:9:14"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1420:9:14"
+              }
+            ],
+            "name": "removeFromWhitelist",
+            "nameLocation": "1342:19:14",
+            "overrides": {
+              "id": 22340,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "1396:8:14"
+            },
+            "parameters": {
+              "id": 22339,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 22338,
+                  "mutability": "mutable",
+                  "name": "elementToRemove",
+                  "nameLocation": "1370:15:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 22366,
+                  "src": "1362:23:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 22337,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1362:7:14",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1361:25:14"
+            },
+            "returnParameters": {
+              "id": 22345,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1430:0:14"
+            },
+            "scope": 22475,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "id": 22385,
+            "nodeType": "FunctionDefinition",
+            "src": "1818:166:14",
+            "body": {
+              "id": 22384,
+              "nodeType": "Block",
+              "src": "1922:62:14",
+              "statements": [
+                {
+                  "expression": {
+                    "commonType": {
+                      "typeIdentifier": "t_enum$_Status_$22273",
+                      "typeString": "enum AddressWhitelist.Status"
+                    },
+                    "id": 22382,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "baseExpression": {
+                        "id": 22377,
+                        "name": "whitelist",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 22278,
+                        "src": "1939:9:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_address_$_t_enum$_Status_$22273_$",
+                          "typeString": "mapping(address => enum AddressWhitelist.Status)"
+                        }
+                      },
+                      "id": 22379,
+                      "indexExpression": {
+                        "id": 22378,
+                        "name": "elementToCheck",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 22369,
+                        "src": "1949:14:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "IndexAccess",
+                      "src": "1939:25:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_Status_$22273",
+                        "typeString": "enum AddressWhitelist.Status"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "==",
+                    "rightExpression": {
+                      "expression": {
+                        "id": 22380,
+                        "name": "Status",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 22273,
+                        "src": "1968:6:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_enum$_Status_$22273_$",
+                          "typeString": "type(enum AddressWhitelist.Status)"
+                        }
+                      },
+                      "id": 22381,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "memberName": "In",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 22271,
+                      "src": "1968:9:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_Status_$22273",
+                        "typeString": "enum AddressWhitelist.Status"
+                      }
+                    },
+                    "src": "1939:38:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "functionReturnParameters": 22376,
+                  "id": 22383,
+                  "nodeType": "Return",
+                  "src": "1932:45:14"
+                }
+              ]
+            },
+            "baseFunctions": [
+              25651
+            ],
+            "documentation": {
+              "id": 22367,
+              "nodeType": "StructuredDocumentation",
+              "src": "1618:195:14",
+              "text": " @notice Checks whether an address is on the whitelist.\n @param elementToCheck the address to check.\n @return True if `elementToCheck` is on the whitelist, or False."
+            },
+            "functionSelector": "3a3ab672",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "arguments": [],
+                "id": 22373,
+                "kind": "modifierInvocation",
+                "modifierName": {
+                  "id": 22372,
+                  "name": "nonReentrantView",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 24774,
+                  "src": "1888:16:14"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1888:18:14"
+              }
+            ],
+            "name": "isOnWhitelist",
+            "nameLocation": "1827:13:14",
+            "overrides": {
+              "id": 22371,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "1879:8:14"
+            },
+            "parameters": {
+              "id": 22370,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 22369,
+                  "mutability": "mutable",
+                  "name": "elementToCheck",
+                  "nameLocation": "1849:14:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 22385,
+                  "src": "1841:22:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 22368,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1841:7:14",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1840:24:14"
+            },
+            "returnParameters": {
+              "id": 22376,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 22375,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 22385,
+                  "src": "1916:4:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 22374,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1916:4:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1915:6:14"
+            },
+            "scope": 22475,
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "id": 22474,
+            "nodeType": "FunctionDefinition",
+            "src": "2537:754:14",
+            "body": {
+              "id": 22473,
+              "nodeType": "Block",
+              "src": "2646:645:14",
+              "statements": [
+                {
+                  "assignments": [
+                    22396
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 22396,
+                      "mutability": "mutable",
+                      "name": "activeCount",
+                      "nameLocation": "2709:11:14",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 22473,
+                      "src": "2701:19:14",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "typeName": {
+                        "id": 22395,
+                        "name": "uint256",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "2701:7:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 22398,
+                  "initialValue": {
+                    "hexValue": "30",
+                    "id": 22397,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "number",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "2723:1:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_rational_0_by_1",
+                      "typeString": "int_const 0"
+                    },
+                    "value": "0"
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "2701:23:14"
+                },
+                {
+                  "body": {
+                    "id": 22423,
+                    "nodeType": "Block",
+                    "src": "2788:119:14",
+                    "statements": [
+                      {
+                        "condition": {
+                          "commonType": {
+                            "typeIdentifier": "t_enum$_Status_$22273",
+                            "typeString": "enum AddressWhitelist.Status"
+                          },
+                          "id": 22417,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftExpression": {
+                            "baseExpression": {
+                              "id": 22410,
+                              "name": "whitelist",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 22278,
+                              "src": "2806:9:14",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_mapping$_t_address_$_t_enum$_Status_$22273_$",
+                                "typeString": "mapping(address => enum AddressWhitelist.Status)"
+                              }
+                            },
+                            "id": 22414,
+                            "indexExpression": {
+                              "baseExpression": {
+                                "id": 22411,
+                                "name": "whitelistIndices",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 22281,
+                                "src": "2816:16:14",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_array$_t_address_$dyn_storage",
+                                  "typeString": "address[] storage ref"
+                                }
+                              },
+                              "id": 22413,
+                              "indexExpression": {
+                                "id": 22412,
+                                "name": "i",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 22400,
+                                "src": "2833:1:14",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "nodeType": "IndexAccess",
+                              "src": "2816:19:14",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            },
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "nodeType": "IndexAccess",
+                            "src": "2806:30:14",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_enum$_Status_$22273",
+                              "typeString": "enum AddressWhitelist.Status"
+                            }
+                          },
+                          "nodeType": "BinaryOperation",
+                          "operator": "==",
+                          "rightExpression": {
+                            "expression": {
+                              "id": 22415,
+                              "name": "Status",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 22273,
+                              "src": "2840:6:14",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_type$_t_enum$_Status_$22273_$",
+                                "typeString": "type(enum AddressWhitelist.Status)"
+                              }
+                            },
+                            "id": 22416,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "memberName": "In",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 22271,
+                            "src": "2840:9:14",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_enum$_Status_$22273",
+                              "typeString": "enum AddressWhitelist.Status"
+                            }
+                          },
+                          "src": "2806:43:14",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "id": 22422,
+                        "nodeType": "IfStatement",
+                        "src": "2802:95:14",
+                        "trueBody": {
+                          "id": 22421,
+                          "nodeType": "Block",
+                          "src": "2851:46:14",
+                          "statements": [
+                            {
+                              "expression": {
+                                "id": 22419,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "nodeType": "UnaryOperation",
+                                "operator": "++",
+                                "prefix": false,
+                                "src": "2869:13:14",
+                                "subExpression": {
+                                  "id": 22418,
+                                  "name": "activeCount",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 22396,
+                                  "src": "2869:11:14",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  }
+                                },
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "id": 22420,
+                              "nodeType": "ExpressionStatement",
+                              "src": "2869:13:14"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  "condition": {
+                    "commonType": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    },
+                    "id": 22406,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "id": 22403,
+                      "name": "i",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 22400,
+                      "src": "2754:1:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "<",
+                    "rightExpression": {
+                      "expression": {
+                        "id": 22404,
+                        "name": "whitelistIndices",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 22281,
+                        "src": "2758:16:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_array$_t_address_$dyn_storage",
+                          "typeString": "address[] storage ref"
+                        }
+                      },
+                      "id": 22405,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "length",
+                      "nodeType": "MemberAccess",
+                      "src": "2758:23:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "2754:27:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 22424,
+                  "initializationExpression": {
+                    "assignments": [
+                      22400
+                    ],
+                    "declarations": [
+                      {
+                        "constant": false,
+                        "id": 22400,
+                        "mutability": "mutable",
+                        "name": "i",
+                        "nameLocation": "2747:1:14",
+                        "nodeType": "VariableDeclaration",
+                        "scope": 22424,
+                        "src": "2739:9:14",
+                        "stateVariable": false,
+                        "storageLocation": "default",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        "typeName": {
+                          "id": 22399,
+                          "name": "uint256",
+                          "nodeType": "ElementaryTypeName",
+                          "src": "2739:7:14",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "visibility": "internal"
+                      }
+                    ],
+                    "id": 22402,
+                    "initialValue": {
+                      "hexValue": "30",
+                      "id": 22401,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "2751:1:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "nodeType": "VariableDeclarationStatement",
+                    "src": "2739:13:14"
+                  },
+                  "loopExpression": {
+                    "expression": {
+                      "id": 22408,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "UnaryOperation",
+                      "operator": "++",
+                      "prefix": false,
+                      "src": "2783:3:14",
+                      "subExpression": {
+                        "id": 22407,
+                        "name": "i",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 22400,
+                        "src": "2783:1:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "id": 22409,
+                    "nodeType": "ExpressionStatement",
+                    "src": "2783:3:14"
+                  },
+                  "nodeType": "ForStatement",
+                  "src": "2734:173:14"
+                },
+                {
+                  "expression": {
+                    "id": 22431,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 22425,
+                      "name": "activeWhitelist",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 22393,
+                      "src": "2947:15:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
+                        "typeString": "address[] memory"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "arguments": [
+                        {
+                          "id": 22429,
+                          "name": "activeCount",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 22396,
+                          "src": "2979:11:14",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        ],
+                        "id": 22428,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "lValueRequested": false,
+                        "nodeType": "NewExpression",
+                        "src": "2965:13:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_function_objectcreation_pure$_t_uint256_$returns$_t_array$_t_address_$dyn_memory_ptr_$",
+                          "typeString": "function (uint256) pure returns (address[] memory)"
+                        },
+                        "typeName": {
+                          "baseType": {
+                            "id": 22426,
+                            "name": "address",
+                            "nodeType": "ElementaryTypeName",
+                            "src": "2969:7:14",
+                            "stateMutability": "nonpayable",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          "id": 22427,
+                          "nodeType": "ArrayTypeName",
+                          "src": "2969:9:14",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                            "typeString": "address[]"
+                          }
+                        }
+                      },
+                      "id": 22430,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "functionCall",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "2965:26:14",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
+                        "typeString": "address[] memory"
+                      }
+                    },
+                    "src": "2947:44:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
+                      "typeString": "address[] memory"
+                    }
+                  },
+                  "id": 22432,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2947:44:14"
+                },
+                {
+                  "expression": {
+                    "id": 22435,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 22433,
+                      "name": "activeCount",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 22396,
+                      "src": "3001:11:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "hexValue": "30",
+                      "id": 22434,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "3015:1:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "src": "3001:15:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 22436,
+                  "nodeType": "ExpressionStatement",
+                  "src": "3001:15:14"
+                },
+                {
+                  "body": {
+                    "id": 22471,
+                    "nodeType": "Block",
+                    "src": "3080:205:14",
+                    "statements": [
+                      {
+                        "assignments": [
+                          22449
+                        ],
+                        "declarations": [
+                          {
+                            "constant": false,
+                            "id": 22449,
+                            "mutability": "mutable",
+                            "name": "addr",
+                            "nameLocation": "3102:4:14",
+                            "nodeType": "VariableDeclaration",
+                            "scope": 22471,
+                            "src": "3094:12:14",
+                            "stateVariable": false,
+                            "storageLocation": "default",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            },
+                            "typeName": {
+                              "id": 22448,
+                              "name": "address",
+                              "nodeType": "ElementaryTypeName",
+                              "src": "3094:7:14",
+                              "stateMutability": "nonpayable",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            },
+                            "visibility": "internal"
+                          }
+                        ],
+                        "id": 22453,
+                        "initialValue": {
+                          "baseExpression": {
+                            "id": 22450,
+                            "name": "whitelistIndices",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 22281,
+                            "src": "3109:16:14",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_array$_t_address_$dyn_storage",
+                              "typeString": "address[] storage ref"
+                            }
+                          },
+                          "id": 22452,
+                          "indexExpression": {
+                            "id": 22451,
+                            "name": "i",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 22438,
+                            "src": "3126:1:14",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "3109:19:14",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "nodeType": "VariableDeclarationStatement",
+                        "src": "3094:34:14"
+                      },
+                      {
+                        "condition": {
+                          "commonType": {
+                            "typeIdentifier": "t_enum$_Status_$22273",
+                            "typeString": "enum AddressWhitelist.Status"
+                          },
+                          "id": 22459,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftExpression": {
+                            "baseExpression": {
+                              "id": 22454,
+                              "name": "whitelist",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 22278,
+                              "src": "3146:9:14",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_mapping$_t_address_$_t_enum$_Status_$22273_$",
+                                "typeString": "mapping(address => enum AddressWhitelist.Status)"
+                              }
+                            },
+                            "id": 22456,
+                            "indexExpression": {
+                              "id": 22455,
+                              "name": "addr",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 22449,
+                              "src": "3156:4:14",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            },
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "nodeType": "IndexAccess",
+                            "src": "3146:15:14",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_enum$_Status_$22273",
+                              "typeString": "enum AddressWhitelist.Status"
+                            }
+                          },
+                          "nodeType": "BinaryOperation",
+                          "operator": "==",
+                          "rightExpression": {
+                            "expression": {
+                              "id": 22457,
+                              "name": "Status",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 22273,
+                              "src": "3165:6:14",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_type$_t_enum$_Status_$22273_$",
+                                "typeString": "type(enum AddressWhitelist.Status)"
+                              }
+                            },
+                            "id": 22458,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "memberName": "In",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 22271,
+                            "src": "3165:9:14",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_enum$_Status_$22273",
+                              "typeString": "enum AddressWhitelist.Status"
+                            }
+                          },
+                          "src": "3146:28:14",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "id": 22470,
+                        "nodeType": "IfStatement",
+                        "src": "3142:133:14",
+                        "trueBody": {
+                          "id": 22469,
+                          "nodeType": "Block",
+                          "src": "3176:99:14",
+                          "statements": [
+                            {
+                              "expression": {
+                                "id": 22464,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "leftHandSide": {
+                                  "baseExpression": {
+                                    "id": 22460,
+                                    "name": "activeWhitelist",
+                                    "nodeType": "Identifier",
+                                    "overloadedDeclarations": [],
+                                    "referencedDeclaration": 22393,
+                                    "src": "3194:15:14",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
+                                      "typeString": "address[] memory"
+                                    }
+                                  },
+                                  "id": 22462,
+                                  "indexExpression": {
+                                    "id": 22461,
+                                    "name": "activeCount",
+                                    "nodeType": "Identifier",
+                                    "overloadedDeclarations": [],
+                                    "referencedDeclaration": 22396,
+                                    "src": "3210:11:14",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_uint256",
+                                      "typeString": "uint256"
+                                    }
+                                  },
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": true,
+                                  "nodeType": "IndexAccess",
+                                  "src": "3194:28:14",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_address",
+                                    "typeString": "address"
+                                  }
+                                },
+                                "nodeType": "Assignment",
+                                "operator": "=",
+                                "rightHandSide": {
+                                  "id": 22463,
+                                  "name": "addr",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 22449,
+                                  "src": "3225:4:14",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_address",
+                                    "typeString": "address"
+                                  }
+                                },
+                                "src": "3194:35:14",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                }
+                              },
+                              "id": 22465,
+                              "nodeType": "ExpressionStatement",
+                              "src": "3194:35:14"
+                            },
+                            {
+                              "expression": {
+                                "id": 22467,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "nodeType": "UnaryOperation",
+                                "operator": "++",
+                                "prefix": false,
+                                "src": "3247:13:14",
+                                "subExpression": {
+                                  "id": 22466,
+                                  "name": "activeCount",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 22396,
+                                  "src": "3247:11:14",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  }
+                                },
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "id": 22468,
+                              "nodeType": "ExpressionStatement",
+                              "src": "3247:13:14"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  "condition": {
+                    "commonType": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    },
+                    "id": 22444,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "id": 22441,
+                      "name": "i",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 22438,
+                      "src": "3046:1:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "<",
+                    "rightExpression": {
+                      "expression": {
+                        "id": 22442,
+                        "name": "whitelistIndices",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 22281,
+                        "src": "3050:16:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_array$_t_address_$dyn_storage",
+                          "typeString": "address[] storage ref"
+                        }
+                      },
+                      "id": 22443,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "length",
+                      "nodeType": "MemberAccess",
+                      "src": "3050:23:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "3046:27:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 22472,
+                  "initializationExpression": {
+                    "assignments": [
+                      22438
+                    ],
+                    "declarations": [
+                      {
+                        "constant": false,
+                        "id": 22438,
+                        "mutability": "mutable",
+                        "name": "i",
+                        "nameLocation": "3039:1:14",
+                        "nodeType": "VariableDeclaration",
+                        "scope": 22472,
+                        "src": "3031:9:14",
+                        "stateVariable": false,
+                        "storageLocation": "default",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        "typeName": {
+                          "id": 22437,
+                          "name": "uint256",
+                          "nodeType": "ElementaryTypeName",
+                          "src": "3031:7:14",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "visibility": "internal"
+                      }
+                    ],
+                    "id": 22440,
+                    "initialValue": {
+                      "hexValue": "30",
+                      "id": 22439,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "3043:1:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "nodeType": "VariableDeclarationStatement",
+                    "src": "3031:13:14"
+                  },
+                  "loopExpression": {
+                    "expression": {
+                      "id": 22446,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "UnaryOperation",
+                      "operator": "++",
+                      "prefix": false,
+                      "src": "3075:3:14",
+                      "subExpression": {
+                        "id": 22445,
+                        "name": "i",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 22438,
+                        "src": "3075:1:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "id": 22447,
+                    "nodeType": "ExpressionStatement",
+                    "src": "3075:3:14"
+                  },
+                  "nodeType": "ForStatement",
+                  "src": "3026:259:14"
+                }
+              ]
+            },
+            "baseFunctions": [
+              25657
+            ],
+            "documentation": {
+              "id": 22386,
+              "nodeType": "StructuredDocumentation",
+              "src": "1990:542:14",
+              "text": " @notice Gets all addresses that are currently included in the whitelist.\n @dev Note: This method skips over, but still iterates through addresses. It is possible for this call to run out\n of gas if a large number of addresses have been removed. To reduce the likelihood of this unlikely scenario, we\n can modify the implementation so that when addresses are removed, the last addresses in the array is moved to\n the empty index.\n @return activeWhitelist the list of addresses on the whitelist."
+            },
+            "functionSelector": "d01f63f5",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "arguments": [],
+                "id": 22390,
+                "kind": "modifierInvocation",
+                "modifierName": {
+                  "id": 22389,
+                  "name": "nonReentrantView",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 24774,
+                  "src": "2584:16:14"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "2584:18:14"
+              }
+            ],
+            "name": "getWhitelist",
+            "nameLocation": "2546:12:14",
+            "overrides": {
+              "id": 22388,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "2575:8:14"
+            },
+            "parameters": {
+              "id": 22387,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2558:2:14"
+            },
+            "returnParameters": {
+              "id": 22394,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 22393,
+                  "mutability": "mutable",
+                  "name": "activeWhitelist",
+                  "nameLocation": "2629:15:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 22474,
+                  "src": "2612:32:14",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
+                    "typeString": "address[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 22391,
+                      "name": "address",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "2612:7:14",
+                      "stateMutability": "nonpayable",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "id": 22392,
+                    "nodeType": "ArrayTypeName",
+                    "src": "2612:9:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                      "typeString": "address[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2611:34:14"
+            },
+            "scope": 22475,
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 22264,
+              "name": "AddressWhitelistInterface",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 25658,
+              "src": "293:25:14"
+            },
+            "id": 22265,
+            "nodeType": "InheritanceSpecifier",
+            "src": "293:25:14"
+          },
+          {
+            "baseName": {
+              "id": 22266,
+              "name": "Ownable",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 20682,
+              "src": "320:7:14"
+            },
+            "id": 22267,
+            "nodeType": "InheritanceSpecifier",
+            "src": "320:7:14"
+          },
+          {
+            "baseName": {
+              "id": 22268,
+              "name": "Lockable",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 24800,
+              "src": "329:8:14"
+            },
+            "id": 22269,
+            "nodeType": "InheritanceSpecifier",
+            "src": "329:8:14"
+          }
+        ],
+        "canonicalName": "AddressWhitelist",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 22263,
+          "nodeType": "StructuredDocumentation",
+          "src": "200:63:14",
+          "text": " @title A contract to track a whitelist of addresses."
+        },
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          22475,
+          24800,
+          20682,
+          21881,
+          25658
+        ],
+        "name": "AddressWhitelist",
+        "nameLocation": "273:16:14",
+        "scope": 22476,
+        "usedErrors": []
+      }
+    ],
+    "license": "AGPL-3.0-only"
+  },
+  "id": 14
+}

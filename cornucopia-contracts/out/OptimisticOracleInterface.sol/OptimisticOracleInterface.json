@@ -1,0 +1,4252 @@
+{
+  "abi": [
+    {
+      "inputs": [],
+      "name": "ancillaryBytesLimit",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "requester",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "identifier",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "ancillaryData",
+          "type": "bytes"
+        }
+      ],
+      "name": "disputePrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "totalBond",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "disputer",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "requester",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "identifier",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "ancillaryData",
+          "type": "bytes"
+        }
+      ],
+      "name": "disputePriceFor",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "totalBond",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "requester",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "identifier",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "ancillaryData",
+          "type": "bytes"
+        }
+      ],
+      "name": "getRequest",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "proposer",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "disputer",
+              "type": "address"
+            },
+            {
+              "internalType": "contract IERC20",
+              "name": "currency",
+              "type": "address"
+            },
+            {
+              "internalType": "bool",
+              "name": "settled",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "refundOnDispute",
+              "type": "bool"
+            },
+            {
+              "internalType": "int256",
+              "name": "proposedPrice",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "resolvedPrice",
+              "type": "int256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "expirationTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "reward",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "finalFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "bond",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "customLiveness",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct OptimisticOracleInterface.Request",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "requester",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "identifier",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "ancillaryData",
+          "type": "bytes"
+        }
+      ],
+      "name": "getState",
+      "outputs": [
+        {
+          "internalType": "enum OptimisticOracleInterface.State",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "requester",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "identifier",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "ancillaryData",
+          "type": "bytes"
+        }
+      ],
+      "name": "hasPrice",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "requester",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "identifier",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "ancillaryData",
+          "type": "bytes"
+        },
+        {
+          "internalType": "int256",
+          "name": "proposedPrice",
+          "type": "int256"
+        }
+      ],
+      "name": "proposePrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "totalBond",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "proposer",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "requester",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "identifier",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "ancillaryData",
+          "type": "bytes"
+        },
+        {
+          "internalType": "int256",
+          "name": "proposedPrice",
+          "type": "int256"
+        }
+      ],
+      "name": "proposePriceFor",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "totalBond",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "identifier",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "ancillaryData",
+          "type": "bytes"
+        },
+        {
+          "internalType": "contract IERC20",
+          "name": "currency",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "reward",
+          "type": "uint256"
+        }
+      ],
+      "name": "requestPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "totalBond",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "identifier",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "ancillaryData",
+          "type": "bytes"
+        },
+        {
+          "internalType": "uint256",
+          "name": "bond",
+          "type": "uint256"
+        }
+      ],
+      "name": "setBond",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "totalBond",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "identifier",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "ancillaryData",
+          "type": "bytes"
+        },
+        {
+          "internalType": "uint256",
+          "name": "customLiveness",
+          "type": "uint256"
+        }
+      ],
+      "name": "setCustomLiveness",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "identifier",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "ancillaryData",
+          "type": "bytes"
+        }
+      ],
+      "name": "setRefundOnDispute",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "requester",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "identifier",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "ancillaryData",
+          "type": "bytes"
+        }
+      ],
+      "name": "settle",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "payout",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "identifier",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "ancillaryData",
+          "type": "bytes"
+        }
+      ],
+      "name": "settleAndGetPrice",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "ancillaryData",
+          "type": "bytes"
+        },
+        {
+          "internalType": "address",
+          "name": "requester",
+          "type": "address"
+        }
+      ],
+      "name": "stampAncillaryData",
+      "outputs": [
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "ancillaryBytesLimit()": "c371dda7",
+    "disputePrice(address,bytes32,uint256,bytes)": "fba7f1e3",
+    "disputePriceFor(address,address,bytes32,uint256,bytes)": "76c7823f",
+    "getRequest(address,bytes32,uint256,bytes)": "a9904f9b",
+    "getState(address,bytes32,uint256,bytes)": "ba4b930c",
+    "hasPrice(address,bytes32,uint256,bytes)": "bc58ccaa",
+    "proposePrice(address,bytes32,uint256,bytes,int256)": "b8b4f908",
+    "proposePriceFor(address,address,bytes32,uint256,bytes,int256)": "7c82288f",
+    "requestPrice(bytes32,uint256,bytes,address,uint256)": "11df92f1",
+    "setBond(bytes32,uint256,bytes,uint256)": "ad5a755a",
+    "setCustomLiveness(bytes32,uint256,bytes,uint256)": "473c45fe",
+    "setRefundOnDispute(bytes32,uint256,bytes)": "91f58dcb",
+    "settle(address,bytes32,uint256,bytes)": "5e9a79a9",
+    "settleAndGetPrice(bytes32,uint256,bytes)": "53b59239",
+    "stampAncillaryData(bytes,address)": "af5d2f39"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.13+commit.abaa5c0e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"ancillaryBytesLimit\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"}],\"name\":\"disputePrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalBond\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"disputer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"}],\"name\":\"disputePriceFor\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalBond\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"}],\"name\":\"getRequest\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"proposer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"disputer\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"settled\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"refundOnDispute\",\"type\":\"bool\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"},{\"internalType\":\"int256\",\"name\":\"resolvedPrice\",\"type\":\"int256\"},{\"internalType\":\"uint256\",\"name\":\"expirationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"finalFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"customLiveness\",\"type\":\"uint256\"}],\"internalType\":\"struct OptimisticOracleInterface.Request\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"}],\"name\":\"getState\",\"outputs\":[{\"internalType\":\"enum OptimisticOracleInterface.State\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"}],\"name\":\"hasPrice\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"}],\"name\":\"proposePrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalBond\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"proposer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"}],\"name\":\"proposePriceFor\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalBond\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"internalType\":\"contract IERC20\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"}],\"name\":\"requestPrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalBond\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"internalType\":\"uint256\",\"name\":\"bond\",\"type\":\"uint256\"}],\"name\":\"setBond\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalBond\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"internalType\":\"uint256\",\"name\":\"customLiveness\",\"type\":\"uint256\"}],\"name\":\"setCustomLiveness\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"}],\"name\":\"setRefundOnDispute\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"}],\"name\":\"settle\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"payout\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"}],\"name\":\"settleAndGetPrice\",\"outputs\":[{\"internalType\":\"int256\",\"name\":\"\",\"type\":\"int256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"}],\"name\":\"stampAncillaryData\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Interface used by financial contracts to interact with the Oracle. Voters will use a different interface.\",\"kind\":\"dev\",\"methods\":{\"disputePrice(address,bytes32,uint256,bytes)\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"identifier\":\"price identifier to identify the existing request.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"totalBond\":\"the amount that's pulled from the disputer's wallet as a bond. The bond will be returned to the disputer once settled if the dispute was valid (the proposal was incorrect).\"}},\"disputePriceFor(address,address,bytes32,uint256,bytes)\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"disputer\":\"address to set as the disputer.\",\"identifier\":\"price identifier to identify the existing request.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"totalBond\":\"the amount that's pulled from the caller's wallet as a bond. The bond will be returned to the disputer once settled if the dispute was value (the proposal was incorrect).\"}},\"getRequest(address,bytes32,uint256,bytes)\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"identifier\":\"price identifier to identify the existing request.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"_0\":\"the Request data structure.\"}},\"getState(address,bytes32,uint256,bytes)\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"identifier\":\"price identifier to identify the existing request.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"_0\":\"the State enum value.\"}},\"hasPrice(address,bytes32,uint256,bytes)\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"identifier\":\"price identifier to identify the existing request.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"_0\":\"true if price has resolved or settled, false otherwise.\"}},\"proposePrice(address,bytes32,uint256,bytes,int256)\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"identifier\":\"price identifier to identify the existing request.\",\"proposedPrice\":\"price being proposed.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"totalBond\":\"the amount that's pulled from the proposer's wallet as a bond. The bond will be returned to the proposer once settled if the proposal is correct.\"}},\"proposePriceFor(address,address,bytes32,uint256,bytes,int256)\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"identifier\":\"price identifier to identify the existing request.\",\"proposedPrice\":\"price being proposed.\",\"proposer\":\"address to set as the proposer.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"totalBond\":\"the amount that's pulled from the caller's wallet as a bond. The bond will be returned to the proposer once settled if the proposal is correct.\"}},\"requestPrice(bytes32,uint256,bytes,address,uint256)\":{\"params\":{\"ancillaryData\":\"ancillary data representing additional args being passed with the price request.\",\"currency\":\"ERC20 token used for payment of rewards and fees. Must be approved for use with the DVM.\",\"identifier\":\"price identifier being requested.\",\"reward\":\"reward offered to a successful proposer. Will be pulled from the caller. Note: this can be 0,               which could make sense if the contract requests and proposes the value in the same call or               provides its own reward system.\",\"timestamp\":\"timestamp of the price being requested.\"},\"returns\":{\"totalBond\":\"default bond (final fee) + final fee that the proposer and disputer will be required to pay. This can be changed with a subsequent call to setBond().\"}},\"setBond(bytes32,uint256,bytes,uint256)\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"bond\":\"custom bond amount to set.\",\"identifier\":\"price identifier to identify the existing request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"totalBond\":\"new bond + final fee that the proposer and disputer will be required to pay. This can be changed again with a subsequent call to setBond().\"}},\"setCustomLiveness(bytes32,uint256,bytes,uint256)\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"customLiveness\":\"new custom liveness.\",\"identifier\":\"price identifier to identify the existing request.\",\"timestamp\":\"timestamp to identify the existing request.\"}},\"setRefundOnDispute(bytes32,uint256,bytes)\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"identifier\":\"price identifier to identify the existing request.\",\"timestamp\":\"timestamp to identify the existing request.\"}},\"settle(address,bytes32,uint256,bytes)\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"identifier\":\"price identifier to identify the existing request.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"payout\":\"the amount that the \\\"winner\\\" (proposer or disputer) receives on settlement. This amount includes the returned bonds as well as additional rewards.\"}},\"settleAndGetPrice(bytes32,uint256,bytes)\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"identifier\":\"price identifier to identify the existing request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"_0\":\"resolved price.\"}}},\"title\":\"Financial contract facing Oracle interface.\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"disputePrice(address,bytes32,uint256,bytes)\":{\"notice\":\"Disputes a price value for an existing price request with an active proposal.\"},\"disputePriceFor(address,address,bytes32,uint256,bytes)\":{\"notice\":\"Disputes a price request with an active proposal on another address' behalf. Note: this address will receive any rewards that come from this dispute. However, any bonds are pulled from the caller.\"},\"getRequest(address,bytes32,uint256,bytes)\":{\"notice\":\"Gets the current data structure containing all information about a price request.\"},\"getState(address,bytes32,uint256,bytes)\":{\"notice\":\"Returns the state of a price request.\"},\"hasPrice(address,bytes32,uint256,bytes)\":{\"notice\":\"Checks if a given request has resolved or been settled (i.e the optimistic oracle has a price).\"},\"proposePrice(address,bytes32,uint256,bytes,int256)\":{\"notice\":\"Proposes a price value for an existing price request.\"},\"proposePriceFor(address,address,bytes32,uint256,bytes,int256)\":{\"notice\":\"Proposes a price value on another address' behalf. Note: this address will receive any rewards that come from this proposal. However, any bonds are pulled from the caller.\"},\"requestPrice(bytes32,uint256,bytes,address,uint256)\":{\"notice\":\"Requests a new price.\"},\"setBond(bytes32,uint256,bytes,uint256)\":{\"notice\":\"Set the proposal bond associated with a price request.\"},\"setCustomLiveness(bytes32,uint256,bytes,uint256)\":{\"notice\":\"Sets a custom liveness value for the request. Liveness is the amount of time a proposal must wait before being auto-resolved.\"},\"setRefundOnDispute(bytes32,uint256,bytes)\":{\"notice\":\"Sets the request to refund the reward if the proposal is disputed. This can help to \\\"hedge\\\" the caller in the event of a dispute-caused delay. Note: in the event of a dispute, the winner still receives the other's bond, so there is still profit to be made even if the reward is refunded.\"},\"settle(address,bytes32,uint256,bytes)\":{\"notice\":\"Attempts to settle an outstanding price request. Will revert if it isn't settleable.\"},\"settleAndGetPrice(bytes32,uint256,bytes)\":{\"notice\":\"Retrieves a price that was previously requested by a caller. Reverts if the request is not settled or settleable. Note: this method is not view so that this call may actually settle the price request if it hasn't been settled.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"lib/protocol/packages/core/contracts/oracle/interfaces/OptimisticOracleInterface.sol\":\"OptimisticOracleInterface\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/=lib/openzeppelin-contracts/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/\",\":protocol/=lib/protocol/\",\":uma-implementation/=lib/protocol/packages/core/contracts/oracle/implementation/\",\":uma-interface/=lib/protocol/packages/core/contracts/oracle/interfaces/\"]},\"sources\":{\"lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0x61437cb513a887a1bbad006e7b1c8b414478427d33de47c5600af3c748f108da\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://2c3d0973630ed74f2b5ce3944677a885dc70ec32fc83b35f55045a10224da32b\",\"dweb:/ipfs/QmbefZ5RoEZKNHXCALfh683PnaNYzKPcKMFjyY1DVAgq8A\"]},\"lib/protocol/packages/core/contracts/oracle/interfaces/OptimisticOracleInterface.sol\":{\"keccak256\":\"0x92e7280c1abd5f0c4fcd20247fc1b8428aaf4eeea59439c074d15fdaf9c64989\",\"license\":\"AGPL-3.0-only\",\"urls\":[\"bzz-raw://8d12bbcf0a91cef63c4767bffd047254599c5a1fce38e5e81d3005e102fdeef8\",\"dweb:/ipfs/QmTkd3AG9gdvBZq3HKCUW8eErvkguM2QqE3nUDGfvye3Yi\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.13+commit.abaa5c0e"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "ancillaryBytesLimit",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "requester",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "identifier",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "ancillaryData",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "disputePrice",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "totalBond",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "disputer",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "requester",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "identifier",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "ancillaryData",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "disputePriceFor",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "totalBond",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "requester",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "identifier",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "ancillaryData",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getRequest",
+          "outputs": [
+            {
+              "internalType": "struct OptimisticOracleInterface.Request",
+              "name": "",
+              "type": "tuple",
+              "components": [
+                {
+                  "internalType": "address",
+                  "name": "proposer",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "disputer",
+                  "type": "address"
+                },
+                {
+                  "internalType": "contract IERC20",
+                  "name": "currency",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "settled",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "refundOnDispute",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "int256",
+                  "name": "proposedPrice",
+                  "type": "int256"
+                },
+                {
+                  "internalType": "int256",
+                  "name": "resolvedPrice",
+                  "type": "int256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "expirationTime",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "reward",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "finalFee",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "bond",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "customLiveness",
+                  "type": "uint256"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "requester",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "identifier",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "ancillaryData",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getState",
+          "outputs": [
+            {
+              "internalType": "enum OptimisticOracleInterface.State",
+              "name": "",
+              "type": "uint8"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "requester",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "identifier",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "ancillaryData",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "hasPrice",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "requester",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "identifier",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "ancillaryData",
+              "type": "bytes"
+            },
+            {
+              "internalType": "int256",
+              "name": "proposedPrice",
+              "type": "int256"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "proposePrice",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "totalBond",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "proposer",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "requester",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "identifier",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "ancillaryData",
+              "type": "bytes"
+            },
+            {
+              "internalType": "int256",
+              "name": "proposedPrice",
+              "type": "int256"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "proposePriceFor",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "totalBond",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "identifier",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "ancillaryData",
+              "type": "bytes"
+            },
+            {
+              "internalType": "contract IERC20",
+              "name": "currency",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "reward",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "requestPrice",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "totalBond",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "identifier",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "ancillaryData",
+              "type": "bytes"
+            },
+            {
+              "internalType": "uint256",
+              "name": "bond",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "setBond",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "totalBond",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "identifier",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "ancillaryData",
+              "type": "bytes"
+            },
+            {
+              "internalType": "uint256",
+              "name": "customLiveness",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "setCustomLiveness"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "identifier",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "ancillaryData",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "setRefundOnDispute"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "requester",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "identifier",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "ancillaryData",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "settle",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "payout",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "identifier",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "ancillaryData",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "settleAndGetPrice",
+          "outputs": [
+            {
+              "internalType": "int256",
+              "name": "",
+              "type": "int256"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes",
+              "name": "ancillaryData",
+              "type": "bytes"
+            },
+            {
+              "internalType": "address",
+              "name": "requester",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "stampAncillaryData",
+          "outputs": [
+            {
+              "internalType": "bytes",
+              "name": "",
+              "type": "bytes"
+            }
+          ]
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {
+          "disputePrice(address,bytes32,uint256,bytes)": {
+            "params": {
+              "ancillaryData": "ancillary data of the price being requested.",
+              "identifier": "price identifier to identify the existing request.",
+              "requester": "sender of the initial price request.",
+              "timestamp": "timestamp to identify the existing request."
+            },
+            "returns": {
+              "totalBond": "the amount that's pulled from the disputer's wallet as a bond. The bond will be returned to the disputer once settled if the dispute was valid (the proposal was incorrect)."
+            }
+          },
+          "disputePriceFor(address,address,bytes32,uint256,bytes)": {
+            "params": {
+              "ancillaryData": "ancillary data of the price being requested.",
+              "disputer": "address to set as the disputer.",
+              "identifier": "price identifier to identify the existing request.",
+              "requester": "sender of the initial price request.",
+              "timestamp": "timestamp to identify the existing request."
+            },
+            "returns": {
+              "totalBond": "the amount that's pulled from the caller's wallet as a bond. The bond will be returned to the disputer once settled if the dispute was value (the proposal was incorrect)."
+            }
+          },
+          "getRequest(address,bytes32,uint256,bytes)": {
+            "params": {
+              "ancillaryData": "ancillary data of the price being requested.",
+              "identifier": "price identifier to identify the existing request.",
+              "requester": "sender of the initial price request.",
+              "timestamp": "timestamp to identify the existing request."
+            },
+            "returns": {
+              "_0": "the Request data structure."
+            }
+          },
+          "getState(address,bytes32,uint256,bytes)": {
+            "params": {
+              "ancillaryData": "ancillary data of the price being requested.",
+              "identifier": "price identifier to identify the existing request.",
+              "requester": "sender of the initial price request.",
+              "timestamp": "timestamp to identify the existing request."
+            },
+            "returns": {
+              "_0": "the State enum value."
+            }
+          },
+          "hasPrice(address,bytes32,uint256,bytes)": {
+            "params": {
+              "ancillaryData": "ancillary data of the price being requested.",
+              "identifier": "price identifier to identify the existing request.",
+              "requester": "sender of the initial price request.",
+              "timestamp": "timestamp to identify the existing request."
+            },
+            "returns": {
+              "_0": "true if price has resolved or settled, false otherwise."
+            }
+          },
+          "proposePrice(address,bytes32,uint256,bytes,int256)": {
+            "params": {
+              "ancillaryData": "ancillary data of the price being requested.",
+              "identifier": "price identifier to identify the existing request.",
+              "proposedPrice": "price being proposed.",
+              "requester": "sender of the initial price request.",
+              "timestamp": "timestamp to identify the existing request."
+            },
+            "returns": {
+              "totalBond": "the amount that's pulled from the proposer's wallet as a bond. The bond will be returned to the proposer once settled if the proposal is correct."
+            }
+          },
+          "proposePriceFor(address,address,bytes32,uint256,bytes,int256)": {
+            "params": {
+              "ancillaryData": "ancillary data of the price being requested.",
+              "identifier": "price identifier to identify the existing request.",
+              "proposedPrice": "price being proposed.",
+              "proposer": "address to set as the proposer.",
+              "requester": "sender of the initial price request.",
+              "timestamp": "timestamp to identify the existing request."
+            },
+            "returns": {
+              "totalBond": "the amount that's pulled from the caller's wallet as a bond. The bond will be returned to the proposer once settled if the proposal is correct."
+            }
+          },
+          "requestPrice(bytes32,uint256,bytes,address,uint256)": {
+            "params": {
+              "ancillaryData": "ancillary data representing additional args being passed with the price request.",
+              "currency": "ERC20 token used for payment of rewards and fees. Must be approved for use with the DVM.",
+              "identifier": "price identifier being requested.",
+              "reward": "reward offered to a successful proposer. Will be pulled from the caller. Note: this can be 0,               which could make sense if the contract requests and proposes the value in the same call or               provides its own reward system.",
+              "timestamp": "timestamp of the price being requested."
+            },
+            "returns": {
+              "totalBond": "default bond (final fee) + final fee that the proposer and disputer will be required to pay. This can be changed with a subsequent call to setBond()."
+            }
+          },
+          "setBond(bytes32,uint256,bytes,uint256)": {
+            "params": {
+              "ancillaryData": "ancillary data of the price being requested.",
+              "bond": "custom bond amount to set.",
+              "identifier": "price identifier to identify the existing request.",
+              "timestamp": "timestamp to identify the existing request."
+            },
+            "returns": {
+              "totalBond": "new bond + final fee that the proposer and disputer will be required to pay. This can be changed again with a subsequent call to setBond()."
+            }
+          },
+          "setCustomLiveness(bytes32,uint256,bytes,uint256)": {
+            "params": {
+              "ancillaryData": "ancillary data of the price being requested.",
+              "customLiveness": "new custom liveness.",
+              "identifier": "price identifier to identify the existing request.",
+              "timestamp": "timestamp to identify the existing request."
+            }
+          },
+          "setRefundOnDispute(bytes32,uint256,bytes)": {
+            "params": {
+              "ancillaryData": "ancillary data of the price being requested.",
+              "identifier": "price identifier to identify the existing request.",
+              "timestamp": "timestamp to identify the existing request."
+            }
+          },
+          "settle(address,bytes32,uint256,bytes)": {
+            "params": {
+              "ancillaryData": "ancillary data of the price being requested.",
+              "identifier": "price identifier to identify the existing request.",
+              "requester": "sender of the initial price request.",
+              "timestamp": "timestamp to identify the existing request."
+            },
+            "returns": {
+              "payout": "the amount that the \"winner\" (proposer or disputer) receives on settlement. This amount includes the returned bonds as well as additional rewards."
+            }
+          },
+          "settleAndGetPrice(bytes32,uint256,bytes)": {
+            "params": {
+              "ancillaryData": "ancillary data of the price being requested.",
+              "identifier": "price identifier to identify the existing request.",
+              "timestamp": "timestamp to identify the existing request."
+            },
+            "returns": {
+              "_0": "resolved price."
+            }
+          }
+        },
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {
+          "disputePrice(address,bytes32,uint256,bytes)": {
+            "notice": "Disputes a price value for an existing price request with an active proposal."
+          },
+          "disputePriceFor(address,address,bytes32,uint256,bytes)": {
+            "notice": "Disputes a price request with an active proposal on another address' behalf. Note: this address will receive any rewards that come from this dispute. However, any bonds are pulled from the caller."
+          },
+          "getRequest(address,bytes32,uint256,bytes)": {
+            "notice": "Gets the current data structure containing all information about a price request."
+          },
+          "getState(address,bytes32,uint256,bytes)": {
+            "notice": "Returns the state of a price request."
+          },
+          "hasPrice(address,bytes32,uint256,bytes)": {
+            "notice": "Checks if a given request has resolved or been settled (i.e the optimistic oracle has a price)."
+          },
+          "proposePrice(address,bytes32,uint256,bytes,int256)": {
+            "notice": "Proposes a price value for an existing price request."
+          },
+          "proposePriceFor(address,address,bytes32,uint256,bytes,int256)": {
+            "notice": "Proposes a price value on another address' behalf. Note: this address will receive any rewards that come from this proposal. However, any bonds are pulled from the caller."
+          },
+          "requestPrice(bytes32,uint256,bytes,address,uint256)": {
+            "notice": "Requests a new price."
+          },
+          "setBond(bytes32,uint256,bytes,uint256)": {
+            "notice": "Set the proposal bond associated with a price request."
+          },
+          "setCustomLiveness(bytes32,uint256,bytes,uint256)": {
+            "notice": "Sets a custom liveness value for the request. Liveness is the amount of time a proposal must wait before being auto-resolved."
+          },
+          "setRefundOnDispute(bytes32,uint256,bytes)": {
+            "notice": "Sets the request to refund the reward if the proposal is disputed. This can help to \"hedge\" the caller in the event of a dispute-caused delay. Note: in the event of a dispute, the winner still receives the other's bond, so there is still profit to be made even if the reward is refunded."
+          },
+          "settle(address,bytes32,uint256,bytes)": {
+            "notice": "Attempts to settle an outstanding price request. Will revert if it isn't settleable."
+          },
+          "settleAndGetPrice(bytes32,uint256,bytes)": {
+            "notice": "Retrieves a price that was previously requested by a caller. Reverts if the request is not settled or settleable. Note: this method is not view so that this call may actually settle the price request if it hasn't been settled."
+          }
+        },
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        ":@openzeppelin/=lib/openzeppelin-contracts/",
+        ":ds-test/=lib/forge-std/lib/ds-test/src/",
+        ":forge-std/=lib/forge-std/src/",
+        ":openzeppelin-contracts/=lib/openzeppelin-contracts/",
+        ":protocol/=lib/protocol/",
+        ":uma-implementation/=lib/protocol/packages/core/contracts/oracle/implementation/",
+        ":uma-interface/=lib/protocol/packages/core/contracts/oracle/interfaces/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "lib/protocol/packages/core/contracts/oracle/interfaces/OptimisticOracleInterface.sol": "OptimisticOracleInterface"
+      },
+      "libraries": {}
+    },
+    "sources": {
+      "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol": {
+        "keccak256": "0x61437cb513a887a1bbad006e7b1c8b414478427d33de47c5600af3c748f108da",
+        "urls": [
+          "bzz-raw://2c3d0973630ed74f2b5ce3944677a885dc70ec32fc83b35f55045a10224da32b",
+          "dweb:/ipfs/QmbefZ5RoEZKNHXCALfh683PnaNYzKPcKMFjyY1DVAgq8A"
+        ],
+        "license": "MIT"
+      },
+      "lib/protocol/packages/core/contracts/oracle/interfaces/OptimisticOracleInterface.sol": {
+        "keccak256": "0x92e7280c1abd5f0c4fcd20247fc1b8428aaf4eeea59439c074d15fdaf9c64989",
+        "urls": [
+          "bzz-raw://8d12bbcf0a91cef63c4767bffd047254599c5a1fce38e5e81d3005e102fdeef8",
+          "dweb:/ipfs/QmTkd3AG9gdvBZq3HKCUW8eErvkguM2QqE3nUDGfvye3Yi"
+        ],
+        "license": "AGPL-3.0-only"
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "lib/protocol/packages/core/contracts/oracle/interfaces/OptimisticOracleInterface.sol",
+    "id": 28257,
+    "exportedSymbols": {
+      "IERC20": [
+        21315
+      ],
+      "OptimisticOracleInterface": [
+        28256
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "42:12350:33",
+    "nodes": [
+      {
+        "id": 28020,
+        "nodeType": "PragmaDirective",
+        "src": "42:23:33",
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ]
+      },
+      {
+        "id": 28021,
+        "nodeType": "ImportDirective",
+        "src": "67:56:33",
+        "absolutePath": "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "file": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 28257,
+        "sourceUnit": 21316,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 28256,
+        "nodeType": "ContractDefinition",
+        "src": "301:12090:33",
+        "nodes": [
+          {
+            "id": 28030,
+            "nodeType": "EnumDefinition",
+            "src": "408:456:33",
+            "canonicalName": "OptimisticOracleInterface.State",
+            "members": [
+              {
+                "id": 28023,
+                "name": "Invalid",
+                "nameLocation": "429:7:33",
+                "nodeType": "EnumValue",
+                "src": "429:7:33"
+              },
+              {
+                "id": 28024,
+                "name": "Requested",
+                "nameLocation": "466:9:33",
+                "nodeType": "EnumValue",
+                "src": "466:9:33"
+              },
+              {
+                "id": 28025,
+                "name": "Proposed",
+                "nameLocation": "523:8:33",
+                "nodeType": "EnumValue",
+                "src": "523:8:33"
+              },
+              {
+                "id": 28026,
+                "name": "Expired",
+                "nameLocation": "587:7:33",
+                "nodeType": "EnumValue",
+                "src": "587:7:33"
+              },
+              {
+                "id": 28027,
+                "name": "Disputed",
+                "nameLocation": "646:8:33",
+                "nodeType": "EnumValue",
+                "src": "646:8:33"
+              },
+              {
+                "id": 28028,
+                "name": "Resolved",
+                "nameLocation": "708:8:33",
+                "nodeType": "EnumValue",
+                "src": "708:8:33"
+              },
+              {
+                "id": 28029,
+                "name": "Settled",
+                "nameLocation": "766:7:33",
+                "nodeType": "EnumValue",
+                "src": "766:7:33"
+              }
+            ],
+            "name": "State",
+            "nameLocation": "413:5:33"
+          },
+          {
+            "id": 28056,
+            "nodeType": "StructDefinition",
+            "src": "914:940:33",
+            "canonicalName": "OptimisticOracleInterface.Request",
+            "members": [
+              {
+                "constant": false,
+                "id": 28032,
+                "mutability": "mutable",
+                "name": "proposer",
+                "nameLocation": "947:8:33",
+                "nodeType": "VariableDeclaration",
+                "scope": 28056,
+                "src": "939:16:33",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 28031,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "939:7:33",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 28034,
+                "mutability": "mutable",
+                "name": "disputer",
+                "nameLocation": "1001:8:33",
+                "nodeType": "VariableDeclaration",
+                "scope": 28056,
+                "src": "993:16:33",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 28033,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "993:7:33",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 28037,
+                "mutability": "mutable",
+                "name": "currency",
+                "nameLocation": "1054:8:33",
+                "nodeType": "VariableDeclaration",
+                "scope": 28056,
+                "src": "1047:15:33",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_contract$_IERC20_$21315",
+                  "typeString": "contract IERC20"
+                },
+                "typeName": {
+                  "id": 28036,
+                  "nodeType": "UserDefinedTypeName",
+                  "pathNode": {
+                    "id": 28035,
+                    "name": "IERC20",
+                    "nodeType": "IdentifierPath",
+                    "referencedDeclaration": 21315,
+                    "src": "1047:6:33"
+                  },
+                  "referencedDeclaration": 21315,
+                  "src": "1047:6:33",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_IERC20_$21315",
+                    "typeString": "contract IERC20"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 28039,
+                "mutability": "mutable",
+                "name": "settled",
+                "nameLocation": "1122:7:33",
+                "nodeType": "VariableDeclaration",
+                "scope": 28056,
+                "src": "1117:12:33",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 28038,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1117:4:33",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 28041,
+                "mutability": "mutable",
+                "name": "refundOnDispute",
+                "nameLocation": "1179:15:33",
+                "nodeType": "VariableDeclaration",
+                "scope": 28056,
+                "src": "1174:20:33",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 28040,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1174:4:33",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 28043,
+                "mutability": "mutable",
+                "name": "proposedPrice",
+                "nameLocation": "1280:13:33",
+                "nodeType": "VariableDeclaration",
+                "scope": 28056,
+                "src": "1273:20:33",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 28042,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1273:6:33",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 28045,
+                "mutability": "mutable",
+                "name": "resolvedPrice",
+                "nameLocation": "1348:13:33",
+                "nodeType": "VariableDeclaration",
+                "scope": 28056,
+                "src": "1341:20:33",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 28044,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1341:6:33",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 28047,
+                "mutability": "mutable",
+                "name": "expirationTime",
+                "nameLocation": "1426:14:33",
+                "nodeType": "VariableDeclaration",
+                "scope": 28056,
+                "src": "1418:22:33",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 28046,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1418:7:33",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 28049,
+                "mutability": "mutable",
+                "name": "reward",
+                "nameLocation": "1519:6:33",
+                "nodeType": "VariableDeclaration",
+                "scope": 28056,
+                "src": "1511:14:33",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 28048,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1511:7:33",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 28051,
+                "mutability": "mutable",
+                "name": "finalFee",
+                "nameLocation": "1607:8:33",
+                "nodeType": "VariableDeclaration",
+                "scope": 28056,
+                "src": "1599:16:33",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 28050,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1599:7:33",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 28053,
+                "mutability": "mutable",
+                "name": "bond",
+                "nameLocation": "1691:4:33",
+                "nodeType": "VariableDeclaration",
+                "scope": 28056,
+                "src": "1683:12:33",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 28052,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1683:7:33",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 28055,
+                "mutability": "mutable",
+                "name": "customLiveness",
+                "nameLocation": "1786:14:33",
+                "nodeType": "VariableDeclaration",
+                "scope": 28056,
+                "src": "1778:22:33",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 28054,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1778:7:33",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "Request",
+            "nameLocation": "921:7:33",
+            "scope": 28256,
+            "visibility": "public"
+          },
+          {
+            "id": 28059,
+            "nodeType": "VariableDeclaration",
+            "src": "2165:50:33",
+            "constant": true,
+            "functionSelector": "c371dda7",
+            "mutability": "constant",
+            "name": "ancillaryBytesLimit",
+            "nameLocation": "2189:19:33",
+            "scope": 28256,
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 28057,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "2165:7:33",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "hexValue": "38313932",
+              "id": 28058,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "2211:4:33",
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_8192_by_1",
+                "typeString": "int_const 8192"
+              },
+              "value": "8192"
+            },
+            "visibility": "public"
+          },
+          {
+            "id": 28076,
+            "nodeType": "FunctionDefinition",
+            "src": "3081:213:33",
+            "documentation": {
+              "id": 28060,
+              "nodeType": "StructuredDocumentation",
+              "src": "2222:854:33",
+              "text": " @notice Requests a new price.\n @param identifier price identifier being requested.\n @param timestamp timestamp of the price being requested.\n @param ancillaryData ancillary data representing additional args being passed with the price request.\n @param currency ERC20 token used for payment of rewards and fees. Must be approved for use with the DVM.\n @param reward reward offered to a successful proposer. Will be pulled from the caller. Note: this can be 0,\n               which could make sense if the contract requests and proposes the value in the same call or\n               provides its own reward system.\n @return totalBond default bond (final fee) + final fee that the proposer and disputer will be required to pay.\n This can be changed with a subsequent call to setBond()."
+            },
+            "functionSelector": "11df92f1",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "requestPrice",
+            "nameLocation": "3090:12:33",
+            "parameters": {
+              "id": 28072,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28062,
+                  "mutability": "mutable",
+                  "name": "identifier",
+                  "nameLocation": "3120:10:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28076,
+                  "src": "3112:18:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 28061,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3112:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28064,
+                  "mutability": "mutable",
+                  "name": "timestamp",
+                  "nameLocation": "3148:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28076,
+                  "src": "3140:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28063,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3140:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28066,
+                  "mutability": "mutable",
+                  "name": "ancillaryData",
+                  "nameLocation": "3180:13:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28076,
+                  "src": "3167:26:33",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 28065,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3167:5:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28069,
+                  "mutability": "mutable",
+                  "name": "currency",
+                  "nameLocation": "3210:8:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28076,
+                  "src": "3203:15:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_IERC20_$21315",
+                    "typeString": "contract IERC20"
+                  },
+                  "typeName": {
+                    "id": 28068,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 28067,
+                      "name": "IERC20",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 21315,
+                      "src": "3203:6:33"
+                    },
+                    "referencedDeclaration": 21315,
+                    "src": "3203:6:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_IERC20_$21315",
+                      "typeString": "contract IERC20"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28071,
+                  "mutability": "mutable",
+                  "name": "reward",
+                  "nameLocation": "3236:6:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28076,
+                  "src": "3228:14:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28070,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3228:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3102:146:33"
+            },
+            "returnParameters": {
+              "id": 28075,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28074,
+                  "mutability": "mutable",
+                  "name": "totalBond",
+                  "nameLocation": "3283:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28076,
+                  "src": "3275:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28073,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3275:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3274:19:33"
+            },
+            "scope": 28256,
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "external"
+          },
+          {
+            "id": 28090,
+            "nodeType": "FunctionDefinition",
+            "src": "3821:181:33",
+            "documentation": {
+              "id": 28077,
+              "nodeType": "StructuredDocumentation",
+              "src": "3300:516:33",
+              "text": " @notice Set the proposal bond associated with a price request.\n @param identifier price identifier to identify the existing request.\n @param timestamp timestamp to identify the existing request.\n @param ancillaryData ancillary data of the price being requested.\n @param bond custom bond amount to set.\n @return totalBond new bond + final fee that the proposer and disputer will be required to pay. This can be\n changed again with a subsequent call to setBond()."
+            },
+            "functionSelector": "ad5a755a",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setBond",
+            "nameLocation": "3830:7:33",
+            "parameters": {
+              "id": 28086,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28079,
+                  "mutability": "mutable",
+                  "name": "identifier",
+                  "nameLocation": "3855:10:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28090,
+                  "src": "3847:18:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 28078,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3847:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28081,
+                  "mutability": "mutable",
+                  "name": "timestamp",
+                  "nameLocation": "3883:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28090,
+                  "src": "3875:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28080,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3875:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28083,
+                  "mutability": "mutable",
+                  "name": "ancillaryData",
+                  "nameLocation": "3915:13:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28090,
+                  "src": "3902:26:33",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 28082,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3902:5:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28085,
+                  "mutability": "mutable",
+                  "name": "bond",
+                  "nameLocation": "3946:4:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28090,
+                  "src": "3938:12:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28084,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3938:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3837:119:33"
+            },
+            "returnParameters": {
+              "id": 28089,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28088,
+                  "mutability": "mutable",
+                  "name": "totalBond",
+                  "nameLocation": "3991:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28090,
+                  "src": "3983:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28087,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3983:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3982:19:33"
+            },
+            "scope": 28256,
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "external"
+          },
+          {
+            "id": 28100,
+            "nodeType": "FunctionDefinition",
+            "src": "4558:142:33",
+            "documentation": {
+              "id": 28091,
+              "nodeType": "StructuredDocumentation",
+              "src": "4008:545:33",
+              "text": " @notice Sets the request to refund the reward if the proposal is disputed. This can help to \"hedge\" the caller\n in the event of a dispute-caused delay. Note: in the event of a dispute, the winner still receives the other's\n bond, so there is still profit to be made even if the reward is refunded.\n @param identifier price identifier to identify the existing request.\n @param timestamp timestamp to identify the existing request.\n @param ancillaryData ancillary data of the price being requested."
+            },
+            "functionSelector": "91f58dcb",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setRefundOnDispute",
+            "nameLocation": "4567:18:33",
+            "parameters": {
+              "id": 28098,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28093,
+                  "mutability": "mutable",
+                  "name": "identifier",
+                  "nameLocation": "4603:10:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28100,
+                  "src": "4595:18:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 28092,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4595:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28095,
+                  "mutability": "mutable",
+                  "name": "timestamp",
+                  "nameLocation": "4631:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28100,
+                  "src": "4623:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28094,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4623:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28097,
+                  "mutability": "mutable",
+                  "name": "ancillaryData",
+                  "nameLocation": "4663:13:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28100,
+                  "src": "4650:26:33",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 28096,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4650:5:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4585:97:33"
+            },
+            "returnParameters": {
+              "id": 28099,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4699:0:33"
+            },
+            "scope": 28256,
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "external"
+          },
+          {
+            "id": 28112,
+            "nodeType": "FunctionDefinition",
+            "src": "5137:173:33",
+            "documentation": {
+              "id": 28101,
+              "nodeType": "StructuredDocumentation",
+              "src": "4706:426:33",
+              "text": " @notice Sets a custom liveness value for the request. Liveness is the amount of time a proposal must wait before\n being auto-resolved.\n @param identifier price identifier to identify the existing request.\n @param timestamp timestamp to identify the existing request.\n @param ancillaryData ancillary data of the price being requested.\n @param customLiveness new custom liveness."
+            },
+            "functionSelector": "473c45fe",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setCustomLiveness",
+            "nameLocation": "5146:17:33",
+            "parameters": {
+              "id": 28110,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28103,
+                  "mutability": "mutable",
+                  "name": "identifier",
+                  "nameLocation": "5181:10:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28112,
+                  "src": "5173:18:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 28102,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5173:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28105,
+                  "mutability": "mutable",
+                  "name": "timestamp",
+                  "nameLocation": "5209:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28112,
+                  "src": "5201:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28104,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5201:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28107,
+                  "mutability": "mutable",
+                  "name": "ancillaryData",
+                  "nameLocation": "5241:13:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28112,
+                  "src": "5228:26:33",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 28106,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5228:5:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28109,
+                  "mutability": "mutable",
+                  "name": "customLiveness",
+                  "nameLocation": "5272:14:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28112,
+                  "src": "5264:22:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28108,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5264:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5163:129:33"
+            },
+            "returnParameters": {
+              "id": 28111,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "5309:0:33"
+            },
+            "scope": 28256,
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "external"
+          },
+          {
+            "id": 28130,
+            "nodeType": "FunctionDefinition",
+            "src": "6085:248:33",
+            "documentation": {
+              "id": 28113,
+              "nodeType": "StructuredDocumentation",
+              "src": "5316:764:33",
+              "text": " @notice Proposes a price value on another address' behalf. Note: this address will receive any rewards that come\n from this proposal. However, any bonds are pulled from the caller.\n @param proposer address to set as the proposer.\n @param requester sender of the initial price request.\n @param identifier price identifier to identify the existing request.\n @param timestamp timestamp to identify the existing request.\n @param ancillaryData ancillary data of the price being requested.\n @param proposedPrice price being proposed.\n @return totalBond the amount that's pulled from the caller's wallet as a bond. The bond will be returned to\n the proposer once settled if the proposal is correct."
+            },
+            "functionSelector": "7c82288f",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "proposePriceFor",
+            "nameLocation": "6094:15:33",
+            "parameters": {
+              "id": 28126,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28115,
+                  "mutability": "mutable",
+                  "name": "proposer",
+                  "nameLocation": "6127:8:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28130,
+                  "src": "6119:16:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 28114,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "6119:7:33",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28117,
+                  "mutability": "mutable",
+                  "name": "requester",
+                  "nameLocation": "6153:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28130,
+                  "src": "6145:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 28116,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "6145:7:33",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28119,
+                  "mutability": "mutable",
+                  "name": "identifier",
+                  "nameLocation": "6180:10:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28130,
+                  "src": "6172:18:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 28118,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "6172:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28121,
+                  "mutability": "mutable",
+                  "name": "timestamp",
+                  "nameLocation": "6208:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28130,
+                  "src": "6200:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28120,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "6200:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28123,
+                  "mutability": "mutable",
+                  "name": "ancillaryData",
+                  "nameLocation": "6240:13:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28130,
+                  "src": "6227:26:33",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 28122,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "6227:5:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28125,
+                  "mutability": "mutable",
+                  "name": "proposedPrice",
+                  "nameLocation": "6270:13:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28130,
+                  "src": "6263:20:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  },
+                  "typeName": {
+                    "id": 28124,
+                    "name": "int256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "6263:6:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_int256",
+                      "typeString": "int256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "6109:180:33"
+            },
+            "returnParameters": {
+              "id": 28129,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28128,
+                  "mutability": "mutable",
+                  "name": "totalBond",
+                  "nameLocation": "6322:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28130,
+                  "src": "6314:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28127,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "6314:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "6313:19:33"
+            },
+            "scope": 28256,
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "public"
+          },
+          {
+            "id": 28146,
+            "nodeType": "FunctionDefinition",
+            "src": "6930:221:33",
+            "documentation": {
+              "id": 28131,
+              "nodeType": "StructuredDocumentation",
+              "src": "6339:586:33",
+              "text": " @notice Proposes a price value for an existing price request.\n @param requester sender of the initial price request.\n @param identifier price identifier to identify the existing request.\n @param timestamp timestamp to identify the existing request.\n @param ancillaryData ancillary data of the price being requested.\n @param proposedPrice price being proposed.\n @return totalBond the amount that's pulled from the proposer's wallet as a bond. The bond will be returned to\n the proposer once settled if the proposal is correct."
+            },
+            "functionSelector": "b8b4f908",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "proposePrice",
+            "nameLocation": "6939:12:33",
+            "parameters": {
+              "id": 28142,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28133,
+                  "mutability": "mutable",
+                  "name": "requester",
+                  "nameLocation": "6969:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28146,
+                  "src": "6961:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 28132,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "6961:7:33",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28135,
+                  "mutability": "mutable",
+                  "name": "identifier",
+                  "nameLocation": "6996:10:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28146,
+                  "src": "6988:18:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 28134,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "6988:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28137,
+                  "mutability": "mutable",
+                  "name": "timestamp",
+                  "nameLocation": "7024:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28146,
+                  "src": "7016:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28136,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "7016:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28139,
+                  "mutability": "mutable",
+                  "name": "ancillaryData",
+                  "nameLocation": "7056:13:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28146,
+                  "src": "7043:26:33",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 28138,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "7043:5:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28141,
+                  "mutability": "mutable",
+                  "name": "proposedPrice",
+                  "nameLocation": "7086:13:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28146,
+                  "src": "7079:20:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  },
+                  "typeName": {
+                    "id": 28140,
+                    "name": "int256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "7079:6:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_int256",
+                      "typeString": "int256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "6951:154:33"
+            },
+            "returnParameters": {
+              "id": 28145,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28144,
+                  "mutability": "mutable",
+                  "name": "totalBond",
+                  "nameLocation": "7140:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28146,
+                  "src": "7132:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28143,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "7132:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "7131:19:33"
+            },
+            "scope": 28256,
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "external"
+          },
+          {
+            "id": 28162,
+            "nodeType": "FunctionDefinition",
+            "src": "7928:218:33",
+            "documentation": {
+              "id": 28147,
+              "nodeType": "StructuredDocumentation",
+              "src": "7157:766:33",
+              "text": " @notice Disputes a price request with an active proposal on another address' behalf. Note: this address will\n receive any rewards that come from this dispute. However, any bonds are pulled from the caller.\n @param disputer address to set as the disputer.\n @param requester sender of the initial price request.\n @param identifier price identifier to identify the existing request.\n @param timestamp timestamp to identify the existing request.\n @param ancillaryData ancillary data of the price being requested.\n @return totalBond the amount that's pulled from the caller's wallet as a bond. The bond will be returned to\n the disputer once settled if the dispute was value (the proposal was incorrect)."
+            },
+            "functionSelector": "76c7823f",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "disputePriceFor",
+            "nameLocation": "7937:15:33",
+            "parameters": {
+              "id": 28158,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28149,
+                  "mutability": "mutable",
+                  "name": "disputer",
+                  "nameLocation": "7970:8:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28162,
+                  "src": "7962:16:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 28148,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "7962:7:33",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28151,
+                  "mutability": "mutable",
+                  "name": "requester",
+                  "nameLocation": "7996:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28162,
+                  "src": "7988:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 28150,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "7988:7:33",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28153,
+                  "mutability": "mutable",
+                  "name": "identifier",
+                  "nameLocation": "8023:10:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28162,
+                  "src": "8015:18:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 28152,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "8015:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28155,
+                  "mutability": "mutable",
+                  "name": "timestamp",
+                  "nameLocation": "8051:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28162,
+                  "src": "8043:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28154,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "8043:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28157,
+                  "mutability": "mutable",
+                  "name": "ancillaryData",
+                  "nameLocation": "8083:13:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28162,
+                  "src": "8070:26:33",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 28156,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "8070:5:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "7952:150:33"
+            },
+            "returnParameters": {
+              "id": 28161,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28160,
+                  "mutability": "mutable",
+                  "name": "totalBond",
+                  "nameLocation": "8135:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28162,
+                  "src": "8127:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28159,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "8127:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "8126:19:33"
+            },
+            "scope": 28256,
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "public"
+          },
+          {
+            "id": 28176,
+            "nodeType": "FunctionDefinition",
+            "src": "8744:191:33",
+            "documentation": {
+              "id": 28163,
+              "nodeType": "StructuredDocumentation",
+              "src": "8152:587:33",
+              "text": " @notice Disputes a price value for an existing price request with an active proposal.\n @param requester sender of the initial price request.\n @param identifier price identifier to identify the existing request.\n @param timestamp timestamp to identify the existing request.\n @param ancillaryData ancillary data of the price being requested.\n @return totalBond the amount that's pulled from the disputer's wallet as a bond. The bond will be returned to\n the disputer once settled if the dispute was valid (the proposal was incorrect)."
+            },
+            "functionSelector": "fba7f1e3",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "disputePrice",
+            "nameLocation": "8753:12:33",
+            "parameters": {
+              "id": 28172,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28165,
+                  "mutability": "mutable",
+                  "name": "requester",
+                  "nameLocation": "8783:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28176,
+                  "src": "8775:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 28164,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "8775:7:33",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28167,
+                  "mutability": "mutable",
+                  "name": "identifier",
+                  "nameLocation": "8810:10:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28176,
+                  "src": "8802:18:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 28166,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "8802:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28169,
+                  "mutability": "mutable",
+                  "name": "timestamp",
+                  "nameLocation": "8838:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28176,
+                  "src": "8830:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28168,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "8830:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28171,
+                  "mutability": "mutable",
+                  "name": "ancillaryData",
+                  "nameLocation": "8870:13:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28176,
+                  "src": "8857:26:33",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 28170,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "8857:5:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "8765:124:33"
+            },
+            "returnParameters": {
+              "id": 28175,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28174,
+                  "mutability": "mutable",
+                  "name": "totalBond",
+                  "nameLocation": "8924:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28176,
+                  "src": "8916:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28173,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "8916:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "8915:19:33"
+            },
+            "scope": 28256,
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "external"
+          },
+          {
+            "id": 28188,
+            "nodeType": "FunctionDefinition",
+            "src": "9461:158:33",
+            "documentation": {
+              "id": 28177,
+              "nodeType": "StructuredDocumentation",
+              "src": "8941:515:33",
+              "text": " @notice Retrieves a price that was previously requested by a caller. Reverts if the request is not settled\n or settleable. Note: this method is not view so that this call may actually settle the price request if it\n hasn't been settled.\n @param identifier price identifier to identify the existing request.\n @param timestamp timestamp to identify the existing request.\n @param ancillaryData ancillary data of the price being requested.\n @return resolved price."
+            },
+            "functionSelector": "53b59239",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "settleAndGetPrice",
+            "nameLocation": "9470:17:33",
+            "parameters": {
+              "id": 28184,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28179,
+                  "mutability": "mutable",
+                  "name": "identifier",
+                  "nameLocation": "9505:10:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28188,
+                  "src": "9497:18:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 28178,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "9497:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28181,
+                  "mutability": "mutable",
+                  "name": "timestamp",
+                  "nameLocation": "9533:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28188,
+                  "src": "9525:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28180,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "9525:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28183,
+                  "mutability": "mutable",
+                  "name": "ancillaryData",
+                  "nameLocation": "9565:13:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28188,
+                  "src": "9552:26:33",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 28182,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "9552:5:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "9487:97:33"
+            },
+            "returnParameters": {
+              "id": 28187,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28186,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28188,
+                  "src": "9611:6:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  },
+                  "typeName": {
+                    "id": 28185,
+                    "name": "int256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "9611:6:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_int256",
+                      "typeString": "int256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "9610:8:33"
+            },
+            "scope": 28256,
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "external"
+          },
+          {
+            "id": 28202,
+            "nodeType": "FunctionDefinition",
+            "src": "10195:182:33",
+            "documentation": {
+              "id": 28189,
+              "nodeType": "StructuredDocumentation",
+              "src": "9625:565:33",
+              "text": " @notice Attempts to settle an outstanding price request. Will revert if it isn't settleable.\n @param requester sender of the initial price request.\n @param identifier price identifier to identify the existing request.\n @param timestamp timestamp to identify the existing request.\n @param ancillaryData ancillary data of the price being requested.\n @return payout the amount that the \"winner\" (proposer or disputer) receives on settlement. This amount includes\n the returned bonds as well as additional rewards."
+            },
+            "functionSelector": "5e9a79a9",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "settle",
+            "nameLocation": "10204:6:33",
+            "parameters": {
+              "id": 28198,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28191,
+                  "mutability": "mutable",
+                  "name": "requester",
+                  "nameLocation": "10228:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28202,
+                  "src": "10220:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 28190,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "10220:7:33",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28193,
+                  "mutability": "mutable",
+                  "name": "identifier",
+                  "nameLocation": "10255:10:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28202,
+                  "src": "10247:18:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 28192,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "10247:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28195,
+                  "mutability": "mutable",
+                  "name": "timestamp",
+                  "nameLocation": "10283:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28202,
+                  "src": "10275:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28194,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "10275:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28197,
+                  "mutability": "mutable",
+                  "name": "ancillaryData",
+                  "nameLocation": "10315:13:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28202,
+                  "src": "10302:26:33",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 28196,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "10302:5:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "10210:124:33"
+            },
+            "returnParameters": {
+              "id": 28201,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28200,
+                  "mutability": "mutable",
+                  "name": "payout",
+                  "nameLocation": "10369:6:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28202,
+                  "src": "10361:14:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28199,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "10361:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "10360:16:33"
+            },
+            "scope": 28256,
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "external"
+          },
+          {
+            "id": 28217,
+            "nodeType": "FunctionDefinition",
+            "src": "10817:189:33",
+            "documentation": {
+              "id": 28203,
+              "nodeType": "StructuredDocumentation",
+              "src": "10383:429:33",
+              "text": " @notice Gets the current data structure containing all information about a price request.\n @param requester sender of the initial price request.\n @param identifier price identifier to identify the existing request.\n @param timestamp timestamp to identify the existing request.\n @param ancillaryData ancillary data of the price being requested.\n @return the Request data structure."
+            },
+            "functionSelector": "a9904f9b",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getRequest",
+            "nameLocation": "10826:10:33",
+            "parameters": {
+              "id": 28212,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28205,
+                  "mutability": "mutable",
+                  "name": "requester",
+                  "nameLocation": "10854:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28217,
+                  "src": "10846:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 28204,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "10846:7:33",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28207,
+                  "mutability": "mutable",
+                  "name": "identifier",
+                  "nameLocation": "10881:10:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28217,
+                  "src": "10873:18:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 28206,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "10873:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28209,
+                  "mutability": "mutable",
+                  "name": "timestamp",
+                  "nameLocation": "10909:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28217,
+                  "src": "10901:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28208,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "10901:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28211,
+                  "mutability": "mutable",
+                  "name": "ancillaryData",
+                  "nameLocation": "10941:13:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28217,
+                  "src": "10928:26:33",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 28210,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "10928:5:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "10836:124:33"
+            },
+            "returnParameters": {
+              "id": 28216,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28215,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28217,
+                  "src": "10990:14:33",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Request_$28056_memory_ptr",
+                    "typeString": "struct OptimisticOracleInterface.Request"
+                  },
+                  "typeName": {
+                    "id": 28214,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 28213,
+                      "name": "Request",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 28056,
+                      "src": "10990:7:33"
+                    },
+                    "referencedDeclaration": 28056,
+                    "src": "10990:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Request_$28056_storage_ptr",
+                      "typeString": "struct OptimisticOracleInterface.Request"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "10989:16:33"
+            },
+            "scope": 28256,
+            "stateMutability": "view",
+            "virtual": true,
+            "visibility": "public"
+          },
+          {
+            "id": 28232,
+            "nodeType": "FunctionDefinition",
+            "src": "11396:178:33",
+            "documentation": {
+              "id": 28218,
+              "nodeType": "StructuredDocumentation",
+              "src": "11012:379:33",
+              "text": " @notice Returns the state of a price request.\n @param requester sender of the initial price request.\n @param identifier price identifier to identify the existing request.\n @param timestamp timestamp to identify the existing request.\n @param ancillaryData ancillary data of the price being requested.\n @return the State enum value."
+            },
+            "functionSelector": "ba4b930c",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getState",
+            "nameLocation": "11405:8:33",
+            "parameters": {
+              "id": 28227,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28220,
+                  "mutability": "mutable",
+                  "name": "requester",
+                  "nameLocation": "11431:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28232,
+                  "src": "11423:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 28219,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "11423:7:33",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28222,
+                  "mutability": "mutable",
+                  "name": "identifier",
+                  "nameLocation": "11458:10:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28232,
+                  "src": "11450:18:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 28221,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "11450:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28224,
+                  "mutability": "mutable",
+                  "name": "timestamp",
+                  "nameLocation": "11486:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28232,
+                  "src": "11478:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28223,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "11478:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28226,
+                  "mutability": "mutable",
+                  "name": "ancillaryData",
+                  "nameLocation": "11518:13:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28232,
+                  "src": "11505:26:33",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 28225,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "11505:5:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "11413:124:33"
+            },
+            "returnParameters": {
+              "id": 28231,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28230,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28232,
+                  "src": "11567:5:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_State_$28030",
+                    "typeString": "enum OptimisticOracleInterface.State"
+                  },
+                  "typeName": {
+                    "id": 28229,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 28228,
+                      "name": "State",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 28030,
+                      "src": "11567:5:33"
+                    },
+                    "referencedDeclaration": 28030,
+                    "src": "11567:5:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_State_$28030",
+                      "typeString": "enum OptimisticOracleInterface.State"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "11566:7:33"
+            },
+            "scope": 28256,
+            "stateMutability": "view",
+            "virtual": true,
+            "visibility": "public"
+          },
+          {
+            "id": 28246,
+            "nodeType": "FunctionDefinition",
+            "src": "12056:177:33",
+            "documentation": {
+              "id": 28233,
+              "nodeType": "StructuredDocumentation",
+              "src": "11580:471:33",
+              "text": " @notice Checks if a given request has resolved or been settled (i.e the optimistic oracle has a price).\n @param requester sender of the initial price request.\n @param identifier price identifier to identify the existing request.\n @param timestamp timestamp to identify the existing request.\n @param ancillaryData ancillary data of the price being requested.\n @return true if price has resolved or settled, false otherwise."
+            },
+            "functionSelector": "bc58ccaa",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "hasPrice",
+            "nameLocation": "12065:8:33",
+            "parameters": {
+              "id": 28242,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28235,
+                  "mutability": "mutable",
+                  "name": "requester",
+                  "nameLocation": "12091:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28246,
+                  "src": "12083:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 28234,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "12083:7:33",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28237,
+                  "mutability": "mutable",
+                  "name": "identifier",
+                  "nameLocation": "12118:10:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28246,
+                  "src": "12110:18:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 28236,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "12110:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28239,
+                  "mutability": "mutable",
+                  "name": "timestamp",
+                  "nameLocation": "12146:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28246,
+                  "src": "12138:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28238,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "12138:7:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28241,
+                  "mutability": "mutable",
+                  "name": "ancillaryData",
+                  "nameLocation": "12178:13:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28246,
+                  "src": "12165:26:33",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 28240,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "12165:5:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "12073:124:33"
+            },
+            "returnParameters": {
+              "id": 28245,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28244,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28246,
+                  "src": "12227:4:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 28243,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "12227:4:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "12226:6:33"
+            },
+            "scope": 28256,
+            "stateMutability": "view",
+            "virtual": true,
+            "visibility": "public"
+          },
+          {
+            "id": 28255,
+            "nodeType": "FunctionDefinition",
+            "src": "12239:150:33",
+            "functionSelector": "af5d2f39",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "stampAncillaryData",
+            "nameLocation": "12248:18:33",
+            "parameters": {
+              "id": 28251,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28248,
+                  "mutability": "mutable",
+                  "name": "ancillaryData",
+                  "nameLocation": "12280:13:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28255,
+                  "src": "12267:26:33",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 28247,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "12267:5:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28250,
+                  "mutability": "mutable",
+                  "name": "requester",
+                  "nameLocation": "12303:9:33",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28255,
+                  "src": "12295:17:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 28249,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "12295:7:33",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "12266:47:33"
+            },
+            "returnParameters": {
+              "id": 28254,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28253,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28255,
+                  "src": "12375:12:33",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 28252,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "12375:5:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "12374:14:33"
+            },
+            "scope": 28256,
+            "stateMutability": "view",
+            "virtual": true,
+            "visibility": "public"
+          }
+        ],
+        "abstract": true,
+        "baseContracts": [],
+        "canonicalName": "OptimisticOracleInterface",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 28022,
+          "nodeType": "StructuredDocumentation",
+          "src": "125:175:33",
+          "text": " @title Financial contract facing Oracle interface.\n @dev Interface used by financial contracts to interact with the Oracle. Voters will use a different interface."
+        },
+        "fullyImplemented": false,
+        "linearizedBaseContracts": [
+          28256
+        ],
+        "name": "OptimisticOracleInterface",
+        "nameLocation": "319:25:33",
+        "scope": 28257,
+        "usedErrors": []
+      }
+    ],
+    "license": "AGPL-3.0-only"
+  },
+  "id": 33
+}

@@ -1,0 +1,455 @@
+{
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "identifier",
+          "type": "bytes32"
+        }
+      ],
+      "name": "addSupportedIdentifier",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "identifier",
+          "type": "bytes32"
+        }
+      ],
+      "name": "isIdentifierSupported",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "identifier",
+          "type": "bytes32"
+        }
+      ],
+      "name": "removeSupportedIdentifier",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "addSupportedIdentifier(bytes32)": "10a7e201",
+    "isIdentifierSupported(bytes32)": "90978d1b",
+    "removeSupportedIdentifier(bytes32)": "8e0d3ca7"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.13+commit.abaa5c0e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"}],\"name\":\"addSupportedIdentifier\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"}],\"name\":\"isIdentifierSupported\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"}],\"name\":\"removeSupportedIdentifier\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"addSupportedIdentifier(bytes32)\":{\"details\":\"Price requests using this identifier will succeed after this call.\",\"params\":{\"identifier\":\"bytes32 encoding of the string identifier. Eg: BTC/USD.\"}},\"isIdentifierSupported(bytes32)\":{\"params\":{\"identifier\":\"bytes32 encoding of the string identifier. Eg: BTC/USD.\"},\"returns\":{\"_0\":\"bool if the identifier is supported (or not).\"}},\"removeSupportedIdentifier(bytes32)\":{\"details\":\"Price requests using this identifier will no longer succeed after this call.\",\"params\":{\"identifier\":\"bytes32 encoding of the string identifier. Eg: BTC/USD.\"}}},\"title\":\"Interface for whitelists of supported identifiers that the oracle can provide prices for.\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"addSupportedIdentifier(bytes32)\":{\"notice\":\"Adds the provided identifier as a supported identifier.\"},\"isIdentifierSupported(bytes32)\":{\"notice\":\"Checks whether an identifier is on the whitelist.\"},\"removeSupportedIdentifier(bytes32)\":{\"notice\":\"Removes the identifier from the whitelist.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"lib/protocol/packages/core/contracts/oracle/interfaces/IdentifierWhitelistInterface.sol\":\"IdentifierWhitelistInterface\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/=lib/openzeppelin-contracts/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/\",\":protocol/=lib/protocol/\",\":uma-implementation/=lib/protocol/packages/core/contracts/oracle/implementation/\",\":uma-interface/=lib/protocol/packages/core/contracts/oracle/interfaces/\"]},\"sources\":{\"lib/protocol/packages/core/contracts/oracle/interfaces/IdentifierWhitelistInterface.sol\":{\"keccak256\":\"0x9ae86a30dd1a8c03fb2c6d27be570bb30c4c0b13ac63cde8620b7e4b51d88dc9\",\"license\":\"AGPL-3.0-only\",\"urls\":[\"bzz-raw://a71d2aff48e075ecab56a9c9767775d1d77e04ec9191fed124e71003220549e3\",\"dweb:/ipfs/QmYPWsZXro6fzqpZY6UxQ5X8znEXfLp2sun8oXzdz8bTyc\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.13+commit.abaa5c0e"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "identifier",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "addSupportedIdentifier"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "identifier",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "isIdentifierSupported",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "identifier",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "removeSupportedIdentifier"
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {
+          "addSupportedIdentifier(bytes32)": {
+            "details": "Price requests using this identifier will succeed after this call.",
+            "params": {
+              "identifier": "bytes32 encoding of the string identifier. Eg: BTC/USD."
+            }
+          },
+          "isIdentifierSupported(bytes32)": {
+            "params": {
+              "identifier": "bytes32 encoding of the string identifier. Eg: BTC/USD."
+            },
+            "returns": {
+              "_0": "bool if the identifier is supported (or not)."
+            }
+          },
+          "removeSupportedIdentifier(bytes32)": {
+            "details": "Price requests using this identifier will no longer succeed after this call.",
+            "params": {
+              "identifier": "bytes32 encoding of the string identifier. Eg: BTC/USD."
+            }
+          }
+        },
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {
+          "addSupportedIdentifier(bytes32)": {
+            "notice": "Adds the provided identifier as a supported identifier."
+          },
+          "isIdentifierSupported(bytes32)": {
+            "notice": "Checks whether an identifier is on the whitelist."
+          },
+          "removeSupportedIdentifier(bytes32)": {
+            "notice": "Removes the identifier from the whitelist."
+          }
+        },
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        ":@openzeppelin/=lib/openzeppelin-contracts/",
+        ":ds-test/=lib/forge-std/lib/ds-test/src/",
+        ":forge-std/=lib/forge-std/src/",
+        ":openzeppelin-contracts/=lib/openzeppelin-contracts/",
+        ":protocol/=lib/protocol/",
+        ":uma-implementation/=lib/protocol/packages/core/contracts/oracle/implementation/",
+        ":uma-interface/=lib/protocol/packages/core/contracts/oracle/interfaces/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "lib/protocol/packages/core/contracts/oracle/interfaces/IdentifierWhitelistInterface.sol": "IdentifierWhitelistInterface"
+      },
+      "libraries": {}
+    },
+    "sources": {
+      "lib/protocol/packages/core/contracts/oracle/interfaces/IdentifierWhitelistInterface.sol": {
+        "keccak256": "0x9ae86a30dd1a8c03fb2c6d27be570bb30c4c0b13ac63cde8620b7e4b51d88dc9",
+        "urls": [
+          "bzz-raw://a71d2aff48e075ecab56a9c9767775d1d77e04ec9191fed124e71003220549e3",
+          "dweb:/ipfs/QmYPWsZXro6fzqpZY6UxQ5X8znEXfLp2sun8oXzdz8bTyc"
+        ],
+        "license": "AGPL-3.0-only"
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "lib/protocol/packages/core/contracts/oracle/interfaces/IdentifierWhitelistInterface.sol",
+    "id": 28019,
+    "exportedSymbols": {
+      "IdentifierWhitelistInterface": [
+        28018
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "42:1112:32",
+    "nodes": [
+      {
+        "id": 27996,
+        "nodeType": "PragmaDirective",
+        "src": "42:23:32",
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ]
+      },
+      {
+        "id": 28018,
+        "nodeType": "ContractDefinition",
+        "src": "175:978:32",
+        "nodes": [
+          {
+            "id": 28003,
+            "nodeType": "FunctionDefinition",
+            "src": "467:61:32",
+            "documentation": {
+              "id": 27998,
+              "nodeType": "StructuredDocumentation",
+              "src": "220:242:32",
+              "text": " @notice Adds the provided identifier as a supported identifier.\n @dev Price requests using this identifier will succeed after this call.\n @param identifier bytes32 encoding of the string identifier. Eg: BTC/USD."
+            },
+            "functionSelector": "10a7e201",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "addSupportedIdentifier",
+            "nameLocation": "476:22:32",
+            "parameters": {
+              "id": 28001,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28000,
+                  "mutability": "mutable",
+                  "name": "identifier",
+                  "nameLocation": "507:10:32",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28003,
+                  "src": "499:18:32",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 27999,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "499:7:32",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "498:20:32"
+            },
+            "returnParameters": {
+              "id": 28002,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "527:0:32"
+            },
+            "scope": 28018,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "id": 28009,
+            "nodeType": "FunctionDefinition",
+            "src": "778:64:32",
+            "documentation": {
+              "id": 28004,
+              "nodeType": "StructuredDocumentation",
+              "src": "534:239:32",
+              "text": " @notice Removes the identifier from the whitelist.\n @dev Price requests using this identifier will no longer succeed after this call.\n @param identifier bytes32 encoding of the string identifier. Eg: BTC/USD."
+            },
+            "functionSelector": "8e0d3ca7",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "removeSupportedIdentifier",
+            "nameLocation": "787:25:32",
+            "parameters": {
+              "id": 28007,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28006,
+                  "mutability": "mutable",
+                  "name": "identifier",
+                  "nameLocation": "821:10:32",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28009,
+                  "src": "813:18:32",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 28005,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "813:7:32",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "812:20:32"
+            },
+            "returnParameters": {
+              "id": 28008,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "841:0:32"
+            },
+            "scope": 28018,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "id": 28017,
+            "nodeType": "FunctionDefinition",
+            "src": "1071:80:32",
+            "documentation": {
+              "id": 28010,
+              "nodeType": "StructuredDocumentation",
+              "src": "848:218:32",
+              "text": " @notice Checks whether an identifier is on the whitelist.\n @param identifier bytes32 encoding of the string identifier. Eg: BTC/USD.\n @return bool if the identifier is supported (or not)."
+            },
+            "functionSelector": "90978d1b",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "isIdentifierSupported",
+            "nameLocation": "1080:21:32",
+            "parameters": {
+              "id": 28013,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28012,
+                  "mutability": "mutable",
+                  "name": "identifier",
+                  "nameLocation": "1110:10:32",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28017,
+                  "src": "1102:18:32",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 28011,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1102:7:32",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1101:20:32"
+            },
+            "returnParameters": {
+              "id": 28016,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28015,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28017,
+                  "src": "1145:4:32",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 28014,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1145:4:32",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1144:6:32"
+            },
+            "scope": 28018,
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "IdentifierWhitelistInterface",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": {
+          "id": 27997,
+          "nodeType": "StructuredDocumentation",
+          "src": "67:107:32",
+          "text": " @title Interface for whitelists of supported identifiers that the oracle can provide prices for."
+        },
+        "fullyImplemented": false,
+        "linearizedBaseContracts": [
+          28018
+        ],
+        "name": "IdentifierWhitelistInterface",
+        "nameLocation": "185:28:32",
+        "scope": 28019,
+        "usedErrors": []
+      }
+    ],
+    "license": "AGPL-3.0-only"
+  },
+  "id": 32
+}

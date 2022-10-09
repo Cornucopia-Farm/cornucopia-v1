@@ -1,0 +1,178 @@
+{
+  "compiler": {
+    "version": "0.8.13+commit.abaa5c0e"
+  },
+  "language": "Solidity",
+  "output": {
+    "abi": [
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint256",
+            "name": "time",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          }
+        ],
+        "name": "getPrice",
+        "outputs": [
+          {
+            "internalType": "int256",
+            "name": "",
+            "type": "int256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint256",
+            "name": "time",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          }
+        ],
+        "name": "hasPrice",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint256",
+            "name": "time",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          }
+        ],
+        "name": "requestPrice",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      }
+    ],
+    "devdoc": {
+      "details": "Interface used by financial contracts to interact with the Oracle. Voters will use a different interface.",
+      "kind": "dev",
+      "methods": {
+        "getPrice(bytes32,uint256,bytes)": {
+          "details": "If the price is not available, the method reverts.",
+          "params": {
+            "ancillaryData": "arbitrary data appended to a price request to give the voters more info from the caller.",
+            "identifier": "uniquely identifies the price requested. eg BTC/USD (encoded as bytes32) could be requested.",
+            "time": "unix timestamp for the price request."
+          },
+          "returns": {
+            "_0": "int256 representing the resolved price for the given identifier and timestamp."
+          }
+        },
+        "hasPrice(bytes32,uint256,bytes)": {
+          "details": "Time must be in the past and the identifier must be supported.",
+          "params": {
+            "ancillaryData": "arbitrary data appended to a price request to give the voters more info from the caller.",
+            "identifier": "uniquely identifies the price requested. eg BTC/USD (encoded as bytes32) could be requested.",
+            "time": "unix timestamp for the price request."
+          },
+          "returns": {
+            "_0": "bool if the DVM has resolved to a price for the given identifier and timestamp."
+          }
+        },
+        "requestPrice(bytes32,uint256,bytes)": {
+          "details": "Time must be in the past and the identifier must be supported.",
+          "params": {
+            "ancillaryData": "arbitrary data appended to a price request to give the voters more info from the caller.",
+            "identifier": "uniquely identifies the price requested. eg BTC/USD (encoded as bytes32) could be requested.",
+            "time": "unix timestamp for the price request."
+          }
+        }
+      },
+      "title": "Financial contract facing Oracle interface.",
+      "version": 1
+    },
+    "userdoc": {
+      "kind": "user",
+      "methods": {
+        "getPrice(bytes32,uint256,bytes)": {
+          "notice": "Gets the price for `identifier` and `time` if it has already been requested and resolved."
+        },
+        "hasPrice(bytes32,uint256,bytes)": {
+          "notice": "Whether the price for `identifier` and `time` is available."
+        },
+        "requestPrice(bytes32,uint256,bytes)": {
+          "notice": "Enqueues a request (if a request isn't already present) for the given `identifier`, `time` pair."
+        }
+      },
+      "version": 1
+    }
+  },
+  "settings": {
+    "compilationTarget": {
+      "lib/protocol/packages/core/contracts/oracle/interfaces/OracleAncillaryInterface.sol": "OracleAncillaryInterface"
+    },
+    "evmVersion": "london",
+    "libraries": {},
+    "metadata": {
+      "bytecodeHash": "ipfs"
+    },
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "remappings": [
+      ":@openzeppelin/=lib/openzeppelin-contracts/",
+      ":ds-test/=lib/forge-std/lib/ds-test/src/",
+      ":forge-std/=lib/forge-std/src/",
+      ":openzeppelin-contracts/=lib/openzeppelin-contracts/",
+      ":protocol/=lib/protocol/",
+      ":uma-implementation/=lib/protocol/packages/core/contracts/oracle/implementation/",
+      ":uma-interface/=lib/protocol/packages/core/contracts/oracle/interfaces/"
+    ]
+  },
+  "sources": {
+    "lib/protocol/packages/core/contracts/oracle/interfaces/OracleAncillaryInterface.sol": {
+      "keccak256": "0xd58b41fe1e389f7871db7c04f2c05c1aac1d0455bbc521534da81fd657016a1f",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://cc532e9c550bb1bba0daa33fda748590cd06ce94a9566fe65dac04e7d40977bc",
+        "dweb:/ipfs/QmZKvfRW2LJFt5MWZbKuU9ujkXnS2hkPUJVj8wwJWcuZGX"
+      ]
+    }
+  },
+  "version": 1
+}

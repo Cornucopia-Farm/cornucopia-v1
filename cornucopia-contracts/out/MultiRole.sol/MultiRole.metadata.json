@@ -1,0 +1,306 @@
+{
+  "compiler": {
+    "version": "0.8.13+commit.abaa5c0e"
+  },
+  "language": "Solidity",
+  "output": {
+    "abi": [
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "newMember",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "manager",
+            "type": "address"
+          }
+        ],
+        "name": "AddedSharedMember",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "oldMember",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "manager",
+            "type": "address"
+          }
+        ],
+        "name": "RemovedSharedMember",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "newMember",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "manager",
+            "type": "address"
+          }
+        ],
+        "name": "ResetExclusiveMember",
+        "type": "event"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "newMember",
+            "type": "address"
+          }
+        ],
+        "name": "addMember",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          }
+        ],
+        "name": "getMember",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "memberToCheck",
+            "type": "address"
+          }
+        ],
+        "name": "holdsRole",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "memberToRemove",
+            "type": "address"
+          }
+        ],
+        "name": "removeMember",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          }
+        ],
+        "name": "renounceMembership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "newMember",
+            "type": "address"
+          }
+        ],
+        "name": "resetMember",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      }
+    ],
+    "devdoc": {
+      "kind": "dev",
+      "methods": {
+        "addMember(uint256,address)": {
+          "details": "Reverts if `roleId` does not represent an initialized, SharedRole or if the caller is not a member of the managing role for `roleId`.",
+          "params": {
+            "newMember": "the new SharedRole member.",
+            "roleId": "the SharedRole membership to modify."
+          }
+        },
+        "getMember(uint256)": {
+          "details": "Reverts if `roleId` does not represent an initialized, exclusive role.",
+          "params": {
+            "roleId": "the ExclusiveRole membership to check."
+          },
+          "returns": {
+            "_0": "the address of the current ExclusiveRole member."
+          }
+        },
+        "holdsRole(uint256,address)": {
+          "details": "Reverts if roleId does not correspond to an initialized role.",
+          "params": {
+            "memberToCheck": "the address to check.",
+            "roleId": "the Role to check."
+          },
+          "returns": {
+            "_0": "True if `memberToCheck` is a member of `roleId`."
+          }
+        },
+        "removeMember(uint256,address)": {
+          "details": "Reverts if `roleId` does not represent an initialized, SharedRole or if the caller is not a member of the managing role for `roleId`.",
+          "params": {
+            "memberToRemove": "the current SharedRole member to remove.",
+            "roleId": "the SharedRole membership to modify."
+          }
+        },
+        "renounceMembership(uint256)": {
+          "details": "Reverts if the caller is not a member of the role for `roleId` or if `roleId` is not an initialized, SharedRole.",
+          "params": {
+            "roleId": "the SharedRole membership to modify."
+          }
+        },
+        "resetMember(uint256,address)": {
+          "details": "Reverts if the caller is not a member of the managing role for `roleId` or if `roleId` is not an initialized, ExclusiveRole.",
+          "params": {
+            "newMember": "the new ExclusiveRole member.",
+            "roleId": "the ExclusiveRole membership to modify."
+          }
+        }
+      },
+      "title": "Base class to manage permissions for the derived class.",
+      "version": 1
+    },
+    "userdoc": {
+      "kind": "user",
+      "methods": {
+        "addMember(uint256,address)": {
+          "notice": "Adds `newMember` to the shared role, `roleId`."
+        },
+        "getMember(uint256)": {
+          "notice": "Gets the current holder of the exclusive role, `roleId`."
+        },
+        "holdsRole(uint256,address)": {
+          "notice": "Whether `memberToCheck` is a member of roleId."
+        },
+        "removeMember(uint256,address)": {
+          "notice": "Removes `memberToRemove` from the shared role, `roleId`."
+        },
+        "renounceMembership(uint256)": {
+          "notice": "Removes caller from the role, `roleId`."
+        },
+        "resetMember(uint256,address)": {
+          "notice": "Changes the exclusive role holder of `roleId` to `newMember`."
+        }
+      },
+      "version": 1
+    }
+  },
+  "settings": {
+    "compilationTarget": {
+      "lib/protocol/packages/core/contracts/common/implementation/MultiRole.sol": "MultiRole"
+    },
+    "evmVersion": "london",
+    "libraries": {},
+    "metadata": {
+      "bytecodeHash": "ipfs"
+    },
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "remappings": [
+      ":@openzeppelin/=lib/openzeppelin-contracts/",
+      ":ds-test/=lib/forge-std/lib/ds-test/src/",
+      ":forge-std/=lib/forge-std/src/",
+      ":openzeppelin-contracts/=lib/openzeppelin-contracts/",
+      ":protocol/=lib/protocol/",
+      ":uma-implementation/=lib/protocol/packages/core/contracts/oracle/implementation/",
+      ":uma-interface/=lib/protocol/packages/core/contracts/oracle/interfaces/"
+    ]
+  },
+  "sources": {
+    "lib/protocol/packages/core/contracts/common/implementation/MultiRole.sol": {
+      "keccak256": "0x134c5a2f847832705be631f2b4eb2a3e23a91a2f0e63560abb481e85eeebfae6",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://f1267c6ad560d1eb896575919ecca13759bf50bb82d1215e03fc1f0424ec37a6",
+        "dweb:/ipfs/QmXewGxpSmSMGYmT6ZUyxCVzy2cybxicbnyCn8w87m5mo3"
+      ]
+    }
+  },
+  "version": 1
+}

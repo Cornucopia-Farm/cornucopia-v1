@@ -1,0 +1,3730 @@
+{
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_finderAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_timerAddress",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "getCurrentTime",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getPendingQueries",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "bytes32",
+              "name": "identifier",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "time",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct MockOracle.QueryPoint[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "identifier",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "time",
+          "type": "uint256"
+        }
+      ],
+      "name": "getPrice",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "identifier",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "time",
+          "type": "uint256"
+        }
+      ],
+      "name": "hasPrice",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "identifier",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "time",
+          "type": "uint256"
+        },
+        {
+          "internalType": "int256",
+          "name": "price",
+          "type": "int256"
+        }
+      ],
+      "name": "pushPrice",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "identifier",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "time",
+          "type": "uint256"
+        }
+      ],
+      "name": "requestPrice",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "time",
+          "type": "uint256"
+        }
+      ],
+      "name": "setCurrentTime",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "timerAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x608060405234801561001057600080fd5b5060405161091e38038061091e83398101604081905261002f9161007f565b600080546001600160a01b039283166001600160a01b031991821617909155600180549390921692169190911790556100b2565b80516001600160a01b038116811461007a57600080fd5b919050565b6000806040838503121561009257600080fd5b61009b83610063565b91506100a960208401610063565b90509250929050565b61085d806100c16000396000f3fe608060405234801561001057600080fd5b50600436106100885760003560e01c806368ad8ae31161005b57806368ad8ae3146100fb578063a03e881a1461010e578063b555d6081461014c578063c9280f061461016157600080fd5b8063051fd48c1461008d5780631c39c38d146100a257806322f8e566146100d257806329cb924d146100e5575b600080fd5b6100a061009b3660046106cb565b610174565b005b6000546100b5906001600160a01b031681565b6040516001600160a01b0390911681526020015b60405180910390f35b6100a06100e03660046106f7565b61031c565b6100ed610392565b6040519081526020016100c9565b6100a0610109366004610710565b610423565b61013c61011c366004610710565b600091825260026020908152604080842092845291905290205460ff1690565b60405190151581526020016100c9565b6101546105a3565b6040516100c99190610732565b6100ed61016f366004610710565b610616565b6040518060600160405280600115158152602001828152602001610196610392565b9052600084815260026020818152604080842087855282528084208551815460ff19169015151781558583015160018201559481015194909201939093558582526003835280822085835290925220805460ff166102505760405162461bcd60e51b815260206004820152602d60248201527f43616e2774207075736820707269636573207468617420686176656e2774206260448201526c19595b881c995c5d595cdd1959609a1b606482015260840160405180910390fd5b60018082015460008681526003602090815260408083208884529091528120805460ff1916815583018190556004549192909161028d9190610781565b9050818114610314576000600482815481106102ab576102ab6107a6565b600091825260208083206002909202909101805483526003825260408084206001808401548652935290922001849055600480549192508291859081106102f4576102f46107a6565b600091825260209091208254600290920201908155600191820154910155505b505050505050565b6000546001600160a01b031661033157600080fd5b60005460405163117c72b360e11b8152600481018390526001600160a01b03909116906322f8e56690602401600060405180830381600087803b15801561037757600080fd5b505af115801561038b573d6000803e3d6000fd5b5050505050565b600080546001600160a01b03161561041e5760008054906101000a90046001600160a01b03166001600160a01b03166329cb924d6040518163ffffffff1660e01b8152600401602060405180830381865afa1580156103f5573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061041991906107bc565b905090565b504290565b61042b610648565b6001600160a01b03166390978d1b836040518263ffffffff1660e01b815260040161045891815260200190565b602060405180830381865afa158015610475573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061049991906107d5565b6104a257600080fd5b60008281526002602090815260408083208484529091529020805460ff161580156104e75750600083815260036020908152604080832085845290915290205460ff16155b1561059e57604080518082018252600180825260048054602080850191825260008981526003825286812089825282528681209551865460ff1916901515178655915194840194909455845180860190955287855292840186815281549283018255925291517f8a35acfbc15ff81a39ae7d344fd709f28e8600b4aa8c65c6b64bfe7fe36bd19b600290930292830155517f8a35acfbc15ff81a39ae7d344fd709f28e8600b4aa8c65c6b64bfe7fe36bd19c909101555b505050565b60606004805480602002602001604051908101604052809291908181526020016000905b8282101561060d578382906000526020600020906002020160405180604001604052908160008201548152602001600182015481525050815260200190600101906105c7565b50505050905090565b60008281526002602090815260408083208484529091528120805460ff1661063d57600080fd5b600101549392505050565b6001546040516302abf57960e61b8152721259195b9d1a599a595c95da1a5d195b1a5cdd606a1b60048201526000916001600160a01b03169063aafd5e4090602401602060405180830381865afa1580156106a7573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061041991906107fe565b6000806000606084860312156106e057600080fd5b505081359360208301359350604090920135919050565b60006020828403121561070957600080fd5b5035919050565b6000806040838503121561072357600080fd5b50508035926020909101359150565b602080825282518282018190526000919060409081850190868401855b828110156107745781518051855286015186850152928401929085019060010161074f565b5091979650505050505050565b6000828210156107a157634e487b7160e01b600052601160045260246000fd5b500390565b634e487b7160e01b600052603260045260246000fd5b6000602082840312156107ce57600080fd5b5051919050565b6000602082840312156107e757600080fd5b815180151581146107f757600080fd5b9392505050565b60006020828403121561081057600080fd5b81516001600160a01b03811681146107f757600080fdfea264697066735822122041d3870357c136a1dadadbaf58569107418247e0acd26717a00090d84716208864736f6c634300080d0033",
+    "sourceMap": "341:3896:28:-:0;;;1492:140;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;728:12:16;:28;;-1:-1:-1;;;;;728:28:16;;;-1:-1:-1;;;;;;728:28:16;;;;;;;;1585:40:28;;;;;::::1;::::0;::::1;::::0;;;::::1;::::0;;341:3896;;14:177:31;93:13;;-1:-1:-1;;;;;135:31:31;;125:42;;115:70;;181:1;178;171:12;115:70;14:177;;;:::o;196:293::-;275:6;283;336:2;324:9;315:7;311:23;307:32;304:52;;;352:1;349;342:12;304:52;375:40;405:9;375:40;:::i;:::-;365:50;;434:49;479:2;468:9;464:18;434:49;:::i;:::-;424:59;;196:293;;;;;:::o;:::-;341:3896:28;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x608060405234801561001057600080fd5b50600436106100885760003560e01c806368ad8ae31161005b57806368ad8ae3146100fb578063a03e881a1461010e578063b555d6081461014c578063c9280f061461016157600080fd5b8063051fd48c1461008d5780631c39c38d146100a257806322f8e566146100d257806329cb924d146100e5575b600080fd5b6100a061009b3660046106cb565b610174565b005b6000546100b5906001600160a01b031681565b6040516001600160a01b0390911681526020015b60405180910390f35b6100a06100e03660046106f7565b61031c565b6100ed610392565b6040519081526020016100c9565b6100a0610109366004610710565b610423565b61013c61011c366004610710565b600091825260026020908152604080842092845291905290205460ff1690565b60405190151581526020016100c9565b6101546105a3565b6040516100c99190610732565b6100ed61016f366004610710565b610616565b6040518060600160405280600115158152602001828152602001610196610392565b9052600084815260026020818152604080842087855282528084208551815460ff19169015151781558583015160018201559481015194909201939093558582526003835280822085835290925220805460ff166102505760405162461bcd60e51b815260206004820152602d60248201527f43616e2774207075736820707269636573207468617420686176656e2774206260448201526c19595b881c995c5d595cdd1959609a1b606482015260840160405180910390fd5b60018082015460008681526003602090815260408083208884529091528120805460ff1916815583018190556004549192909161028d9190610781565b9050818114610314576000600482815481106102ab576102ab6107a6565b600091825260208083206002909202909101805483526003825260408084206001808401548652935290922001849055600480549192508291859081106102f4576102f46107a6565b600091825260209091208254600290920201908155600191820154910155505b505050505050565b6000546001600160a01b031661033157600080fd5b60005460405163117c72b360e11b8152600481018390526001600160a01b03909116906322f8e56690602401600060405180830381600087803b15801561037757600080fd5b505af115801561038b573d6000803e3d6000fd5b5050505050565b600080546001600160a01b03161561041e5760008054906101000a90046001600160a01b03166001600160a01b03166329cb924d6040518163ffffffff1660e01b8152600401602060405180830381865afa1580156103f5573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061041991906107bc565b905090565b504290565b61042b610648565b6001600160a01b03166390978d1b836040518263ffffffff1660e01b815260040161045891815260200190565b602060405180830381865afa158015610475573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061049991906107d5565b6104a257600080fd5b60008281526002602090815260408083208484529091529020805460ff161580156104e75750600083815260036020908152604080832085845290915290205460ff16155b1561059e57604080518082018252600180825260048054602080850191825260008981526003825286812089825282528681209551865460ff1916901515178655915194840194909455845180860190955287855292840186815281549283018255925291517f8a35acfbc15ff81a39ae7d344fd709f28e8600b4aa8c65c6b64bfe7fe36bd19b600290930292830155517f8a35acfbc15ff81a39ae7d344fd709f28e8600b4aa8c65c6b64bfe7fe36bd19c909101555b505050565b60606004805480602002602001604051908101604052809291908181526020016000905b8282101561060d578382906000526020600020906002020160405180604001604052908160008201548152602001600182015481525050815260200190600101906105c7565b50505050905090565b60008281526002602090815260408083208484529091528120805460ff1661063d57600080fd5b600101549392505050565b6001546040516302abf57960e61b8152721259195b9d1a599a595c95da1a5d195b1a5cdd606a1b60048201526000916001600160a01b03169063aafd5e4090602401602060405180830381865afa1580156106a7573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061041991906107fe565b6000806000606084860312156106e057600080fd5b505081359360208301359350604090920135919050565b60006020828403121561070957600080fd5b5035919050565b6000806040838503121561072357600080fd5b50508035926020909101359150565b602080825282518282018190526000919060409081850190868401855b828110156107745781518051855286015186850152928401929085019060010161074f565b5091979650505050505050565b6000828210156107a157634e487b7160e01b600052601160045260246000fd5b500390565b634e487b7160e01b600052603260045260246000fd5b6000602082840312156107ce57600080fd5b5051919050565b6000602082840312156107e757600080fd5b815180151581146107f757600080fd5b9392505050565b60006020828403121561081057600080fd5b81516001600160a01b03811681146107f757600080fdfea264697066735822122041d3870357c136a1dadadbaf58569107418247e0acd26717a00090d84716208864736f6c634300080d0033",
+    "sourceMap": "341:3896:28:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2313:974;;;;;;:::i;:::-;;:::i;:::-;;391:27:16;;;;;-1:-1:-1;;;;;391:27:16;;;;;;-1:-1:-1;;;;;498:32:31;;;480:51;;468:2;453:18;391:27:16;;;;;;;;1097:115;;;;;;:::i;:::-;;:::i;1457:276::-;;;:::i;:::-;;;873:25:31;;;861:2;846:18;1457:276:16;727:177:31;1741:510:28;;;;;;:::i;:::-;;:::i;3342:195::-;;;;;;:::i;:::-;3424:4;3463:26;;;:14;:26;;;;;;;;:32;;;;;;;;3512:18;;;;3342:195;;;;1327:14:31;;1320:22;1302:41;;1290:2;1275:18;3342:195:28;1162:187:31;3886:112:28;;;:::i;:::-;;;;;;;:::i;3595:228::-;;;;;;:::i;:::-;;:::i;2313:974::-;2464:36;;;;;;;;2470:4;2464:36;;;;;;2476:5;2464:36;;;;2483:16;:14;:16::i;:::-;2464:36;;2429:26;;;;:14;:26;;;;;;;;:32;;;;;;;;:71;;;;-1:-1:-1;;2429:71:28;;;;;;;;;;;-1:-1:-1;2429:71:28;;;;;;;;;;;;;;;2543:24;;;:12;:24;;;;;:30;;;;;;;2591:18;;2429:71;2591:18;2583:76;;;;-1:-1:-1;;;2583:76:28;;2537:2:31;2583:76:28;;;2519:21:31;2576:2;2556:18;;;2549:30;2615:34;2595:18;;;2588:62;-1:-1:-1;;;2666:18:31;;;2659:43;2719:19;;2583:76:28;;;;;;;;2885:16;;;;;2860:22;2918:24;;;:12;:24;;;;;;;;:30;;;;;;;;2911:37;;-1:-1:-1;;2911:37:28;;;;;;;;2978:15;:22;2885:16;;2860:22;;2978:26;;2885:16;2978:26;:::i;:::-;2958:46;;3031:14;3018:9;:27;3014:267;;3061:30;3094:15;3110:9;3094:26;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;3147:22;;3134:36;;:12;:36;;;;;;3171:16;;;;;3134:54;;;;;;;:60;:77;;;3225:15;:31;;3094:26;;-1:-1:-1;3094:26:28;;3197:14;;3225:31;;;;;;:::i;:::-;;;;;;;;;:45;;:31;;;;;:45;;;;;;;;;;;-1:-1:-1;3014:267:28;2419:868;;;2313:974;;;:::o;1097:115:16:-;899:3;875:12;-1:-1:-1;;;;;875:12:16;867:37;;;;;;1171:12:::1;::::0;1165:40:::1;::::0;-1:-1:-1;;;1165:40:16;;::::1;::::0;::::1;873:25:31::0;;;-1:-1:-1;;;;;1171:12:16;;::::1;::::0;1165:34:::1;::::0;846:18:31;;1165:40:16::1;;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;::::0;::::1;;;;;;;;;1097:115:::0;:::o;1457:276::-;1512:7;1535:12;;-1:-1:-1;;;;;1535:12:16;:28;1531:196;;1592:12;;;;;;;;-1:-1:-1;;;;;1592:12:16;-1:-1:-1;;;;;1586:34:16;;:36;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;1579:43;;1457:276;:::o;1531:196::-;-1:-1:-1;1660:15:16;;1457:276::o;1741:510:28:-;1831:25;:23;:25::i;:::-;-1:-1:-1;;;;;1831:47:28;;1879:10;1831:59;;;;;;;;;;;;;873:25:31;;861:2;846:18;;727:177;1831:59:28;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;1823:68;;;;;;1901:20;1924:26;;;:14;:26;;;;;;;;:32;;;;;;;;1971:18;;;;1970:19;:62;;;;-1:-1:-1;1994:24:28;;;;:12;:24;;;;;;;;:30;;;;;;;;:38;;;1993:39;1970:62;1966:279;;;2130:40;;;;;;;;2141:4;2130:40;;;2147:15;:22;;2130:40;;;;;;;-1:-1:-1;2097:24:28;;;:12;:24;;;;;:30;;;;;;;;:73;;;;-1:-1:-1;;2097:73:28;;;;;;;;;;;;;;;;2205:28;;;;;;;;;;;;;;;;;2184:50;;;;;;;;;;;;;;;;;;;;;;;;;;1966:279;1813:438;1741:510;;:::o;3886:112::-;3938:19;3976:15;3969:22;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;3886:112;:::o;3595:228::-;3677:6;3718:26;;;:14;:26;;;;;;;;:32;;;;;;;;3768:18;;;;3760:27;;;;;;3804:12;;;;3595:228;-1:-1:-1;;;3595:228:28:o;4004:231::-;4158:6;;:69;;-1:-1:-1;;;4158:69:28;;-1:-1:-1;;;4158:69:28;;;873:25:31;4061:49:28;;-1:-1:-1;;;;;4158:6:28;;:31;;846:18:31;;4158:69:28;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;14:315:31:-;90:6;98;106;159:2;147:9;138:7;134:23;130:32;127:52;;;175:1;172;165:12;127:52;-1:-1:-1;;198:23:31;;;268:2;253:18;;240:32;;-1:-1:-1;319:2:31;304:18;;;291:32;;14:315;-1:-1:-1;14:315:31:o;542:180::-;601:6;654:2;642:9;633:7;629:23;625:32;622:52;;;670:1;667;660:12;622:52;-1:-1:-1;693:23:31;;542:180;-1:-1:-1;542:180:31:o;909:248::-;977:6;985;1038:2;1026:9;1017:7;1013:23;1009:32;1006:52;;;1054:1;1051;1044:12;1006:52;-1:-1:-1;;1077:23:31;;;1147:2;1132:18;;;1119:32;;-1:-1:-1;909:248:31:o;1354:796::-;1583:2;1635:21;;;1705:13;;1608:18;;;1727:22;;;1554:4;;1583:2;1768;;1786:18;;;;1827:15;;;1554:4;1870:254;1884:6;1881:1;1878:13;1870:254;;;1943:13;;1981:9;;1969:22;;2031:11;;2025:18;2011:12;;;2004:40;2064:12;;;;2099:15;;;;1906:1;1899:9;1870:254;;;-1:-1:-1;2141:3:31;;1354:796;-1:-1:-1;;;;;;;1354:796:31:o;2749:222::-;2789:4;2817:1;2814;2811:8;2808:131;;;2861:10;2856:3;2852:20;2849:1;2842:31;2896:4;2893:1;2886:15;2924:4;2921:1;2914:15;2808:131;-1:-1:-1;2956:9:31;;2749:222::o;2976:127::-;3037:10;3032:3;3028:20;3025:1;3018:31;3068:4;3065:1;3058:15;3092:4;3089:1;3082:15;3108:184;3178:6;3231:2;3219:9;3210:7;3206:23;3202:32;3199:52;;;3247:1;3244;3237:12;3199:52;-1:-1:-1;3270:16:31;;3108:184;-1:-1:-1;3108:184:31:o;3479:277::-;3546:6;3599:2;3587:9;3578:7;3574:23;3570:32;3567:52;;;3615:1;3612;3605:12;3567:52;3647:9;3641:16;3700:5;3693:13;3686:21;3679:5;3676:32;3666:60;;3722:1;3719;3712:12;3666:60;3745:5;3479:277;-1:-1:-1;;;3479:277:31:o;3761:290::-;3831:6;3884:2;3872:9;3863:7;3859:23;3855:32;3852:52;;;3900:1;3897;3890:12;3852:52;3926:16;;-1:-1:-1;;;;;3971:31:31;;3961:42;;3951:70;;4017:1;4014;4007:12",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "getCurrentTime()": "29cb924d",
+    "getPendingQueries()": "b555d608",
+    "getPrice(bytes32,uint256)": "c9280f06",
+    "hasPrice(bytes32,uint256)": "a03e881a",
+    "pushPrice(bytes32,uint256,int256)": "051fd48c",
+    "requestPrice(bytes32,uint256)": "68ad8ae3",
+    "setCurrentTime(uint256)": "22f8e566",
+    "timerAddress()": "1c39c38d"
+  },
+  "ast": {
+    "absolutePath": "/Users/alextoberoff/Desktop/Cornucopia/cornucopia/cornucopia-contracts/lib/protocol/packages/core/contracts/oracle/test/MockOracle.sol",
+    "id": 26805,
+    "exportedSymbols": {
+      "FinderInterface": [
+        25919
+      ],
+      "IdentifierWhitelistInterface": [
+        25943
+      ],
+      "MockOracle": [
+        26804
+      ],
+      "OptimisticOracleConstraints": [
+        24179
+      ],
+      "OracleInterface": [
+        26251
+      ],
+      "OracleInterfaces": [
+        24174
+      ],
+      "Testable": [
+        24070
+      ],
+      "Timer": [
+        24105
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "42:4196:28",
+    "nodes": [
+      {
+        "id": 26517,
+        "nodeType": "PragmaDirective",
+        "src": "42:23:28",
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ]
+      },
+      {
+        "id": 26518,
+        "nodeType": "ImportDirective",
+        "src": "67:50:28",
+        "absolutePath": "/Users/alextoberoff/Desktop/Cornucopia/cornucopia/cornucopia-contracts/lib/protocol/packages/core/contracts/common/implementation/Testable.sol",
+        "file": "../../common/implementation/Testable.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 26805,
+        "sourceUnit": 24071,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 26519,
+        "nodeType": "ImportDirective",
+        "src": "118:43:28",
+        "absolutePath": "/Users/alextoberoff/Desktop/Cornucopia/cornucopia/cornucopia-contracts/lib/protocol/packages/core/contracts/oracle/interfaces/OracleInterface.sol",
+        "file": "../interfaces/OracleInterface.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 26805,
+        "sourceUnit": 26252,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 26520,
+        "nodeType": "ImportDirective",
+        "src": "162:56:28",
+        "absolutePath": "/Users/alextoberoff/Desktop/Cornucopia/cornucopia/cornucopia-contracts/lib/protocol/packages/core/contracts/oracle/interfaces/IdentifierWhitelistInterface.sol",
+        "file": "../interfaces/IdentifierWhitelistInterface.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 26805,
+        "sourceUnit": 25944,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 26521,
+        "nodeType": "ImportDirective",
+        "src": "219:43:28",
+        "absolutePath": "/Users/alextoberoff/Desktop/Cornucopia/cornucopia/cornucopia-contracts/lib/protocol/packages/core/contracts/oracle/interfaces/FinderInterface.sol",
+        "file": "../interfaces/FinderInterface.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 26805,
+        "sourceUnit": 25920,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 26522,
+        "nodeType": "ImportDirective",
+        "src": "263:41:28",
+        "absolutePath": "/Users/alextoberoff/Desktop/Cornucopia/cornucopia/cornucopia-contracts/lib/protocol/packages/core/contracts/oracle/implementation/Constants.sol",
+        "file": "../implementation/Constants.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 26805,
+        "sourceUnit": 24180,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 26804,
+        "nodeType": "ContractDefinition",
+        "src": "341:3896:28",
+        "nodes": [
+          {
+            "id": 26533,
+            "nodeType": "StructDefinition",
+            "src": "485:151:28",
+            "canonicalName": "MockOracle.Price",
+            "members": [
+              {
+                "constant": false,
+                "id": 26528,
+                "mutability": "mutable",
+                "name": "isAvailable",
+                "nameLocation": "513:11:28",
+                "nodeType": "VariableDeclaration",
+                "scope": 26533,
+                "src": "508:16:28",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 26527,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "508:4:28",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 26530,
+                "mutability": "mutable",
+                "name": "price",
+                "nameLocation": "541:5:28",
+                "nodeType": "VariableDeclaration",
+                "scope": 26533,
+                "src": "534:12:28",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 26529,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "534:6:28",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 26532,
+                "mutability": "mutable",
+                "name": "verifiedTime",
+                "nameLocation": "617:12:28",
+                "nodeType": "VariableDeclaration",
+                "scope": 26533,
+                "src": "609:20:28",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 26531,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "609:7:28",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "Price",
+            "nameLocation": "492:5:28",
+            "scope": 26804,
+            "visibility": "public"
+          },
+          {
+            "id": 26538,
+            "nodeType": "StructDefinition",
+            "src": "787:70:28",
+            "canonicalName": "MockOracle.QueryIndex",
+            "members": [
+              {
+                "constant": false,
+                "id": 26535,
+                "mutability": "mutable",
+                "name": "isValid",
+                "nameLocation": "820:7:28",
+                "nodeType": "VariableDeclaration",
+                "scope": 26538,
+                "src": "815:12:28",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 26534,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "815:4:28",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 26537,
+                "mutability": "mutable",
+                "name": "index",
+                "nameLocation": "845:5:28",
+                "nodeType": "VariableDeclaration",
+                "scope": 26538,
+                "src": "837:13:28",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 26536,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "837:7:28",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "QueryIndex",
+            "nameLocation": "794:10:28",
+            "scope": 26804,
+            "visibility": "public"
+          },
+          {
+            "id": 26543,
+            "nodeType": "StructDefinition",
+            "src": "931:75:28",
+            "canonicalName": "MockOracle.QueryPoint",
+            "members": [
+              {
+                "constant": false,
+                "id": 26540,
+                "mutability": "mutable",
+                "name": "identifier",
+                "nameLocation": "967:10:28",
+                "nodeType": "VariableDeclaration",
+                "scope": 26543,
+                "src": "959:18:28",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                },
+                "typeName": {
+                  "id": 26539,
+                  "name": "bytes32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "959:7:28",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 26542,
+                "mutability": "mutable",
+                "name": "time",
+                "nameLocation": "995:4:28",
+                "nodeType": "VariableDeclaration",
+                "scope": 26543,
+                "src": "987:12:28",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 26541,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "987:7:28",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "QueryPoint",
+            "nameLocation": "938:10:28",
+            "scope": 26804,
+            "visibility": "public"
+          },
+          {
+            "id": 26546,
+            "nodeType": "VariableDeclaration",
+            "src": "1044:30:28",
+            "constant": false,
+            "mutability": "mutable",
+            "name": "finder",
+            "nameLocation": "1068:6:28",
+            "scope": 26804,
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_FinderInterface_$25919",
+              "typeString": "contract FinderInterface"
+            },
+            "typeName": {
+              "id": 26545,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 26544,
+                "name": "FinderInterface",
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 25919,
+                "src": "1044:15:28"
+              },
+              "referencedDeclaration": 25919,
+              "src": "1044:15:28",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_FinderInterface_$25919",
+                "typeString": "contract FinderInterface"
+              }
+            },
+            "visibility": "private"
+          },
+          {
+            "id": 26553,
+            "nodeType": "VariableDeclaration",
+            "src": "1144:68:28",
+            "constant": false,
+            "mutability": "mutable",
+            "name": "verifiedPrices",
+            "nameLocation": "1198:14:28",
+            "scope": 26804,
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_bytes32_$_t_mapping$_t_uint256_$_t_struct$_Price_$26533_storage_$_$",
+              "typeString": "mapping(bytes32 => mapping(uint256 => struct MockOracle.Price))"
+            },
+            "typeName": {
+              "id": 26552,
+              "keyType": {
+                "id": 26547,
+                "name": "bytes32",
+                "nodeType": "ElementaryTypeName",
+                "src": "1152:7:28",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "1144:45:28",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_bytes32_$_t_mapping$_t_uint256_$_t_struct$_Price_$26533_storage_$_$",
+                "typeString": "mapping(bytes32 => mapping(uint256 => struct MockOracle.Price))"
+              },
+              "valueType": {
+                "id": 26551,
+                "keyType": {
+                  "id": 26548,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1171:7:28",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "nodeType": "Mapping",
+                "src": "1163:25:28",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Price_$26533_storage_$",
+                  "typeString": "mapping(uint256 => struct MockOracle.Price)"
+                },
+                "valueType": {
+                  "id": 26550,
+                  "nodeType": "UserDefinedTypeName",
+                  "pathNode": {
+                    "id": 26549,
+                    "name": "Price",
+                    "nodeType": "IdentifierPath",
+                    "referencedDeclaration": 26533,
+                    "src": "1182:5:28"
+                  },
+                  "referencedDeclaration": 26533,
+                  "src": "1182:5:28",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Price_$26533_storage_ptr",
+                    "typeString": "struct MockOracle.Price"
+                  }
+                }
+              }
+            },
+            "visibility": "private"
+          },
+          {
+            "id": 26560,
+            "nodeType": "VariableDeclaration",
+            "src": "1372:71:28",
+            "constant": false,
+            "mutability": "mutable",
+            "name": "queryIndices",
+            "nameLocation": "1431:12:28",
+            "scope": 26804,
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_bytes32_$_t_mapping$_t_uint256_$_t_struct$_QueryIndex_$26538_storage_$_$",
+              "typeString": "mapping(bytes32 => mapping(uint256 => struct MockOracle.QueryIndex))"
+            },
+            "typeName": {
+              "id": 26559,
+              "keyType": {
+                "id": 26554,
+                "name": "bytes32",
+                "nodeType": "ElementaryTypeName",
+                "src": "1380:7:28",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "1372:50:28",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_bytes32_$_t_mapping$_t_uint256_$_t_struct$_QueryIndex_$26538_storage_$_$",
+                "typeString": "mapping(bytes32 => mapping(uint256 => struct MockOracle.QueryIndex))"
+              },
+              "valueType": {
+                "id": 26558,
+                "keyType": {
+                  "id": 26555,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1399:7:28",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "nodeType": "Mapping",
+                "src": "1391:30:28",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_QueryIndex_$26538_storage_$",
+                  "typeString": "mapping(uint256 => struct MockOracle.QueryIndex)"
+                },
+                "valueType": {
+                  "id": 26557,
+                  "nodeType": "UserDefinedTypeName",
+                  "pathNode": {
+                    "id": 26556,
+                    "name": "QueryIndex",
+                    "nodeType": "IdentifierPath",
+                    "referencedDeclaration": 26538,
+                    "src": "1410:10:28"
+                  },
+                  "referencedDeclaration": 26538,
+                  "src": "1410:10:28",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_QueryIndex_$26538_storage_ptr",
+                    "typeString": "struct MockOracle.QueryIndex"
+                  }
+                }
+              }
+            },
+            "visibility": "private"
+          },
+          {
+            "id": 26564,
+            "nodeType": "VariableDeclaration",
+            "src": "1449:36:28",
+            "constant": false,
+            "mutability": "mutable",
+            "name": "requestedPrices",
+            "nameLocation": "1470:15:28",
+            "scope": 26804,
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_array$_t_struct$_QueryPoint_$26543_storage_$dyn_storage",
+              "typeString": "struct MockOracle.QueryPoint[]"
+            },
+            "typeName": {
+              "baseType": {
+                "id": 26562,
+                "nodeType": "UserDefinedTypeName",
+                "pathNode": {
+                  "id": 26561,
+                  "name": "QueryPoint",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 26543,
+                  "src": "1449:10:28"
+                },
+                "referencedDeclaration": 26543,
+                "src": "1449:10:28",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_QueryPoint_$26543_storage_ptr",
+                  "typeString": "struct MockOracle.QueryPoint"
+                }
+              },
+              "id": 26563,
+              "nodeType": "ArrayTypeName",
+              "src": "1449:12:28",
+              "typeDescriptions": {
+                "typeIdentifier": "t_array$_t_struct$_QueryPoint_$26543_storage_$dyn_storage_ptr",
+                "typeString": "struct MockOracle.QueryPoint[]"
+              }
+            },
+            "visibility": "private"
+          },
+          {
+            "id": 26581,
+            "nodeType": "FunctionDefinition",
+            "src": "1492:140:28",
+            "body": {
+              "id": 26580,
+              "nodeType": "Block",
+              "src": "1575:57:28",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 26578,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 26574,
+                      "name": "finder",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 26546,
+                      "src": "1585:6:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_FinderInterface_$25919",
+                        "typeString": "contract FinderInterface"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "arguments": [
+                        {
+                          "id": 26576,
+                          "name": "_finderAddress",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 26566,
+                          "src": "1610:14:28",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        ],
+                        "id": 26575,
+                        "name": "FinderInterface",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 25919,
+                        "src": "1594:15:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_FinderInterface_$25919_$",
+                          "typeString": "type(contract FinderInterface)"
+                        }
+                      },
+                      "id": 26577,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "typeConversion",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "1594:31:28",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_FinderInterface_$25919",
+                        "typeString": "contract FinderInterface"
+                      }
+                    },
+                    "src": "1585:40:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_FinderInterface_$25919",
+                      "typeString": "contract FinderInterface"
+                    }
+                  },
+                  "id": 26579,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1585:40:28"
+                }
+              ]
+            },
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [
+              {
+                "arguments": [
+                  {
+                    "id": 26571,
+                    "name": "_timerAddress",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 26568,
+                    "src": "1560:13:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  }
+                ],
+                "id": 26572,
+                "kind": "baseConstructorSpecifier",
+                "modifierName": {
+                  "id": 26570,
+                  "name": "Testable",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 24070,
+                  "src": "1551:8:28"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1551:23:28"
+              }
+            ],
+            "name": "",
+            "nameLocation": "-1:-1:-1",
+            "parameters": {
+              "id": 26569,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 26566,
+                  "mutability": "mutable",
+                  "name": "_finderAddress",
+                  "nameLocation": "1512:14:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26581,
+                  "src": "1504:22:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 26565,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1504:7:28",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 26568,
+                  "mutability": "mutable",
+                  "name": "_timerAddress",
+                  "nameLocation": "1536:13:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26581,
+                  "src": "1528:21:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 26567,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1528:7:28",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1503:47:28"
+            },
+            "returnParameters": {
+              "id": 26573,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1575:0:28"
+            },
+            "scope": 26804,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "id": 26641,
+            "nodeType": "FunctionDefinition",
+            "src": "1741:510:28",
+            "body": {
+              "id": 26640,
+              "nodeType": "Block",
+              "src": "1813:438:28",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "arguments": [
+                          {
+                            "id": 26593,
+                            "name": "identifier",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 26583,
+                            "src": "1879:10:28",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bytes32",
+                              "typeString": "bytes32"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_bytes32",
+                              "typeString": "bytes32"
+                            }
+                          ],
+                          "expression": {
+                            "arguments": [],
+                            "expression": {
+                              "argumentTypes": [],
+                              "id": 26590,
+                              "name": "_getIdentifierWhitelist",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 26803,
+                              "src": "1831:23:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_function_internal_view$__$returns$_t_contract$_IdentifierWhitelistInterface_$25943_$",
+                                "typeString": "function () view returns (contract IdentifierWhitelistInterface)"
+                              }
+                            },
+                            "id": 26591,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "kind": "functionCall",
+                            "lValueRequested": false,
+                            "names": [],
+                            "nodeType": "FunctionCall",
+                            "src": "1831:25:28",
+                            "tryCall": false,
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_IdentifierWhitelistInterface_$25943",
+                              "typeString": "contract IdentifierWhitelistInterface"
+                            }
+                          },
+                          "id": 26592,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isIdentifierSupported",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 25942,
+                          "src": "1831:47:28",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_view$_t_bytes32_$returns$_t_bool_$",
+                            "typeString": "function (bytes32) view external returns (bool)"
+                          }
+                        },
+                        "id": 26594,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "1831:59:28",
+                        "tryCall": false,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 26589,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        -18,
+                        -18
+                      ],
+                      "referencedDeclaration": -18,
+                      "src": "1823:7:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 26595,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1823:68:28",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 26596,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1823:68:28"
+                },
+                {
+                  "assignments": [
+                    26599
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 26599,
+                      "mutability": "mutable",
+                      "name": "lookup",
+                      "nameLocation": "1915:6:28",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 26640,
+                      "src": "1901:20:28",
+                      "stateVariable": false,
+                      "storageLocation": "storage",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Price_$26533_storage_ptr",
+                        "typeString": "struct MockOracle.Price"
+                      },
+                      "typeName": {
+                        "id": 26598,
+                        "nodeType": "UserDefinedTypeName",
+                        "pathNode": {
+                          "id": 26597,
+                          "name": "Price",
+                          "nodeType": "IdentifierPath",
+                          "referencedDeclaration": 26533,
+                          "src": "1901:5:28"
+                        },
+                        "referencedDeclaration": 26533,
+                        "src": "1901:5:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Price_$26533_storage_ptr",
+                          "typeString": "struct MockOracle.Price"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 26605,
+                  "initialValue": {
+                    "baseExpression": {
+                      "baseExpression": {
+                        "id": 26600,
+                        "name": "verifiedPrices",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 26553,
+                        "src": "1924:14:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_bytes32_$_t_mapping$_t_uint256_$_t_struct$_Price_$26533_storage_$_$",
+                          "typeString": "mapping(bytes32 => mapping(uint256 => struct MockOracle.Price storage ref))"
+                        }
+                      },
+                      "id": 26602,
+                      "indexExpression": {
+                        "id": 26601,
+                        "name": "identifier",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 26583,
+                        "src": "1939:10:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "IndexAccess",
+                      "src": "1924:26:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Price_$26533_storage_$",
+                        "typeString": "mapping(uint256 => struct MockOracle.Price storage ref)"
+                      }
+                    },
+                    "id": 26604,
+                    "indexExpression": {
+                      "id": 26603,
+                      "name": "time",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 26585,
+                      "src": "1951:4:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "IndexAccess",
+                    "src": "1924:32:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Price_$26533_storage",
+                      "typeString": "struct MockOracle.Price storage ref"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1901:55:28"
+                },
+                {
+                  "condition": {
+                    "commonType": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    },
+                    "id": 26616,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "id": 26608,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "UnaryOperation",
+                      "operator": "!",
+                      "prefix": true,
+                      "src": "1970:19:28",
+                      "subExpression": {
+                        "expression": {
+                          "id": 26606,
+                          "name": "lookup",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 26599,
+                          "src": "1971:6:28",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Price_$26533_storage_ptr",
+                            "typeString": "struct MockOracle.Price storage pointer"
+                          }
+                        },
+                        "id": 26607,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "isAvailable",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 26528,
+                        "src": "1971:18:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "&&",
+                    "rightExpression": {
+                      "id": 26615,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "UnaryOperation",
+                      "operator": "!",
+                      "prefix": true,
+                      "src": "1993:39:28",
+                      "subExpression": {
+                        "expression": {
+                          "baseExpression": {
+                            "baseExpression": {
+                              "id": 26609,
+                              "name": "queryIndices",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 26560,
+                              "src": "1994:12:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_mapping$_t_bytes32_$_t_mapping$_t_uint256_$_t_struct$_QueryIndex_$26538_storage_$_$",
+                                "typeString": "mapping(bytes32 => mapping(uint256 => struct MockOracle.QueryIndex storage ref))"
+                              }
+                            },
+                            "id": 26611,
+                            "indexExpression": {
+                              "id": 26610,
+                              "name": "identifier",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 26583,
+                              "src": "2007:10:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_bytes32",
+                                "typeString": "bytes32"
+                              }
+                            },
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "nodeType": "IndexAccess",
+                            "src": "1994:24:28",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_QueryIndex_$26538_storage_$",
+                              "typeString": "mapping(uint256 => struct MockOracle.QueryIndex storage ref)"
+                            }
+                          },
+                          "id": 26613,
+                          "indexExpression": {
+                            "id": 26612,
+                            "name": "time",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 26585,
+                            "src": "2019:4:28",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "1994:30:28",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_QueryIndex_$26538_storage",
+                            "typeString": "struct MockOracle.QueryIndex storage ref"
+                          }
+                        },
+                        "id": 26614,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "isValid",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 26535,
+                        "src": "1994:38:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "src": "1970:62:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 26639,
+                  "nodeType": "IfStatement",
+                  "src": "1966:279:28",
+                  "trueBody": {
+                    "id": 26638,
+                    "nodeType": "Block",
+                    "src": "2034:211:28",
+                    "statements": [
+                      {
+                        "expression": {
+                          "id": 26627,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftHandSide": {
+                            "baseExpression": {
+                              "baseExpression": {
+                                "id": 26617,
+                                "name": "queryIndices",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 26560,
+                                "src": "2097:12:28",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_mapping$_t_bytes32_$_t_mapping$_t_uint256_$_t_struct$_QueryIndex_$26538_storage_$_$",
+                                  "typeString": "mapping(bytes32 => mapping(uint256 => struct MockOracle.QueryIndex storage ref))"
+                                }
+                              },
+                              "id": 26620,
+                              "indexExpression": {
+                                "id": 26618,
+                                "name": "identifier",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 26583,
+                                "src": "2110:10:28",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_bytes32",
+                                  "typeString": "bytes32"
+                                }
+                              },
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "nodeType": "IndexAccess",
+                              "src": "2097:24:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_QueryIndex_$26538_storage_$",
+                                "typeString": "mapping(uint256 => struct MockOracle.QueryIndex storage ref)"
+                              }
+                            },
+                            "id": 26621,
+                            "indexExpression": {
+                              "id": 26619,
+                              "name": "time",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 26585,
+                              "src": "2122:4:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            },
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": true,
+                            "nodeType": "IndexAccess",
+                            "src": "2097:30:28",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_QueryIndex_$26538_storage",
+                              "typeString": "struct MockOracle.QueryIndex storage ref"
+                            }
+                          },
+                          "nodeType": "Assignment",
+                          "operator": "=",
+                          "rightHandSide": {
+                            "arguments": [
+                              {
+                                "hexValue": "74727565",
+                                "id": 26623,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": true,
+                                "kind": "bool",
+                                "lValueRequested": false,
+                                "nodeType": "Literal",
+                                "src": "2141:4:28",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                },
+                                "value": "true"
+                              },
+                              {
+                                "expression": {
+                                  "id": 26624,
+                                  "name": "requestedPrices",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 26564,
+                                  "src": "2147:15:28",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_array$_t_struct$_QueryPoint_$26543_storage_$dyn_storage",
+                                    "typeString": "struct MockOracle.QueryPoint storage ref[] storage ref"
+                                  }
+                                },
+                                "id": 26625,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "memberName": "length",
+                                "nodeType": "MemberAccess",
+                                "src": "2147:22:28",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              }
+                            ],
+                            "expression": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                },
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "id": 26622,
+                              "name": "QueryIndex",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 26538,
+                              "src": "2130:10:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_type$_t_struct$_QueryIndex_$26538_storage_ptr_$",
+                                "typeString": "type(struct MockOracle.QueryIndex storage pointer)"
+                              }
+                            },
+                            "id": 26626,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "kind": "structConstructorCall",
+                            "lValueRequested": false,
+                            "names": [],
+                            "nodeType": "FunctionCall",
+                            "src": "2130:40:28",
+                            "tryCall": false,
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_QueryIndex_$26538_memory_ptr",
+                              "typeString": "struct MockOracle.QueryIndex memory"
+                            }
+                          },
+                          "src": "2097:73:28",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_QueryIndex_$26538_storage",
+                            "typeString": "struct MockOracle.QueryIndex storage ref"
+                          }
+                        },
+                        "id": 26628,
+                        "nodeType": "ExpressionStatement",
+                        "src": "2097:73:28"
+                      },
+                      {
+                        "expression": {
+                          "arguments": [
+                            {
+                              "arguments": [
+                                {
+                                  "id": 26633,
+                                  "name": "identifier",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 26583,
+                                  "src": "2216:10:28",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_bytes32",
+                                    "typeString": "bytes32"
+                                  }
+                                },
+                                {
+                                  "id": 26634,
+                                  "name": "time",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 26585,
+                                  "src": "2228:4:28",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  }
+                                }
+                              ],
+                              "expression": {
+                                "argumentTypes": [
+                                  {
+                                    "typeIdentifier": "t_bytes32",
+                                    "typeString": "bytes32"
+                                  },
+                                  {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  }
+                                ],
+                                "id": 26632,
+                                "name": "QueryPoint",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 26543,
+                                "src": "2205:10:28",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_type$_t_struct$_QueryPoint_$26543_storage_ptr_$",
+                                  "typeString": "type(struct MockOracle.QueryPoint storage pointer)"
+                                }
+                              },
+                              "id": 26635,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "kind": "structConstructorCall",
+                              "lValueRequested": false,
+                              "names": [],
+                              "nodeType": "FunctionCall",
+                              "src": "2205:28:28",
+                              "tryCall": false,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_struct$_QueryPoint_$26543_memory_ptr",
+                                "typeString": "struct MockOracle.QueryPoint memory"
+                              }
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_struct$_QueryPoint_$26543_memory_ptr",
+                                "typeString": "struct MockOracle.QueryPoint memory"
+                              }
+                            ],
+                            "expression": {
+                              "id": 26629,
+                              "name": "requestedPrices",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 26564,
+                              "src": "2184:15:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_array$_t_struct$_QueryPoint_$26543_storage_$dyn_storage",
+                                "typeString": "struct MockOracle.QueryPoint storage ref[] storage ref"
+                              }
+                            },
+                            "id": 26631,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "push",
+                            "nodeType": "MemberAccess",
+                            "src": "2184:20:28",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_arraypush_nonpayable$_t_array$_t_struct$_QueryPoint_$26543_storage_$dyn_storage_ptr_$_t_struct$_QueryPoint_$26543_storage_$returns$__$bound_to$_t_array$_t_struct$_QueryPoint_$26543_storage_$dyn_storage_ptr_$",
+                              "typeString": "function (struct MockOracle.QueryPoint storage ref[] storage pointer,struct MockOracle.QueryPoint storage ref)"
+                            }
+                          },
+                          "id": 26636,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "2184:50:28",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_tuple$__$",
+                            "typeString": "tuple()"
+                          }
+                        },
+                        "id": 26637,
+                        "nodeType": "ExpressionStatement",
+                        "src": "2184:50:28"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "baseFunctions": [
+              26230
+            ],
+            "functionSelector": "68ad8ae3",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "requestPrice",
+            "nameLocation": "1750:12:28",
+            "overrides": {
+              "id": 26587,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "1804:8:28"
+            },
+            "parameters": {
+              "id": 26586,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 26583,
+                  "mutability": "mutable",
+                  "name": "identifier",
+                  "nameLocation": "1771:10:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26641,
+                  "src": "1763:18:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 26582,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1763:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 26585,
+                  "mutability": "mutable",
+                  "name": "time",
+                  "nameLocation": "1791:4:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26641,
+                  "src": "1783:12:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 26584,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1783:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1762:34:28"
+            },
+            "returnParameters": {
+              "id": 26588,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1813:0:28"
+            },
+            "scope": 26804,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "id": 26727,
+            "nodeType": "FunctionDefinition",
+            "src": "2313:974:28",
+            "body": {
+              "id": 26726,
+              "nodeType": "Block",
+              "src": "2419:868:28",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 26661,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "baseExpression": {
+                        "baseExpression": {
+                          "id": 26650,
+                          "name": "verifiedPrices",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 26553,
+                          "src": "2429:14:28",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_mapping$_t_uint256_$_t_struct$_Price_$26533_storage_$_$",
+                            "typeString": "mapping(bytes32 => mapping(uint256 => struct MockOracle.Price storage ref))"
+                          }
+                        },
+                        "id": 26653,
+                        "indexExpression": {
+                          "id": 26651,
+                          "name": "identifier",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 26643,
+                          "src": "2444:10:28",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes32",
+                            "typeString": "bytes32"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "2429:26:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Price_$26533_storage_$",
+                          "typeString": "mapping(uint256 => struct MockOracle.Price storage ref)"
+                        }
+                      },
+                      "id": 26654,
+                      "indexExpression": {
+                        "id": 26652,
+                        "name": "time",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 26645,
+                        "src": "2456:4:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "2429:32:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Price_$26533_storage",
+                        "typeString": "struct MockOracle.Price storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "arguments": [
+                        {
+                          "hexValue": "74727565",
+                          "id": 26656,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "bool",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "2470:4:28",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          },
+                          "value": "true"
+                        },
+                        {
+                          "id": 26657,
+                          "name": "price",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 26647,
+                          "src": "2476:5:28",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_int256",
+                            "typeString": "int256"
+                          }
+                        },
+                        {
+                          "arguments": [],
+                          "expression": {
+                            "argumentTypes": [],
+                            "id": 26658,
+                            "name": "getCurrentTime",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 24069,
+                            "src": "2483:14:28",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_internal_view$__$returns$_t_uint256_$",
+                              "typeString": "function () view returns (uint256)"
+                            }
+                          },
+                          "id": 26659,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "2483:16:28",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          },
+                          {
+                            "typeIdentifier": "t_int256",
+                            "typeString": "int256"
+                          },
+                          {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        ],
+                        "id": 26655,
+                        "name": "Price",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 26533,
+                        "src": "2464:5:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_struct$_Price_$26533_storage_ptr_$",
+                          "typeString": "type(struct MockOracle.Price storage pointer)"
+                        }
+                      },
+                      "id": 26660,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "structConstructorCall",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "2464:36:28",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Price_$26533_memory_ptr",
+                        "typeString": "struct MockOracle.Price memory"
+                      }
+                    },
+                    "src": "2429:71:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Price_$26533_storage",
+                      "typeString": "struct MockOracle.Price storage ref"
+                    }
+                  },
+                  "id": 26662,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2429:71:28"
+                },
+                {
+                  "assignments": [
+                    26665
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 26665,
+                      "mutability": "mutable",
+                      "name": "queryIndex",
+                      "nameLocation": "2530:10:28",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 26726,
+                      "src": "2511:29:28",
+                      "stateVariable": false,
+                      "storageLocation": "storage",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_QueryIndex_$26538_storage_ptr",
+                        "typeString": "struct MockOracle.QueryIndex"
+                      },
+                      "typeName": {
+                        "id": 26664,
+                        "nodeType": "UserDefinedTypeName",
+                        "pathNode": {
+                          "id": 26663,
+                          "name": "QueryIndex",
+                          "nodeType": "IdentifierPath",
+                          "referencedDeclaration": 26538,
+                          "src": "2511:10:28"
+                        },
+                        "referencedDeclaration": 26538,
+                        "src": "2511:10:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_QueryIndex_$26538_storage_ptr",
+                          "typeString": "struct MockOracle.QueryIndex"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 26671,
+                  "initialValue": {
+                    "baseExpression": {
+                      "baseExpression": {
+                        "id": 26666,
+                        "name": "queryIndices",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 26560,
+                        "src": "2543:12:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_bytes32_$_t_mapping$_t_uint256_$_t_struct$_QueryIndex_$26538_storage_$_$",
+                          "typeString": "mapping(bytes32 => mapping(uint256 => struct MockOracle.QueryIndex storage ref))"
+                        }
+                      },
+                      "id": 26668,
+                      "indexExpression": {
+                        "id": 26667,
+                        "name": "identifier",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 26643,
+                        "src": "2556:10:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "IndexAccess",
+                      "src": "2543:24:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_QueryIndex_$26538_storage_$",
+                        "typeString": "mapping(uint256 => struct MockOracle.QueryIndex storage ref)"
+                      }
+                    },
+                    "id": 26670,
+                    "indexExpression": {
+                      "id": 26669,
+                      "name": "time",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 26645,
+                      "src": "2568:4:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "IndexAccess",
+                    "src": "2543:30:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_QueryIndex_$26538_storage",
+                      "typeString": "struct MockOracle.QueryIndex storage ref"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "2511:62:28"
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "expression": {
+                          "id": 26673,
+                          "name": "queryIndex",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 26665,
+                          "src": "2591:10:28",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_QueryIndex_$26538_storage_ptr",
+                            "typeString": "struct MockOracle.QueryIndex storage pointer"
+                          }
+                        },
+                        "id": 26674,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "isValid",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 26535,
+                        "src": "2591:18:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "43616e2774207075736820707269636573207468617420686176656e2774206265656e20726571756573746564",
+                        "id": 26675,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "2611:47:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_7f86d4b67de8b52ac5d5f9c15d18865d01fddde2652d2e531d7f1171d8464ec1",
+                          "typeString": "literal_string \"Can't push prices that haven't been requested\""
+                        },
+                        "value": "Can't push prices that haven't been requested"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_7f86d4b67de8b52ac5d5f9c15d18865d01fddde2652d2e531d7f1171d8464ec1",
+                          "typeString": "literal_string \"Can't push prices that haven't been requested\""
+                        }
+                      ],
+                      "id": 26672,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        -18,
+                        -18
+                      ],
+                      "referencedDeclaration": -18,
+                      "src": "2583:7:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 26676,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2583:76:28",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 26677,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2583:76:28"
+                },
+                {
+                  "assignments": [
+                    26679
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 26679,
+                      "mutability": "mutable",
+                      "name": "indexToReplace",
+                      "nameLocation": "2868:14:28",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 26726,
+                      "src": "2860:22:28",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "typeName": {
+                        "id": 26678,
+                        "name": "uint256",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "2860:7:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 26682,
+                  "initialValue": {
+                    "expression": {
+                      "id": 26680,
+                      "name": "queryIndex",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 26665,
+                      "src": "2885:10:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_QueryIndex_$26538_storage_ptr",
+                        "typeString": "struct MockOracle.QueryIndex storage pointer"
+                      }
+                    },
+                    "id": 26681,
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "memberName": "index",
+                    "nodeType": "MemberAccess",
+                    "referencedDeclaration": 26537,
+                    "src": "2885:16:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "2860:41:28"
+                },
+                {
+                  "expression": {
+                    "id": 26688,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "UnaryOperation",
+                    "operator": "delete",
+                    "prefix": true,
+                    "src": "2911:37:28",
+                    "subExpression": {
+                      "baseExpression": {
+                        "baseExpression": {
+                          "id": 26683,
+                          "name": "queryIndices",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 26560,
+                          "src": "2918:12:28",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_mapping$_t_uint256_$_t_struct$_QueryIndex_$26538_storage_$_$",
+                            "typeString": "mapping(bytes32 => mapping(uint256 => struct MockOracle.QueryIndex storage ref))"
+                          }
+                        },
+                        "id": 26685,
+                        "indexExpression": {
+                          "id": 26684,
+                          "name": "identifier",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 26643,
+                          "src": "2931:10:28",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes32",
+                            "typeString": "bytes32"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "2918:24:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_QueryIndex_$26538_storage_$",
+                          "typeString": "mapping(uint256 => struct MockOracle.QueryIndex storage ref)"
+                        }
+                      },
+                      "id": 26687,
+                      "indexExpression": {
+                        "id": 26686,
+                        "name": "time",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 26645,
+                        "src": "2943:4:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "2918:30:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_QueryIndex_$26538_storage",
+                        "typeString": "struct MockOracle.QueryIndex storage ref"
+                      }
+                    },
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 26689,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2911:37:28"
+                },
+                {
+                  "assignments": [
+                    26691
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 26691,
+                      "mutability": "mutable",
+                      "name": "lastIndex",
+                      "nameLocation": "2966:9:28",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 26726,
+                      "src": "2958:17:28",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "typeName": {
+                        "id": 26690,
+                        "name": "uint256",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "2958:7:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 26696,
+                  "initialValue": {
+                    "commonType": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    },
+                    "id": 26695,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "expression": {
+                        "id": 26692,
+                        "name": "requestedPrices",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 26564,
+                        "src": "2978:15:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_array$_t_struct$_QueryPoint_$26543_storage_$dyn_storage",
+                          "typeString": "struct MockOracle.QueryPoint storage ref[] storage ref"
+                        }
+                      },
+                      "id": 26693,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "length",
+                      "nodeType": "MemberAccess",
+                      "src": "2978:22:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "-",
+                    "rightExpression": {
+                      "hexValue": "31",
+                      "id": 26694,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "3003:1:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_1_by_1",
+                        "typeString": "int_const 1"
+                      },
+                      "value": "1"
+                    },
+                    "src": "2978:26:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "2958:46:28"
+                },
+                {
+                  "condition": {
+                    "commonType": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    },
+                    "id": 26699,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "id": 26697,
+                      "name": "lastIndex",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 26691,
+                      "src": "3018:9:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "!=",
+                    "rightExpression": {
+                      "id": 26698,
+                      "name": "indexToReplace",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 26679,
+                      "src": "3031:14:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "3018:27:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 26725,
+                  "nodeType": "IfStatement",
+                  "src": "3014:267:28",
+                  "trueBody": {
+                    "id": 26724,
+                    "nodeType": "Block",
+                    "src": "3047:234:28",
+                    "statements": [
+                      {
+                        "assignments": [
+                          26702
+                        ],
+                        "declarations": [
+                          {
+                            "constant": false,
+                            "id": 26702,
+                            "mutability": "mutable",
+                            "name": "queryToCopy",
+                            "nameLocation": "3080:11:28",
+                            "nodeType": "VariableDeclaration",
+                            "scope": 26724,
+                            "src": "3061:30:28",
+                            "stateVariable": false,
+                            "storageLocation": "storage",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_QueryPoint_$26543_storage_ptr",
+                              "typeString": "struct MockOracle.QueryPoint"
+                            },
+                            "typeName": {
+                              "id": 26701,
+                              "nodeType": "UserDefinedTypeName",
+                              "pathNode": {
+                                "id": 26700,
+                                "name": "QueryPoint",
+                                "nodeType": "IdentifierPath",
+                                "referencedDeclaration": 26543,
+                                "src": "3061:10:28"
+                              },
+                              "referencedDeclaration": 26543,
+                              "src": "3061:10:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_struct$_QueryPoint_$26543_storage_ptr",
+                                "typeString": "struct MockOracle.QueryPoint"
+                              }
+                            },
+                            "visibility": "internal"
+                          }
+                        ],
+                        "id": 26706,
+                        "initialValue": {
+                          "baseExpression": {
+                            "id": 26703,
+                            "name": "requestedPrices",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 26564,
+                            "src": "3094:15:28",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_array$_t_struct$_QueryPoint_$26543_storage_$dyn_storage",
+                              "typeString": "struct MockOracle.QueryPoint storage ref[] storage ref"
+                            }
+                          },
+                          "id": 26705,
+                          "indexExpression": {
+                            "id": 26704,
+                            "name": "lastIndex",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 26691,
+                            "src": "3110:9:28",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "3094:26:28",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_QueryPoint_$26543_storage",
+                            "typeString": "struct MockOracle.QueryPoint storage ref"
+                          }
+                        },
+                        "nodeType": "VariableDeclarationStatement",
+                        "src": "3061:59:28"
+                      },
+                      {
+                        "expression": {
+                          "id": 26716,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftHandSide": {
+                            "expression": {
+                              "baseExpression": {
+                                "baseExpression": {
+                                  "id": 26707,
+                                  "name": "queryIndices",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 26560,
+                                  "src": "3134:12:28",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_mapping$_t_bytes32_$_t_mapping$_t_uint256_$_t_struct$_QueryIndex_$26538_storage_$_$",
+                                    "typeString": "mapping(bytes32 => mapping(uint256 => struct MockOracle.QueryIndex storage ref))"
+                                  }
+                                },
+                                "id": 26712,
+                                "indexExpression": {
+                                  "expression": {
+                                    "id": 26708,
+                                    "name": "queryToCopy",
+                                    "nodeType": "Identifier",
+                                    "overloadedDeclarations": [],
+                                    "referencedDeclaration": 26702,
+                                    "src": "3147:11:28",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_struct$_QueryPoint_$26543_storage_ptr",
+                                      "typeString": "struct MockOracle.QueryPoint storage pointer"
+                                    }
+                                  },
+                                  "id": 26709,
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "memberName": "identifier",
+                                  "nodeType": "MemberAccess",
+                                  "referencedDeclaration": 26540,
+                                  "src": "3147:22:28",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_bytes32",
+                                    "typeString": "bytes32"
+                                  }
+                                },
+                                "isConstant": false,
+                                "isLValue": true,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "nodeType": "IndexAccess",
+                                "src": "3134:36:28",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_QueryIndex_$26538_storage_$",
+                                  "typeString": "mapping(uint256 => struct MockOracle.QueryIndex storage ref)"
+                                }
+                              },
+                              "id": 26713,
+                              "indexExpression": {
+                                "expression": {
+                                  "id": 26710,
+                                  "name": "queryToCopy",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 26702,
+                                  "src": "3171:11:28",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_struct$_QueryPoint_$26543_storage_ptr",
+                                    "typeString": "struct MockOracle.QueryPoint storage pointer"
+                                  }
+                                },
+                                "id": 26711,
+                                "isConstant": false,
+                                "isLValue": true,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "memberName": "time",
+                                "nodeType": "MemberAccess",
+                                "referencedDeclaration": 26542,
+                                "src": "3171:16:28",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "nodeType": "IndexAccess",
+                              "src": "3134:54:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_struct$_QueryIndex_$26538_storage",
+                                "typeString": "struct MockOracle.QueryIndex storage ref"
+                              }
+                            },
+                            "id": 26714,
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": true,
+                            "memberName": "index",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 26537,
+                            "src": "3134:60:28",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "nodeType": "Assignment",
+                          "operator": "=",
+                          "rightHandSide": {
+                            "id": 26715,
+                            "name": "indexToReplace",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 26679,
+                            "src": "3197:14:28",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "src": "3134:77:28",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "id": 26717,
+                        "nodeType": "ExpressionStatement",
+                        "src": "3134:77:28"
+                      },
+                      {
+                        "expression": {
+                          "id": 26722,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftHandSide": {
+                            "baseExpression": {
+                              "id": 26718,
+                              "name": "requestedPrices",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 26564,
+                              "src": "3225:15:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_array$_t_struct$_QueryPoint_$26543_storage_$dyn_storage",
+                                "typeString": "struct MockOracle.QueryPoint storage ref[] storage ref"
+                              }
+                            },
+                            "id": 26720,
+                            "indexExpression": {
+                              "id": 26719,
+                              "name": "indexToReplace",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 26679,
+                              "src": "3241:14:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            },
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": true,
+                            "nodeType": "IndexAccess",
+                            "src": "3225:31:28",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_QueryPoint_$26543_storage",
+                              "typeString": "struct MockOracle.QueryPoint storage ref"
+                            }
+                          },
+                          "nodeType": "Assignment",
+                          "operator": "=",
+                          "rightHandSide": {
+                            "id": 26721,
+                            "name": "queryToCopy",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 26702,
+                            "src": "3259:11:28",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_QueryPoint_$26543_storage_ptr",
+                              "typeString": "struct MockOracle.QueryPoint storage pointer"
+                            }
+                          },
+                          "src": "3225:45:28",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_QueryPoint_$26543_storage",
+                            "typeString": "struct MockOracle.QueryPoint storage ref"
+                          }
+                        },
+                        "id": 26723,
+                        "nodeType": "ExpressionStatement",
+                        "src": "3225:45:28"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "functionSelector": "051fd48c",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "pushPrice",
+            "nameLocation": "2322:9:28",
+            "parameters": {
+              "id": 26648,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 26643,
+                  "mutability": "mutable",
+                  "name": "identifier",
+                  "nameLocation": "2349:10:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26727,
+                  "src": "2341:18:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 26642,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2341:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 26645,
+                  "mutability": "mutable",
+                  "name": "time",
+                  "nameLocation": "2377:4:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26727,
+                  "src": "2369:12:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 26644,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2369:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 26647,
+                  "mutability": "mutable",
+                  "name": "price",
+                  "nameLocation": "2398:5:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26727,
+                  "src": "2391:12:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  },
+                  "typeName": {
+                    "id": 26646,
+                    "name": "int256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2391:6:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_int256",
+                      "typeString": "int256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2331:78:28"
+            },
+            "returnParameters": {
+              "id": 26649,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2419:0:28"
+            },
+            "scope": 26804,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "id": 26750,
+            "nodeType": "FunctionDefinition",
+            "src": "3342:195:28",
+            "body": {
+              "id": 26749,
+              "nodeType": "Block",
+              "src": "3430:107:28",
+              "statements": [
+                {
+                  "assignments": [
+                    26739
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 26739,
+                      "mutability": "mutable",
+                      "name": "lookup",
+                      "nameLocation": "3454:6:28",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 26749,
+                      "src": "3440:20:28",
+                      "stateVariable": false,
+                      "storageLocation": "storage",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Price_$26533_storage_ptr",
+                        "typeString": "struct MockOracle.Price"
+                      },
+                      "typeName": {
+                        "id": 26738,
+                        "nodeType": "UserDefinedTypeName",
+                        "pathNode": {
+                          "id": 26737,
+                          "name": "Price",
+                          "nodeType": "IdentifierPath",
+                          "referencedDeclaration": 26533,
+                          "src": "3440:5:28"
+                        },
+                        "referencedDeclaration": 26533,
+                        "src": "3440:5:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Price_$26533_storage_ptr",
+                          "typeString": "struct MockOracle.Price"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 26745,
+                  "initialValue": {
+                    "baseExpression": {
+                      "baseExpression": {
+                        "id": 26740,
+                        "name": "verifiedPrices",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 26553,
+                        "src": "3463:14:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_bytes32_$_t_mapping$_t_uint256_$_t_struct$_Price_$26533_storage_$_$",
+                          "typeString": "mapping(bytes32 => mapping(uint256 => struct MockOracle.Price storage ref))"
+                        }
+                      },
+                      "id": 26742,
+                      "indexExpression": {
+                        "id": 26741,
+                        "name": "identifier",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 26729,
+                        "src": "3478:10:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "IndexAccess",
+                      "src": "3463:26:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Price_$26533_storage_$",
+                        "typeString": "mapping(uint256 => struct MockOracle.Price storage ref)"
+                      }
+                    },
+                    "id": 26744,
+                    "indexExpression": {
+                      "id": 26743,
+                      "name": "time",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 26731,
+                      "src": "3490:4:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "IndexAccess",
+                    "src": "3463:32:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Price_$26533_storage",
+                      "typeString": "struct MockOracle.Price storage ref"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "3440:55:28"
+                },
+                {
+                  "expression": {
+                    "expression": {
+                      "id": 26746,
+                      "name": "lookup",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 26739,
+                      "src": "3512:6:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Price_$26533_storage_ptr",
+                        "typeString": "struct MockOracle.Price storage pointer"
+                      }
+                    },
+                    "id": 26747,
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "memberName": "isAvailable",
+                    "nodeType": "MemberAccess",
+                    "referencedDeclaration": 26528,
+                    "src": "3512:18:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "functionReturnParameters": 26736,
+                  "id": 26748,
+                  "nodeType": "Return",
+                  "src": "3505:25:28"
+                }
+              ]
+            },
+            "baseFunctions": [
+              26240
+            ],
+            "functionSelector": "a03e881a",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "hasPrice",
+            "nameLocation": "3351:8:28",
+            "overrides": {
+              "id": 26733,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "3406:8:28"
+            },
+            "parameters": {
+              "id": 26732,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 26729,
+                  "mutability": "mutable",
+                  "name": "identifier",
+                  "nameLocation": "3368:10:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26750,
+                  "src": "3360:18:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 26728,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3360:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 26731,
+                  "mutability": "mutable",
+                  "name": "time",
+                  "nameLocation": "3388:4:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26750,
+                  "src": "3380:12:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 26730,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3380:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3359:34:28"
+            },
+            "returnParameters": {
+              "id": 26736,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 26735,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26750,
+                  "src": "3424:4:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 26734,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3424:4:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3423:6:28"
+            },
+            "scope": 26804,
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "id": 26778,
+            "nodeType": "FunctionDefinition",
+            "src": "3595:228:28",
+            "body": {
+              "id": 26777,
+              "nodeType": "Block",
+              "src": "3685:138:28",
+              "statements": [
+                {
+                  "assignments": [
+                    26762
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 26762,
+                      "mutability": "mutable",
+                      "name": "lookup",
+                      "nameLocation": "3709:6:28",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 26777,
+                      "src": "3695:20:28",
+                      "stateVariable": false,
+                      "storageLocation": "storage",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Price_$26533_storage_ptr",
+                        "typeString": "struct MockOracle.Price"
+                      },
+                      "typeName": {
+                        "id": 26761,
+                        "nodeType": "UserDefinedTypeName",
+                        "pathNode": {
+                          "id": 26760,
+                          "name": "Price",
+                          "nodeType": "IdentifierPath",
+                          "referencedDeclaration": 26533,
+                          "src": "3695:5:28"
+                        },
+                        "referencedDeclaration": 26533,
+                        "src": "3695:5:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Price_$26533_storage_ptr",
+                          "typeString": "struct MockOracle.Price"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 26768,
+                  "initialValue": {
+                    "baseExpression": {
+                      "baseExpression": {
+                        "id": 26763,
+                        "name": "verifiedPrices",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 26553,
+                        "src": "3718:14:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_bytes32_$_t_mapping$_t_uint256_$_t_struct$_Price_$26533_storage_$_$",
+                          "typeString": "mapping(bytes32 => mapping(uint256 => struct MockOracle.Price storage ref))"
+                        }
+                      },
+                      "id": 26765,
+                      "indexExpression": {
+                        "id": 26764,
+                        "name": "identifier",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 26752,
+                        "src": "3733:10:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "IndexAccess",
+                      "src": "3718:26:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Price_$26533_storage_$",
+                        "typeString": "mapping(uint256 => struct MockOracle.Price storage ref)"
+                      }
+                    },
+                    "id": 26767,
+                    "indexExpression": {
+                      "id": 26766,
+                      "name": "time",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 26754,
+                      "src": "3745:4:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "IndexAccess",
+                    "src": "3718:32:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Price_$26533_storage",
+                      "typeString": "struct MockOracle.Price storage ref"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "3695:55:28"
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "expression": {
+                          "id": 26770,
+                          "name": "lookup",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 26762,
+                          "src": "3768:6:28",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Price_$26533_storage_ptr",
+                            "typeString": "struct MockOracle.Price storage pointer"
+                          }
+                        },
+                        "id": 26771,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "isAvailable",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 26528,
+                        "src": "3768:18:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 26769,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        -18,
+                        -18
+                      ],
+                      "referencedDeclaration": -18,
+                      "src": "3760:7:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 26772,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "3760:27:28",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 26773,
+                  "nodeType": "ExpressionStatement",
+                  "src": "3760:27:28"
+                },
+                {
+                  "expression": {
+                    "expression": {
+                      "id": 26774,
+                      "name": "lookup",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 26762,
+                      "src": "3804:6:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Price_$26533_storage_ptr",
+                        "typeString": "struct MockOracle.Price storage pointer"
+                      }
+                    },
+                    "id": 26775,
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "memberName": "price",
+                    "nodeType": "MemberAccess",
+                    "referencedDeclaration": 26530,
+                    "src": "3804:12:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_int256",
+                      "typeString": "int256"
+                    }
+                  },
+                  "functionReturnParameters": 26759,
+                  "id": 26776,
+                  "nodeType": "Return",
+                  "src": "3797:19:28"
+                }
+              ]
+            },
+            "baseFunctions": [
+              26250
+            ],
+            "functionSelector": "c9280f06",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getPrice",
+            "nameLocation": "3604:8:28",
+            "overrides": {
+              "id": 26756,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "3659:8:28"
+            },
+            "parameters": {
+              "id": 26755,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 26752,
+                  "mutability": "mutable",
+                  "name": "identifier",
+                  "nameLocation": "3621:10:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26778,
+                  "src": "3613:18:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 26751,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3613:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 26754,
+                  "mutability": "mutable",
+                  "name": "time",
+                  "nameLocation": "3641:4:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26778,
+                  "src": "3633:12:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 26753,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3633:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3612:34:28"
+            },
+            "returnParameters": {
+              "id": 26759,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 26758,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26778,
+                  "src": "3677:6:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  },
+                  "typeName": {
+                    "id": 26757,
+                    "name": "int256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3677:6:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_int256",
+                      "typeString": "int256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3676:8:28"
+            },
+            "scope": 26804,
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "id": 26788,
+            "nodeType": "FunctionDefinition",
+            "src": "3886:112:28",
+            "body": {
+              "id": 26787,
+              "nodeType": "Block",
+              "src": "3959:39:28",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 26785,
+                    "name": "requestedPrices",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 26564,
+                    "src": "3976:15:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_struct$_QueryPoint_$26543_storage_$dyn_storage",
+                      "typeString": "struct MockOracle.QueryPoint storage ref[] storage ref"
+                    }
+                  },
+                  "functionReturnParameters": 26784,
+                  "id": 26786,
+                  "nodeType": "Return",
+                  "src": "3969:22:28"
+                }
+              ]
+            },
+            "functionSelector": "b555d608",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getPendingQueries",
+            "nameLocation": "3895:17:28",
+            "parameters": {
+              "id": 26779,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3912:2:28"
+            },
+            "returnParameters": {
+              "id": 26784,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 26783,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26788,
+                  "src": "3938:19:28",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_struct$_QueryPoint_$26543_memory_ptr_$dyn_memory_ptr",
+                    "typeString": "struct MockOracle.QueryPoint[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 26781,
+                      "nodeType": "UserDefinedTypeName",
+                      "pathNode": {
+                        "id": 26780,
+                        "name": "QueryPoint",
+                        "nodeType": "IdentifierPath",
+                        "referencedDeclaration": 26543,
+                        "src": "3938:10:28"
+                      },
+                      "referencedDeclaration": 26543,
+                      "src": "3938:10:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_QueryPoint_$26543_storage_ptr",
+                        "typeString": "struct MockOracle.QueryPoint"
+                      }
+                    },
+                    "id": 26782,
+                    "nodeType": "ArrayTypeName",
+                    "src": "3938:12:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_struct$_QueryPoint_$26543_storage_$dyn_storage_ptr",
+                      "typeString": "struct MockOracle.QueryPoint[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3937:21:28"
+            },
+            "scope": 26804,
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "id": 26803,
+            "nodeType": "FunctionDefinition",
+            "src": "4004:231:28",
+            "body": {
+              "id": 26802,
+              "nodeType": "Block",
+              "src": "4112:123:28",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "arguments": [
+                          {
+                            "expression": {
+                              "id": 26797,
+                              "name": "OracleInterfaces",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 24174,
+                              "src": "4190:16:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_type$_t_contract$_OracleInterfaces_$24174_$",
+                                "typeString": "type(library OracleInterfaces)"
+                              }
+                            },
+                            "id": 26798,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "IdentifierWhitelist",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 24140,
+                            "src": "4190:36:28",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bytes32",
+                              "typeString": "bytes32"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_bytes32",
+                              "typeString": "bytes32"
+                            }
+                          ],
+                          "expression": {
+                            "id": 26795,
+                            "name": "finder",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 26546,
+                            "src": "4158:6:28",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_FinderInterface_$25919",
+                              "typeString": "contract FinderInterface"
+                            }
+                          },
+                          "id": 26796,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "getImplementationAddress",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 25918,
+                          "src": "4158:31:28",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_view$_t_bytes32_$returns$_t_address_$",
+                            "typeString": "function (bytes32) view external returns (address)"
+                          }
+                        },
+                        "id": 26799,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "4158:69:28",
+                        "tryCall": false,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 26794,
+                      "name": "IdentifierWhitelistInterface",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 25943,
+                      "src": "4129:28:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_contract$_IdentifierWhitelistInterface_$25943_$",
+                        "typeString": "type(contract IdentifierWhitelistInterface)"
+                      }
+                    },
+                    "id": 26800,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "4129:99:28",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_IdentifierWhitelistInterface_$25943",
+                      "typeString": "contract IdentifierWhitelistInterface"
+                    }
+                  },
+                  "functionReturnParameters": 26793,
+                  "id": 26801,
+                  "nodeType": "Return",
+                  "src": "4122:106:28"
+                }
+              ]
+            },
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_getIdentifierWhitelist",
+            "nameLocation": "4013:23:28",
+            "parameters": {
+              "id": 26789,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4036:2:28"
+            },
+            "returnParameters": {
+              "id": 26793,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 26792,
+                  "mutability": "mutable",
+                  "name": "supportedIdentifiers",
+                  "nameLocation": "4090:20:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26803,
+                  "src": "4061:49:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_IdentifierWhitelistInterface_$25943",
+                    "typeString": "contract IdentifierWhitelistInterface"
+                  },
+                  "typeName": {
+                    "id": 26791,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 26790,
+                      "name": "IdentifierWhitelistInterface",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 25943,
+                      "src": "4061:28:28"
+                    },
+                    "referencedDeclaration": 25943,
+                    "src": "4061:28:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_IdentifierWhitelistInterface_$25943",
+                      "typeString": "contract IdentifierWhitelistInterface"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4060:51:28"
+            },
+            "scope": 26804,
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "private"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 26523,
+              "name": "OracleInterface",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 26251,
+              "src": "364:15:28"
+            },
+            "id": 26524,
+            "nodeType": "InheritanceSpecifier",
+            "src": "364:15:28"
+          },
+          {
+            "baseName": {
+              "id": 26525,
+              "name": "Testable",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 24070,
+              "src": "381:8:28"
+            },
+            "id": 26526,
+            "nodeType": "InheritanceSpecifier",
+            "src": "381:8:28"
+          }
+        ],
+        "canonicalName": "MockOracle",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          26804,
+          24070,
+          26251
+        ],
+        "name": "MockOracle",
+        "nameLocation": "350:10:28",
+        "scope": 26805,
+        "usedErrors": []
+      }
+    ],
+    "license": "AGPL-3.0-only"
+  },
+  "id": 28
+}

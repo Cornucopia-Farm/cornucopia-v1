@@ -1,0 +1,3 @@
+# Cornucopia Bounty Platform 
+
+Crosschain technical and non-technical bounties for DAOs. More to come soon...

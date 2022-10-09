@@ -1,0 +1,131 @@
+{
+  "compiler": {
+    "version": "0.8.13+commit.abaa5c0e"
+  },
+  "language": "Solidity",
+  "output": {
+    "abi": [
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          }
+        ],
+        "name": "addSupportedIdentifier",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          }
+        ],
+        "name": "isIdentifierSupported",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          }
+        ],
+        "name": "removeSupportedIdentifier",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      }
+    ],
+    "devdoc": {
+      "kind": "dev",
+      "methods": {
+        "addSupportedIdentifier(bytes32)": {
+          "details": "Price requests using this identifier will succeed after this call.",
+          "params": {
+            "identifier": "bytes32 encoding of the string identifier. Eg: BTC/USD."
+          }
+        },
+        "isIdentifierSupported(bytes32)": {
+          "params": {
+            "identifier": "bytes32 encoding of the string identifier. Eg: BTC/USD."
+          },
+          "returns": {
+            "_0": "bool if the identifier is supported (or not)."
+          }
+        },
+        "removeSupportedIdentifier(bytes32)": {
+          "details": "Price requests using this identifier will no longer succeed after this call.",
+          "params": {
+            "identifier": "bytes32 encoding of the string identifier. Eg: BTC/USD."
+          }
+        }
+      },
+      "title": "Interface for whitelists of supported identifiers that the oracle can provide prices for.",
+      "version": 1
+    },
+    "userdoc": {
+      "kind": "user",
+      "methods": {
+        "addSupportedIdentifier(bytes32)": {
+          "notice": "Adds the provided identifier as a supported identifier."
+        },
+        "isIdentifierSupported(bytes32)": {
+          "notice": "Checks whether an identifier is on the whitelist."
+        },
+        "removeSupportedIdentifier(bytes32)": {
+          "notice": "Removes the identifier from the whitelist."
+        }
+      },
+      "version": 1
+    }
+  },
+  "settings": {
+    "compilationTarget": {
+      "lib/protocol/packages/core/contracts/oracle/interfaces/IdentifierWhitelistInterface.sol": "IdentifierWhitelistInterface"
+    },
+    "evmVersion": "london",
+    "libraries": {},
+    "metadata": {
+      "bytecodeHash": "ipfs"
+    },
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "remappings": [
+      ":@openzeppelin/=lib/openzeppelin-contracts/",
+      ":ds-test/=lib/forge-std/lib/ds-test/src/",
+      ":forge-std/=lib/forge-std/src/",
+      ":openzeppelin-contracts/=lib/openzeppelin-contracts/",
+      ":protocol/=lib/protocol/",
+      ":uma-implementation/=lib/protocol/packages/core/contracts/oracle/implementation/",
+      ":uma-interface/=lib/protocol/packages/core/contracts/oracle/interfaces/"
+    ]
+  },
+  "sources": {
+    "lib/protocol/packages/core/contracts/oracle/interfaces/IdentifierWhitelistInterface.sol": {
+      "keccak256": "0x9ae86a30dd1a8c03fb2c6d27be570bb30c4c0b13ac63cde8620b7e4b51d88dc9",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://a71d2aff48e075ecab56a9c9767775d1d77e04ec9191fed124e71003220549e3",
+        "dweb:/ipfs/QmYPWsZXro6fzqpZY6UxQ5X8znEXfLp2sun8oXzdz8bTyc"
+      ]
+    }
+  },
+  "version": 1
+}

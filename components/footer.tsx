@@ -1,0 +1,11 @@
+import React from 'react';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Link from 'next/link';
+
+export default function Footer() {
+    return ( 
+      <Box sx={{ paddingBottom: '32px' }}>
+      </Box>   
+    );
+};

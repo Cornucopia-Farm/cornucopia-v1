@@ -1,0 +1,894 @@
+{
+  "compiler": {
+    "version": "0.8.13+commit.abaa5c0e"
+  },
+  "language": "Solidity",
+  "output": {
+    "abi": [
+      {
+        "inputs": [
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "rawValue",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct FixedPoint.Unsigned",
+            "name": "_fixedOracleFeePerSecondPerPfc",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "rawValue",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct FixedPoint.Unsigned",
+            "name": "_weeklyDelayFeePerSecondPerPfc",
+            "type": "tuple"
+          },
+          {
+            "internalType": "address",
+            "name": "_timerAddress",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "newMember",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "manager",
+            "type": "address"
+          }
+        ],
+        "name": "AddedSharedMember",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "rawValue",
+                "type": "uint256"
+              }
+            ],
+            "indexed": false,
+            "internalType": "struct FixedPoint.Unsigned",
+            "name": "newFinalFee",
+            "type": "tuple"
+          }
+        ],
+        "name": "NewFinalFee",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "rawValue",
+                "type": "uint256"
+              }
+            ],
+            "indexed": false,
+            "internalType": "struct FixedPoint.Unsigned",
+            "name": "newOracleFee",
+            "type": "tuple"
+          }
+        ],
+        "name": "NewFixedOracleFeePerSecondPerPfc",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "rawValue",
+                "type": "uint256"
+              }
+            ],
+            "indexed": false,
+            "internalType": "struct FixedPoint.Unsigned",
+            "name": "newWeeklyDelayFeePerSecondPerPfc",
+            "type": "tuple"
+          }
+        ],
+        "name": "NewWeeklyDelayFeePerSecondPerPfc",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "oldMember",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "manager",
+            "type": "address"
+          }
+        ],
+        "name": "RemovedSharedMember",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "newMember",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "manager",
+            "type": "address"
+          }
+        ],
+        "name": "ResetExclusiveMember",
+        "type": "event"
+      },
+      {
+        "inputs": [],
+        "name": "SECONDS_PER_WEEK",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "newMember",
+            "type": "address"
+          }
+        ],
+        "name": "addMember",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "currency",
+            "type": "address"
+          }
+        ],
+        "name": "computeFinalFee",
+        "outputs": [
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "rawValue",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct FixedPoint.Unsigned",
+            "name": "",
+            "type": "tuple"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "startTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "endTime",
+            "type": "uint256"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "rawValue",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct FixedPoint.Unsigned",
+            "name": "pfc",
+            "type": "tuple"
+          }
+        ],
+        "name": "computeRegularFee",
+        "outputs": [
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "rawValue",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct FixedPoint.Unsigned",
+            "name": "regularFee",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "rawValue",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct FixedPoint.Unsigned",
+            "name": "latePenalty",
+            "type": "tuple"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "finalFees",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "rawValue",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "fixedOracleFeePerSecondPerPfc",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "rawValue",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "getCurrentTime",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          }
+        ],
+        "name": "getMember",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "memberToCheck",
+            "type": "address"
+          }
+        ],
+        "name": "holdsRole",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "payOracleFees",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "erc20Address",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "rawValue",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct FixedPoint.Unsigned",
+            "name": "amount",
+            "type": "tuple"
+          }
+        ],
+        "name": "payOracleFeesErc20",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "memberToRemove",
+            "type": "address"
+          }
+        ],
+        "name": "removeMember",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          }
+        ],
+        "name": "renounceMembership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "roleId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "newMember",
+            "type": "address"
+          }
+        ],
+        "name": "resetMember",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "time",
+            "type": "uint256"
+          }
+        ],
+        "name": "setCurrentTime",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "currency",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "rawValue",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct FixedPoint.Unsigned",
+            "name": "newFinalFee",
+            "type": "tuple"
+          }
+        ],
+        "name": "setFinalFee",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "rawValue",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct FixedPoint.Unsigned",
+            "name": "newFixedOracleFeePerSecondPerPfc",
+            "type": "tuple"
+          }
+        ],
+        "name": "setFixedOracleFeePerSecondPerPfc",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "rawValue",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct FixedPoint.Unsigned",
+            "name": "newWeeklyDelayFeePerSecondPerPfc",
+            "type": "tuple"
+          }
+        ],
+        "name": "setWeeklyDelayFeePerSecondPerPfc",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "timerAddress",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "weeklyDelayFeePerSecondPerPfc",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "rawValue",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "withdraw",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "erc20Address",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "withdrawErc20",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      }
+    ],
+    "devdoc": {
+      "kind": "dev",
+      "methods": {
+        "addMember(uint256,address)": {
+          "details": "Reverts if `roleId` does not represent an initialized, SharedRole or if the caller is not a member of the managing role for `roleId`.",
+          "params": {
+            "newMember": "the new SharedRole member.",
+            "roleId": "the SharedRole membership to modify."
+          }
+        },
+        "computeFinalFee(address)": {
+          "params": {
+            "currency": "token used to pay the final fee."
+          },
+          "returns": {
+            "_0": "finalFee amount due denominated in units of `currency`."
+          }
+        },
+        "computeRegularFee(uint256,uint256,(uint256))": {
+          "details": "The late penalty is similar to the regular fee in that is is charged per second over the period between startTime and endTime. The late penalty percentage increases over time as follows: - 0-1 week since startTime: no late penalty - 1-2 weeks since startTime: 1x late penalty percentage is applied - 2-3 weeks since startTime: 2x late penalty percentage is applied - ...",
+          "params": {
+            "endTime": "end time until which the fee is paid.",
+            "pfc": "\"profit from corruption\", or the maximum amount of margin currency that a token sponsor could extract from the contract through corrupting the price feed in their favor.",
+            "startTime": "defines the beginning time from which the fee is paid."
+          },
+          "returns": {
+            "latePenalty": "penalty percentage, if any, for paying the fee after the deadline.",
+            "regularFee": "amount owed for the duration from start to end time for the given pfc."
+          }
+        },
+        "getCurrentTime()": {
+          "returns": {
+            "_0": "uint for the current Testable timestamp."
+          }
+        },
+        "getMember(uint256)": {
+          "details": "Reverts if `roleId` does not represent an initialized, exclusive role.",
+          "params": {
+            "roleId": "the ExclusiveRole membership to check."
+          },
+          "returns": {
+            "_0": "the address of the current ExclusiveRole member."
+          }
+        },
+        "holdsRole(uint256,address)": {
+          "details": "Reverts if roleId does not correspond to an initialized role.",
+          "params": {
+            "memberToCheck": "the address to check.",
+            "roleId": "the Role to check."
+          },
+          "returns": {
+            "_0": "True if `memberToCheck` is a member of `roleId`."
+          }
+        },
+        "payOracleFees()": {
+          "details": "To be used by contracts whose margin currency is ETH."
+        },
+        "payOracleFeesErc20(address,(uint256))": {
+          "details": "To be used if the margin currency is an ERC20 token rather than ETH.",
+          "params": {
+            "amount": "number of tokens to transfer. An approval for at least this amount must exist.",
+            "erc20Address": "address of the ERC20 token used to pay the fee."
+          }
+        },
+        "removeMember(uint256,address)": {
+          "details": "Reverts if `roleId` does not represent an initialized, SharedRole or if the caller is not a member of the managing role for `roleId`.",
+          "params": {
+            "memberToRemove": "the current SharedRole member to remove.",
+            "roleId": "the SharedRole membership to modify."
+          }
+        },
+        "renounceMembership(uint256)": {
+          "details": "Reverts if the caller is not a member of the role for `roleId` or if `roleId` is not an initialized, SharedRole.",
+          "params": {
+            "roleId": "the SharedRole membership to modify."
+          }
+        },
+        "resetMember(uint256,address)": {
+          "details": "Reverts if the caller is not a member of the managing role for `roleId` or if `roleId` is not an initialized, ExclusiveRole.",
+          "params": {
+            "newMember": "the new ExclusiveRole member.",
+            "roleId": "the ExclusiveRole membership to modify."
+          }
+        },
+        "setCurrentTime(uint256)": {
+          "details": "Will revert if not running in test mode.",
+          "params": {
+            "time": "timestamp to set current Testable time to."
+          }
+        },
+        "setFinalFee(address,(uint256))": {
+          "params": {
+            "currency": "defines the token currency used to pay the final fee.",
+            "newFinalFee": "final fee amount."
+          }
+        },
+        "setFixedOracleFeePerSecondPerPfc((uint256))": {
+          "params": {
+            "newFixedOracleFeePerSecondPerPfc": "new fee per second charged to use the oracle."
+          }
+        },
+        "setWeeklyDelayFeePerSecondPerPfc((uint256))": {
+          "params": {
+            "newWeeklyDelayFeePerSecondPerPfc": "fee escalation per week of late fee payment."
+          }
+        },
+        "withdrawErc20(address,uint256)": {
+          "params": {
+            "amount": "amount of tokens to withdraw.",
+            "erc20Address": "ERC20 token to withdraw."
+          }
+        }
+      },
+      "title": "An implementation of Store that can accept Oracle fees in ETH or any arbitrary ERC20 token.",
+      "version": 1
+    },
+    "userdoc": {
+      "kind": "user",
+      "methods": {
+        "addMember(uint256,address)": {
+          "notice": "Adds `newMember` to the shared role, `roleId`."
+        },
+        "computeFinalFee(address)": {
+          "notice": "Computes the final oracle fees that a contract should pay at settlement."
+        },
+        "computeRegularFee(uint256,uint256,(uint256))": {
+          "notice": "Computes the regular oracle fees that a contract should pay for a period."
+        },
+        "constructor": {
+          "notice": "Construct the Store contract."
+        },
+        "getCurrentTime()": {
+          "notice": "Gets the current time. Will return the last time set in `setCurrentTime` if running in test mode. Otherwise, it will return the block timestamp."
+        },
+        "getMember(uint256)": {
+          "notice": "Gets the current holder of the exclusive role, `roleId`."
+        },
+        "holdsRole(uint256,address)": {
+          "notice": "Whether `memberToCheck` is a member of roleId."
+        },
+        "payOracleFees()": {
+          "notice": "Pays Oracle fees in ETH to the store."
+        },
+        "payOracleFeesErc20(address,(uint256))": {
+          "notice": "Pays oracle fees in the margin currency, erc20Address, to the store."
+        },
+        "removeMember(uint256,address)": {
+          "notice": "Removes `memberToRemove` from the shared role, `roleId`."
+        },
+        "renounceMembership(uint256)": {
+          "notice": "Removes caller from the role, `roleId`."
+        },
+        "resetMember(uint256,address)": {
+          "notice": "Changes the exclusive role holder of `roleId` to `newMember`."
+        },
+        "setCurrentTime(uint256)": {
+          "notice": "Sets the current time."
+        },
+        "setFinalFee(address,(uint256))": {
+          "notice": "Sets a new final fee for a particular currency."
+        },
+        "setFixedOracleFeePerSecondPerPfc((uint256))": {
+          "notice": "Sets a new oracle fee per second."
+        },
+        "setWeeklyDelayFeePerSecondPerPfc((uint256))": {
+          "notice": "Sets a new weekly delay fee."
+        },
+        "withdraw(uint256)": {
+          "notice": "Withdraws ETH from the contract."
+        },
+        "withdrawErc20(address,uint256)": {
+          "notice": "Withdraws ERC20 tokens from the contract."
+        }
+      },
+      "version": 1
+    }
+  },
+  "settings": {
+    "compilationTarget": {
+      "lib/protocol/packages/core/contracts/oracle/implementation/store.sol": "Store"
+    },
+    "evmVersion": "london",
+    "libraries": {},
+    "metadata": {
+      "bytecodeHash": "ipfs"
+    },
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "remappings": [
+      ":@openzeppelin/=lib/openzeppelin-contracts/",
+      ":ds-test/=lib/forge-std/lib/ds-test/src/",
+      ":forge-std/=lib/forge-std/src/",
+      ":openzeppelin-contracts/=lib/openzeppelin-contracts/",
+      ":protocol/=lib/protocol/",
+      ":uma-implementation/=lib/protocol/packages/core/contracts/oracle/implementation/",
+      ":uma-interface/=lib/protocol/packages/core/contracts/oracle/interfaces/"
+    ]
+  },
+  "sources": {
+    "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol": {
+      "keccak256": "0x61437cb513a887a1bbad006e7b1c8b414478427d33de47c5600af3c748f108da",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://2c3d0973630ed74f2b5ce3944677a885dc70ec32fc83b35f55045a10224da32b",
+        "dweb:/ipfs/QmbefZ5RoEZKNHXCALfh683PnaNYzKPcKMFjyY1DVAgq8A"
+      ]
+    },
+    "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol": {
+      "keccak256": "0xc3d946432c0ddbb1f846a0d3985be71299df331b91d06732152117f62f0be2b5",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://4632c341a06ba5c079b51ca5a915efab4e6ab57735b37839b3e8365ff806a43e",
+        "dweb:/ipfs/QmTHT3xHYed2wajEoA5qu7ii2BxLpPhQZHwAhtLK5Z7ANK"
+      ]
+    },
+    "lib/openzeppelin-contracts/contracts/utils/Address.sol": {
+      "keccak256": "0xe9abc4c299ea6f0f5b357c26c573f26de46eea260d8bc28c950d2dfb92c50178",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://5a2261f75a2930e4cdd0320a1ed0337b0ed4ca32877a7bef6252433a47337205",
+        "dweb:/ipfs/Qmaa5mykZdKWHexRbjrrvdVKR1ctU8dymDrmtWGsZ1vWhL"
+      ]
+    },
+    "lib/openzeppelin-contracts/contracts/utils/math/SafeMath.sol": {
+      "keccak256": "0xa2f576be637946f767aa56601c26d717f48a0aff44f82e46f13807eea1009a21",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://973868f808e88e21a1a0a01d4839314515ee337ad096286c88e41b74dcc11fc2",
+        "dweb:/ipfs/QmfYuZxRfx2J2xdk4EXN7jKg4bUYEMTaYk9BAw9Bqn4o2Y"
+      ]
+    },
+    "lib/openzeppelin-contracts/contracts/utils/math/SignedSafeMath.sol": {
+      "keccak256": "0x62f53f262fabbbc6d8ab49488d8fce36370351aff2b8d3898d499d68995a71c2",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://efd599513c2f313a3f5e9536beb2b80a0d2b3dd34202c174a707d81b7dc751ce",
+        "dweb:/ipfs/QmdDiENVFSyWjfFskNLnViMH77DHg3oDthkSZk7dMzNNKB"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/common/implementation/FixedPoint.sol": {
+      "keccak256": "0x996b97cc4fa5da4064e3aee500edc6972485d59a9334ceec81155e2c2f484dae",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://8d7c028926dc2b27e7dc103363dca8a43f60b3351f4a14bcb702660f95c68663",
+        "dweb:/ipfs/QmXz4ieFjP5RxJ35F8GbPryYEGvFmxc4Gqx8EK7N57ixzT"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/common/implementation/MultiRole.sol": {
+      "keccak256": "0x134c5a2f847832705be631f2b4eb2a3e23a91a2f0e63560abb481e85eeebfae6",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://f1267c6ad560d1eb896575919ecca13759bf50bb82d1215e03fc1f0424ec37a6",
+        "dweb:/ipfs/QmXewGxpSmSMGYmT6ZUyxCVzy2cybxicbnyCn8w87m5mo3"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/common/implementation/Testable.sol": {
+      "keccak256": "0x0254b45747293bb800373a58d123969adec0428f7be79dc941cab10fcad09918",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://537d694e3753596f507d071f283be9caeaad0010c444c9c9955d729affeb4907",
+        "dweb:/ipfs/QmZ1WfVTBao11QaN6aygMhnt45UjRq77ZwfKPFmHiVSdaJ"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/common/implementation/Timer.sol": {
+      "keccak256": "0x9e0dd7389718bd5d1da910273a6f4cee98ee22bfc0c92bde0f0955c0e23adb5e",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://7ddac8d3cb76f8811156a11a7702d7c05b15a0f18c22b5abdc318723193f9266",
+        "dweb:/ipfs/QmPxL7AU8NkURJaZ6WxXNcw88wGMSoPX4jbt7SMdPJqtYv"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/common/implementation/Withdrawable.sol": {
+      "keccak256": "0x0cffa58907ae0c4b2948f225723e5f4346276c0f1484452fb5c78fc90b79c630",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://e832b3f09aa18ef687a34ffc754f9e9d1200c63da8f1550e46111a44a2b2433d",
+        "dweb:/ipfs/QmdqUvbxXtea2w3msKp9PRAhxs3YsJCWX31bWRHSuq54Vr"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/oracle/implementation/store.sol": {
+      "keccak256": "0x6a2b6982a9bbe9860c73c6c542e2021050b1127b28f887c329f36cc71c20dad2",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://977406313978d803c0e5327f52c594f044c231fa3e9e6ab265ce19e457a06678",
+        "dweb:/ipfs/QmY7en5NPTBvpriHZMKiWgzG9T3hNopR11d7VsBBPZaaVD"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/oracle/interfaces/StoreInterface.sol": {
+      "keccak256": "0xbb73671684309c91ad5ef3da1474051d03f2e7d5882bed7f5c4317e5d4c768df",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://32386544d3119fd0187a8c4e8b01c739f508ab863faa04345cabc2544081f9e8",
+        "dweb:/ipfs/QmYszDURs1x75rsejZkGt9zCkASXnJtufbNsL3XHe2eJPQ"
+      ]
+    }
+  },
+  "version": 1
+}

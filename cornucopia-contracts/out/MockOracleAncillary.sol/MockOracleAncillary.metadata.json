@@ -1,0 +1,422 @@
+{
+  "compiler": {
+    "version": "0.8.13+commit.abaa5c0e"
+  },
+  "language": "Solidity",
+  "output": {
+    "abi": [
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_finderAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "_timerAddress",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "requester",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "time",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          }
+        ],
+        "name": "PriceRequestAdded",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "pusher",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "time",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          },
+          {
+            "indexed": false,
+            "internalType": "int256",
+            "name": "price",
+            "type": "int256"
+          }
+        ],
+        "name": "PushedPrice",
+        "type": "event"
+      },
+      {
+        "inputs": [],
+        "name": "getCurrentTime",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "getPendingQueries",
+        "outputs": [
+          {
+            "components": [
+              {
+                "internalType": "bytes32",
+                "name": "identifier",
+                "type": "bytes32"
+              },
+              {
+                "internalType": "uint256",
+                "name": "time",
+                "type": "uint256"
+              },
+              {
+                "internalType": "bytes",
+                "name": "ancillaryData",
+                "type": "bytes"
+              }
+            ],
+            "internalType": "struct MockOracleAncillary.QueryPoint[]",
+            "name": "",
+            "type": "tuple[]"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint256",
+            "name": "time",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          }
+        ],
+        "name": "getPrice",
+        "outputs": [
+          {
+            "internalType": "int256",
+            "name": "",
+            "type": "int256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint256",
+            "name": "time",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          }
+        ],
+        "name": "hasPrice",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint256",
+            "name": "time",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          },
+          {
+            "internalType": "int256",
+            "name": "price",
+            "type": "int256"
+          }
+        ],
+        "name": "pushPrice",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint256",
+            "name": "time",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes",
+            "name": "ancillaryData",
+            "type": "bytes"
+          }
+        ],
+        "name": "requestPrice",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "time",
+            "type": "uint256"
+          }
+        ],
+        "name": "setCurrentTime",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "timerAddress",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ],
+    "devdoc": {
+      "kind": "dev",
+      "methods": {
+        "getCurrentTime()": {
+          "returns": {
+            "_0": "uint for the current Testable timestamp."
+          }
+        },
+        "getPrice(bytes32,uint256,bytes)": {
+          "details": "If the price is not available, the method reverts.",
+          "params": {
+            "ancillaryData": "arbitrary data appended to a price request to give the voters more info from the caller.",
+            "identifier": "uniquely identifies the price requested. eg BTC/USD (encoded as bytes32) could be requested.",
+            "time": "unix timestamp for the price request."
+          },
+          "returns": {
+            "_0": "int256 representing the resolved price for the given identifier and timestamp."
+          }
+        },
+        "hasPrice(bytes32,uint256,bytes)": {
+          "details": "Time must be in the past and the identifier must be supported.",
+          "params": {
+            "ancillaryData": "arbitrary data appended to a price request to give the voters more info from the caller.",
+            "identifier": "uniquely identifies the price requested. eg BTC/USD (encoded as bytes32) could be requested.",
+            "time": "unix timestamp for the price request."
+          },
+          "returns": {
+            "_0": "bool if the DVM has resolved to a price for the given identifier and timestamp."
+          }
+        },
+        "requestPrice(bytes32,uint256,bytes)": {
+          "details": "Time must be in the past and the identifier must be supported.",
+          "params": {
+            "ancillaryData": "arbitrary data appended to a price request to give the voters more info from the caller.",
+            "identifier": "uniquely identifies the price requested. eg BTC/USD (encoded as bytes32) could be requested.",
+            "time": "unix timestamp for the price request."
+          }
+        },
+        "setCurrentTime(uint256)": {
+          "details": "Will revert if not running in test mode.",
+          "params": {
+            "time": "timestamp to set current Testable time to."
+          }
+        }
+      },
+      "version": 1
+    },
+    "userdoc": {
+      "kind": "user",
+      "methods": {
+        "getCurrentTime()": {
+          "notice": "Gets the current time. Will return the last time set in `setCurrentTime` if running in test mode. Otherwise, it will return the block timestamp."
+        },
+        "getPrice(bytes32,uint256,bytes)": {
+          "notice": "Gets the price for `identifier` and `time` if it has already been requested and resolved."
+        },
+        "hasPrice(bytes32,uint256,bytes)": {
+          "notice": "Whether the price for `identifier` and `time` is available."
+        },
+        "requestPrice(bytes32,uint256,bytes)": {
+          "notice": "Enqueues a request (if a request isn't already present) for the given `identifier`, `time` pair."
+        },
+        "setCurrentTime(uint256)": {
+          "notice": "Sets the current time."
+        }
+      },
+      "version": 1
+    }
+  },
+  "settings": {
+    "compilationTarget": {
+      "lib/protocol/packages/core/contracts/oracle/test/MockOracleAncillary.sol": "MockOracleAncillary"
+    },
+    "evmVersion": "london",
+    "libraries": {},
+    "metadata": {
+      "bytecodeHash": "ipfs"
+    },
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "remappings": [
+      ":@openzeppelin/=lib/openzeppelin-contracts/",
+      ":ds-test/=lib/forge-std/lib/ds-test/src/",
+      ":forge-std/=lib/forge-std/src/",
+      ":openzeppelin-contracts/=lib/openzeppelin-contracts/",
+      ":protocol/=lib/protocol/",
+      ":uma-implementation/=lib/protocol/packages/core/contracts/oracle/implementation/",
+      ":uma-interface/=lib/protocol/packages/core/contracts/oracle/interfaces/"
+    ]
+  },
+  "sources": {
+    "lib/protocol/packages/core/contracts/common/implementation/Testable.sol": {
+      "keccak256": "0x0254b45747293bb800373a58d123969adec0428f7be79dc941cab10fcad09918",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://537d694e3753596f507d071f283be9caeaad0010c444c9c9955d729affeb4907",
+        "dweb:/ipfs/QmZ1WfVTBao11QaN6aygMhnt45UjRq77ZwfKPFmHiVSdaJ"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/common/implementation/Timer.sol": {
+      "keccak256": "0x9e0dd7389718bd5d1da910273a6f4cee98ee22bfc0c92bde0f0955c0e23adb5e",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://7ddac8d3cb76f8811156a11a7702d7c05b15a0f18c22b5abdc318723193f9266",
+        "dweb:/ipfs/QmPxL7AU8NkURJaZ6WxXNcw88wGMSoPX4jbt7SMdPJqtYv"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/oracle/implementation/Constants.sol": {
+      "keccak256": "0x36dcec83c5ac265b759b6a5559ec76088ce24854bf590ba66f808e8ecb59b97e",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://b6f16b1705220fe3692cca201d65993046b4cbb6dddbc35508c489606575bfc2",
+        "dweb:/ipfs/QmdHvPibiSD7j9VJg73DaDPFBsCsWSxKpZJnVCSTErVTHC"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/oracle/interfaces/FinderInterface.sol": {
+      "keccak256": "0x9166fbfe08e954eb86d33c114fcde7ce4fd0dda5d9d28b31210582bfc769fa86",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://e611e12bcaaebfdf65b67c566ff1d34708e757f01a445bd87c55862e89383b81",
+        "dweb:/ipfs/QmYNSq5oopTShdS6j4VWKqoLxmQSRKmWebCxw6K4LfmKrf"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/oracle/interfaces/IdentifierWhitelistInterface.sol": {
+      "keccak256": "0x9ae86a30dd1a8c03fb2c6d27be570bb30c4c0b13ac63cde8620b7e4b51d88dc9",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://a71d2aff48e075ecab56a9c9767775d1d77e04ec9191fed124e71003220549e3",
+        "dweb:/ipfs/QmYPWsZXro6fzqpZY6UxQ5X8znEXfLp2sun8oXzdz8bTyc"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/oracle/interfaces/OracleAncillaryInterface.sol": {
+      "keccak256": "0xd58b41fe1e389f7871db7c04f2c05c1aac1d0455bbc521534da81fd657016a1f",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://cc532e9c550bb1bba0daa33fda748590cd06ce94a9566fe65dac04e7d40977bc",
+        "dweb:/ipfs/QmZKvfRW2LJFt5MWZbKuU9ujkXnS2hkPUJVj8wwJWcuZGX"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/oracle/test/MockOracleAncillary.sol": {
+      "keccak256": "0x82998d9b9425ef21bd6b77753e3adbcf51c122e58c7ba53603fbb260e3439a6e",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://8c8eb761c348f32a4a376ed8e27bff3f9a542bc973ac043ea252dd526b9c5a49",
+        "dweb:/ipfs/QmT5LctfTAqDHxvkdTYFmDuPeMe9fR25J7xrh5B7Wt6HUq"
+      ]
+    }
+  },
+  "version": 1
+}

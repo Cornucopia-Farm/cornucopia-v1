@@ -1,0 +1,242 @@
+{
+  "compiler": {
+    "version": "0.8.13+commit.abaa5c0e"
+  },
+  "language": "Solidity",
+  "output": {
+    "abi": [
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "previousOwner",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "newOwner",
+            "type": "address"
+          }
+        ],
+        "name": "OwnershipTransferred",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          }
+        ],
+        "name": "SupportedIdentifierAdded",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          }
+        ],
+        "name": "SupportedIdentifierRemoved",
+        "type": "event"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          }
+        ],
+        "name": "addSupportedIdentifier",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          }
+        ],
+        "name": "isIdentifierSupported",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "identifier",
+            "type": "bytes32"
+          }
+        ],
+        "name": "removeSupportedIdentifier",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "renounceOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "newOwner",
+            "type": "address"
+          }
+        ],
+        "name": "transferOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      }
+    ],
+    "devdoc": {
+      "kind": "dev",
+      "methods": {
+        "addSupportedIdentifier(bytes32)": {
+          "details": "Price requests using this identifier will succeed after this call.",
+          "params": {
+            "identifier": "unique UTF-8 representation for the feed being added. Eg: BTC/USD."
+          }
+        },
+        "isIdentifierSupported(bytes32)": {
+          "params": {
+            "identifier": "unique UTF-8 representation for the feed being queried. Eg: BTC/USD."
+          },
+          "returns": {
+            "_0": "bool if the identifier is supported (or not)."
+          }
+        },
+        "owner()": {
+          "details": "Returns the address of the current owner."
+        },
+        "removeSupportedIdentifier(bytes32)": {
+          "details": "Price requests using this identifier will no longer succeed after this call.",
+          "params": {
+            "identifier": "unique UTF-8 representation for the feed being removed. Eg: BTC/USD."
+          }
+        },
+        "renounceOwnership()": {
+          "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+        },
+        "transferOwnership(address)": {
+          "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+        }
+      },
+      "title": "Stores a whitelist of supported identifiers that the oracle can provide prices for.",
+      "version": 1
+    },
+    "userdoc": {
+      "kind": "user",
+      "methods": {
+        "addSupportedIdentifier(bytes32)": {
+          "notice": "Adds the provided identifier as a supported identifier."
+        },
+        "isIdentifierSupported(bytes32)": {
+          "notice": "Checks whether an identifier is on the whitelist."
+        },
+        "removeSupportedIdentifier(bytes32)": {
+          "notice": "Removes the identifier from the whitelist."
+        }
+      },
+      "version": 1
+    }
+  },
+  "settings": {
+    "compilationTarget": {
+      "lib/protocol/packages/core/contracts/oracle/implementation/IdentifierWhitelist.sol": "IdentifierWhitelist"
+    },
+    "evmVersion": "london",
+    "libraries": {},
+    "metadata": {
+      "bytecodeHash": "ipfs"
+    },
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "remappings": [
+      ":@openzeppelin/=lib/openzeppelin-contracts/",
+      ":ds-test/=lib/forge-std/lib/ds-test/src/",
+      ":forge-std/=lib/forge-std/src/",
+      ":openzeppelin-contracts/=lib/openzeppelin-contracts/",
+      ":protocol/=lib/protocol/",
+      ":uma-implementation/=lib/protocol/packages/core/contracts/oracle/implementation/",
+      ":uma-interface/=lib/protocol/packages/core/contracts/oracle/interfaces/"
+    ]
+  },
+  "sources": {
+    "lib/openzeppelin-contracts/contracts/access/Ownable.sol": {
+      "keccak256": "0x24e0364e503a9bbde94c715d26573a76f14cd2a202d45f96f52134ab806b67b9",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://e12cbaa7378fd9b62280e4e1d164bedcb4399ce238f5f98fc0eefb7e50577981",
+        "dweb:/ipfs/QmXRoFGUgfsaRkoPT5bxNMtSayKTQ8GZATLPXf69HcRA51"
+      ]
+    },
+    "lib/openzeppelin-contracts/contracts/utils/Context.sol": {
+      "keccak256": "0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://6df0ddf21ce9f58271bdfaa85cde98b200ef242a05a3f85c2bc10a8294800a92",
+        "dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/oracle/implementation/IdentifierWhitelist.sol": {
+      "keccak256": "0x77ad704fca2d76e187bbc72ed48323cf5b483dbee6c86afe023103d6fc7129eb",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://6c8a7765d146c7133c5028b40b4a7a060a030425299d8d6622a06af5c44d4aa8",
+        "dweb:/ipfs/QmU5TDtc3XHDgp25WxFmKbYGycY7NsT5EtHJ6DH5Q2YWgt"
+      ]
+    },
+    "lib/protocol/packages/core/contracts/oracle/interfaces/IdentifierWhitelistInterface.sol": {
+      "keccak256": "0x9ae86a30dd1a8c03fb2c6d27be570bb30c4c0b13ac63cde8620b7e4b51d88dc9",
+      "license": "AGPL-3.0-only",
+      "urls": [
+        "bzz-raw://a71d2aff48e075ecab56a9c9767775d1d77e04ec9191fed124e71003220549e3",
+        "dweb:/ipfs/QmYPWsZXro6fzqpZY6UxQ5X8znEXfLp2sun8oXzdz8bTyc"
+      ]
+    }
+  },
+  "version": 1
+}
