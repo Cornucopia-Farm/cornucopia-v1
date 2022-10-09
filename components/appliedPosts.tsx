@@ -13,10 +13,6 @@ import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // a
 import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransaction, useContractRead, useBlockNumber, useContract, usePrepareContractWrite, useContractEvent, useSigner, useNetwork } from 'wagmi';
 import { ethers } from 'ethers';
 
-// BUG: TypeError: Cannot read properties of null (reading 'getLogs') when const isEscrowed = await props.escrowContract.queryFilter(filter); likely bc escrowContract hasn't been defined
-// data noot showing up either for applied bounties most of the time hmm
-
-
 type Props = {
     postId: string;
     existsSubmitted: Promise<Map<string, boolean>>;
