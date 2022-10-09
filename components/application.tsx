@@ -116,20 +116,7 @@ const Application: React.FC<Props> = props => {
     setBountyAppId(bountyAppId);
     setHunterAddress(hunterAddress);
     setBountyAmt(ethAmount);
-    // console.log("bounty id", bountyAppId)
-    // console.log("hunter addr", hunterAddress)
-    // console.log("boounty amt", bountyAmt)
-    // console.log("debounced bounty id", debouncedBountyAppId)
-    // console.log("debpunced hunter addr", debouncedHunterAddress)
-    // console.log("debounced boounty amt", debouncedBountyAmt)
     // escrow?.();
-    // console.log("ESCROW FUNC CALLED")
-    // console.log("bounty id", bountyAppId)
-    // console.log("hunter addr", hunterAddress)
-    // console.log("boounty amt", bountyAmt)
-    // console.log("debounced bounty id", debouncedBountyAppId)
-    // console.log("debpunced hunter addr", debouncedHunterAddress)
-    // console.log("debounced boounty amt", debouncedBountyAmt)
   };
 
   const handleCloseEscrowFalse = () => {
