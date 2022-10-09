@@ -26,34 +26,6 @@ type Props = {
   applications?: Array<JSX.Element>;
 };
 const NestedAccordion: React.FC<Props> = props => {
-
-  // const Application = () => {
-  //   if (props.person) {
-  //     return(
-  //       <Accordion square={true} sx={{ borderRadius: '12px', backgroundColor: 'rgba(6, 72, 41, 0.05)' }}>
-  //         <AccordionSummary
-  //           expandIcon={<ExpandMoreIcon />}
-  //           aria-controls="panel1a-content"
-  //           id="panel1a-header"
-  //         >
-  //           <Typography sx={{ width: '90%', flexShrink: 0, color: '#064829' }}>{props.person}</Typography>
-  //         </AccordionSummary>
-  //         <AccordionDetails>
-  //           <AppCard  
-  //             experience={props.experience} 
-  //             contactInfo={props.contactInfo} 
-  //             links={props.appLinks} 
-  //           >
-  //             {props.children}
-  //           </AppCard>
-  //         </AccordionDetails>
-  //       </Accordion>
-  //     );
-  //   } else {
-  //     return <> </>
-  //   }   
-  // };
-
   return (
     <div>
       <Accordion square={true} sx={{ borderRadius: '12px', backgroundColor: 'rgba(6, 72, 41, 0.05)' }}>
