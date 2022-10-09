@@ -12,14 +12,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
-import { useContractWrite, usePrepareContractWrite, useWaitForTransaction, useContract, useProvider, useEnsName } from 'wagmi';
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction, useContract, useEnsName } from 'wagmi';
 import { ContractInterface, ethers } from 'ethers';
 import useDebounce from './useDebounce';
 import SimpleSnackBar from './simpleSnackBar';
 import { Request } from '../getUMAEventData';
 import wethABI from '../WETH9.json';
-// need to add loading, tx waiting to be mined, txsuccess, etc when tx is created!
-// Issue: submitted work posts data isn't showing up in the component for some reason hmm
 
 type Props = {
     person: string;
