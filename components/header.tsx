@@ -11,6 +11,7 @@ import { useProvider } from 'wagmi';
 import { twitterAuthorize } from "@cyberlab/social-verifier";
 import { useAccount, useConnect } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import styles from '../styles/Home.module.css';
 
 export default function HeaderTabs() {
 
@@ -45,7 +46,7 @@ export default function HeaderTabs() {
 
 
   return ( 
-    <Box sx={{ display: 'flex', flexDirection: 'row', borderBottom: .5, alignItems: 'center', borderColor: 'divider', paddingTop: '12px', paddingBottom: '12px', justifyContent: 'space-between' }}>
+    <Box className={styles.header} sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', borderColor: 'divider', paddingTop: '12px', paddingBottom: '12px', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', marginLeft: '16px', gap: '32px'}}> 
         {/* <Tabs> */}
           <Link href="/openBounties" >
@@ -68,7 +69,9 @@ export default function HeaderTabs() {
         {/* <Button variant="contained" sx={{ backgroundColor: 'rgba(6, 72, 41, 0.15)', borderRadius: '12px', marginRight: '32px', }} onClick={handlePopUp}>Verify Account</Button> */}
         {/* <Button variant="contained" sx={{ backgroundColor: 'rgba(6, 72, 41, 0.85)', borderRadius: '12px', marginRight: '32px', }} onClick={handleClickOpen}>{address ? address : "Connect Wallet"}</Button>
         <Wallet open={open} onClose={handleClose} onConnect={setAddress} /> */}
+        <Box className={styles.sunGlow}> 
         <ConnectButton />
+        </Box>
         
     </Box>   
   );

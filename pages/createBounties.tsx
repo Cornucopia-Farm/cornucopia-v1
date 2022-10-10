@@ -25,6 +25,7 @@ import SubmittedPosts from '../components/submittedPosts';
 import DisputeInitiatedPosts from '../components/disputeInitiatedPosts';
 import DisputeRespondedToPosts from '../components/disputeRespondedToPosts';
 import FinishedPosts from '../components/finishedPosts';
+import styles from '../styles/Home.module.css';
 
 // Bounty Stages for Creator:
 // 1. Posted (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.NoBounty); CHECK PROGRESS MAPPING
@@ -256,7 +257,7 @@ const CreateBounties: NextPage = () => {
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
     
-                <main>
+                <main className={styles.background}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '160px', paddingRight: '160px', paddingTop: '24px', color: 'rgba(6, 72, 41, 0.85)' }}>
                         <Form
                             creatorAddress={address!}

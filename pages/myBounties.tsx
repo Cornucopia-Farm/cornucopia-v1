@@ -30,6 +30,7 @@ import umaABI from '../cornucopia-contracts/out/SkinnyOptimisticOracle.sol/Skinn
 import useDebounce from '../components/useDebounce';
 import SimpleSnackBar from '../components/simpleSnackBar';
 import { Request, getUMAEventData } from '../getUMAEventData';
+import styles from '../styles/Home.module.css';
 
 // Bounty Stages for Hunter:
 // 1. Applied (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.NoBounty); CHECK PROGRESS MAPPING
@@ -473,7 +474,7 @@ const MyBounties: NextPage = () => {
 
     if (!loading && !submittedLoading) {
         return (
-            <div>
+            <div className={styles.background}>
                 <Head>
                     <title>My Bounties</title>
                     <meta name="description" content="First Farm" />

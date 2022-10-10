@@ -16,6 +16,7 @@ import { CompressOutlined } from '@mui/icons-material';
 import { TailSpin } from 'react-loader-spinner';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
+import styles from '../styles/Home.module.css';
 
 type ArData = {
     address: string;
@@ -127,15 +128,15 @@ const OpenBounties: NextPage = () => {
     
     if (!loading && openBountyPosts.length > 0) {
         return (
-            <div>
+            <div className={styles.background}>
                 <Head>
-                <title>Open Bounties</title>
-                <meta name="description" content="First Farm" />
-                <link rel="icon" href="/favicon.ico" />
+                    <title>Open Bounties</title>
+                    <meta name="description" content="First Farm" />
+                    <link rel="icon" href="/favicon.ico" />
                 </Head>
 
                 <main>
-                <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '160px', paddingRight: '160px', color: 'rgba(6, 72, 41, 0.85)' }}> 
+                <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '160px', paddingRight: '160px', color: 'rgba(6, 72, 41, 0.85)', height: '108px + 1vh'}}> 
                     <h2>Open Bounties</h2>
                     <Card sx={{ backgroundColor: 'rgba(6, 72, 41, 0.05)', borderRadius: '12px', paddingTop: '12px', paddingLeft: '12px', paddingRight: '12px', paddingBottom: '12px' }}> 
                         <ClientOnly>
