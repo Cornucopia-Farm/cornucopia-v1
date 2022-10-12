@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { flexbox } from '@mui/system';
 import Link from '@mui/material/Link';
+import styles from '../styles/Home.module.css';
 
 type Props = {
   description: string;
@@ -20,29 +21,35 @@ type Props = {
 
 const BasicCard: React.FC<Props> = props => {
   return (
-    <Card sx={{ minWidth: '275', borderRadius: '12px',  }}>
+    <Card className={styles.cardBackground} sx={{ minWidth: '275', borderRadius: '12px',  }}>
       <CardContent>
         <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '1px', paddingRight: '1px', paddingTop: '1px' }}>
-          <Typography sx={{ fontSize: 16, color: '#064829' }}>
-            Description: {props.description}
-          </Typography>
-          <Typography sx={{ fontSize: 16, color: '#064829' }}>
-            Date Posted: {props.date}
-          </Typography>
-          <Typography sx={{ fontSize: 16, color: '#064829' }}>
-            Time to Complete: {props.time}
-          </Typography>
-          <Typography sx={{ fontSize: 16, color: '#064829' }}>
-            Links: {props.links}
-          </Typography>
+          <Box sx={{ display: 'flex', paddingLeft: 0}}> 
+            <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Description </Typography>
+            <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%'}}>{props.description}</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', paddingLeft: 0}}> 
+            <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Date Posted </Typography>
+            <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%'}}>{props.date}</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', paddingLeft: 0}}> 
+            <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Time to Complete </Typography>
+            <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%'}}>{props.time}</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', paddingLeft: 0}}> 
+            <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Links </Typography>
+            <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%'}}>{props.links}</Typography>
+          </Box>
           {props.workLinks &&
-            <Typography sx={{ fontSize: 16, color: '#064829' }}>
-              Work Links: {props.workLinks}
-            </Typography>
+            <Box sx={{ display: 'flex', paddingLeft: 0}}> 
+              <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Work Links </Typography>
+              <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%'}}>{props.workLinks}</Typography>
+            </Box>
           }
-          <Typography sx={{ fontSize: 16, color: '#064829' }}>
-            Arweave Hash: <Link target="_blank" rel="noopener" href={"https://arweave.net/" + props.arweaveHash}>{props.arweaveHash}</Link>
-          </Typography>
+          <Box sx={{ display: 'flex', paddingLeft: 0}}> 
+              <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Arweave Hash </Typography>
+              <Typography className={styles.arweaveHash} sx={{fontSize: 16, color: '#064829', width: '45%'}}><Link target="_blank" rel="noopener" href={"https://arweave.net/" + props.arweaveHash}>{props.arweaveHash}</Link></Typography>
+          </Box>
         </Box>
       </CardContent>
       <CardActions>

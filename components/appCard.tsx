@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { flexbox } from '@mui/system';
 import Link from '@mui/material/Link';
+import styles from '../styles/Home.module.css';
 
 type Props = {
   experience: string;
@@ -21,20 +22,19 @@ const BasicCard: React.FC<Props> = props => {
   return (
     <Card sx={{ minWidth: '275', borderRadius: '12px',  }}>
       <CardContent>
-        <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '1px', paddingRight: '1px', paddingTop: '1px' }}>
-          <Typography sx={{ fontSize: 16, color: '#064829' }}>
-            Experience: {props.experience}
-          </Typography>
-          <Typography sx={{ fontSize: 16, color: '#064829' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'space-between', paddingLeft: '1px', paddingRight: '1px', paddingTop: '1px' }}>
+          <Typography className={styles.cardTag}  sx={{ fontSize: 16, color: '#064829' }}>
+            Experience: </Typography> <Typography className={styles.h2}>{props.experience}</Typography>
+          <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829' }}>
             Contact Info: {props.contactInfo}
           </Typography>
-          <Typography sx={{ fontSize: 16, color: '#064829' }}>
+          <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829' }}>
             Links: {props.links}
           </Typography>
-          <Typography sx={{ fontSize: 16, color: '#064829' }}>
+          <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829' }}>
             Work Links: {props.workLinks}
           </Typography>
-          <Typography sx={{ fontSize: 16, color: '#064829' }}>
+          <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829' }}>
             Arweave Hash: <Link target="_blank" rel="noopener" href={"https://arweave.net/" + props.arweaveHash}>{props.arweaveHash}</Link>
           </Typography>
         </Box>

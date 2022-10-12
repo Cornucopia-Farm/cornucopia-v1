@@ -7,6 +7,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import BountyCard from './bountyCard';
 import Box from '@mui/material/Box';
 import { useEnsName } from 'wagmi';
+import styles from '../styles/Home.module.css';
 
 type Props = { // need to change bounty card to specify which component it is for!
   company: string;
@@ -40,17 +41,17 @@ const BasicAccordion: React.FC<Props> = props => {
 
   return (
     <div>
-      <Accordion square={true} sx={{ borderRadius: '12px', backgroundColor: 'rgba(6, 72, 41, 0.05)' }} >
+      <Accordion className={styles.accordionBackground} square={true} sx={{ borderRadius: '12px', backgroundColor: 'rgba(6, 72, 41, 0.05)' }} >
         <AccordionSummary 
-          expandIcon={<ExpandMoreIcon />}
+          expandIcon={<ExpandMoreIcon sx={{color: 'rgb(233, 233, 198)'}}/>}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
           <Box sx={{ borderRadius: '12px', width: '45%', flexShrink: 0 }}> 
-            <Typography sx={{ color: '#064829' }}>{ensName ? ensName : props.company}</Typography>
+            <Typography className={styles.h2} sx={{ color: '#064829' }}>{ensName ? ensName : props.company}</Typography>
           </Box>
-          <Typography sx={{ width: '45%', flexShrink: 0, color: '#064829' }}>{props.bountyName}</Typography> 
-          <Typography sx={{ color: '#064829' }}>{props.amount} ETH</Typography> 
+          <Typography className={styles.h2} sx={{ width: '45%', flexShrink: 0, color: '#064829' }}>{props.bountyName}</Typography> 
+          <Typography className={styles.h2} sx={{ color: '#064829' }}>{props.amount} ETH</Typography> 
             
         </AccordionSummary>
         <AccordionDetails >

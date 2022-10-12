@@ -17,6 +17,7 @@ import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
 import useDebounce from './useDebounce';
 import SimpleSnackBar from './simpleSnackBar';
+import styles from '../styles/Home.module.css';
 
 type Props = {
     creatorAddress: string;
@@ -177,7 +178,7 @@ const Form: React.FC<Props> = props => {
             );
         } else if (props.formType == "applyBounty") {
             return (
-                <Button variant="contained" sx={{ backgroundColor: 'rgba(6, 72, 41, 0.85)', borderRadius: '12px' }} onClick={handleClickOpen}>
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleClickOpen}>
                     Apply
                 </Button>
             );
@@ -205,6 +206,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        className={styles.h2}
                     />
                     <TextField
                         autoFocus
@@ -217,6 +219,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        className={styles.h2}
                     />
                     <TextField
                         autoFocus
@@ -229,6 +232,7 @@ const Form: React.FC<Props> = props => {
                         type="number"
                         fullWidth
                         variant="standard"
+                        className={styles.h2}
                     />
                     <TextField
                         autoFocus
@@ -241,6 +245,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        className={styles.h2}
                     />
                     <TextField
                         autoFocus
@@ -253,6 +258,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        className={styles.h2}
                     />
                     <TextField
                         autoFocus
@@ -265,6 +271,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        className={styles.h2}
                     />
                 </div>
             );
@@ -282,6 +289,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        className={styles.h2}
                     />
                     <TextField
                         autoFocus
@@ -294,6 +302,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        className={styles.h2}
                     />
                     <TextField
                         autoFocus
@@ -306,6 +315,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        className={styles.h2}
                     />
                 </div>
             );
@@ -323,6 +333,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        className={styles.h2}
                     />
                 </div>
             );
@@ -336,17 +347,17 @@ const Form: React.FC<Props> = props => {
             }
             <ButtonType />
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>{props.formName}</DialogTitle>
+                <DialogTitle className={styles.h2}>{props.formName}</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
+                    <DialogContentText className={styles.h2}>
                     {props.summary}
                     </DialogContentText>
                     {dialogBoxes(props.formType)}
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>{props.formButtons[0]}</Button>
+                    <Button className={styles.h2} onClick={handleClose}>{props.formButtons[0]}</Button>
                     {props.formName !== "Submit" && 
-                        <Button onClick={handleCloseSubmit}>{props.formButtons[1]}</Button>
+                        <Button className={styles.h2} onClick={handleCloseSubmit}>{props.formButtons[1]}</Button>
                     }
                     {props.formName === "Submit" &&
                         <div>

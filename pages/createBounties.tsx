@@ -26,6 +26,9 @@ import DisputeInitiatedPosts from '../components/disputeInitiatedPosts';
 import DisputeRespondedToPosts from '../components/disputeRespondedToPosts';
 import FinishedPosts from '../components/finishedPosts';
 import styles from '../styles/Home.module.css';
+import Slider from '@mui/material/Slider';
+import { Typography } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
 // Bounty Stages for Creator:
 // 1. Posted (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.NoBounty); CHECK PROGRESS MAPPING
@@ -248,6 +251,50 @@ const CreateBounties: NextPage = () => {
         }
     }, [loading]);
 
+    const marks = [
+        {
+            value: 0,
+            label: 'Posted',
+        },
+        {
+            value: 15,
+            label: 'Applied To',
+        },
+        {
+            value: 30,
+            label: 'In Progress',
+        },
+        {
+            value: 45,
+            label: 'Submitted: Needs Approval',
+        },
+        {
+            value: 60,
+            label: 'Dispute Initiated',
+        },
+        {
+            value: 75,
+            label: 'Dispute Responded To',
+        },
+        {
+            value: 90,
+            label: 'Finished',
+        },
+    ];
+
+    function valuetext(value: number) {
+        return marks[marks.findIndex((mark) => mark.value === value)].label
+    }
+
+    const useStyles = makeStyles((theme: any) => ({
+        mark: {
+          color: 'white'
+        }
+    }));
+      
+    const [stage, setStage] = React.useState(1);
+    const classes = useStyles();
+
     if (!loading) {
         return (
             <div>
@@ -289,34 +336,73 @@ const CreateBounties: NextPage = () => {
                                 }
                             ]}
                         /> 
-                        <h2>Posted</h2>
-                            <ClientOnly>
-                                {postedComponents}
-                            </ClientOnly> 
-                        <h2>Applied To</h2>
-                            <ClientOnly>
-                                {appliedComponents}
-                            </ClientOnly>
-                        <h2>In Progress</h2>
-                            <ClientOnly>
-                                {inProgressComponents}
-                            </ClientOnly>
-                        <h2>Submitted: Needs Approval</h2>
-                            <ClientOnly>
-                                {submittedComponents}
-                            </ClientOnly>
-                        <h2>Dispute Initiated</h2>
-                            <ClientOnly>
-                                {disputeInitiatedComponents}
-                            </ClientOnly>
-                        <h2>Dispute Responded To</h2>
-                            <ClientOnly>
-                                {disputeRespondedToComponents}
-                            </ClientOnly>
-                        <h2>Finished</h2>
-                            <ClientOnly>
-                                {finishedComponents}
-                            </ClientOnly>
+                        <Slider
+                            aria-label="Restricted values"
+                            defaultValue={0}
+                            getAriaValueText={valuetext}
+                            step={null}
+                            valueLabelDisplay="auto"
+                            marks={marks}
+                            onChange={(e, val) => setStage(marks.findIndex((mark) => mark.value === val) + 1)}
+                            sx={{ color: 'white'}}
+                            classes={{ markLabel: classes.mark }}
+                        />
+                        {stage === 1 && 
+                            <div> 
+                                <h2 className={styles.h2}>Posted</h2>
+                                <ClientOnly>
+                                    {postedComponents}
+                                </ClientOnly>
+                            </div>
+                        } 
+                        {stage === 2 && 
+                            <div> 
+                                <h2 className={styles.h2}>Applied To</h2>
+                                <ClientOnly>
+                                    {appliedComponents}
+                                </ClientOnly>
+                            </div>
+                        }
+                        {stage === 3 && 
+                            <div> 
+                                <h2 className={styles.h2}>In Progress</h2>
+                                <ClientOnly>
+                                    {inProgressComponents}
+                                </ClientOnly>
+                            </div>
+                        }
+                        {stage === 4 && 
+                            <div> 
+                                <h2 className={styles.h2}>Submitted: Needs Approval</h2>
+                                <ClientOnly>
+                                    {submittedComponents}
+                                </ClientOnly>
+                            </div>
+                        }
+                        {stage === 5 && 
+                            <div> 
+                                <h2 className={styles.h2}>Dispute Initiated</h2>
+                                <ClientOnly>
+                                    {disputeInitiatedComponents}
+                                </ClientOnly>
+                            </div>
+                        }
+                        {stage === 6 && 
+                            <div> 
+                                <h2 className={styles.h2}>Dispute Responded To</h2>
+                                <ClientOnly>
+                                    {disputeRespondedToComponents}
+                                </ClientOnly>
+                            </div>
+                        }
+                        {stage === 7 && 
+                            <div> 
+                                <h2 className={styles.h2}>Finished</h2>
+                                <ClientOnly>
+                                    {finishedComponents}
+                                </ClientOnly>
+                            </div>
+                        }
                     </Box>
                 </main>
             </div>

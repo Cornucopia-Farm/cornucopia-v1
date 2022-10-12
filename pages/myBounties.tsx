@@ -489,43 +489,43 @@ const MyBounties: NextPage = () => {
                         {(isForceHunterPayoutTxLoading || isForceHunterPayoutTxSuccess) && 
                             <SimpleSnackBar msg={isForceHunterPayoutTxLoading ? 'Forcing payout...' : 'Forced payout!'}/>
                         }
-                        <h2>Applied</h2>
+                        <h2 className={styles.h2}>Applied</h2>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>                            
                             <ClientOnly>
                                 {appliedBountyPosts}
                             </ClientOnly>  
                         </Box>
-                        <h2>In Progress</h2>
+                        <h2 className={styles.h2}>In Progress</h2>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                             <ClientOnly>
                                 {inProgressBountyPosts}
                             </ClientOnly>
                         </Box>
-                        <h2>Submitted</h2>
+                        <h2 className={styles.h2}>Submitted</h2>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                             <ClientOnly>
                                 {submittedBountyPosts}
                             </ClientOnly>
                         </Box>
-                        <h2>Dispute Initiated</h2>
+                        <h2 className={styles.h2}>Dispute Initiated</h2>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                             <ClientOnly>
                                 {disputeInitiatedBountyPosts}
                             </ClientOnly>
                         </Box>
-                        <h2>Dispute Responded To</h2>
+                        <h2 className={styles.h2}>Dispute Responded To</h2>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                             <ClientOnly>
                                 {disputeRespondedToBountyPosts}
                             </ClientOnly>
                         </Box>
-                        <h2>Creator No Dispute or Payout within 2 Weeks</h2>
+                        <h2 className={styles.h2}>Creator No Dispute or Payout within 2 Weeks</h2>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                             <ClientOnly>
                                 {creatorNoActionBountyPosts}
                             </ClientOnly>
                         </Box>
-                        <h2>Finished</h2>
+                        <h2 className={styles.h2}>Finished</h2>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                             <ClientOnly>
                                 {finishedBountyPosts}

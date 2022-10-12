@@ -17,6 +17,11 @@ import { TailSpin } from 'react-loader-spinner';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 import styles from '../styles/Home.module.css';
+import { gsap } from "gsap";
+import cloud from '../images/cloud.jpg';
+import farm from '../images/farm.svg';
+import cows from '../images/cows.svg';
+import clouds from '../images/clouds.svg';
 
 type ArData = {
     address: string;
@@ -125,6 +130,17 @@ const OpenBounties: NextPage = () => {
             getPosts(postIds);
         } 
     }, [loading]);
+
+    // const root = React.useRef();
+
+    // React.useLayoutEffect(() => {
+    //     let ctx = gsap.context(() => {
+    //     // all your animations go in here...
+    //     gsap.to(".box", { rotation: "+=360" });
+    //     }, root); // <- scopes all selector text to the root element
+
+    //     return () => ctx.revert();
+    // }, []);
     
     if (!loading && openBountyPosts.length > 0) {
         return (
@@ -137,8 +153,34 @@ const OpenBounties: NextPage = () => {
 
                 <main>
                 <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '160px', paddingRight: '160px', color: 'rgba(6, 72, 41, 0.85)', height: '108px + 1vh'}}> 
-                    <h2>Open Bounties</h2>
-                    <Card sx={{ backgroundColor: 'rgba(6, 72, 41, 0.05)', borderRadius: '12px', paddingTop: '12px', paddingLeft: '12px', paddingRight: '12px', paddingBottom: '12px' }}> 
+                    <h2 className={styles.h2}>Open Bounties</h2>
+                    {/* <div className={styles.x1}>
+                        <div className={styles.cloud} />
+                    </div> */}
+                    {/* <div className={styles.backgroundWrap}>
+                        <div className={styles.x1}>
+                            <div className={styles.cloud}></div>
+                        </div>
+
+                        <div className={styles.x2}>
+                            <div className={styles.cloud}></div>
+                        </div>
+
+                        <div className={styles.x3}>
+                            <div className={styles.cloud}></div>
+                        </div>
+
+                        <div className={styles.x4}>
+                            <div className={styles.cloud}></div>
+                        </div>
+
+                        <div className={styles.x5}>
+                            <div className={styles.cloud}></div>
+                        </div>
+                    </div> */}
+                    {/* <Image src={farm} layout="fill"/> */}
+                    {/* <Image src={clouds} height={100} width={10000}/> */}
+                    <Card className={styles.accordionBackground} sx={{backgroundColor: 'rgba(6, 72, 41, 0.05)', borderRadius: '12px', paddingTop: '12px', paddingLeft: '12px', paddingRight: '12px', paddingBottom: '12px' }}> 
                         <ClientOnly>
                             {openBountyPosts}
                         </ClientOnly>

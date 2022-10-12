@@ -7,7 +7,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
 import BountyCard from './bountyCard';
 import AppCard from './appCard';
-
+import styles from '../styles/Home.module.css';
 
 type Props = {
   // person: string;
@@ -34,8 +34,8 @@ const NestedAccordion: React.FC<Props> = props => {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-            <Typography sx={{ width: '90%', flexShrink: 0, color: '#064829' }}>{props.bountyName}</Typography>
-            <Typography sx={{ color: '#064829' }}>{props.amount} ETH</Typography>     
+            <Typography className={styles.h2} sx={{ width: '90%', flexShrink: 0, color: '#064829' }}>{props.bountyName}</Typography>
+            <Typography className={styles.h2} sx={{ color: '#064829' }}>{props.amount} ETH</Typography>     
         </AccordionSummary>
         <AccordionDetails>
           <BountyCard 
