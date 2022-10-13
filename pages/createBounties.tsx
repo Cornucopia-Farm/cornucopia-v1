@@ -277,7 +277,7 @@ const CreateBounties: NextPage = () => {
             label: 'Dispute Responded To',
         },
         {
-            value: 90,
+            value: 100,
             label: 'Finished',
         },
     ];
@@ -344,7 +344,7 @@ const CreateBounties: NextPage = () => {
                             valueLabelDisplay="auto"
                             marks={marks}
                             onChange={(e, val) => setStage(marks.findIndex((mark) => mark.value === val) + 1)}
-                            sx={{ color: 'white'}}
+                            sx={{ color: 'white', '& .MuiSlider-markLabel': { color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk' }}}
                             // classes={{ markLabel: classes.mark }}
                         />
                         {stage === 1 && 

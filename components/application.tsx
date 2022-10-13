@@ -196,11 +196,11 @@ const Application: React.FC<Props> = props => {
 
       <Accordion square={true} sx={{ borderRadius: '12px', backgroundColor: 'rgba(6, 72, 41, 0.05)' }}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
+          expandIcon={<ExpandMoreIcon sx={{color: 'rgb(233, 233, 198)'}}/>}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography sx={{ width: '90%', flexShrink: 0, color: '#064829' }}>{ensName ? ensName : props.person}</Typography>
+          <Typography sx={{ width: '90%', flexShrink: 0, color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk', fontSize: '15px'}}>{ensName ? ensName : props.person}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <AppCard  
@@ -212,7 +212,7 @@ const Application: React.FC<Props> = props => {
           >
             {props.appStatus === "applied" &&
               <div> 
-                <Button variant="contained" sx={{ backgroundColor: '#C2C2C2', borderRadius: '12px', marginRight: '8px' }} onClick={handleClickOpenReject}>Reject</Button>
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleClickOpenReject}>Reject</Button>
                 <Dialog
                   open={openReject!}
                   onClose={handleCloseReject} 
@@ -227,7 +227,7 @@ const Application: React.FC<Props> = props => {
                       <Button onClick={handleCloseReject} autoFocus>Yes I want to</Button>
                   </DialogActions>
                 </Dialog>
-                <Button variant="contained" sx={{ backgroundColor: 'rgba(6, 72, 41, 0.85)', borderRadius: '12px' }} onClick={() => {handleClickOpenEscrow(); handleCloseEscrowTrue(props.postId!, props.person, props.amount!);}}>Escrow</Button>
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenEscrow(); handleCloseEscrowTrue(props.postId!, props.person, props.amount!);}}>Escrow</Button>
                 <Dialog
                   open={openEscrow}
                   onClose={handleCloseEscrowFalse}

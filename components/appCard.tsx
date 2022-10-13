@@ -20,23 +20,31 @@ type Props = {
 
 const BasicCard: React.FC<Props> = props => {
   return (
-    <Card sx={{ minWidth: '275', borderRadius: '12px',  }}>
+    <Card className={styles.cardBackground} sx={{ minWidth: '275', borderRadius: '12px',  }}>
       <CardContent>
-        <Box sx={{ display: 'flex', flexDirection: 'space-between', paddingLeft: '1px', paddingRight: '1px', paddingTop: '1px' }}>
-          <Typography className={styles.cardTag}  sx={{ fontSize: 16, color: '#064829' }}>
-            Experience: </Typography> <Typography className={styles.h2}>{props.experience}</Typography>
-          <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829' }}>
-            Contact Info: {props.contactInfo}
-          </Typography>
-          <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829' }}>
-            Links: {props.links}
-          </Typography>
-          <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829' }}>
-            Work Links: {props.workLinks}
-          </Typography>
-          <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829' }}>
-            Arweave Hash: <Link target="_blank" rel="noopener" href={"https://arweave.net/" + props.arweaveHash}>{props.arweaveHash}</Link>
-          </Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '1px', paddingRight: '1px', paddingTop: '1px' }}>
+          <Box sx={{ display: 'flex', paddingLeft: 0}}> 
+            <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Experience </Typography>
+            <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%'}}>{props.experience}</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', paddingLeft: 0}}> 
+            <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Contact Info </Typography>
+            <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%'}}>{props.contactInfo}</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', paddingLeft: 0}}> 
+            <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Links </Typography>
+            <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%'}}>{props.links}</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', paddingLeft: 0}}> 
+            <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Work Links </Typography>
+            <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%'}}>{props.workLinks}</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', paddingLeft: 0}}> 
+            <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Arweave Hash </Typography>
+            <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%'}}>
+              <Link target="_blank" rel="noopener" href={"https://arweave.net/" + props.arweaveHash}>{props.arweaveHash}</Link>
+            </Typography>
+          </Box>
         </Box>
       </CardContent>
       <CardActions>

@@ -1,85 +1,114 @@
 import React from "react";
 import { gsap } from "gsap";
+import Cow from '../images/cow.svg';
 
-function CowAnimation() {
-
-    const comp = React.useRef(); // create a ref for the root level element (for scoping)
+function Icon() {
+    const cow = React.useRef();
+    const legLower1 = React.useRef();
+    const legLower2 = React.useRef();
+    const legUpper1 = React.useRef();
+    const legUpper2 = React.useRef();
+    const tail = React.useRef();
 
     React.useLayoutEffect(() => {
-    
-    // create our context. This function is invoked immediately and all GSAP animations and ScrollTriggers created during the execution of this function get recorded so we can revert() them later (cleanup)
-    let ctx = gsap.context(() => {
-        
-        // all our animations can use selector text like ".box" 
-        // and it's properly scoped to our component
-        gsap.fromTo(comp, {
-            duration: 30,
-            x: -300,
+
+        gsap.fromTo(cow.current, {
+            paused: true,
+            x: 0,
             repeat: -1,
-            ease:"linear.out"
+            ease:"none"
           },{
-            x: 1500,
+            x: 1000,
             repeat: -1,
-            ease:"linear.out"
+            ease:"none",
+            duration: 30
           });
-          gsap.fromTo(".s-cow-move-leg-upper", {
-            duration: 1.5,
+
+        // gsap.fromTo(cow.current, {
+        //     duration: 1,
+        //     x: -300,
+        //     repeat: 0,
+        //     ease:"linear.out"
+        //   },{
+        //     x: 1500,
+        //     repeat: 0,
+        //     ease:"linear.out"
+        //   });
+          gsap.fromTo(legUpper1.current, {
             transformOrigin: "top top",
             rotation: -15,
             repeat:-1,
             yoyo: true,
             ease:"linear.out",
             delay: 2
-          },
-          {
+            },
+            {
             transformOrigin: "top top",
+            duration: 1.5,
             rotation: 15,
             repeat:-1,
             yoyo: true,
             ease:"linear.out"
-          });
-          gsap.fromTo(".s-cow-move-leg-lower", {
-            duration: 1.5,
+            });
+          gsap.fromTo(legLower1.current, {
             transformOrigin: "top top",
             rotation: -20,
             repeat:-1,
             yoyo: true,
             ease:"linear.out"
-          },
-          {
+            },
+            {
             transformOrigin: "top top",
+            duration: 1.5,
             rotation: 20,
             repeat:-1,
             yoyo: true,
             ease:"linear.out"
-          }).delay(1.5);
-          gsap.to(".s-cow-move-tale", {
+            }).delay(1.5);
+            gsap.fromTo(legUpper2.current, {
+                transformOrigin: "top top",
+                rotation: -15,
+                repeat:-1,
+                yoyo: true,
+                ease:"linear.out",
+                delay: 2
+                },
+                {
+                transformOrigin: "top top",
+                duration: 1.5,
+                rotation: 15,
+                repeat:-1,
+                yoyo: true,
+                ease:"linear.out"
+                });
+              gsap.fromTo(legLower2.current, {
+                transformOrigin: "top top",
+                rotation: -20,
+                repeat:-1,
+                yoyo: true,
+                ease:"linear.out"
+                },
+                {
+                transformOrigin: "top top",
+                duration: 1.5,
+                rotation: 20,
+                repeat:-1,
+                yoyo: true,
+                ease:"linear.out"
+                }).delay(1.5);
+          gsap.to(tail.current, {
             duration: 1.5,
             transformOrigin: "top right",
             rotation: 20,
             repeat: -1,
             yoyo:true,
             ease:"linear.in"
-          }).delay(1.5);
-          //Cow chew grass 
-          gsap.to(".s-cow-grass-chew", {
-            duration: 1,
-            transformOrigin: "center center",
-            skewX: 10,
-            repeat: -1,
-            yoyo:true,
-            ease:"linear.out"
-          });
-        
-    }, comp); // <- IMPORTANT! Scopes selector text
-    
-    return () => ctx.revert(); // cleanup
-    
-    }, []); // <- empty dependency Array so it doesn't re-run on every render
+            }).delay(1.5);
 
-  return (
-    <div ref={comp} className="cow"> 
-    <svg
+    }, []);
+
+    return (
+        <svg
       xmlns="http://www.w3.org/2000/svg"
       width="100%"
       height="100%"
@@ -90,14 +119,15 @@ function CowAnimation() {
       style={{ width: "100%", height: "100%" }}
       className="cow"
     >
-      <g className="s-cow-move-right">
+      <g className="s-cow-move-right" ref={cow}>
         <path
           fill="#3F3B37"
           d="M65.528 788.958c0 1.846-1.839 3.342-4.109 3.342-2.268 0-4.109-1.496-4.109-3.342v-33.445c0-1.846 1.839-3.345 4.109-3.345h4.109v36.79z"
           className="s-cow-move-tale"
+            ref={tail}
         ></path>
         <g>
-          <g className="s-cow-move-leg-lower">
+          <g className="s-cow-move-leg-lower" ref={legLower1}>
             <path
               fill="#594B42"
               d="M83.989 772.236v23.409c0 1.229.815 2.304 2.028 2.887 1.275.606 2.081 1.701 2.081 2.904v10.929c0 1.852 1.839 3.347 4.108 3.347v6.689h12.323l-2.972-4.838c-.696-1.137-2.118-1.852-3.674-1.852h-1.57v-14.274c0-1.204.807-2.293 2.081-2.904 1.213-.582 2.029-1.655 2.029-2.886v-23.411H83.989z"
@@ -107,7 +137,7 @@ function CowAnimation() {
               d="M97.907 815.71c1.556 0 2.978.716 3.674 1.853l2.972 4.836H92.23v-6.688h5.677v-.001z"
             ></path>
           </g>
-          <g className="s-cow-move-leg-lower">
+          <g className="s-cow-move-leg-lower" ref={legLower2}>
             <path
               fill="#594B42"
               d="M188.769 795.647c0 1.229-.814 2.304-2.028 2.885-1.274.609-2.081 1.701-2.081 2.904v14.274h1.569c1.557 0 2.979.716 3.675 1.849l2.972 4.841h-12.325v-6.689c-2.267 0-4.107-1.495-4.107-3.346v-10.931c0-1.201-.807-2.292-2.08-2.902-1.213-.585-2.029-1.657-2.029-2.887v-23.409h16.434v23.411z"
@@ -117,7 +147,7 @@ function CowAnimation() {
               d="M186.229 815.71h-5.677v6.688h12.324l-2.972-4.836c-.696-1.137-2.117-1.852-3.675-1.852z"
             ></path>
           </g>
-          <g className="s-cow-move-leg-upper">
+          <g className="s-cow-move-leg-upper" ref={legUpper1}>
             <path
               fill="#8C8279"
               d="M61.418 774.315v21.264c0 1.218.817 2.283 2.029 2.857 1.273.608 2.078 1.689 2.078 2.884v10.836c0 1.834 1.843 3.318 4.111 3.318v6.637h12.323l-2.972-4.798c-.696-1.128-2.118-1.836-3.675-1.836h-1.569v-14.156c0-1.191.805-2.276 2.081-2.881 1.213-.576 3.094-2.746 3.094-3.966 0 0 .595-2.175 1.316-5.323.869-3.788 1.725-14.836 1.725-14.836 0-8.368-5.013-12.265-11.498-11.72-2.629.221-9.039-2.708-9.043 11.72z"
@@ -127,7 +157,7 @@ function CowAnimation() {
               d="M69.635 815.71v6.688h12.324l-2.97-4.836c-.697-1.137-2.119-1.853-3.675-1.853h-5.679v.001z"
             ></path>
           </g>
-          <g className="s-cow-move-leg-upper">
+          <g className="s-cow-move-leg-upper" ref={legUpper2}>
             <path
               fill="#8C8279"
               d="M160.102 784.362l-.092 10.917c-.01 1.228.799 2.309 2.006 2.903 1.269.622 2.067 1.721 2.057 2.924l-.091 10.932c-.015 1.849 1.812 3.361 4.081 3.383l-.056 6.69 12.323.12-2.932-4.869c-.685-1.14-2.102-1.873-3.659-1.889l-1.57-.014.119-14.271c.01-1.205.824-2.289 2.104-2.89 1.218-.564 2.042-1.633 2.052-2.862l.139-16.721h.002l.003-.022c.03-.302.048-.611.05-.925.042-4.98-3.617-9.057-8.167-9.099-4.313-.042-7.883 3.549-8.284 8.162l-.017.226-.062 7.303h-.007v.002h.001z"
@@ -198,8 +228,7 @@ function CowAnimation() {
         </g>
       </g>
     </svg>
-    </div>
-  );
+    );
 }
 
-export default CowAnimation;
+export default Icon;

@@ -176,9 +176,9 @@
 }
 
 .background {
-  height: 108vh !important;
+  /* height: 108vh !important; */
   z-index: -1;
-  background: rgb(15, 14, 13) ;
+  /* background: rgb(15, 14, 13); */
   /* background: linear-gradient(to bottom, rgb(77, 137, 216), 20%, rgb(250, 239, 188), 90%, green, rgb(87, 44, 33)); */
 }
 
