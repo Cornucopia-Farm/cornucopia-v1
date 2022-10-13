@@ -22,6 +22,7 @@ import cloud from '../images/cloud.jpg';
 import farm from '../images/farm.svg';
 import cows from '../images/cows.svg';
 import clouds from '../images/clouds.svg';
+import CowAnimation from '../components/cowAnimation';
 
 type ArData = {
     address: string;
@@ -130,17 +131,6 @@ const OpenBounties: NextPage = () => {
             getPosts(postIds);
         } 
     }, [loading]);
-
-    // const root = React.useRef();
-
-    // React.useLayoutEffect(() => {
-    //     let ctx = gsap.context(() => {
-    //     // all your animations go in here...
-    //     gsap.to(".box", { rotation: "+=360" });
-    //     }, root); // <- scopes all selector text to the root element
-
-    //     return () => ctx.revert();
-    // }, []);
     
     if (!loading && openBountyPosts.length > 0) {
         return (
@@ -185,6 +175,7 @@ const OpenBounties: NextPage = () => {
                             {openBountyPosts}
                         </ClientOnly>
                     </Card>
+                    <CowAnimation />
                 </Box>
                 </main>
             </div>

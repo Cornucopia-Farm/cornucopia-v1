@@ -286,14 +286,14 @@ const CreateBounties: NextPage = () => {
         return marks[marks.findIndex((mark) => mark.value === value)].label
     }
 
-    const useStyles = makeStyles((theme: any) => ({
-        mark: {
-          color: 'white'
-        }
-    }));
+    // const useStyles = makeStyles((theme: any) => ({
+    //     mark: {
+    //       color: 'white'
+    //     }
+    // }));
       
     const [stage, setStage] = React.useState(1);
-    const classes = useStyles();
+    // const classes = useStyles();
 
     if (!loading) {
         return (
@@ -345,7 +345,7 @@ const CreateBounties: NextPage = () => {
                             marks={marks}
                             onChange={(e, val) => setStage(marks.findIndex((mark) => mark.value === val) + 1)}
                             sx={{ color: 'white'}}
-                            classes={{ markLabel: classes.mark }}
+                            // classes={{ markLabel: classes.mark }}
                         />
                         {stage === 1 && 
                             <div> 
