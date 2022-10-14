@@ -285,15 +285,8 @@ const CreateBounties: NextPage = () => {
     function valuetext(value: number) {
         return marks[marks.findIndex((mark) => mark.value === value)].label
     }
-
-    // const useStyles = makeStyles((theme: any) => ({
-    //     mark: {
-    //       color: 'white'
-    //     }
-    // }));
       
     const [stage, setStage] = React.useState(1);
-    // const classes = useStyles();
 
     if (!loading) {
         return (
@@ -345,7 +338,6 @@ const CreateBounties: NextPage = () => {
                             marks={marks}
                             onChange={(e, val) => setStage(marks.findIndex((mark) => mark.value === val) + 1)}
                             sx={{ color: 'white', '& .MuiSlider-markLabel': { color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk' }}}
-                            // classes={{ markLabel: classes.mark }}
                         />
                         {stage === 1 && 
                             <div> 

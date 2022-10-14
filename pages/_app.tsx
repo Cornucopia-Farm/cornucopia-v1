@@ -8,7 +8,7 @@ import Layout from '../components/layout';
 import { ApolloProvider } from "@apollo/client";
 import client from "../apollo-client";
 import '@rainbow-me/rainbowkit/styles.css';
-import { connectorsForWallets, getDefaultWallets, RainbowKitProvider, wallet, darkTheme, midnightTheme } from '@rainbow-me/rainbowkit';
+import { connectorsForWallets, getDefaultWallets, RainbowKitProvider, wallet, darkTheme, midnightTheme, Theme } from '@rainbow-me/rainbowkit';
 import {
   chain,
   configureChains,
@@ -19,6 +19,8 @@ import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { makeStyles } from '@mui/styles';
+import merge from 'lodash.merge';
+
 
 
 type NextPageWithLayout = NextPage & {
@@ -113,6 +115,15 @@ const wagmiClient = createClient({
   webSocketProvider 
 });
 
+const myTheme = merge(midnightTheme(), {
+  fonts: {
+    body: 'Space Grotesk',
+  },
+  colors: {
+    connectButtonText: 'rgb(233, 233, 198)',
+  },
+} as Theme);
+
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   
     useEffect(() => {
@@ -124,7 +135,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
     return (
       <WagmiConfig client={wagmiClient}> 
-        <RainbowKitProvider theme={midnightTheme()} chains={chains} >
+        <RainbowKitProvider theme={myTheme} chains={chains} >
           <ApolloProvider client={client}> 
             <Layout>
               <Component {...pageProps} />

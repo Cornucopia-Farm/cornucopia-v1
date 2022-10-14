@@ -6,7 +6,8 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import BountyCard from './bountyCard';
 import Box from '@mui/material/Box';
-import { useEnsName } from 'wagmi';
+import Link from '@mui/material/Link';
+import { useEnsName, useNetwork } from 'wagmi';
 import styles from '../styles/Home.module.css';
 
 type Props = { // need to change bounty card to specify which component it is for!
@@ -26,6 +27,7 @@ type Props = { // need to change bounty card to specify which component it is fo
 const BasicAccordion: React.FC<Props> = props => {
 
   const { data: ensName } = useEnsName({ address: props.company });
+  const { chain } = useNetwork();
 
   const dispute = () => {
     if (props.disputes) {
@@ -39,6 +41,23 @@ const BasicAccordion: React.FC<Props> = props => {
     };
   };
 
+  const blockExplorer = (network: any) => {
+    if (network === 'polygon') {
+      return 'https://polygonscan.com/address/'
+    } else if (network === 'goerli') {
+      return 'https://goerli.etherscan.io/address/'
+    } else if (network === 'arbitrum') {
+      return 'https://arbiscan.io/address/'
+    } else if (network === 'optimism') {
+      return 'https://optimistic.etherscan.io/address/'
+    } else if (network === 'aurora') {
+      return 'https://aurorascan.dev/address/'
+    }
+    return 'https://etherscan.io/address/'
+  };
+
+  const blockExplorerURL = blockExplorer(chain?.network);
+
   return (
     <div>
       <Accordion className={styles.accordionBackground} square={true} sx={{ borderRadius: '12px', backgroundColor: 'rgba(6, 72, 41, 0.05)' }} >
@@ -48,7 +67,7 @@ const BasicAccordion: React.FC<Props> = props => {
           id="panel1a-header"
         >
           <Box sx={{ borderRadius: '12px', width: '45%', flexShrink: 0 }}> 
-            <Typography className={styles.h2} sx={{ color: '#064829' }}>{ensName ? ensName : props.company}</Typography>
+            <Typography className={styles.h2} sx={{ color: '#064829' }}><Link target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
           </Box>
           <Typography className={styles.h2} sx={{ width: '45%', flexShrink: 0, color: '#064829' }}>{props.bountyName}</Typography> 
           <Typography className={styles.h2} sx={{ color: '#064829' }}>{props.amount} ETH</Typography> 

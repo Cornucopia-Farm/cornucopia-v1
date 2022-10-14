@@ -31,6 +31,7 @@ import useDebounce from '../components/useDebounce';
 import SimpleSnackBar from '../components/simpleSnackBar';
 import { Request, getUMAEventData } from '../getUMAEventData';
 import styles from '../styles/Home.module.css';
+import Slider from '@mui/material/Slider';
 
 // Bounty Stages for Hunter:
 // 1. Applied (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.NoBounty); CHECK PROGRESS MAPPING
@@ -347,7 +348,7 @@ const MyBounties: NextPage = () => {
                         disputes={false} 
                     >
                         <div> 
-                            <Button variant="contained" sx={{ backgroundColor: 'rgba(6, 72, 41, 0.85)', borderRadius: '12px' }} onClick={() => {handleClickOpenDispute(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress);}}>Dispute</Button>
+                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }}  onClick={() => {handleClickOpenDispute(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress);}}>Dispute</Button>
                                 <Dialog
                                     open={openDispute}
                                     onClose={handleCloseDisputeFalse}
@@ -406,7 +407,7 @@ const MyBounties: NextPage = () => {
                         disputes={false} 
                     >
                         <div> 
-                            <Button variant="contained" sx={{ backgroundColor: 'rgba(6, 72, 41, 0.85)', borderRadius: '12px' }} onClick={() => {handleClickOpenForce(); handleCloseForceTrue(postData.data.postId, postData.data.creatorAddress);}}>Force Claim</Button>
+                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenForce(); handleCloseForceTrue(postData.data.postId, postData.data.creatorAddress);}}>Force Claim</Button>
                                 <Dialog
                                     open={openForce}
                                     onClose={handleCloseForceFalse}
@@ -472,6 +473,44 @@ const MyBounties: NextPage = () => {
         }
     }, [loading, submittedLoading]);
 
+    const marks = [
+        {
+            value: 0,
+            label: 'Applied',
+        },
+        {
+            value: 15,
+            label: 'In Progress',
+        },
+        {
+            value: 30,
+            label: 'Submitted',
+        },
+        {
+            value: 45,
+            label: 'Dispute Initiated',
+        },
+        {
+            value: 60,
+            label: 'Dispute Responded To',
+        },
+        {
+            value: 75,
+            label: 'Force Payout',
+        },
+        {
+            value: 100,
+            label: 'Finished',
+        },
+    ];
+
+    function valuetext(value: number) {
+        return marks[marks.findIndex((mark) => mark.value === value)].label
+    }
+
+    const [stage, setStage] = React.useState(1);
+
+
     if (!loading && !submittedLoading) {
         return (
             <div className={styles.background}>
@@ -489,48 +528,72 @@ const MyBounties: NextPage = () => {
                         {(isForceHunterPayoutTxLoading || isForceHunterPayoutTxSuccess) && 
                             <SimpleSnackBar msg={isForceHunterPayoutTxLoading ? 'Forcing payout...' : 'Forced payout!'}/>
                         }
-                        <h2 className={styles.h2}>Applied</h2>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>                            
-                            <ClientOnly>
-                                {appliedBountyPosts}
-                            </ClientOnly>  
-                        </Box>
-                        <h2 className={styles.h2}>In Progress</h2>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                            <ClientOnly>
-                                {inProgressBountyPosts}
-                            </ClientOnly>
-                        </Box>
-                        <h2 className={styles.h2}>Submitted</h2>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                            <ClientOnly>
-                                {submittedBountyPosts}
-                            </ClientOnly>
-                        </Box>
-                        <h2 className={styles.h2}>Dispute Initiated</h2>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                            <ClientOnly>
-                                {disputeInitiatedBountyPosts}
-                            </ClientOnly>
-                        </Box>
-                        <h2 className={styles.h2}>Dispute Responded To</h2>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                            <ClientOnly>
-                                {disputeRespondedToBountyPosts}
-                            </ClientOnly>
-                        </Box>
-                        <h2 className={styles.h2}>Creator No Dispute or Payout within 2 Weeks</h2>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                            <ClientOnly>
-                                {creatorNoActionBountyPosts}
-                            </ClientOnly>
-                        </Box>
-                        <h2 className={styles.h2}>Finished</h2>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                            <ClientOnly>
-                                {finishedBountyPosts}
-                            </ClientOnly>
-                        </Box>
+                        <Slider
+                            aria-label="Restricted values"
+                            defaultValue={0}
+                            getAriaValueText={valuetext}
+                            step={null}
+                            valueLabelDisplay="auto"
+                            marks={marks}
+                            onChange={(e, val) => setStage(marks.findIndex((mark) => mark.value === val) + 1)}
+                            sx={{ color: 'white', '& .MuiSlider-markLabel': { color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk' }}}
+                        />
+                        {stage === 1 && 
+                            <div> 
+                                <h2 className={styles.h2}>Applied</h2>
+                                <ClientOnly>
+                                    {appliedBountyPosts}
+                                </ClientOnly> 
+                            </div>
+                        } 
+                        {stage === 2 && 
+                            <div> 
+                                <h2 className={styles.h2}>In Progress</h2>
+                                <ClientOnly>
+                                    {inProgressBountyPosts}
+                                </ClientOnly> 
+                            </div>
+                        }
+                        {stage === 3 && 
+                            <div> 
+                                <h2 className={styles.h2}>Submitted</h2>
+                                <ClientOnly>
+                                    {submittedBountyPosts}
+                                </ClientOnly> 
+                            </div>
+                        }
+                        {stage === 4 && 
+                            <div> 
+                                <h2 className={styles.h2}>Dispute Initiated</h2>
+                                <ClientOnly>
+                                    {disputeInitiatedBountyPosts}
+                                </ClientOnly> 
+                            </div>
+                        }
+                        {stage === 5 && 
+                            <div> 
+                                <h2 className={styles.h2}>Dispute Responded To</h2>
+                                <ClientOnly>
+                                    {disputeRespondedToBountyPosts}
+                                </ClientOnly> 
+                            </div>
+                        }
+                        {stage === 6 && 
+                            <div> 
+                                <h2 className={styles.h2}>Force Payout</h2>
+                                <ClientOnly>
+                                    {creatorNoActionBountyPosts}
+                                </ClientOnly> 
+                            </div>
+                        }
+                        {stage === 7 && 
+                            <div> 
+                                <h2 className={styles.h2}>Finished</h2>
+                                <ClientOnly>
+                                    {finishedBountyPosts}
+                                </ClientOnly> 
+                            </div>
+                        }
                     </Box>
                 </main>
             </div>

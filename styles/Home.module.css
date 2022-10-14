@@ -109,7 +109,7 @@
   font-family: 'Space Grotesk' !important;
   font-weight: 300;
   font-size: 'calc(2000px-1vh)';
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   color: rgb(233, 233, 198);
   display: flex;
   text-align: center;
@@ -203,6 +203,14 @@
 }
 
 .cardBackground {
+  background-color: rgb(23, 21, 20);
+}
+
+.formHeader {
+  font-family: 'Space Grotesk' !important;
+  font-weight: 300;
+  text-transform: capitalize;
+  color: rgb(233, 233, 198);
   background-color: rgb(23, 21, 20);
 }
 

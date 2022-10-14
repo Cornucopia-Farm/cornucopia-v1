@@ -11,13 +11,15 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Link from '@mui/material/Link';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
-import { useContractWrite, usePrepareContractWrite, useWaitForTransaction, useContract, useEnsName } from 'wagmi';
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction, useContract, useEnsName, useNetwork } from 'wagmi';
 import { ContractInterface, ethers } from 'ethers';
 import useDebounce from './useDebounce';
 import SimpleSnackBar from './simpleSnackBar';
 import { Request } from '../getUMAEventData';
 import wethABI from '../WETH9.json';
+import styles from '../styles/Home.module.css';
 
 type Props = {
     person: string;
@@ -50,6 +52,7 @@ const wethContractConfig = {
 const Application: React.FC<Props> = props => {
 
   const { data: ensName } = useEnsName({ address: props.person });
+  const { chain } = useNetwork();
 
   // Applied State
   const [openReject, setOpenReject] = React.useState(false);
@@ -177,6 +180,22 @@ const Application: React.FC<Props> = props => {
     // payoutIfDispute?.();
   };
 
+  const blockExplorer = (network: any) => {
+    if (network === 'polygon') {
+      return 'https://polygonscan.com/address/'
+    } else if (network === 'goerli') {
+      return 'https://goerli.etherscan.io/address/'
+    } else if (network === 'arbitrum') {
+      return 'https://arbiscan.io/address/'
+    } else if (network === 'optimism') {
+      return 'https://optimistic.etherscan.io/address/'
+    } else if (network === 'aurora') {
+      return 'https://aurorascan.dev/address/'
+    }
+    return 'https://etherscan.io/address/'
+  };
+
+  const blockExplorerURL = blockExplorer(chain?.network);
 
   if (props.person) {
     return(
@@ -200,7 +219,9 @@ const Application: React.FC<Props> = props => {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography sx={{ width: '90%', flexShrink: 0, color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk', fontSize: '15px'}}>{ensName ? ensName : props.person}</Typography>
+          {/* <Typography sx={{ width: '90%', flexShrink: 0, color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk', fontSize: '15px'}}>{ensName ? ensName : props.person}</Typography> */}
+          <Typography className={styles.h2} sx={{ color: '#064829', fontSize: '15px' }}><Link target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.person)}>{ensName ? ensName : (props.person.slice(0,4) + '...' + props.person.slice(-4))}</Link></Typography>
+
         </AccordionSummary>
         <AccordionDetails>
           <AppCard  
@@ -253,7 +274,7 @@ const Application: React.FC<Props> = props => {
             }
             {props.appStatus === "submitted" &&  
               <div>
-                <Button variant="contained" sx={{ backgroundColor: '#C2C2C2', borderRadius: '12px', marginRight: '8px' }}  onClick={() => {handleClickOpenContest(); handleCloseContestTrue(props.postId!, props.person, props.workLinks!, props.postLinks!);}}>Contest</Button>
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {handleClickOpenContest(); handleCloseContestTrue(props.postId!, props.person, props.workLinks!, props.postLinks!);}}>Contest</Button>
                 <Dialog
                   open={openContest}
                   onClose={handleCloseContestFalse}
@@ -278,7 +299,7 @@ const Application: React.FC<Props> = props => {
                     <Button onClick={() => {initiateDispute?.(); setOpenContest(false);}} autoFocus disabled={!initiateDispute || isInitiateDisputeTxLoading}>{isInitiateDisputeTxLoading ? 'Initiating dispute...' : 'Yes I want to'}</Button>
                   </DialogActions>
                 </Dialog>
-                <Button variant="contained" sx={{ backgroundColor: 'rgba(6, 72, 41, 0.85)', borderRadius: '12px' }} onClick={() => {handleClickOpenPay(); handleClosePayTrue(props.postId!, props.person);}}>Pay</Button>
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenPay(); handleClosePayTrue(props.postId!, props.person);}}>Pay</Button>
                 <Dialog
                   open={openPay}
                   onClose={handleClosePayFalse}
@@ -303,7 +324,7 @@ const Application: React.FC<Props> = props => {
             }
             {props.appStatus === "settle" &&
               <div> 
-                <Button variant="contained" sx={{ backgroundColor: '#C2C2C2', borderRadius: '12px', marginRight: '8px' }} onClick={handleClickOpenReject}>Reject</Button>
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleClickOpenReject}>Reject</Button>
                 <Dialog
                   open={openReject!}
                   onClose={handleCloseSettleFalse} 
@@ -318,7 +339,7 @@ const Application: React.FC<Props> = props => {
                       <Button onClick={handleCloseSettleFalse} autoFocus>Yes I don't want to</Button> 
                   </DialogActions>
                 </Dialog>
-                <Button variant="contained" sx={{ backgroundColor: 'rgba(6, 72, 41, 0.85)', borderRadius: '12px' }} onClick={() => {handleClickOpenSettle(); handleCloseSettleTrue(props.postId!, props.person, props.timestamp!, props.ancillaryData!, props.request!);}}>Settle</Button>
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenSettle(); handleCloseSettleTrue(props.postId!, props.person, props.timestamp!, props.ancillaryData!, props.request!);}}>Settle</Button>
                 <Dialog
                   open={openSettle}
                   onClose={handleCloseSettleFalse}

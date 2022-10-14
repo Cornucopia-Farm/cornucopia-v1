@@ -170,9 +170,9 @@ const Form: React.FC<Props> = props => {
     }, [arweaveTrigger]);
 
     const ButtonType = () => {
-        if (props.formType == "createBounty") {
+        if (props.formType == "createBounty") { // TODO: Change color of create new bounty icon
             return (
-                <Fab sx={{ backgroundColor: 'rgba(6, 72, 41, 0.85)', color: '#FFFFFF' }} aria-label="add" onClick={handleClickOpen}>
+                <Fab sx={{ backgroundColor: 'rgba(6, 72, 41, 0.85)', color: '#FFFFFF' }} aria-label="add" onClick={handleClickOpen}> 
                     <AddIcon />
                 </Fab>
             );
@@ -184,7 +184,7 @@ const Form: React.FC<Props> = props => {
             );
         } else {
             return (
-                <Button variant="contained" sx={{ backgroundColor: 'rgba(6, 72, 41, 0.85)', borderRadius: '12px' }} onClick={handleClickOpen}>
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }}  onClick={handleClickOpen}>
                     Submit
                 </Button>
             );
@@ -206,7 +206,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
-                        className={styles.h2}
+                        sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInputLabel-root': { color: 'rgb(233, 233, 198)'}}} 
                     />
                     <TextField
                         autoFocus
@@ -219,7 +219,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
-                        className={styles.h2}
+                        sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInputLabel-root': { color: 'rgb(233, 233, 198)'}}} 
                     />
                     <TextField
                         autoFocus
@@ -232,7 +232,7 @@ const Form: React.FC<Props> = props => {
                         type="number"
                         fullWidth
                         variant="standard"
-                        className={styles.h2}
+                        sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInputLabel-root': { color: 'rgb(233, 233, 198)'}}} 
                     />
                     <TextField
                         autoFocus
@@ -245,7 +245,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
-                        className={styles.h2}
+                        sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInputLabel-root': { color: 'rgb(233, 233, 198)'}}} 
                     />
                     <TextField
                         autoFocus
@@ -258,7 +258,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
-                        className={styles.h2}
+                        sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInputLabel-root': { color: 'rgb(233, 233, 198)'}}} 
                     />
                     <TextField
                         autoFocus
@@ -271,7 +271,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
-                        className={styles.h2}
+                        sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInputLabel-root': { color: 'rgb(233, 233, 198)'}}} 
                     />
                 </div>
             );
@@ -289,7 +289,8 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
-                        className={styles.h2}
+                        sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInputLabel-root': { color: 'rgb(233, 233, 198)'}}} // base is the text color when you type while label is the default that goes to the top
+                        // sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInput-underline:after': { borderBottomColor: 'red', }}} // example of how to change underline text when you click on a field
                     />
                     <TextField
                         autoFocus
@@ -302,7 +303,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
-                        className={styles.h2}
+                        sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInputLabel-root': { color: 'rgb(233, 233, 198)'}}} 
                     />
                     <TextField
                         autoFocus
@@ -315,7 +316,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
-                        className={styles.h2}
+                        sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInputLabel-root': { color: 'rgb(233, 233, 198)'}}} 
                     />
                 </div>
             );
@@ -333,7 +334,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
-                        className={styles.h2}
+                        sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInputLabel-root': { color: 'rgb(233, 233, 198)'}}} 
                     />
                 </div>
             );
@@ -347,21 +348,21 @@ const Form: React.FC<Props> = props => {
             }
             <ButtonType />
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle className={styles.h2}>{props.formName}</DialogTitle>
-                <DialogContent>
+                <DialogTitle className={styles.formHeader}>{props.formName}</DialogTitle>
+                <DialogContent className={styles.cardBackground}>
                     <DialogContentText className={styles.h2}>
                     {props.summary}
                     </DialogContentText>
                     {dialogBoxes(props.formType)}
                 </DialogContent>
-                <DialogActions>
-                    <Button className={styles.h2} onClick={handleClose}>{props.formButtons[0]}</Button>
+                <DialogActions className={styles.formHeader}>
+                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleClose}>{props.formButtons[0]}</Button>
                     {props.formName !== "Submit" && 
-                        <Button className={styles.h2} onClick={handleCloseSubmit}>{props.formButtons[1]}</Button>
+                        <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleCloseSubmit}>{props.formButtons[1]}</Button>
                     }
                     {props.formName === "Submit" &&
                         <div>
-                            <Button onClick={() => {handleOpenSubmitCheck(); handleCloseSubmitTrue(props.postId!, props.creatorAddress);}}>{props.formButtons[1]}</Button>
+                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleOpenSubmitCheck(); handleCloseSubmitTrue(props.postId!, props.creatorAddress);}}>{props.formButtons[1]}</Button>
                             <Dialog
                                 open={openSubmitCheck}
                                 onClose={handleClose}
@@ -377,9 +378,9 @@ const Form: React.FC<Props> = props => {
                                     </DialogContentText>
                                 </DialogContent>
                                 <DialogActions>
-                                    <Button onClick={handleClose}>No I don't</Button>
+                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleClose}>No I don't</Button>
                                     {/* <Button onClick={() => handleCloseSubmitTrue(props.postId!, props.creatorAddress)} autoFocus>Yes I want to</Button> */}
-                                    <Button onClick={() => {submit?.(); handleCloseSubmit();}} autoFocus disabled={!submit || isSubmitTxLoading}>{isSubmitTxLoading ? 'Submitting work...' : 'Yes I want to'}</Button>
+                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {submit?.(); handleCloseSubmit();}} autoFocus disabled={!submit || isSubmitTxLoading}>{isSubmitTxLoading ? 'Submitting work...' : 'Yes I want to'}</Button>
                                 </DialogActions>
                             </Dialog>
                         </div>
