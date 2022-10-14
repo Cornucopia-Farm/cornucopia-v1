@@ -4,7 +4,7 @@ pragma solidity 0.8.13;
 import "forge-std/Test.sol";
 import "../Escrow.sol";
 import "../../lib/protocol/packages/core/contracts/oracle/test/MockOracleAncillary.sol";
-import "../../lib/protocol/packages/core/contracts/oracle/implementation/SkinnyOptimisticOracle.sol";
+import "../../lib/protocol/packages/core/contracts/oracle/implementation/previous-versions/SkinnyOptimisticOracle.sol";
 import "../../lib/protocol/packages/core/contracts/oracle/interfaces/SkinnyOptimisticOracleInterface.sol";
 import "../../lib/protocol/packages/core/contracts/oracle/implementation/store.sol";
 import "../../lib/protocol/packages/core/contracts/oracle/implementation/Finder.sol";
