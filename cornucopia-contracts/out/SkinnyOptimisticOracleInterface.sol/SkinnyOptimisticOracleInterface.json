@@ -866,7 +866,7 @@
     "settle(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))": "b730539f",
     "stampAncillaryData(bytes,address)": "af5d2f39"
   },
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.13+commit.abaa5c0e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"ancillaryBytesLimit\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"timestamp\",\"type\":\"uint32\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"proposer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"disputer\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"settled\",\"type\":\"bool\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"},{\"internalType\":\"int256\",\"name\":\"resolvedPrice\",\"type\":\"int256\"},{\"internalType\":\"uint256\",\"name\":\"expirationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"finalFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"customLiveness\",\"type\":\"uint256\"}],\"internalType\":\"struct SkinnyOptimisticOracleInterface.Request\",\"name\":\"request\",\"type\":\"tuple\"}],\"name\":\"disputePrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalBond\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"timestamp\",\"type\":\"uint32\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"proposer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"disputer\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"settled\",\"type\":\"bool\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"},{\"internalType\":\"int256\",\"name\":\"resolvedPrice\",\"type\":\"int256\"},{\"internalType\":\"uint256\",\"name\":\"expirationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"finalFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"customLiveness\",\"type\":\"uint256\"}],\"internalType\":\"struct SkinnyOptimisticOracleInterface.Request\",\"name\":\"request\",\"type\":\"tuple\"},{\"internalType\":\"address\",\"name\":\"disputer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"}],\"name\":\"disputePriceFor\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalBond\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"timestamp\",\"type\":\"uint32\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"proposer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"disputer\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"settled\",\"type\":\"bool\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"},{\"internalType\":\"int256\",\"name\":\"resolvedPrice\",\"type\":\"int256\"},{\"internalType\":\"uint256\",\"name\":\"expirationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"finalFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"customLiveness\",\"type\":\"uint256\"}],\"internalType\":\"struct SkinnyOptimisticOracleInterface.Request\",\"name\":\"request\",\"type\":\"tuple\"}],\"name\":\"getState\",\"outputs\":[{\"internalType\":\"enum OptimisticOracleInterface.State\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"timestamp\",\"type\":\"uint32\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"proposer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"disputer\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"settled\",\"type\":\"bool\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"},{\"internalType\":\"int256\",\"name\":\"resolvedPrice\",\"type\":\"int256\"},{\"internalType\":\"uint256\",\"name\":\"expirationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"finalFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"customLiveness\",\"type\":\"uint256\"}],\"internalType\":\"struct SkinnyOptimisticOracleInterface.Request\",\"name\":\"request\",\"type\":\"tuple\"}],\"name\":\"hasPrice\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"timestamp\",\"type\":\"uint32\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"proposer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"disputer\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"settled\",\"type\":\"bool\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"},{\"internalType\":\"int256\",\"name\":\"resolvedPrice\",\"type\":\"int256\"},{\"internalType\":\"uint256\",\"name\":\"expirationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"finalFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"customLiveness\",\"type\":\"uint256\"}],\"internalType\":\"struct SkinnyOptimisticOracleInterface.Request\",\"name\":\"request\",\"type\":\"tuple\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"}],\"name\":\"proposePrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalBond\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"timestamp\",\"type\":\"uint32\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"proposer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"disputer\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"settled\",\"type\":\"bool\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"},{\"internalType\":\"int256\",\"name\":\"resolvedPrice\",\"type\":\"int256\"},{\"internalType\":\"uint256\",\"name\":\"expirationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"finalFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"customLiveness\",\"type\":\"uint256\"}],\"internalType\":\"struct SkinnyOptimisticOracleInterface.Request\",\"name\":\"request\",\"type\":\"tuple\"},{\"internalType\":\"address\",\"name\":\"proposer\",\"type\":\"address\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"}],\"name\":\"proposePriceFor\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalBond\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"timestamp\",\"type\":\"uint32\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"internalType\":\"contract IERC20\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"customLiveness\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"proposer\",\"type\":\"address\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"}],\"name\":\"requestAndProposePriceFor\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalBond\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"timestamp\",\"type\":\"uint32\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"internalType\":\"contract IERC20\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"customLiveness\",\"type\":\"uint256\"}],\"name\":\"requestPrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalBond\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"timestamp\",\"type\":\"uint32\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"proposer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"disputer\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"settled\",\"type\":\"bool\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"},{\"internalType\":\"int256\",\"name\":\"resolvedPrice\",\"type\":\"int256\"},{\"internalType\":\"uint256\",\"name\":\"expirationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"finalFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"customLiveness\",\"type\":\"uint256\"}],\"internalType\":\"struct SkinnyOptimisticOracleInterface.Request\",\"name\":\"request\",\"type\":\"tuple\"}],\"name\":\"settle\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"payout\",\"type\":\"uint256\"},{\"internalType\":\"int256\",\"name\":\"resolvedPrice\",\"type\":\"int256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"}],\"name\":\"stampAncillaryData\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Interface used by financial contracts to interact with the Oracle. Voters will use a different interface.\",\"kind\":\"dev\",\"methods\":{\"disputePrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"identifier\":\"price identifier to identify the existing request.\",\"request\":\"price request parameters whose hash must match the request that the caller wants to dispute.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"totalBond\":\"the amount that's pulled from the caller's wallet as a bond. The bond will be returned to the disputer once settled if the dispute was valid (the proposal was incorrect).\"}},\"disputePriceFor(bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),address,address)\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"disputer\":\"address to set as the disputer.\",\"identifier\":\"price identifier to identify the existing request.\",\"request\":\"price request parameters whose hash must match the request that the caller wants to dispute.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"totalBond\":\"the amount that's pulled from the caller's wallet as a bond. The bond will be returned to the disputer once settled if the dispute was valid (the proposal was incorrect).\"}},\"getState(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"identifier\":\"price identifier to identify the existing request.\",\"request\":\"price request parameters.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"_0\":\"the State.\"}},\"hasPrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"identifier\":\"price identifier to identify the existing request.\",\"request\":\"price request parameters. The hash of these parameters must match with the request hash that is associated with the price request unique ID {requester, identifier, timestamp, ancillaryData}, or this method will revert.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"_0\":\"boolean indicating true if price exists and false if not.\"}},\"proposePrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),int256)\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"identifier\":\"price identifier to identify the existing request.\",\"proposedPrice\":\"price being proposed.\",\"request\":\"price request parameters whose hash must match the request that the caller wants to propose a price for.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"totalBond\":\"the amount that's pulled from the caller's wallet as a bond. The bond will be returned to the proposer once settled if the proposal is correct.\"}},\"proposePriceFor(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),address,int256)\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"identifier\":\"price identifier to identify the existing request.\",\"proposedPrice\":\"price being proposed.\",\"proposer\":\"address to set as the proposer.\",\"request\":\"price request parameters whose hash must match the request that the caller wants to propose a price for.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"totalBond\":\"the amount that's pulled from the caller's wallet as a bond. The bond will be returned to the proposer once settled if the proposal is correct.\"}},\"requestAndProposePriceFor(bytes32,uint32,bytes,address,uint256,uint256,uint256,address,int256)\":{\"details\":\"The caller is the requester, but the proposer can be customized.\",\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"bond\":\"custom proposal bond to set for request. If set to 0, defaults to the final fee.\",\"currency\":\"ERC20 token used for payment of rewards and fees. Must be approved for use with the DVM.\",\"customLiveness\":\"custom proposal liveness to set for request.\",\"identifier\":\"price identifier to identify the existing request.\",\"proposedPrice\":\"price being proposed.\",\"proposer\":\"address to set as the proposer.\",\"reward\":\"reward offered to a successful proposer. Will be pulled from the caller. Note: this can be 0,               which could make sense if the contract requests and proposes the value in the same call or               provides its own reward system.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"totalBond\":\"the amount that's pulled from the caller's wallet as a bond. The bond will be returned to the proposer once settled if the proposal is correct.\"}},\"requestPrice(bytes32,uint32,bytes,address,uint256,uint256,uint256)\":{\"params\":{\"ancillaryData\":\"ancillary data representing additional args being passed with the price request.\",\"bond\":\"custom proposal bond to set for request. If set to 0, defaults to the final fee.\",\"currency\":\"ERC20 token used for payment of rewards and fees. Must be approved for use with the DVM.\",\"customLiveness\":\"custom proposal liveness to set for request.\",\"identifier\":\"price identifier being requested.\",\"reward\":\"reward offered to a successful proposer. Will be pulled from the caller. Note: this can be 0,               which could make sense if the contract requests and proposes the value in the same call or               provides its own reward system.\",\"timestamp\":\"timestamp of the price being requested.\"},\"returns\":{\"totalBond\":\"default bond + final fee that the proposer and disputer will be required to pay.\"}},\"settle(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"identifier\":\"price identifier to identify the existing request.\",\"request\":\"price request parameters whose hash must match the request that the caller wants to settle.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"payout\":\"the amount that the \\\"winner\\\" (proposer or disputer) receives on settlement. This amount includes the returned bonds as well as additional rewards.\",\"resolvedPrice\":\"the price that the request settled to.\"}},\"stampAncillaryData(bytes,address)\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"requester\":\"sender of the initial price request.\"},\"returns\":{\"_0\":\"the stamped ancillary bytes.\"}}},\"title\":\"Interface for the gas-cost-reduced version of the OptimisticOracle.\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"disputePrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))\":{\"notice\":\"Disputes a price request with an active proposal where caller is the disputer.\"},\"disputePriceFor(bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),address,address)\":{\"notice\":\"Disputes a price request with an active proposal on another address' behalf. Note: this address will receive any rewards that come from this dispute. However, any bonds are pulled from the caller.\"},\"getState(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))\":{\"notice\":\"Computes the current state of a price request. See the State enum for more details.\"},\"hasPrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))\":{\"notice\":\"Checks if a given request has resolved, expired or been settled (i.e the optimistic oracle has a price).\"},\"proposePrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),int256)\":{\"notice\":\"Proposes a price value where caller is the proposer.\"},\"proposePriceFor(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),address,int256)\":{\"notice\":\"Proposes a price value on another address' behalf. Note: this address will receive any rewards that come from this proposal. However, any bonds are pulled from the caller.\"},\"requestAndProposePriceFor(bytes32,uint32,bytes,address,uint256,uint256,uint256,address,int256)\":{\"notice\":\"Combines logic of requestPrice and proposePrice while taking advantage of gas savings from not having to overwrite Request params that a normal requestPrice() => proposePrice() flow would entail. Note: The proposer will receive any rewards that come from this proposal. However, any bonds are pulled from the caller.\"},\"requestPrice(bytes32,uint32,bytes,address,uint256,uint256,uint256)\":{\"notice\":\"Requests a new price.\"},\"settle(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))\":{\"notice\":\"Attempts to settle an outstanding price request. Will revert if it isn't settleable.\"},\"stampAncillaryData(bytes,address)\":{\"notice\":\"Generates stamped ancillary data in the format that it would be used in the case of a price dispute.\"}},\"notice\":\"Differences from normal OptimisticOracle: - refundOnDispute: flag is removed, by default there are no refunds on disputes. - customizing request parameters: In the OptimisticOracle, parameters like `bond` and `customLiveness` can be reset   after a request is already made via `requestPrice`. In the SkinnyOptimisticOracle, these parameters can only be   set in `requestPrice`, which has an expanded input set. - settleAndGetPrice: Replaced by `settle`, which can only be called once per settleable request. The resolved price   can be fetched via the `Settle` event or the return value of `settle`. - general changes to interface: Functions that interact with existing requests all require the parameters of the   request to modify to be passed as input. These parameters must match with the existing request parameters or the   function will revert. This change reflects the internal refactor to store hashed request parameters instead of the   full request struct.\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"lib/protocol/packages/core/contracts/oracle/interfaces/SkinnyOptimisticOracleInterface.sol\":\"SkinnyOptimisticOracleInterface\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/=lib/openzeppelin-contracts/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/\",\":protocol/=lib/protocol/\",\":uma-implementation/=lib/protocol/packages/core/contracts/oracle/implementation/\",\":uma-interface/=lib/protocol/packages/core/contracts/oracle/interfaces/\"]},\"sources\":{\"lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0x61437cb513a887a1bbad006e7b1c8b414478427d33de47c5600af3c748f108da\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://2c3d0973630ed74f2b5ce3944677a885dc70ec32fc83b35f55045a10224da32b\",\"dweb:/ipfs/QmbefZ5RoEZKNHXCALfh683PnaNYzKPcKMFjyY1DVAgq8A\"]},\"lib/protocol/packages/core/contracts/oracle/interfaces/OptimisticOracleInterface.sol\":{\"keccak256\":\"0x92e7280c1abd5f0c4fcd20247fc1b8428aaf4eeea59439c074d15fdaf9c64989\",\"license\":\"AGPL-3.0-only\",\"urls\":[\"bzz-raw://8d12bbcf0a91cef63c4767bffd047254599c5a1fce38e5e81d3005e102fdeef8\",\"dweb:/ipfs/QmTkd3AG9gdvBZq3HKCUW8eErvkguM2QqE3nUDGfvye3Yi\"]},\"lib/protocol/packages/core/contracts/oracle/interfaces/SkinnyOptimisticOracleInterface.sol\":{\"keccak256\":\"0x91d21e44a97b719106e8f97b99399a3d8dc3697badd01df06518892f38fe033f\",\"license\":\"AGPL-3.0-only\",\"urls\":[\"bzz-raw://68c350c822b256b43543ac4dd3dd1413ed95f25a9415d5dba4c562cd11d55716\",\"dweb:/ipfs/QmZyYeBnM59oPmWcK1KERNayg7xuHv12sLzzmqC42Lq76a\"]}},\"version\":1}",
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.13+commit.abaa5c0e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"ancillaryBytesLimit\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"timestamp\",\"type\":\"uint32\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"proposer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"disputer\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"settled\",\"type\":\"bool\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"},{\"internalType\":\"int256\",\"name\":\"resolvedPrice\",\"type\":\"int256\"},{\"internalType\":\"uint256\",\"name\":\"expirationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"finalFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"customLiveness\",\"type\":\"uint256\"}],\"internalType\":\"struct SkinnyOptimisticOracleInterface.Request\",\"name\":\"request\",\"type\":\"tuple\"}],\"name\":\"disputePrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalBond\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"timestamp\",\"type\":\"uint32\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"proposer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"disputer\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"settled\",\"type\":\"bool\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"},{\"internalType\":\"int256\",\"name\":\"resolvedPrice\",\"type\":\"int256\"},{\"internalType\":\"uint256\",\"name\":\"expirationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"finalFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"customLiveness\",\"type\":\"uint256\"}],\"internalType\":\"struct SkinnyOptimisticOracleInterface.Request\",\"name\":\"request\",\"type\":\"tuple\"},{\"internalType\":\"address\",\"name\":\"disputer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"}],\"name\":\"disputePriceFor\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalBond\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"timestamp\",\"type\":\"uint32\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"proposer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"disputer\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"settled\",\"type\":\"bool\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"},{\"internalType\":\"int256\",\"name\":\"resolvedPrice\",\"type\":\"int256\"},{\"internalType\":\"uint256\",\"name\":\"expirationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"finalFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"customLiveness\",\"type\":\"uint256\"}],\"internalType\":\"struct SkinnyOptimisticOracleInterface.Request\",\"name\":\"request\",\"type\":\"tuple\"}],\"name\":\"getState\",\"outputs\":[{\"internalType\":\"enum OptimisticOracleInterface.State\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"timestamp\",\"type\":\"uint32\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"proposer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"disputer\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"settled\",\"type\":\"bool\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"},{\"internalType\":\"int256\",\"name\":\"resolvedPrice\",\"type\":\"int256\"},{\"internalType\":\"uint256\",\"name\":\"expirationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"finalFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"customLiveness\",\"type\":\"uint256\"}],\"internalType\":\"struct SkinnyOptimisticOracleInterface.Request\",\"name\":\"request\",\"type\":\"tuple\"}],\"name\":\"hasPrice\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"timestamp\",\"type\":\"uint32\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"proposer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"disputer\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"settled\",\"type\":\"bool\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"},{\"internalType\":\"int256\",\"name\":\"resolvedPrice\",\"type\":\"int256\"},{\"internalType\":\"uint256\",\"name\":\"expirationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"finalFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"customLiveness\",\"type\":\"uint256\"}],\"internalType\":\"struct SkinnyOptimisticOracleInterface.Request\",\"name\":\"request\",\"type\":\"tuple\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"}],\"name\":\"proposePrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalBond\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"timestamp\",\"type\":\"uint32\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"proposer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"disputer\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"settled\",\"type\":\"bool\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"},{\"internalType\":\"int256\",\"name\":\"resolvedPrice\",\"type\":\"int256\"},{\"internalType\":\"uint256\",\"name\":\"expirationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"finalFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"customLiveness\",\"type\":\"uint256\"}],\"internalType\":\"struct SkinnyOptimisticOracleInterface.Request\",\"name\":\"request\",\"type\":\"tuple\"},{\"internalType\":\"address\",\"name\":\"proposer\",\"type\":\"address\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"}],\"name\":\"proposePriceFor\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalBond\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"timestamp\",\"type\":\"uint32\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"internalType\":\"contract IERC20\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"customLiveness\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"proposer\",\"type\":\"address\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"}],\"name\":\"requestAndProposePriceFor\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalBond\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"timestamp\",\"type\":\"uint32\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"internalType\":\"contract IERC20\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"customLiveness\",\"type\":\"uint256\"}],\"name\":\"requestPrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalBond\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint32\",\"name\":\"timestamp\",\"type\":\"uint32\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"proposer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"disputer\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"currency\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"settled\",\"type\":\"bool\"},{\"internalType\":\"int256\",\"name\":\"proposedPrice\",\"type\":\"int256\"},{\"internalType\":\"int256\",\"name\":\"resolvedPrice\",\"type\":\"int256\"},{\"internalType\":\"uint256\",\"name\":\"expirationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"finalFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"customLiveness\",\"type\":\"uint256\"}],\"internalType\":\"struct SkinnyOptimisticOracleInterface.Request\",\"name\":\"request\",\"type\":\"tuple\"}],\"name\":\"settle\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"payout\",\"type\":\"uint256\"},{\"internalType\":\"int256\",\"name\":\"resolvedPrice\",\"type\":\"int256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"}],\"name\":\"stampAncillaryData\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Interface used by financial contracts to interact with the Oracle. Voters will use a different interface.\",\"kind\":\"dev\",\"methods\":{\"disputePrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"identifier\":\"price identifier to identify the existing request.\",\"request\":\"price request parameters whose hash must match the request that the caller wants to dispute.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"totalBond\":\"the amount that's pulled from the caller's wallet as a bond. The bond will be returned to the disputer once settled if the dispute was valid (the proposal was incorrect).\"}},\"disputePriceFor(bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),address,address)\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"disputer\":\"address to set as the disputer.\",\"identifier\":\"price identifier to identify the existing request.\",\"request\":\"price request parameters whose hash must match the request that the caller wants to dispute.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"totalBond\":\"the amount that's pulled from the caller's wallet as a bond. The bond will be returned to the disputer once settled if the dispute was valid (the proposal was incorrect).\"}},\"getState(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"identifier\":\"price identifier to identify the existing request.\",\"request\":\"price request parameters.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"_0\":\"the State.\"}},\"hasPrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"identifier\":\"price identifier to identify the existing request.\",\"request\":\"price request parameters. The hash of these parameters must match with the request hash that is associated with the price request unique ID {requester, identifier, timestamp, ancillaryData}, or this method will revert.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"_0\":\"boolean indicating true if price exists and false if not.\"}},\"proposePrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),int256)\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"identifier\":\"price identifier to identify the existing request.\",\"proposedPrice\":\"price being proposed.\",\"request\":\"price request parameters whose hash must match the request that the caller wants to propose a price for.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"totalBond\":\"the amount that's pulled from the caller's wallet as a bond. The bond will be returned to the proposer once settled if the proposal is correct.\"}},\"proposePriceFor(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),address,int256)\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"identifier\":\"price identifier to identify the existing request.\",\"proposedPrice\":\"price being proposed.\",\"proposer\":\"address to set as the proposer.\",\"request\":\"price request parameters whose hash must match the request that the caller wants to propose a price for.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"totalBond\":\"the amount that's pulled from the caller's wallet as a bond. The bond will be returned to the proposer once settled if the proposal is correct.\"}},\"requestAndProposePriceFor(bytes32,uint32,bytes,address,uint256,uint256,uint256,address,int256)\":{\"details\":\"The caller is the requester, but the proposer can be customized.\",\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"bond\":\"custom proposal bond to set for request. If set to 0, defaults to the final fee.\",\"currency\":\"ERC20 token used for payment of rewards and fees. Must be approved for use with the DVM.\",\"customLiveness\":\"custom proposal liveness to set for request.\",\"identifier\":\"price identifier to identify the existing request.\",\"proposedPrice\":\"price being proposed.\",\"proposer\":\"address to set as the proposer.\",\"reward\":\"reward offered to a successful proposer. Will be pulled from the caller. Note: this can be 0,               which could make sense if the contract requests and proposes the value in the same call or               provides its own reward system.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"totalBond\":\"the amount that's pulled from the caller's wallet as a bond. The bond will be returned to the proposer once settled if the proposal is correct.\"}},\"requestPrice(bytes32,uint32,bytes,address,uint256,uint256,uint256)\":{\"params\":{\"ancillaryData\":\"ancillary data representing additional args being passed with the price request.\",\"bond\":\"custom proposal bond to set for request. If set to 0, defaults to the final fee.\",\"currency\":\"ERC20 token used for payment of rewards and fees. Must be approved for use with the DVM.\",\"customLiveness\":\"custom proposal liveness to set for request.\",\"identifier\":\"price identifier being requested.\",\"reward\":\"reward offered to a successful proposer. Will be pulled from the caller. Note: this can be 0,               which could make sense if the contract requests and proposes the value in the same call or               provides its own reward system.\",\"timestamp\":\"timestamp of the price being requested.\"},\"returns\":{\"totalBond\":\"default bond + final fee that the proposer and disputer will be required to pay.\"}},\"settle(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"identifier\":\"price identifier to identify the existing request.\",\"request\":\"price request parameters whose hash must match the request that the caller wants to settle.\",\"requester\":\"sender of the initial price request.\",\"timestamp\":\"timestamp to identify the existing request.\"},\"returns\":{\"payout\":\"the amount that the \\\"winner\\\" (proposer or disputer) receives on settlement. This amount includes the returned bonds as well as additional rewards.\",\"resolvedPrice\":\"the price that the request settled to.\"}},\"stampAncillaryData(bytes,address)\":{\"params\":{\"ancillaryData\":\"ancillary data of the price being requested.\",\"requester\":\"sender of the initial price request.\"},\"returns\":{\"_0\":\"the stamped ancillary bytes.\"}}},\"title\":\"Interface for the gas-cost-reduced version of the OptimisticOracle.\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"disputePrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))\":{\"notice\":\"Disputes a price request with an active proposal where caller is the disputer.\"},\"disputePriceFor(bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),address,address)\":{\"notice\":\"Disputes a price request with an active proposal on another address' behalf. Note: this address will receive any rewards that come from this dispute. However, any bonds are pulled from the caller.\"},\"getState(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))\":{\"notice\":\"Computes the current state of a price request. See the State enum for more details.\"},\"hasPrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))\":{\"notice\":\"Checks if a given request has resolved, expired or been settled (i.e the optimistic oracle has a price).\"},\"proposePrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),int256)\":{\"notice\":\"Proposes a price value where caller is the proposer.\"},\"proposePriceFor(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),address,int256)\":{\"notice\":\"Proposes a price value on another address' behalf. Note: this address will receive any rewards that come from this proposal. However, any bonds are pulled from the caller.\"},\"requestAndProposePriceFor(bytes32,uint32,bytes,address,uint256,uint256,uint256,address,int256)\":{\"notice\":\"Combines logic of requestPrice and proposePrice while taking advantage of gas savings from not having to overwrite Request params that a normal requestPrice() => proposePrice() flow would entail. Note: The proposer will receive any rewards that come from this proposal. However, any bonds are pulled from the caller.\"},\"requestPrice(bytes32,uint32,bytes,address,uint256,uint256,uint256)\":{\"notice\":\"Requests a new price.\"},\"settle(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))\":{\"notice\":\"Attempts to settle an outstanding price request. Will revert if it isn't settleable.\"},\"stampAncillaryData(bytes,address)\":{\"notice\":\"Generates stamped ancillary data in the format that it would be used in the case of a price dispute.\"}},\"notice\":\"Differences from normal OptimisticOracle: - refundOnDispute: flag is removed, by default there are no refunds on disputes. - customizing request parameters: In the OptimisticOracle, parameters like `bond` and `customLiveness` can be reset   after a request is already made via `requestPrice`. In the SkinnyOptimisticOracle, these parameters can only be   set in `requestPrice`, which has an expanded input set. - settleAndGetPrice: Replaced by `settle`, which can only be called once per settleable request. The resolved price   can be fetched via the `Settle` event or the return value of `settle`. - general changes to interface: Functions that interact with existing requests all require the parameters of the   request to modify to be passed as input. These parameters must match with the existing request parameters or the   function will revert. This change reflects the internal refactor to store hashed request parameters instead of the   full request struct.\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"lib/protocol/packages/core/contracts/oracle/interfaces/SkinnyOptimisticOracleInterface.sol\":\"SkinnyOptimisticOracleInterface\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/=lib/openzeppelin-contracts/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":protocol/=lib/protocol/\",\":uma-implementation/=lib/protocol/packages/core/contracts/oracle/implementation/\",\":uma-interface/=lib/protocol/packages/core/contracts/oracle/interfaces/\"]},\"sources\":{\"lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0x9750c6b834f7b43000631af5cc30001c5f547b3ceb3635488f140f60e897ea6b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://5a7d5b1ef5d8d5889ad2ed89d8619c09383b80b72ab226e0fe7bde1636481e34\",\"dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr\"]},\"lib/protocol/packages/core/contracts/oracle/interfaces/FinderInterface.sol\":{\"keccak256\":\"0x9166fbfe08e954eb86d33c114fcde7ce4fd0dda5d9d28b31210582bfc769fa86\",\"license\":\"AGPL-3.0-only\",\"urls\":[\"bzz-raw://e611e12bcaaebfdf65b67c566ff1d34708e757f01a445bd87c55862e89383b81\",\"dweb:/ipfs/QmYNSq5oopTShdS6j4VWKqoLxmQSRKmWebCxw6K4LfmKrf\"]},\"lib/protocol/packages/core/contracts/oracle/interfaces/OptimisticOracleInterface.sol\":{\"keccak256\":\"0xd03746f46b74c37f406a61e28869469255460ffc8751b69b34496d6dba249813\",\"license\":\"AGPL-3.0-only\",\"urls\":[\"bzz-raw://7711c2d0da898a7c761aabcabe43d3bd57081fa88db8a2a1ac6a5ad37a1c620f\",\"dweb:/ipfs/QmV6djBAYZ9BshwMW36PyRbyET5gj6raaFr8fjJNiEEvWf\"]},\"lib/protocol/packages/core/contracts/oracle/interfaces/SkinnyOptimisticOracleInterface.sol\":{\"keccak256\":\"0x91d21e44a97b719106e8f97b99399a3d8dc3697badd01df06518892f38fe033f\",\"license\":\"AGPL-3.0-only\",\"urls\":[\"bzz-raw://68c350c822b256b43543ac4dd3dd1413ed95f25a9415d5dba4c562cd11d55716\",\"dweb:/ipfs/QmZyYeBnM59oPmWcK1KERNayg7xuHv12sLzzmqC42Lq76a\"]}},\"version\":1}",
   "metadata": {
     "compiler": {
       "version": "0.8.13+commit.abaa5c0e"
@@ -1894,7 +1894,7 @@
         ":@openzeppelin/=lib/openzeppelin-contracts/",
         ":ds-test/=lib/forge-std/lib/ds-test/src/",
         ":forge-std/=lib/forge-std/src/",
-        ":openzeppelin-contracts/=lib/openzeppelin-contracts/",
+        ":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/",
         ":protocol/=lib/protocol/",
         ":uma-implementation/=lib/protocol/packages/core/contracts/oracle/implementation/",
         ":uma-interface/=lib/protocol/packages/core/contracts/oracle/interfaces/"
@@ -1913,18 +1913,26 @@
     },
     "sources": {
       "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol": {
-        "keccak256": "0x61437cb513a887a1bbad006e7b1c8b414478427d33de47c5600af3c748f108da",
+        "keccak256": "0x9750c6b834f7b43000631af5cc30001c5f547b3ceb3635488f140f60e897ea6b",
         "urls": [
-          "bzz-raw://2c3d0973630ed74f2b5ce3944677a885dc70ec32fc83b35f55045a10224da32b",
-          "dweb:/ipfs/QmbefZ5RoEZKNHXCALfh683PnaNYzKPcKMFjyY1DVAgq8A"
+          "bzz-raw://5a7d5b1ef5d8d5889ad2ed89d8619c09383b80b72ab226e0fe7bde1636481e34",
+          "dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr"
         ],
         "license": "MIT"
       },
-      "lib/protocol/packages/core/contracts/oracle/interfaces/OptimisticOracleInterface.sol": {
-        "keccak256": "0x92e7280c1abd5f0c4fcd20247fc1b8428aaf4eeea59439c074d15fdaf9c64989",
+      "lib/protocol/packages/core/contracts/oracle/interfaces/FinderInterface.sol": {
+        "keccak256": "0x9166fbfe08e954eb86d33c114fcde7ce4fd0dda5d9d28b31210582bfc769fa86",
         "urls": [
-          "bzz-raw://8d12bbcf0a91cef63c4767bffd047254599c5a1fce38e5e81d3005e102fdeef8",
-          "dweb:/ipfs/QmTkd3AG9gdvBZq3HKCUW8eErvkguM2QqE3nUDGfvye3Yi"
+          "bzz-raw://e611e12bcaaebfdf65b67c566ff1d34708e757f01a445bd87c55862e89383b81",
+          "dweb:/ipfs/QmYNSq5oopTShdS6j4VWKqoLxmQSRKmWebCxw6K4LfmKrf"
+        ],
+        "license": "AGPL-3.0-only"
+      },
+      "lib/protocol/packages/core/contracts/oracle/interfaces/OptimisticOracleInterface.sol": {
+        "keccak256": "0xd03746f46b74c37f406a61e28869469255460ffc8751b69b34496d6dba249813",
+        "urls": [
+          "bzz-raw://7711c2d0da898a7c761aabcabe43d3bd57081fa88db8a2a1ac6a5ad37a1c620f",
+          "dweb:/ipfs/QmV6djBAYZ9BshwMW36PyRbyET5gj6raaFr8fjJNiEEvWf"
         ],
         "license": "AGPL-3.0-only"
       },
@@ -1941,25 +1949,28 @@
   },
   "ast": {
     "absolutePath": "lib/protocol/packages/core/contracts/oracle/interfaces/SkinnyOptimisticOracleInterface.sol",
-    "id": 28514,
+    "id": 31440,
     "exportedSymbols": {
+      "FinderInterface": [
+        30830
+      ],
       "IERC20": [
-        21315
+        24004
       ],
       "OptimisticOracleInterface": [
-        28256
+        31182
       ],
       "SkinnyOptimisticOracleInterface": [
-        28513
+        31439
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "42:13222:35",
+    "src": "42:13222:38",
     "nodes": [
       {
-        "id": 28296,
+        "id": 31222,
         "nodeType": "PragmaDirective",
-        "src": "42:23:35",
+        "src": "42:23:38",
         "literals": [
           "solidity",
           "^",
@@ -1968,49 +1979,49 @@
         ]
       },
       {
-        "id": 28297,
+        "id": 31223,
         "nodeType": "ImportDirective",
-        "src": "67:56:35",
+        "src": "67:56:38",
         "absolutePath": "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
         "file": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 28514,
-        "sourceUnit": 21316,
+        "scope": 31440,
+        "sourceUnit": 24005,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "id": 28298,
+        "id": 31224,
         "nodeType": "ImportDirective",
-        "src": "124:53:35",
+        "src": "124:53:38",
         "absolutePath": "lib/protocol/packages/core/contracts/oracle/interfaces/OptimisticOracleInterface.sol",
         "file": "../interfaces/OptimisticOracleInterface.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 28514,
-        "sourceUnit": 28257,
+        "scope": 31440,
+        "sourceUnit": 31183,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "id": 28513,
+        "id": 31439,
         "nodeType": "ContractDefinition",
-        "src": "1388:11875:35",
+        "src": "1388:11875:38",
         "nodes": [
           {
-            "id": 28323,
+            "id": 31249,
             "nodeType": "StructDefinition",
-            "src": "1606:841:35",
+            "src": "1606:841:38",
             "canonicalName": "SkinnyOptimisticOracleInterface.Request",
             "members": [
               {
                 "constant": false,
-                "id": 28301,
+                "id": 31227,
                 "mutability": "mutable",
                 "name": "proposer",
-                "nameLocation": "1639:8:35",
+                "nameLocation": "1639:8:38",
                 "nodeType": "VariableDeclaration",
-                "scope": 28323,
-                "src": "1631:16:35",
+                "scope": 31249,
+                "src": "1631:16:38",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2018,10 +2029,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 28300,
+                  "id": 31226,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1631:7:35",
+                  "src": "1631:7:38",
                   "stateMutability": "nonpayable",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
@@ -2032,13 +2043,13 @@
               },
               {
                 "constant": false,
-                "id": 28303,
+                "id": 31229,
                 "mutability": "mutable",
                 "name": "disputer",
-                "nameLocation": "1693:8:35",
+                "nameLocation": "1693:8:38",
                 "nodeType": "VariableDeclaration",
-                "scope": 28323,
-                "src": "1685:16:35",
+                "scope": 31249,
+                "src": "1685:16:38",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2046,10 +2057,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 28302,
+                  "id": 31228,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1685:7:35",
+                  "src": "1685:7:38",
                   "stateMutability": "nonpayable",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
@@ -2060,33 +2071,33 @@
               },
               {
                 "constant": false,
-                "id": 28306,
+                "id": 31232,
                 "mutability": "mutable",
                 "name": "currency",
-                "nameLocation": "1746:8:35",
+                "nameLocation": "1746:8:38",
                 "nodeType": "VariableDeclaration",
-                "scope": 28323,
-                "src": "1739:15:35",
+                "scope": 31249,
+                "src": "1739:15:38",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_contract$_IERC20_$21315",
+                  "typeIdentifier": "t_contract$_IERC20_$24004",
                   "typeString": "contract IERC20"
                 },
                 "typeName": {
-                  "id": 28305,
+                  "id": 31231,
                   "nodeType": "UserDefinedTypeName",
                   "pathNode": {
-                    "id": 28304,
+                    "id": 31230,
                     "name": "IERC20",
                     "nodeType": "IdentifierPath",
-                    "referencedDeclaration": 21315,
-                    "src": "1739:6:35"
+                    "referencedDeclaration": 24004,
+                    "src": "1739:6:38"
                   },
-                  "referencedDeclaration": 21315,
-                  "src": "1739:6:35",
+                  "referencedDeclaration": 24004,
+                  "src": "1739:6:38",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_IERC20_$21315",
+                    "typeIdentifier": "t_contract$_IERC20_$24004",
                     "typeString": "contract IERC20"
                   }
                 },
@@ -2094,13 +2105,13 @@
               },
               {
                 "constant": false,
-                "id": 28308,
+                "id": 31234,
                 "mutability": "mutable",
                 "name": "settled",
-                "nameLocation": "1814:7:35",
+                "nameLocation": "1814:7:38",
                 "nodeType": "VariableDeclaration",
-                "scope": 28323,
-                "src": "1809:12:35",
+                "scope": 31249,
+                "src": "1809:12:38",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2108,10 +2119,10 @@
                   "typeString": "bool"
                 },
                 "typeName": {
-                  "id": 28307,
+                  "id": 31233,
                   "name": "bool",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1809:4:35",
+                  "src": "1809:4:38",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bool",
                     "typeString": "bool"
@@ -2121,13 +2132,13 @@
               },
               {
                 "constant": false,
-                "id": 28310,
+                "id": 31236,
                 "mutability": "mutable",
                 "name": "proposedPrice",
-                "nameLocation": "1873:13:35",
+                "nameLocation": "1873:13:38",
                 "nodeType": "VariableDeclaration",
-                "scope": 28323,
-                "src": "1866:20:35",
+                "scope": 31249,
+                "src": "1866:20:38",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2135,10 +2146,10 @@
                   "typeString": "int256"
                 },
                 "typeName": {
-                  "id": 28309,
+                  "id": 31235,
                   "name": "int256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1866:6:35",
+                  "src": "1866:6:38",
                   "typeDescriptions": {
                     "typeIdentifier": "t_int256",
                     "typeString": "int256"
@@ -2148,13 +2159,13 @@
               },
               {
                 "constant": false,
-                "id": 28312,
+                "id": 31238,
                 "mutability": "mutable",
                 "name": "resolvedPrice",
-                "nameLocation": "1941:13:35",
+                "nameLocation": "1941:13:38",
                 "nodeType": "VariableDeclaration",
-                "scope": 28323,
-                "src": "1934:20:35",
+                "scope": 31249,
+                "src": "1934:20:38",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2162,10 +2173,10 @@
                   "typeString": "int256"
                 },
                 "typeName": {
-                  "id": 28311,
+                  "id": 31237,
                   "name": "int256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1934:6:35",
+                  "src": "1934:6:38",
                   "typeDescriptions": {
                     "typeIdentifier": "t_int256",
                     "typeString": "int256"
@@ -2175,13 +2186,13 @@
               },
               {
                 "constant": false,
-                "id": 28314,
+                "id": 31240,
                 "mutability": "mutable",
                 "name": "expirationTime",
-                "nameLocation": "2019:14:35",
+                "nameLocation": "2019:14:38",
                 "nodeType": "VariableDeclaration",
-                "scope": 28323,
-                "src": "2011:22:35",
+                "scope": 31249,
+                "src": "2011:22:38",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2189,10 +2200,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 28313,
+                  "id": 31239,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "2011:7:35",
+                  "src": "2011:7:38",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -2202,13 +2213,13 @@
               },
               {
                 "constant": false,
-                "id": 28316,
+                "id": 31242,
                 "mutability": "mutable",
                 "name": "reward",
-                "nameLocation": "2112:6:35",
+                "nameLocation": "2112:6:38",
                 "nodeType": "VariableDeclaration",
-                "scope": 28323,
-                "src": "2104:14:35",
+                "scope": 31249,
+                "src": "2104:14:38",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2216,10 +2227,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 28315,
+                  "id": 31241,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "2104:7:35",
+                  "src": "2104:7:38",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -2229,13 +2240,13 @@
               },
               {
                 "constant": false,
-                "id": 28318,
+                "id": 31244,
                 "mutability": "mutable",
                 "name": "finalFee",
-                "nameLocation": "2200:8:35",
+                "nameLocation": "2200:8:38",
                 "nodeType": "VariableDeclaration",
-                "scope": 28323,
-                "src": "2192:16:35",
+                "scope": 31249,
+                "src": "2192:16:38",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2243,10 +2254,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 28317,
+                  "id": 31243,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "2192:7:35",
+                  "src": "2192:7:38",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -2256,13 +2267,13 @@
               },
               {
                 "constant": false,
-                "id": 28320,
+                "id": 31246,
                 "mutability": "mutable",
                 "name": "bond",
-                "nameLocation": "2284:4:35",
+                "nameLocation": "2284:4:38",
                 "nodeType": "VariableDeclaration",
-                "scope": 28323,
-                "src": "2276:12:35",
+                "scope": 31249,
+                "src": "2276:12:38",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2270,10 +2281,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 28319,
+                  "id": 31245,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "2276:7:35",
+                  "src": "2276:7:38",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -2283,13 +2294,13 @@
               },
               {
                 "constant": false,
-                "id": 28322,
+                "id": 31248,
                 "mutability": "mutable",
                 "name": "customLiveness",
-                "nameLocation": "2379:14:35",
+                "nameLocation": "2379:14:38",
                 "nodeType": "VariableDeclaration",
-                "scope": 28323,
-                "src": "2371:22:35",
+                "scope": 31249,
+                "src": "2371:22:38",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2297,10 +2308,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 28321,
+                  "id": 31247,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "2371:7:35",
+                  "src": "2371:7:38",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -2310,20 +2321,20 @@
               }
             ],
             "name": "Request",
-            "nameLocation": "1613:7:35",
-            "scope": 28513,
+            "nameLocation": "1613:7:38",
+            "scope": 31439,
             "visibility": "public"
           },
           {
-            "id": 28326,
+            "id": 31252,
             "nodeType": "VariableDeclaration",
-            "src": "2758:50:35",
+            "src": "2758:50:38",
             "constant": true,
             "functionSelector": "c371dda7",
             "mutability": "constant",
             "name": "ancillaryBytesLimit",
-            "nameLocation": "2782:19:35",
-            "scope": 28513,
+            "nameLocation": "2782:19:38",
+            "scope": 31439,
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -2331,10 +2342,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 28324,
+              "id": 31250,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "2758:7:35",
+              "src": "2758:7:38",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -2342,14 +2353,14 @@
             },
             "value": {
               "hexValue": "38313932",
-              "id": 28325,
+              "id": 31251,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
               "kind": "number",
               "lValueRequested": false,
               "nodeType": "Literal",
-              "src": "2804:4:35",
+              "src": "2804:4:38",
               "typeDescriptions": {
                 "typeIdentifier": "t_rational_8192_by_1",
                 "typeString": "int_const 8192"
@@ -2359,13 +2370,13 @@
             "visibility": "public"
           },
           {
-            "id": 28347,
+            "id": 31273,
             "nodeType": "FunctionDefinition",
-            "src": "3772:266:35",
+            "src": "3772:266:38",
             "documentation": {
-              "id": 28327,
+              "id": 31253,
               "nodeType": "StructuredDocumentation",
-              "src": "2815:952:35",
+              "src": "2815:952:38",
               "text": " @notice Requests a new price.\n @param identifier price identifier being requested.\n @param timestamp timestamp of the price being requested.\n @param ancillaryData ancillary data representing additional args being passed with the price request.\n @param currency ERC20 token used for payment of rewards and fees. Must be approved for use with the DVM.\n @param reward reward offered to a successful proposer. Will be pulled from the caller. Note: this can be 0,\n               which could make sense if the contract requests and proposes the value in the same call or\n               provides its own reward system.\n @param bond custom proposal bond to set for request. If set to 0, defaults to the final fee.\n @param customLiveness custom proposal liveness to set for request.\n @return totalBond default bond + final fee that the proposer and disputer will be required to pay."
             },
             "functionSelector": "d6228407",
@@ -2373,20 +2384,20 @@
             "kind": "function",
             "modifiers": [],
             "name": "requestPrice",
-            "nameLocation": "3781:12:35",
+            "nameLocation": "3781:12:38",
             "parameters": {
-              "id": 28343,
+              "id": 31269,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 28329,
+                  "id": 31255,
                   "mutability": "mutable",
                   "name": "identifier",
-                  "nameLocation": "3811:10:35",
+                  "nameLocation": "3811:10:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28347,
-                  "src": "3803:18:35",
+                  "scope": 31273,
+                  "src": "3803:18:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2394,10 +2405,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 28328,
+                    "id": 31254,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3803:7:35",
+                    "src": "3803:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -2407,13 +2418,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28331,
+                  "id": 31257,
                   "mutability": "mutable",
                   "name": "timestamp",
-                  "nameLocation": "3838:9:35",
+                  "nameLocation": "3838:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28347,
-                  "src": "3831:16:35",
+                  "scope": 31273,
+                  "src": "3831:16:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2421,10 +2432,10 @@
                     "typeString": "uint32"
                   },
                   "typeName": {
-                    "id": 28330,
+                    "id": 31256,
                     "name": "uint32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3831:6:35",
+                    "src": "3831:6:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint32",
                       "typeString": "uint32"
@@ -2434,13 +2445,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28333,
+                  "id": 31259,
                   "mutability": "mutable",
                   "name": "ancillaryData",
-                  "nameLocation": "3870:13:35",
+                  "nameLocation": "3870:13:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28347,
-                  "src": "3857:26:35",
+                  "scope": 31273,
+                  "src": "3857:26:38",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -2448,10 +2459,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 28332,
+                    "id": 31258,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3857:5:35",
+                    "src": "3857:5:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -2461,33 +2472,33 @@
                 },
                 {
                   "constant": false,
-                  "id": 28336,
+                  "id": 31262,
                   "mutability": "mutable",
                   "name": "currency",
-                  "nameLocation": "3900:8:35",
+                  "nameLocation": "3900:8:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28347,
-                  "src": "3893:15:35",
+                  "scope": 31273,
+                  "src": "3893:15:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_IERC20_$21315",
+                    "typeIdentifier": "t_contract$_IERC20_$24004",
                     "typeString": "contract IERC20"
                   },
                   "typeName": {
-                    "id": 28335,
+                    "id": 31261,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 28334,
+                      "id": 31260,
                       "name": "IERC20",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 21315,
-                      "src": "3893:6:35"
+                      "referencedDeclaration": 24004,
+                      "src": "3893:6:38"
                     },
-                    "referencedDeclaration": 21315,
-                    "src": "3893:6:35",
+                    "referencedDeclaration": 24004,
+                    "src": "3893:6:38",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IERC20_$21315",
+                      "typeIdentifier": "t_contract$_IERC20_$24004",
                       "typeString": "contract IERC20"
                     }
                   },
@@ -2495,13 +2506,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28338,
+                  "id": 31264,
                   "mutability": "mutable",
                   "name": "reward",
-                  "nameLocation": "3926:6:35",
+                  "nameLocation": "3926:6:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28347,
-                  "src": "3918:14:35",
+                  "scope": 31273,
+                  "src": "3918:14:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2509,10 +2520,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 28337,
+                    "id": 31263,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3918:7:35",
+                    "src": "3918:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2522,13 +2533,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28340,
+                  "id": 31266,
                   "mutability": "mutable",
                   "name": "bond",
-                  "nameLocation": "3950:4:35",
+                  "nameLocation": "3950:4:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28347,
-                  "src": "3942:12:35",
+                  "scope": 31273,
+                  "src": "3942:12:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2536,10 +2547,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 28339,
+                    "id": 31265,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3942:7:35",
+                    "src": "3942:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2549,13 +2560,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28342,
+                  "id": 31268,
                   "mutability": "mutable",
                   "name": "customLiveness",
-                  "nameLocation": "3972:14:35",
+                  "nameLocation": "3972:14:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28347,
-                  "src": "3964:22:35",
+                  "scope": 31273,
+                  "src": "3964:22:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2563,10 +2574,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 28341,
+                    "id": 31267,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3964:7:35",
+                    "src": "3964:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2575,21 +2586,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "3793:199:35"
+              "src": "3793:199:38"
             },
             "returnParameters": {
-              "id": 28346,
+              "id": 31272,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 28345,
+                  "id": 31271,
                   "mutability": "mutable",
                   "name": "totalBond",
-                  "nameLocation": "4027:9:35",
+                  "nameLocation": "4027:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28347,
-                  "src": "4019:17:35",
+                  "scope": 31273,
+                  "src": "4019:17:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2597,10 +2608,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 28344,
+                    "id": 31270,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "4019:7:35",
+                    "src": "4019:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2609,21 +2620,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "4018:19:35"
+              "src": "4018:19:38"
             },
-            "scope": 28513,
+            "scope": 31439,
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "external"
           },
           {
-            "id": 28368,
+            "id": 31294,
             "nodeType": "FunctionDefinition",
-            "src": "4947:279:35",
+            "src": "4947:279:38",
             "documentation": {
-              "id": 28348,
+              "id": 31274,
               "nodeType": "StructuredDocumentation",
-              "src": "4044:898:35",
+              "src": "4044:898:38",
               "text": " @notice Proposes a price value on another address' behalf. Note: this address will receive any rewards that come\n from this proposal. However, any bonds are pulled from the caller.\n @param requester sender of the initial price request.\n @param identifier price identifier to identify the existing request.\n @param timestamp timestamp to identify the existing request.\n @param ancillaryData ancillary data of the price being requested.\n @param request price request parameters whose hash must match the request that the caller wants to\n propose a price for.\n @param proposer address to set as the proposer.\n @param proposedPrice price being proposed.\n @return totalBond the amount that's pulled from the caller's wallet as a bond. The bond will be returned to\n the proposer once settled if the proposal is correct."
             },
             "functionSelector": "b1a166b2",
@@ -2631,20 +2642,20 @@
             "kind": "function",
             "modifiers": [],
             "name": "proposePriceFor",
-            "nameLocation": "4956:15:35",
+            "nameLocation": "4956:15:38",
             "parameters": {
-              "id": 28364,
+              "id": 31290,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 28350,
+                  "id": 31276,
                   "mutability": "mutable",
                   "name": "requester",
-                  "nameLocation": "4989:9:35",
+                  "nameLocation": "4989:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28368,
-                  "src": "4981:17:35",
+                  "scope": 31294,
+                  "src": "4981:17:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2652,10 +2663,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 28349,
+                    "id": 31275,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "4981:7:35",
+                    "src": "4981:7:38",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2666,13 +2677,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28352,
+                  "id": 31278,
                   "mutability": "mutable",
                   "name": "identifier",
-                  "nameLocation": "5016:10:35",
+                  "nameLocation": "5016:10:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28368,
-                  "src": "5008:18:35",
+                  "scope": 31294,
+                  "src": "5008:18:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2680,10 +2691,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 28351,
+                    "id": 31277,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "5008:7:35",
+                    "src": "5008:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -2693,13 +2704,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28354,
+                  "id": 31280,
                   "mutability": "mutable",
                   "name": "timestamp",
-                  "nameLocation": "5043:9:35",
+                  "nameLocation": "5043:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28368,
-                  "src": "5036:16:35",
+                  "scope": 31294,
+                  "src": "5036:16:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2707,10 +2718,10 @@
                     "typeString": "uint32"
                   },
                   "typeName": {
-                    "id": 28353,
+                    "id": 31279,
                     "name": "uint32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "5036:6:35",
+                    "src": "5036:6:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint32",
                       "typeString": "uint32"
@@ -2720,13 +2731,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28356,
+                  "id": 31282,
                   "mutability": "mutable",
                   "name": "ancillaryData",
-                  "nameLocation": "5075:13:35",
+                  "nameLocation": "5075:13:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28368,
-                  "src": "5062:26:35",
+                  "scope": 31294,
+                  "src": "5062:26:38",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -2734,10 +2745,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 28355,
+                    "id": 31281,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "5062:5:35",
+                    "src": "5062:5:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -2747,33 +2758,33 @@
                 },
                 {
                   "constant": false,
-                  "id": 28359,
+                  "id": 31285,
                   "mutability": "mutable",
                   "name": "request",
-                  "nameLocation": "5113:7:35",
+                  "nameLocation": "5113:7:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28368,
-                  "src": "5098:22:35",
+                  "scope": 31294,
+                  "src": "5098:22:38",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Request_$28323_memory_ptr",
+                    "typeIdentifier": "t_struct$_Request_$31249_memory_ptr",
                     "typeString": "struct SkinnyOptimisticOracleInterface.Request"
                   },
                   "typeName": {
-                    "id": 28358,
+                    "id": 31284,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 28357,
+                      "id": 31283,
                       "name": "Request",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 28323,
-                      "src": "5098:7:35"
+                      "referencedDeclaration": 31249,
+                      "src": "5098:7:38"
                     },
-                    "referencedDeclaration": 28323,
-                    "src": "5098:7:35",
+                    "referencedDeclaration": 31249,
+                    "src": "5098:7:38",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Request_$28323_storage_ptr",
+                      "typeIdentifier": "t_struct$_Request_$31249_storage_ptr",
                       "typeString": "struct SkinnyOptimisticOracleInterface.Request"
                     }
                   },
@@ -2781,13 +2792,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28361,
+                  "id": 31287,
                   "mutability": "mutable",
                   "name": "proposer",
-                  "nameLocation": "5138:8:35",
+                  "nameLocation": "5138:8:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28368,
-                  "src": "5130:16:35",
+                  "scope": 31294,
+                  "src": "5130:16:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2795,10 +2806,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 28360,
+                    "id": 31286,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "5130:7:35",
+                    "src": "5130:7:38",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2809,13 +2820,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28363,
+                  "id": 31289,
                   "mutability": "mutable",
                   "name": "proposedPrice",
-                  "nameLocation": "5163:13:35",
+                  "nameLocation": "5163:13:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28368,
-                  "src": "5156:20:35",
+                  "scope": 31294,
+                  "src": "5156:20:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2823,10 +2834,10 @@
                     "typeString": "int256"
                   },
                   "typeName": {
-                    "id": 28362,
+                    "id": 31288,
                     "name": "int256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "5156:6:35",
+                    "src": "5156:6:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_int256",
                       "typeString": "int256"
@@ -2835,21 +2846,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "4971:211:35"
+              "src": "4971:211:38"
             },
             "returnParameters": {
-              "id": 28367,
+              "id": 31293,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 28366,
+                  "id": 31292,
                   "mutability": "mutable",
                   "name": "totalBond",
-                  "nameLocation": "5215:9:35",
+                  "nameLocation": "5215:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28368,
-                  "src": "5207:17:35",
+                  "scope": 31294,
+                  "src": "5207:17:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2857,10 +2868,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 28365,
+                    "id": 31291,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "5207:7:35",
+                    "src": "5207:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2869,21 +2880,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "5206:19:35"
+              "src": "5206:19:38"
             },
-            "scope": 28513,
+            "scope": 31439,
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "public"
           },
           {
-            "id": 28387,
+            "id": 31313,
             "nodeType": "FunctionDefinition",
-            "src": "5954:252:35",
+            "src": "5954:252:38",
             "documentation": {
-              "id": 28369,
+              "id": 31295,
               "nodeType": "StructuredDocumentation",
-              "src": "5232:717:35",
+              "src": "5232:717:38",
               "text": " @notice Proposes a price value where caller is the proposer.\n @param requester sender of the initial price request.\n @param identifier price identifier to identify the existing request.\n @param timestamp timestamp to identify the existing request.\n @param ancillaryData ancillary data of the price being requested.\n @param request price request parameters whose hash must match the request that the caller wants to\n propose a price for.\n @param proposedPrice price being proposed.\n @return totalBond the amount that's pulled from the caller's wallet as a bond. The bond will be returned to\n the proposer once settled if the proposal is correct."
             },
             "functionSelector": "93c44ef7",
@@ -2891,20 +2902,20 @@
             "kind": "function",
             "modifiers": [],
             "name": "proposePrice",
-            "nameLocation": "5963:12:35",
+            "nameLocation": "5963:12:38",
             "parameters": {
-              "id": 28383,
+              "id": 31309,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 28371,
+                  "id": 31297,
                   "mutability": "mutable",
                   "name": "requester",
-                  "nameLocation": "5993:9:35",
+                  "nameLocation": "5993:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28387,
-                  "src": "5985:17:35",
+                  "scope": 31313,
+                  "src": "5985:17:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2912,10 +2923,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 28370,
+                    "id": 31296,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "5985:7:35",
+                    "src": "5985:7:38",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2926,13 +2937,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28373,
+                  "id": 31299,
                   "mutability": "mutable",
                   "name": "identifier",
-                  "nameLocation": "6020:10:35",
+                  "nameLocation": "6020:10:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28387,
-                  "src": "6012:18:35",
+                  "scope": 31313,
+                  "src": "6012:18:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2940,10 +2951,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 28372,
+                    "id": 31298,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "6012:7:35",
+                    "src": "6012:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -2953,13 +2964,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28375,
+                  "id": 31301,
                   "mutability": "mutable",
                   "name": "timestamp",
-                  "nameLocation": "6047:9:35",
+                  "nameLocation": "6047:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28387,
-                  "src": "6040:16:35",
+                  "scope": 31313,
+                  "src": "6040:16:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2967,10 +2978,10 @@
                     "typeString": "uint32"
                   },
                   "typeName": {
-                    "id": 28374,
+                    "id": 31300,
                     "name": "uint32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "6040:6:35",
+                    "src": "6040:6:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint32",
                       "typeString": "uint32"
@@ -2980,13 +2991,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28377,
+                  "id": 31303,
                   "mutability": "mutable",
                   "name": "ancillaryData",
-                  "nameLocation": "6079:13:35",
+                  "nameLocation": "6079:13:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28387,
-                  "src": "6066:26:35",
+                  "scope": 31313,
+                  "src": "6066:26:38",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -2994,10 +3005,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 28376,
+                    "id": 31302,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "6066:5:35",
+                    "src": "6066:5:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -3007,33 +3018,33 @@
                 },
                 {
                   "constant": false,
-                  "id": 28380,
+                  "id": 31306,
                   "mutability": "mutable",
                   "name": "request",
-                  "nameLocation": "6117:7:35",
+                  "nameLocation": "6117:7:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28387,
-                  "src": "6102:22:35",
+                  "scope": 31313,
+                  "src": "6102:22:38",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Request_$28323_memory_ptr",
+                    "typeIdentifier": "t_struct$_Request_$31249_memory_ptr",
                     "typeString": "struct SkinnyOptimisticOracleInterface.Request"
                   },
                   "typeName": {
-                    "id": 28379,
+                    "id": 31305,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 28378,
+                      "id": 31304,
                       "name": "Request",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 28323,
-                      "src": "6102:7:35"
+                      "referencedDeclaration": 31249,
+                      "src": "6102:7:38"
                     },
-                    "referencedDeclaration": 28323,
-                    "src": "6102:7:35",
+                    "referencedDeclaration": 31249,
+                    "src": "6102:7:38",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Request_$28323_storage_ptr",
+                      "typeIdentifier": "t_struct$_Request_$31249_storage_ptr",
                       "typeString": "struct SkinnyOptimisticOracleInterface.Request"
                     }
                   },
@@ -3041,13 +3052,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28382,
+                  "id": 31308,
                   "mutability": "mutable",
                   "name": "proposedPrice",
-                  "nameLocation": "6141:13:35",
+                  "nameLocation": "6141:13:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28387,
-                  "src": "6134:20:35",
+                  "scope": 31313,
+                  "src": "6134:20:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3055,10 +3066,10 @@
                     "typeString": "int256"
                   },
                   "typeName": {
-                    "id": 28381,
+                    "id": 31307,
                     "name": "int256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "6134:6:35",
+                    "src": "6134:6:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_int256",
                       "typeString": "int256"
@@ -3067,21 +3078,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "5975:185:35"
+              "src": "5975:185:38"
             },
             "returnParameters": {
-              "id": 28386,
+              "id": 31312,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 28385,
+                  "id": 31311,
                   "mutability": "mutable",
                   "name": "totalBond",
-                  "nameLocation": "6195:9:35",
+                  "nameLocation": "6195:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28387,
-                  "src": "6187:17:35",
+                  "scope": 31313,
+                  "src": "6187:17:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3089,10 +3100,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 28384,
+                    "id": 31310,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "6187:7:35",
+                    "src": "6187:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3101,21 +3112,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "6186:19:35"
+              "src": "6186:19:38"
             },
-            "scope": 28513,
+            "scope": 31439,
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "external"
           },
           {
-            "id": 28412,
+            "id": 31338,
             "nodeType": "FunctionDefinition",
-            "src": "7715:335:35",
+            "src": "7715:335:38",
             "documentation": {
-              "id": 28388,
+              "id": 31314,
               "nodeType": "StructuredDocumentation",
-              "src": "6212:1498:35",
+              "src": "6212:1498:38",
               "text": " @notice Combines logic of requestPrice and proposePrice while taking advantage of gas savings from not having to\n overwrite Request params that a normal requestPrice() => proposePrice() flow would entail. Note: The proposer\n will receive any rewards that come from this proposal. However, any bonds are pulled from the caller.\n @dev The caller is the requester, but the proposer can be customized.\n @param identifier price identifier to identify the existing request.\n @param timestamp timestamp to identify the existing request.\n @param ancillaryData ancillary data of the price being requested.\n @param currency ERC20 token used for payment of rewards and fees. Must be approved for use with the DVM.\n @param reward reward offered to a successful proposer. Will be pulled from the caller. Note: this can be 0,\n               which could make sense if the contract requests and proposes the value in the same call or\n               provides its own reward system.\n @param bond custom proposal bond to set for request. If set to 0, defaults to the final fee.\n @param customLiveness custom proposal liveness to set for request.\n @param proposer address to set as the proposer.\n @param proposedPrice price being proposed.\n @return totalBond the amount that's pulled from the caller's wallet as a bond. The bond will be returned to\n the proposer once settled if the proposal is correct."
             },
             "functionSelector": "af355d1e",
@@ -3123,20 +3134,20 @@
             "kind": "function",
             "modifiers": [],
             "name": "requestAndProposePriceFor",
-            "nameLocation": "7724:25:35",
+            "nameLocation": "7724:25:38",
             "parameters": {
-              "id": 28408,
+              "id": 31334,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 28390,
+                  "id": 31316,
                   "mutability": "mutable",
                   "name": "identifier",
-                  "nameLocation": "7767:10:35",
+                  "nameLocation": "7767:10:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28412,
-                  "src": "7759:18:35",
+                  "scope": 31338,
+                  "src": "7759:18:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3144,10 +3155,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 28389,
+                    "id": 31315,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "7759:7:35",
+                    "src": "7759:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -3157,13 +3168,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28392,
+                  "id": 31318,
                   "mutability": "mutable",
                   "name": "timestamp",
-                  "nameLocation": "7794:9:35",
+                  "nameLocation": "7794:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28412,
-                  "src": "7787:16:35",
+                  "scope": 31338,
+                  "src": "7787:16:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3171,10 +3182,10 @@
                     "typeString": "uint32"
                   },
                   "typeName": {
-                    "id": 28391,
+                    "id": 31317,
                     "name": "uint32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "7787:6:35",
+                    "src": "7787:6:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint32",
                       "typeString": "uint32"
@@ -3184,13 +3195,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28394,
+                  "id": 31320,
                   "mutability": "mutable",
                   "name": "ancillaryData",
-                  "nameLocation": "7826:13:35",
+                  "nameLocation": "7826:13:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28412,
-                  "src": "7813:26:35",
+                  "scope": 31338,
+                  "src": "7813:26:38",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -3198,10 +3209,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 28393,
+                    "id": 31319,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "7813:5:35",
+                    "src": "7813:5:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -3211,33 +3222,33 @@
                 },
                 {
                   "constant": false,
-                  "id": 28397,
+                  "id": 31323,
                   "mutability": "mutable",
                   "name": "currency",
-                  "nameLocation": "7856:8:35",
+                  "nameLocation": "7856:8:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28412,
-                  "src": "7849:15:35",
+                  "scope": 31338,
+                  "src": "7849:15:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_IERC20_$21315",
+                    "typeIdentifier": "t_contract$_IERC20_$24004",
                     "typeString": "contract IERC20"
                   },
                   "typeName": {
-                    "id": 28396,
+                    "id": 31322,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 28395,
+                      "id": 31321,
                       "name": "IERC20",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 21315,
-                      "src": "7849:6:35"
+                      "referencedDeclaration": 24004,
+                      "src": "7849:6:38"
                     },
-                    "referencedDeclaration": 21315,
-                    "src": "7849:6:35",
+                    "referencedDeclaration": 24004,
+                    "src": "7849:6:38",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IERC20_$21315",
+                      "typeIdentifier": "t_contract$_IERC20_$24004",
                       "typeString": "contract IERC20"
                     }
                   },
@@ -3245,13 +3256,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28399,
+                  "id": 31325,
                   "mutability": "mutable",
                   "name": "reward",
-                  "nameLocation": "7882:6:35",
+                  "nameLocation": "7882:6:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28412,
-                  "src": "7874:14:35",
+                  "scope": 31338,
+                  "src": "7874:14:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3259,10 +3270,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 28398,
+                    "id": 31324,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "7874:7:35",
+                    "src": "7874:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3272,13 +3283,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28401,
+                  "id": 31327,
                   "mutability": "mutable",
                   "name": "bond",
-                  "nameLocation": "7906:4:35",
+                  "nameLocation": "7906:4:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28412,
-                  "src": "7898:12:35",
+                  "scope": 31338,
+                  "src": "7898:12:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3286,10 +3297,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 28400,
+                    "id": 31326,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "7898:7:35",
+                    "src": "7898:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3299,13 +3310,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28403,
+                  "id": 31329,
                   "mutability": "mutable",
                   "name": "customLiveness",
-                  "nameLocation": "7928:14:35",
+                  "nameLocation": "7928:14:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28412,
-                  "src": "7920:22:35",
+                  "scope": 31338,
+                  "src": "7920:22:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3313,10 +3324,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 28402,
+                    "id": 31328,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "7920:7:35",
+                    "src": "7920:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3326,13 +3337,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28405,
+                  "id": 31331,
                   "mutability": "mutable",
                   "name": "proposer",
-                  "nameLocation": "7960:8:35",
+                  "nameLocation": "7960:8:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28412,
-                  "src": "7952:16:35",
+                  "scope": 31338,
+                  "src": "7952:16:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3340,10 +3351,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 28404,
+                    "id": 31330,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "7952:7:35",
+                    "src": "7952:7:38",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -3354,13 +3365,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28407,
+                  "id": 31333,
                   "mutability": "mutable",
                   "name": "proposedPrice",
-                  "nameLocation": "7985:13:35",
+                  "nameLocation": "7985:13:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28412,
-                  "src": "7978:20:35",
+                  "scope": 31338,
+                  "src": "7978:20:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3368,10 +3379,10 @@
                     "typeString": "int256"
                   },
                   "typeName": {
-                    "id": 28406,
+                    "id": 31332,
                     "name": "int256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "7978:6:35",
+                    "src": "7978:6:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_int256",
                       "typeString": "int256"
@@ -3380,21 +3391,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "7749:255:35"
+              "src": "7749:255:38"
             },
             "returnParameters": {
-              "id": 28411,
+              "id": 31337,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 28410,
+                  "id": 31336,
                   "mutability": "mutable",
                   "name": "totalBond",
-                  "nameLocation": "8039:9:35",
+                  "nameLocation": "8039:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28412,
-                  "src": "8031:17:35",
+                  "scope": 31338,
+                  "src": "8031:17:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3402,10 +3413,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 28409,
+                    "id": 31335,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "8031:7:35",
+                    "src": "8031:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3414,21 +3425,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "8030:19:35"
+              "src": "8030:19:38"
             },
-            "scope": 28513,
+            "scope": 31439,
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "external"
           },
           {
-            "id": 28431,
+            "id": 31357,
             "nodeType": "FunctionDefinition",
-            "src": "8949:249:35",
+            "src": "8949:249:38",
             "documentation": {
-              "id": 28413,
+              "id": 31339,
               "nodeType": "StructuredDocumentation",
-              "src": "8056:888:35",
+              "src": "8056:888:38",
               "text": " @notice Disputes a price request with an active proposal on another address' behalf. Note: this address will\n receive any rewards that come from this dispute. However, any bonds are pulled from the caller.\n @param identifier price identifier to identify the existing request.\n @param timestamp timestamp to identify the existing request.\n @param ancillaryData ancillary data of the price being requested.\n @param request price request parameters whose hash must match the request that the caller wants to\n dispute.\n @param disputer address to set as the disputer.\n @param requester sender of the initial price request.\n @return totalBond the amount that's pulled from the caller's wallet as a bond. The bond will be returned to\n the disputer once settled if the dispute was valid (the proposal was incorrect)."
             },
             "functionSelector": "9ce320c8",
@@ -3436,20 +3447,20 @@
             "kind": "function",
             "modifiers": [],
             "name": "disputePriceFor",
-            "nameLocation": "8958:15:35",
+            "nameLocation": "8958:15:38",
             "parameters": {
-              "id": 28427,
+              "id": 31353,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 28415,
+                  "id": 31341,
                   "mutability": "mutable",
                   "name": "identifier",
-                  "nameLocation": "8991:10:35",
+                  "nameLocation": "8991:10:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28431,
-                  "src": "8983:18:35",
+                  "scope": 31357,
+                  "src": "8983:18:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3457,10 +3468,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 28414,
+                    "id": 31340,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "8983:7:35",
+                    "src": "8983:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -3470,13 +3481,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28417,
+                  "id": 31343,
                   "mutability": "mutable",
                   "name": "timestamp",
-                  "nameLocation": "9018:9:35",
+                  "nameLocation": "9018:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28431,
-                  "src": "9011:16:35",
+                  "scope": 31357,
+                  "src": "9011:16:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3484,10 +3495,10 @@
                     "typeString": "uint32"
                   },
                   "typeName": {
-                    "id": 28416,
+                    "id": 31342,
                     "name": "uint32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "9011:6:35",
+                    "src": "9011:6:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint32",
                       "typeString": "uint32"
@@ -3497,13 +3508,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28419,
+                  "id": 31345,
                   "mutability": "mutable",
                   "name": "ancillaryData",
-                  "nameLocation": "9050:13:35",
+                  "nameLocation": "9050:13:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28431,
-                  "src": "9037:26:35",
+                  "scope": 31357,
+                  "src": "9037:26:38",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -3511,10 +3522,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 28418,
+                    "id": 31344,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "9037:5:35",
+                    "src": "9037:5:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -3524,33 +3535,33 @@
                 },
                 {
                   "constant": false,
-                  "id": 28422,
+                  "id": 31348,
                   "mutability": "mutable",
                   "name": "request",
-                  "nameLocation": "9088:7:35",
+                  "nameLocation": "9088:7:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28431,
-                  "src": "9073:22:35",
+                  "scope": 31357,
+                  "src": "9073:22:38",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Request_$28323_memory_ptr",
+                    "typeIdentifier": "t_struct$_Request_$31249_memory_ptr",
                     "typeString": "struct SkinnyOptimisticOracleInterface.Request"
                   },
                   "typeName": {
-                    "id": 28421,
+                    "id": 31347,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 28420,
+                      "id": 31346,
                       "name": "Request",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 28323,
-                      "src": "9073:7:35"
+                      "referencedDeclaration": 31249,
+                      "src": "9073:7:38"
                     },
-                    "referencedDeclaration": 28323,
-                    "src": "9073:7:35",
+                    "referencedDeclaration": 31249,
+                    "src": "9073:7:38",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Request_$28323_storage_ptr",
+                      "typeIdentifier": "t_struct$_Request_$31249_storage_ptr",
                       "typeString": "struct SkinnyOptimisticOracleInterface.Request"
                     }
                   },
@@ -3558,13 +3569,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28424,
+                  "id": 31350,
                   "mutability": "mutable",
                   "name": "disputer",
-                  "nameLocation": "9113:8:35",
+                  "nameLocation": "9113:8:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28431,
-                  "src": "9105:16:35",
+                  "scope": 31357,
+                  "src": "9105:16:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3572,10 +3583,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 28423,
+                    "id": 31349,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "9105:7:35",
+                    "src": "9105:7:38",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -3586,13 +3597,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28426,
+                  "id": 31352,
                   "mutability": "mutable",
                   "name": "requester",
-                  "nameLocation": "9139:9:35",
+                  "nameLocation": "9139:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28431,
-                  "src": "9131:17:35",
+                  "scope": 31357,
+                  "src": "9131:17:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3600,10 +3611,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 28425,
+                    "id": 31351,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "9131:7:35",
+                    "src": "9131:7:38",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -3613,21 +3624,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "8973:181:35"
+              "src": "8973:181:38"
             },
             "returnParameters": {
-              "id": 28430,
+              "id": 31356,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 28429,
+                  "id": 31355,
                   "mutability": "mutable",
                   "name": "totalBond",
-                  "nameLocation": "9187:9:35",
+                  "nameLocation": "9187:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28431,
-                  "src": "9179:17:35",
+                  "scope": 31357,
+                  "src": "9179:17:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3635,10 +3646,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 28428,
+                    "id": 31354,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "9179:7:35",
+                    "src": "9179:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3647,21 +3658,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "9178:19:35"
+              "src": "9178:19:38"
             },
-            "scope": 28513,
+            "scope": 31439,
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "public"
           },
           {
-            "id": 28448,
+            "id": 31374,
             "nodeType": "FunctionDefinition",
-            "src": "9917:222:35",
+            "src": "9917:222:38",
             "documentation": {
-              "id": 28432,
+              "id": 31358,
               "nodeType": "StructuredDocumentation",
-              "src": "9204:708:35",
+              "src": "9204:708:38",
               "text": " @notice Disputes a price request with an active proposal where caller is the disputer.\n @param requester sender of the initial price request.\n @param identifier price identifier to identify the existing request.\n @param timestamp timestamp to identify the existing request.\n @param ancillaryData ancillary data of the price being requested.\n @param request price request parameters whose hash must match the request that the caller wants to\n dispute.\n @return totalBond the amount that's pulled from the caller's wallet as a bond. The bond will be returned to\n the disputer once settled if the dispute was valid (the proposal was incorrect)."
             },
             "functionSelector": "3a31577e",
@@ -3669,20 +3680,20 @@
             "kind": "function",
             "modifiers": [],
             "name": "disputePrice",
-            "nameLocation": "9926:12:35",
+            "nameLocation": "9926:12:38",
             "parameters": {
-              "id": 28444,
+              "id": 31370,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 28434,
+                  "id": 31360,
                   "mutability": "mutable",
                   "name": "requester",
-                  "nameLocation": "9956:9:35",
+                  "nameLocation": "9956:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28448,
-                  "src": "9948:17:35",
+                  "scope": 31374,
+                  "src": "9948:17:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3690,10 +3701,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 28433,
+                    "id": 31359,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "9948:7:35",
+                    "src": "9948:7:38",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -3704,13 +3715,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28436,
+                  "id": 31362,
                   "mutability": "mutable",
                   "name": "identifier",
-                  "nameLocation": "9983:10:35",
+                  "nameLocation": "9983:10:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28448,
-                  "src": "9975:18:35",
+                  "scope": 31374,
+                  "src": "9975:18:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3718,10 +3729,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 28435,
+                    "id": 31361,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "9975:7:35",
+                    "src": "9975:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -3731,13 +3742,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28438,
+                  "id": 31364,
                   "mutability": "mutable",
                   "name": "timestamp",
-                  "nameLocation": "10010:9:35",
+                  "nameLocation": "10010:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28448,
-                  "src": "10003:16:35",
+                  "scope": 31374,
+                  "src": "10003:16:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3745,10 +3756,10 @@
                     "typeString": "uint32"
                   },
                   "typeName": {
-                    "id": 28437,
+                    "id": 31363,
                     "name": "uint32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "10003:6:35",
+                    "src": "10003:6:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint32",
                       "typeString": "uint32"
@@ -3758,13 +3769,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28440,
+                  "id": 31366,
                   "mutability": "mutable",
                   "name": "ancillaryData",
-                  "nameLocation": "10042:13:35",
+                  "nameLocation": "10042:13:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28448,
-                  "src": "10029:26:35",
+                  "scope": 31374,
+                  "src": "10029:26:38",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -3772,10 +3783,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 28439,
+                    "id": 31365,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "10029:5:35",
+                    "src": "10029:5:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -3785,54 +3796,54 @@
                 },
                 {
                   "constant": false,
-                  "id": 28443,
+                  "id": 31369,
                   "mutability": "mutable",
                   "name": "request",
-                  "nameLocation": "10080:7:35",
+                  "nameLocation": "10080:7:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28448,
-                  "src": "10065:22:35",
+                  "scope": 31374,
+                  "src": "10065:22:38",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Request_$28323_memory_ptr",
+                    "typeIdentifier": "t_struct$_Request_$31249_memory_ptr",
                     "typeString": "struct SkinnyOptimisticOracleInterface.Request"
                   },
                   "typeName": {
-                    "id": 28442,
+                    "id": 31368,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 28441,
+                      "id": 31367,
                       "name": "Request",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 28323,
-                      "src": "10065:7:35"
+                      "referencedDeclaration": 31249,
+                      "src": "10065:7:38"
                     },
-                    "referencedDeclaration": 28323,
-                    "src": "10065:7:35",
+                    "referencedDeclaration": 31249,
+                    "src": "10065:7:38",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Request_$28323_storage_ptr",
+                      "typeIdentifier": "t_struct$_Request_$31249_storage_ptr",
                       "typeString": "struct SkinnyOptimisticOracleInterface.Request"
                     }
                   },
                   "visibility": "internal"
                 }
               ],
-              "src": "9938:155:35"
+              "src": "9938:155:38"
             },
             "returnParameters": {
-              "id": 28447,
+              "id": 31373,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 28446,
+                  "id": 31372,
                   "mutability": "mutable",
                   "name": "totalBond",
-                  "nameLocation": "10128:9:35",
+                  "nameLocation": "10128:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28448,
-                  "src": "10120:17:35",
+                  "scope": 31374,
+                  "src": "10120:17:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3840,10 +3851,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 28445,
+                    "id": 31371,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "10120:7:35",
+                    "src": "10120:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3852,21 +3863,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "10119:19:35"
+              "src": "10119:19:38"
             },
-            "scope": 28513,
+            "scope": 31439,
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "external"
           },
           {
-            "id": 28467,
+            "id": 31393,
             "nodeType": "FunctionDefinition",
-            "src": "10904:235:35",
+            "src": "10904:235:38",
             "documentation": {
-              "id": 28449,
+              "id": 31375,
               "nodeType": "StructuredDocumentation",
-              "src": "10145:754:35",
+              "src": "10145:754:38",
               "text": " @notice Attempts to settle an outstanding price request. Will revert if it isn't settleable.\n @param requester sender of the initial price request.\n @param identifier price identifier to identify the existing request.\n @param timestamp timestamp to identify the existing request.\n @param ancillaryData ancillary data of the price being requested.\n @param request price request parameters whose hash must match the request that the caller wants to\n settle.\n @return payout the amount that the \"winner\" (proposer or disputer) receives on settlement. This amount includes\n the returned bonds as well as additional rewards.\n @return resolvedPrice the price that the request settled to."
             },
             "functionSelector": "b730539f",
@@ -3874,20 +3885,20 @@
             "kind": "function",
             "modifiers": [],
             "name": "settle",
-            "nameLocation": "10913:6:35",
+            "nameLocation": "10913:6:38",
             "parameters": {
-              "id": 28461,
+              "id": 31387,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 28451,
+                  "id": 31377,
                   "mutability": "mutable",
                   "name": "requester",
-                  "nameLocation": "10937:9:35",
+                  "nameLocation": "10937:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28467,
-                  "src": "10929:17:35",
+                  "scope": 31393,
+                  "src": "10929:17:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3895,10 +3906,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 28450,
+                    "id": 31376,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "10929:7:35",
+                    "src": "10929:7:38",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -3909,13 +3920,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28453,
+                  "id": 31379,
                   "mutability": "mutable",
                   "name": "identifier",
-                  "nameLocation": "10964:10:35",
+                  "nameLocation": "10964:10:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28467,
-                  "src": "10956:18:35",
+                  "scope": 31393,
+                  "src": "10956:18:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3923,10 +3934,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 28452,
+                    "id": 31378,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "10956:7:35",
+                    "src": "10956:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -3936,13 +3947,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28455,
+                  "id": 31381,
                   "mutability": "mutable",
                   "name": "timestamp",
-                  "nameLocation": "10991:9:35",
+                  "nameLocation": "10991:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28467,
-                  "src": "10984:16:35",
+                  "scope": 31393,
+                  "src": "10984:16:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3950,10 +3961,10 @@
                     "typeString": "uint32"
                   },
                   "typeName": {
-                    "id": 28454,
+                    "id": 31380,
                     "name": "uint32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "10984:6:35",
+                    "src": "10984:6:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint32",
                       "typeString": "uint32"
@@ -3963,13 +3974,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28457,
+                  "id": 31383,
                   "mutability": "mutable",
                   "name": "ancillaryData",
-                  "nameLocation": "11023:13:35",
+                  "nameLocation": "11023:13:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28467,
-                  "src": "11010:26:35",
+                  "scope": 31393,
+                  "src": "11010:26:38",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -3977,10 +3988,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 28456,
+                    "id": 31382,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "11010:5:35",
+                    "src": "11010:5:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -3990,54 +4001,54 @@
                 },
                 {
                   "constant": false,
-                  "id": 28460,
+                  "id": 31386,
                   "mutability": "mutable",
                   "name": "request",
-                  "nameLocation": "11061:7:35",
+                  "nameLocation": "11061:7:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28467,
-                  "src": "11046:22:35",
+                  "scope": 31393,
+                  "src": "11046:22:38",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Request_$28323_memory_ptr",
+                    "typeIdentifier": "t_struct$_Request_$31249_memory_ptr",
                     "typeString": "struct SkinnyOptimisticOracleInterface.Request"
                   },
                   "typeName": {
-                    "id": 28459,
+                    "id": 31385,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 28458,
+                      "id": 31384,
                       "name": "Request",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 28323,
-                      "src": "11046:7:35"
+                      "referencedDeclaration": 31249,
+                      "src": "11046:7:38"
                     },
-                    "referencedDeclaration": 28323,
-                    "src": "11046:7:35",
+                    "referencedDeclaration": 31249,
+                    "src": "11046:7:38",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Request_$28323_storage_ptr",
+                      "typeIdentifier": "t_struct$_Request_$31249_storage_ptr",
                       "typeString": "struct SkinnyOptimisticOracleInterface.Request"
                     }
                   },
                   "visibility": "internal"
                 }
               ],
-              "src": "10919:155:35"
+              "src": "10919:155:38"
             },
             "returnParameters": {
-              "id": 28466,
+              "id": 31392,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 28463,
+                  "id": 31389,
                   "mutability": "mutable",
                   "name": "payout",
-                  "nameLocation": "11109:6:35",
+                  "nameLocation": "11109:6:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28467,
-                  "src": "11101:14:35",
+                  "scope": 31393,
+                  "src": "11101:14:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -4045,10 +4056,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 28462,
+                    "id": 31388,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "11101:7:35",
+                    "src": "11101:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -4058,13 +4069,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28465,
+                  "id": 31391,
                   "mutability": "mutable",
                   "name": "resolvedPrice",
-                  "nameLocation": "11124:13:35",
+                  "nameLocation": "11124:13:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28467,
-                  "src": "11117:20:35",
+                  "scope": 31393,
+                  "src": "11117:20:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -4072,10 +4083,10 @@
                     "typeString": "int256"
                   },
                   "typeName": {
-                    "id": 28464,
+                    "id": 31390,
                     "name": "int256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "11117:6:35",
+                    "src": "11117:6:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_int256",
                       "typeString": "int256"
@@ -4084,21 +4095,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "11100:38:35"
+              "src": "11100:38:38"
             },
-            "scope": 28513,
+            "scope": 31439,
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "external"
           },
           {
-            "id": 28485,
+            "id": 31411,
             "nodeType": "FunctionDefinition",
-            "src": "11612:232:35",
+            "src": "11612:232:38",
             "documentation": {
-              "id": 28468,
+              "id": 31394,
               "nodeType": "StructuredDocumentation",
-              "src": "11145:462:35",
+              "src": "11145:462:38",
               "text": " @notice Computes the current state of a price request. See the State enum for more details.\n @param requester sender of the initial price request.\n @param identifier price identifier to identify the existing request.\n @param timestamp timestamp to identify the existing request.\n @param ancillaryData ancillary data of the price being requested.\n @param request price request parameters.\n @return the State."
             },
             "functionSelector": "51205554",
@@ -4106,20 +4117,20 @@
             "kind": "function",
             "modifiers": [],
             "name": "getState",
-            "nameLocation": "11621:8:35",
+            "nameLocation": "11621:8:38",
             "parameters": {
-              "id": 28480,
+              "id": 31406,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 28470,
+                  "id": 31396,
                   "mutability": "mutable",
                   "name": "requester",
-                  "nameLocation": "11647:9:35",
+                  "nameLocation": "11647:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28485,
-                  "src": "11639:17:35",
+                  "scope": 31411,
+                  "src": "11639:17:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -4127,10 +4138,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 28469,
+                    "id": 31395,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "11639:7:35",
+                    "src": "11639:7:38",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -4141,13 +4152,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28472,
+                  "id": 31398,
                   "mutability": "mutable",
                   "name": "identifier",
-                  "nameLocation": "11674:10:35",
+                  "nameLocation": "11674:10:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28485,
-                  "src": "11666:18:35",
+                  "scope": 31411,
+                  "src": "11666:18:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -4155,10 +4166,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 28471,
+                    "id": 31397,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "11666:7:35",
+                    "src": "11666:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -4168,13 +4179,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28474,
+                  "id": 31400,
                   "mutability": "mutable",
                   "name": "timestamp",
-                  "nameLocation": "11701:9:35",
+                  "nameLocation": "11701:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28485,
-                  "src": "11694:16:35",
+                  "scope": 31411,
+                  "src": "11694:16:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -4182,10 +4193,10 @@
                     "typeString": "uint32"
                   },
                   "typeName": {
-                    "id": 28473,
+                    "id": 31399,
                     "name": "uint32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "11694:6:35",
+                    "src": "11694:6:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint32",
                       "typeString": "uint32"
@@ -4195,13 +4206,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28476,
+                  "id": 31402,
                   "mutability": "mutable",
                   "name": "ancillaryData",
-                  "nameLocation": "11733:13:35",
+                  "nameLocation": "11733:13:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28485,
-                  "src": "11720:26:35",
+                  "scope": 31411,
+                  "src": "11720:26:38",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -4209,10 +4220,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 28475,
+                    "id": 31401,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "11720:5:35",
+                    "src": "11720:5:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -4222,95 +4233,95 @@
                 },
                 {
                   "constant": false,
-                  "id": 28479,
+                  "id": 31405,
                   "mutability": "mutable",
                   "name": "request",
-                  "nameLocation": "11771:7:35",
+                  "nameLocation": "11771:7:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28485,
-                  "src": "11756:22:35",
+                  "scope": 31411,
+                  "src": "11756:22:38",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Request_$28323_memory_ptr",
+                    "typeIdentifier": "t_struct$_Request_$31249_memory_ptr",
                     "typeString": "struct SkinnyOptimisticOracleInterface.Request"
                   },
                   "typeName": {
-                    "id": 28478,
+                    "id": 31404,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 28477,
+                      "id": 31403,
                       "name": "Request",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 28323,
-                      "src": "11756:7:35"
+                      "referencedDeclaration": 31249,
+                      "src": "11756:7:38"
                     },
-                    "referencedDeclaration": 28323,
-                    "src": "11756:7:35",
+                    "referencedDeclaration": 31249,
+                    "src": "11756:7:38",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Request_$28323_storage_ptr",
+                      "typeIdentifier": "t_struct$_Request_$31249_storage_ptr",
                       "typeString": "struct SkinnyOptimisticOracleInterface.Request"
                     }
                   },
                   "visibility": "internal"
                 }
               ],
-              "src": "11629:155:35"
+              "src": "11629:155:38"
             },
             "returnParameters": {
-              "id": 28484,
+              "id": 31410,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 28483,
+                  "id": 31409,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28485,
-                  "src": "11811:31:35",
+                  "scope": 31411,
+                  "src": "11811:31:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_State_$28030",
+                    "typeIdentifier": "t_enum$_State_$30935",
                     "typeString": "enum OptimisticOracleInterface.State"
                   },
                   "typeName": {
-                    "id": 28482,
+                    "id": 31408,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 28481,
+                      "id": 31407,
                       "name": "OptimisticOracleInterface.State",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 28030,
-                      "src": "11811:31:35"
+                      "referencedDeclaration": 30935,
+                      "src": "11811:31:38"
                     },
-                    "referencedDeclaration": 28030,
-                    "src": "11811:31:35",
+                    "referencedDeclaration": 30935,
+                    "src": "11811:31:38",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_State_$28030",
+                      "typeIdentifier": "t_enum$_State_$30935",
                       "typeString": "enum OptimisticOracleInterface.State"
                     }
                   },
                   "visibility": "internal"
                 }
               ],
-              "src": "11810:33:35"
+              "src": "11810:33:38"
             },
-            "scope": 28513,
+            "scope": 31439,
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "external"
           },
           {
-            "id": 28502,
+            "id": 31428,
             "nodeType": "FunctionDefinition",
-            "src": "12592:203:35",
+            "src": "12592:203:38",
             "documentation": {
-              "id": 28486,
+              "id": 31412,
               "nodeType": "StructuredDocumentation",
-              "src": "11850:737:35",
+              "src": "11850:737:38",
               "text": " @notice Checks if a given request has resolved, expired or been settled (i.e the optimistic oracle has a price).\n @param requester sender of the initial price request.\n @param identifier price identifier to identify the existing request.\n @param timestamp timestamp to identify the existing request.\n @param ancillaryData ancillary data of the price being requested.\n @param request price request parameters. The hash of these parameters must match with the request hash that is\n associated with the price request unique ID {requester, identifier, timestamp, ancillaryData}, or this method\n will revert.\n @return boolean indicating true if price exists and false if not."
             },
             "functionSelector": "a337e1ad",
@@ -4318,20 +4329,20 @@
             "kind": "function",
             "modifiers": [],
             "name": "hasPrice",
-            "nameLocation": "12601:8:35",
+            "nameLocation": "12601:8:38",
             "parameters": {
-              "id": 28498,
+              "id": 31424,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 28488,
+                  "id": 31414,
                   "mutability": "mutable",
                   "name": "requester",
-                  "nameLocation": "12627:9:35",
+                  "nameLocation": "12627:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28502,
-                  "src": "12619:17:35",
+                  "scope": 31428,
+                  "src": "12619:17:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -4339,10 +4350,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 28487,
+                    "id": 31413,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "12619:7:35",
+                    "src": "12619:7:38",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -4353,13 +4364,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28490,
+                  "id": 31416,
                   "mutability": "mutable",
                   "name": "identifier",
-                  "nameLocation": "12654:10:35",
+                  "nameLocation": "12654:10:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28502,
-                  "src": "12646:18:35",
+                  "scope": 31428,
+                  "src": "12646:18:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -4367,10 +4378,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 28489,
+                    "id": 31415,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "12646:7:35",
+                    "src": "12646:7:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -4380,13 +4391,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28492,
+                  "id": 31418,
                   "mutability": "mutable",
                   "name": "timestamp",
-                  "nameLocation": "12681:9:35",
+                  "nameLocation": "12681:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28502,
-                  "src": "12674:16:35",
+                  "scope": 31428,
+                  "src": "12674:16:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -4394,10 +4405,10 @@
                     "typeString": "uint32"
                   },
                   "typeName": {
-                    "id": 28491,
+                    "id": 31417,
                     "name": "uint32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "12674:6:35",
+                    "src": "12674:6:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint32",
                       "typeString": "uint32"
@@ -4407,13 +4418,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28494,
+                  "id": 31420,
                   "mutability": "mutable",
                   "name": "ancillaryData",
-                  "nameLocation": "12713:13:35",
+                  "nameLocation": "12713:13:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28502,
-                  "src": "12700:26:35",
+                  "scope": 31428,
+                  "src": "12700:26:38",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -4421,10 +4432,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 28493,
+                    "id": 31419,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "12700:5:35",
+                    "src": "12700:5:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -4434,54 +4445,54 @@
                 },
                 {
                   "constant": false,
-                  "id": 28497,
+                  "id": 31423,
                   "mutability": "mutable",
                   "name": "request",
-                  "nameLocation": "12751:7:35",
+                  "nameLocation": "12751:7:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28502,
-                  "src": "12736:22:35",
+                  "scope": 31428,
+                  "src": "12736:22:38",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Request_$28323_memory_ptr",
+                    "typeIdentifier": "t_struct$_Request_$31249_memory_ptr",
                     "typeString": "struct SkinnyOptimisticOracleInterface.Request"
                   },
                   "typeName": {
-                    "id": 28496,
+                    "id": 31422,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 28495,
+                      "id": 31421,
                       "name": "Request",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 28323,
-                      "src": "12736:7:35"
+                      "referencedDeclaration": 31249,
+                      "src": "12736:7:38"
                     },
-                    "referencedDeclaration": 28323,
-                    "src": "12736:7:35",
+                    "referencedDeclaration": 31249,
+                    "src": "12736:7:38",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Request_$28323_storage_ptr",
+                      "typeIdentifier": "t_struct$_Request_$31249_storage_ptr",
                       "typeString": "struct SkinnyOptimisticOracleInterface.Request"
                     }
                   },
                   "visibility": "internal"
                 }
               ],
-              "src": "12609:155:35"
+              "src": "12609:155:38"
             },
             "returnParameters": {
-              "id": 28501,
+              "id": 31427,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 28500,
+                  "id": 31426,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28502,
-                  "src": "12789:4:35",
+                  "scope": 31428,
+                  "src": "12789:4:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -4489,10 +4500,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 28499,
+                    "id": 31425,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "12789:4:35",
+                    "src": "12789:4:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -4501,21 +4512,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "12788:6:35"
+              "src": "12788:6:38"
             },
-            "scope": 28513,
+            "scope": 31439,
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "public"
           },
           {
-            "id": 28512,
+            "id": 31438,
             "nodeType": "FunctionDefinition",
-            "src": "13111:150:35",
+            "src": "13111:150:38",
             "documentation": {
-              "id": 28503,
+              "id": 31429,
               "nodeType": "StructuredDocumentation",
-              "src": "12801:305:35",
+              "src": "12801:305:38",
               "text": " @notice Generates stamped ancillary data in the format that it would be used in the case of a price dispute.\n @param ancillaryData ancillary data of the price being requested.\n @param requester sender of the initial price request.\n @return the stamped ancillary bytes."
             },
             "functionSelector": "af5d2f39",
@@ -4523,20 +4534,20 @@
             "kind": "function",
             "modifiers": [],
             "name": "stampAncillaryData",
-            "nameLocation": "13120:18:35",
+            "nameLocation": "13120:18:38",
             "parameters": {
-              "id": 28508,
+              "id": 31434,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 28505,
+                  "id": 31431,
                   "mutability": "mutable",
                   "name": "ancillaryData",
-                  "nameLocation": "13152:13:35",
+                  "nameLocation": "13152:13:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28512,
-                  "src": "13139:26:35",
+                  "scope": 31438,
+                  "src": "13139:26:38",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -4544,10 +4555,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 28504,
+                    "id": 31430,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "13139:5:35",
+                    "src": "13139:5:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -4557,13 +4568,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 28507,
+                  "id": 31433,
                   "mutability": "mutable",
                   "name": "requester",
-                  "nameLocation": "13175:9:35",
+                  "nameLocation": "13175:9:38",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28512,
-                  "src": "13167:17:35",
+                  "scope": 31438,
+                  "src": "13167:17:38",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -4571,10 +4582,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 28506,
+                    "id": 31432,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "13167:7:35",
+                    "src": "13167:7:38",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -4584,21 +4595,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "13138:47:35"
+              "src": "13138:47:38"
             },
             "returnParameters": {
-              "id": 28511,
+              "id": 31437,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 28510,
+                  "id": 31436,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 28512,
-                  "src": "13247:12:35",
+                  "scope": 31438,
+                  "src": "13247:12:38",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -4606,10 +4617,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 28509,
+                    "id": 31435,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "13247:5:35",
+                    "src": "13247:5:38",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -4618,9 +4629,9 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "13246:14:35"
+              "src": "13246:14:38"
             },
-            "scope": 28513,
+            "scope": 31439,
             "stateMutability": "pure",
             "virtual": true,
             "visibility": "public"
@@ -4632,22 +4643,22 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "documentation": {
-          "id": 28299,
+          "id": 31225,
           "nodeType": "StructuredDocumentation",
-          "src": "179:1208:35",
+          "src": "179:1208:38",
           "text": " @title Interface for the gas-cost-reduced version of the OptimisticOracle.\n @notice Differences from normal OptimisticOracle:\n - refundOnDispute: flag is removed, by default there are no refunds on disputes.\n - customizing request parameters: In the OptimisticOracle, parameters like `bond` and `customLiveness` can be reset\n   after a request is already made via `requestPrice`. In the SkinnyOptimisticOracle, these parameters can only be\n   set in `requestPrice`, which has an expanded input set.\n - settleAndGetPrice: Replaced by `settle`, which can only be called once per settleable request. The resolved price\n   can be fetched via the `Settle` event or the return value of `settle`.\n - general changes to interface: Functions that interact with existing requests all require the parameters of the\n   request to modify to be passed as input. These parameters must match with the existing request parameters or the\n   function will revert. This change reflects the internal refactor to store hashed request parameters instead of the\n   full request struct.\n @dev Interface used by financial contracts to interact with the Oracle. Voters will use a different interface."
         },
         "fullyImplemented": false,
         "linearizedBaseContracts": [
-          28513
+          31439
         ],
         "name": "SkinnyOptimisticOracleInterface",
-        "nameLocation": "1406:31:35",
-        "scope": 28514,
+        "nameLocation": "1406:31:38",
+        "scope": 31440,
         "usedErrors": []
       }
     ],
     "license": "AGPL-3.0-only"
   },
-  "id": 35
+  "id": 38
 }

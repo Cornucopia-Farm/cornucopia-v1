@@ -4,7 +4,7 @@ pragma solidity 0.8.13;
 import "forge-std/Test.sol";
 import "../Escrow.sol";
 import "../../lib/protocol/packages/core/contracts/oracle/test/MockOracleAncillary.sol";
-import "../../lib/protocol/packages/core/contracts/oracle/implementation/SkinnyOptimisticOracle.sol";
+import "../../lib/protocol/packages/core/contracts/oracle/implementation/previous-versions/SkinnyOptimisticOracle.sol";
 import "../../lib/protocol/packages/core/contracts/oracle/interfaces/SkinnyOptimisticOracleInterface.sol";
 import "../../lib/protocol/packages/core/contracts/oracle/implementation/store.sol";
 import "../../lib/protocol/packages/core/contracts/oracle/implementation/Finder.sol";
@@ -16,6 +16,7 @@ import "../../lib/protocol/packages/core/contracts/common/implementation/Expande
 
 contract EscrowTest is Test {
     Escrow public escrowContract;
+    ExpandedERC20 public token;
     SkinnyOptimisticOracle public optimisticOracle;
     Finder public finderContract;
     Timer public timerContract;
@@ -41,6 +42,8 @@ contract EscrowTest is Test {
 
     function setUp() public {
         escrowContract = new Escrow();
+        token = new ExpandedERC20("Test Token", "TEST", 18);
+        token.addMinter(address(this)); // Allow testContract to mint tokens;
     }
 
     function setUpUMA(address creator, address hunter) public {
@@ -75,8 +78,8 @@ contract EscrowTest is Test {
         storeContract.setFinalFee(address(weth), FixedPoint.Unsigned({rawValue: finalFee}));
     }
 
-    // Test Escrow Function
-    function testEscrow() public {
+    // Test Escrow Function W/ ETH
+    function testEscrowETH() public {
         string memory bountyAppId = "AppId";
         address creator = address(0xABCD);
         address hunter = address(0xBEEF);
@@ -89,8 +92,31 @@ contract EscrowTest is Test {
         vm.expectEmit(true, true, true, true); // Want to check the first 3 indexed event params, and the last non-indexed param
         emit Escrowed(creator, hunter, bountyAppId, "Escrowed!"); // This is the event we expect to be emitted
 
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration);
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0);
         assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 1 ether); // Check that bountyAmounts for this bountyId, creator, hunter combo is set to msg.value
+        assertEq(escrowContract.expiration(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 1000000 + expiration); // Check that expirtation for this bountyId, creator, hunter combo is set to current block timestamp + expiraton data
+        
+        vm.stopPrank(); // Sets msg.sender back to address(this)
+    }
+
+    // Test Escrow Function W/ ERC20
+    function testEscrowERC20() public {
+        string memory bountyAppId = "AppId";
+        address creator = address(0xABCD);
+        address hunter = address(0xBEEF);
+        uint expiration = 1 weeks;
+        
+        token.mint(creator, 100 * 10^18); // Mint 100 Test Token
+        vm.startPrank(creator); // Sets msg.sender = creator till stopPrank called
+        vm.warp(1000000); // Sets block.timestamp = 1000000
+
+        vm.expectEmit(true, true, true, true); // Want to check the first 3 indexed event params, and the last non-indexed param
+        emit Escrowed(creator, hunter, bountyAppId, "Escrowed!"); // This is the event we expect to be emitted
+
+        token.approve(address(escrowContract), 1 * 10^18);
+
+        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10^18);
+        assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 1 * 10^18); // Check that bountyAmounts for this bountyId, creator, hunter combo is set to msg.value
         assertEq(escrowContract.expiration(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 1000000 + expiration); // Check that expirtation for this bountyId, creator, hunter combo is set to current block timestamp + expiraton data
         
         vm.stopPrank(); // Sets msg.sender back to address(this)
@@ -106,11 +132,11 @@ contract EscrowTest is Test {
         vm.startPrank(creator); // Sets msg.sender = creator till stopPrank called
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration); // Escrow Funds
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0); // Escrow Funds
 
         // Test require statement that unique bounty, creator, hunter
         vm.expectRevert(bytes("Funds already escrowed")); // Expect this revert error; note: case sensitive
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration); // Call escrow again with same bountyid, creator, hunter
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0); // Call escrow again with same bountyid, creator, hunter
         vm.stopPrank();
     }
 
@@ -124,7 +150,7 @@ contract EscrowTest is Test {
         uint expiration = 1 weeks;
         vm.deal(creator, 2 ether); // Give creator some eth
         vm.prank(creator); // Sets msg.sender = creator for next function call
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration);
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0);
 
         vm.startPrank(hunter); // Sets msg.sender = hunter till stopPrank called
         vm.warp(1000000); // Sets block.timestamp = 1000000
@@ -159,7 +185,7 @@ contract EscrowTest is Test {
         uint expiration = 1 weeks;
         vm.deal(creator, 2 ether); // Give creator some eth
         vm.prank(creator); // Sets msg.sender = creator for next function call
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration);
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0);
 
         vm.startPrank(hunter); // Sets msg.sender = hunter till stopPrank called
         vm.warp(1000000); // Sets block.timestamp = 1000000
@@ -172,7 +198,7 @@ contract EscrowTest is Test {
         vm.stopPrank();
     }
 
-    function testPayout() public {
+    function testPayoutETH() public {
         string memory bountyAppId = "AppId";
         address creator = address(0xABCD);
         address hunter = address(0xBEEF);
@@ -182,7 +208,7 @@ contract EscrowTest is Test {
         vm.prank(creator); // Sets msg.sender = creator till stopPrank called
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration); // Escrow funds
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0); // Escrow funds
 
         vm.prank(hunter); // Sets msg.sender = hunter till stopPrank called
         vm.warp(1000010); // Sets block.timestamp = 1000010
@@ -198,7 +224,7 @@ contract EscrowTest is Test {
         vm.expectEmit(true, true, true, true); // Want to check the first 3 indexed event params, and the last non-indexed param
         emit FundsSent(creator, hunter, bountyAppId, "Funds sent to hunter!"); // This is the event we expect to be emitted
 
-        escrowContract.payout(bountyAppId, hunter);
+        escrowContract.payout(bountyAppId, hunter, address(0));
         assertEq(escrowContractBalanceBefore - address(escrowContract).balance, hunter.balance - hunterBalanceBefore); // Check that same amount paid out to hunter was deducted from the contract
         assertEq(hunter.balance - hunterBalanceBefore, valueToBePaidToHunter); // Check that the value paid out to the hunter was the expected amount 
         assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that the bountyAmount corresponding to this bountyAppId, creator, hunter is set to 0
@@ -206,7 +232,44 @@ contract EscrowTest is Test {
         vm.stopPrank();
     }
 
-    function testHunterNoSubmitWorkPayout() public {
+    function testPayoutERC20() public {
+        string memory bountyAppId = "AppId";
+        address creator = address(0xABCD);
+        address hunter = address(0xBEEF);
+        uint expiration = 1 weeks;
+
+        token.mint(creator, 100 * 10^18); // Mint 100 Test Token
+        vm.startPrank(creator); // Sets msg.sender = creator till stopPrank called
+        vm.warp(1000000); // Sets block.timestamp = 1000000
+
+        token.approve(address(escrowContract), 1 * 10^18);
+        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10^18); // Escrow funds
+        vm.stopPrank();
+
+        vm.prank(hunter); // Sets msg.sender = hunter till stopPrank called
+        vm.warp(1000010); // Sets block.timestamp = 1000010
+
+        escrowContract.submit(bountyAppId, creator); // Hunter submits work
+
+        vm.startPrank(creator);
+        // Testing Case 1: Bounty creator doesn't dispute and pays out normal amount
+        uint escrowContractBalanceBefore = token.balanceOf(address(escrowContract));
+        uint hunterBalanceBefore = token.balanceOf(hunter);
+        uint valueToBePaidToHunter = escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter)));
+        
+        vm.expectEmit(true, true, true, true); // Want to check the first 3 indexed event params, and the last non-indexed param
+        emit FundsSent(creator, hunter, bountyAppId, "Funds sent to hunter!"); // This is the event we expect to be emitted
+
+        escrowContract.payout(bountyAppId, hunter, address(token));
+    
+        assertEq(escrowContractBalanceBefore - token.balanceOf(address(escrowContract)), token.balanceOf(hunter) - hunterBalanceBefore); // Check that same amount paid out to hunter was deducted from the contract
+        assertEq(token.balanceOf(hunter) - hunterBalanceBefore, valueToBePaidToHunter); // Check that the value paid out to the hunter was the expected amount 
+        assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that the bountyAmount corresponding to this bountyAppId, creator, hunter is set to 0
+        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Resolved)); // Check that Status enum set to Resolved 
+        vm.stopPrank();
+    }
+
+    function testHunterNoSubmitWorkPayoutETH() public {
         string memory bountyAppId = "AppId";
         address creator = address(0xABCD);
         address hunter = address(0xBEEF);
@@ -216,7 +279,7 @@ contract EscrowTest is Test {
         vm.startPrank(creator); // Sets msg.sender = creator till stopPrank called
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration); // Escrow funds
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0); // Escrow funds
 
         // Testing Case 5: Bounty Hunter doesn't submit work within specified time
         vm.warp(1000000 + expiration + 1); // Sets block.timestamp to be > expiration time set by creator + timestamp when they escrowed their funds.
@@ -231,10 +294,45 @@ contract EscrowTest is Test {
 
         assertEq(uint(progress), uint(Escrow.Status.NoBounty)); // Check that Status enum set to NoBounty as hunter hasn't submitted work yet
 
-        escrowContract.payout(bountyAppId, hunter);
+        escrowContract.payout(bountyAppId, hunter, address(0));
 
         assertEq(escrowContractBalanceBefore - address(escrowContract).balance, creator.balance -  creatorBalanceBefore); // Check that same amount paid out to creator was deducted from the contract
         assertEq(creator.balance - creatorBalanceBefore, valueToBePaidToCreator); // Check that the value paid out to the hunter was the expected amount 
+        assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that the bountyAmount corresponding to this bountyAppId, creator, hunter is set to 0
+        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Resolved)); // Check that Status enum set to Resolved
+        vm.stopPrank();
+    }
+
+    function testHunterNoSubmitWorkPayoutERC20() public {
+        string memory bountyAppId = "AppId";
+        address creator = address(0xABCD);
+        address hunter = address(0xBEEF);
+        uint expiration = 1 weeks;
+
+        token.mint(creator, 100 * 10^18); // Mint 100 Test Token
+        vm.startPrank(creator); // Sets msg.sender = creator till stopPrank called
+        vm.warp(1000000); // Sets block.timestamp = 1000000
+
+        token.approve(address(escrowContract), 1 * 10^18);
+        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10^18); // Escrow funds
+        
+        // Testing Case 5: Bounty Hunter doesn't submit work within specified time
+        vm.warp(1000000 + expiration + 1); // Sets block.timestamp to be > expiration time set by creator + timestamp when they escrowed their funds.
+        
+        uint escrowContractBalanceBefore = token.balanceOf(address(escrowContract));
+        uint creatorBalanceBefore = token.balanceOf(creator);
+        uint valueToBePaidToCreator = escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter)));
+        uint progress = uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter))));
+        
+        vm.expectEmit(true, true, true, true); // Want to check the first 3 indexed event params, and the last non-indexed param
+        emit FundsWithdrawnToCreator(creator, hunter, bountyAppId, "Funds withdrawn to creator!"); // This is the event we expect to be emitted
+
+        assertEq(uint(progress), uint(Escrow.Status.NoBounty)); // Check that Status enum set to NoBounty as hunter hasn't submitted work yet
+
+        escrowContract.payout(bountyAppId, hunter, address(token));
+
+        assertEq(escrowContractBalanceBefore - token.balanceOf(address(escrowContract)), token.balanceOf(creator) -  creatorBalanceBefore); // Check that same amount paid out to creator was deducted from the contract
+        assertEq(token.balanceOf(creator) - creatorBalanceBefore, valueToBePaidToCreator); // Check that the value paid out to the hunter was the expected amount 
         assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that the bountyAmount corresponding to this bountyAppId, creator, hunter is set to 0
         assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Resolved)); // Check that Status enum set to Resolved
         vm.stopPrank();
@@ -256,7 +354,7 @@ contract EscrowTest is Test {
         vm.prank(creator); // Sets msg.sender = creator for next function call
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration);
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0);
 
         vm.prank(hunter);
         vm.warp(1000001); // Sets block.timestamp = 1000001
@@ -307,7 +405,7 @@ contract EscrowTest is Test {
         vm.deal(creator, 2 ether); // Give creator some eth
         vm.startPrank(creator); // Sets msg.sender = creator for next function call
         vm.warp(1000000); // Sets block.timestamp = 1000000
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration);
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0);
 
         // Test require statement that hunter must have submitted their work before creator can initiate dispute for this bountyid, creator, hunter combo
         vm.expectRevert(bytes("Work not Submitted")); // Expect this revert error
@@ -330,7 +428,7 @@ contract EscrowTest is Test {
         vm.prank(creator); // Sets msg.sender = creator for next function call
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration);
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0);
 
         vm.prank(hunter);
         vm.warp(1000001); // Sets block.timestamp = 1000001
@@ -406,7 +504,7 @@ contract EscrowTest is Test {
         vm.prank(creator); // Sets msg.sender = creator for next function call
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration);
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0);
 
         vm.prank(hunter);
         vm.warp(1000001); // Sets block.timestamp = 1000001
@@ -437,7 +535,7 @@ contract EscrowTest is Test {
         );  
     }
 
-    function testForceHunterDispute() public {
+    function testForceHunterDisputeETH() public {
         string memory bountyAppId = "AppId";
         address creator = address(0xABCD);
         address hunter = address(0xBEEF);
@@ -447,7 +545,7 @@ contract EscrowTest is Test {
         vm.prank(creator); // Sets msg.sender = creator till stopPrank called
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration); // Escrow funds
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0); // Escrow funds
 
         vm.startPrank(hunter);
         vm.warp(1000001); // Sets block.timestamp = 1000001
@@ -463,10 +561,48 @@ contract EscrowTest is Test {
         uint hunterBalanceBefore = hunter.balance;
         uint valueToBePaidToHunter = escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter)));
 
-        escrowContract.forceHunterPayout(bountyAppId, creator); // Force payout
+        escrowContract.forceHunterPayout(bountyAppId, creator, address(0)); // Force payout
 
         assertEq(escrowContractBalanceBefore - address(escrowContract).balance, hunter.balance -  hunterBalanceBefore); // Check that same amount paid out to hunter was deducted from the contract
         assertEq(hunter.balance - hunterBalanceBefore, valueToBePaidToHunter); // Check that the value paid out to the hunter was the expected amount 
+        assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that the bountyAmount corresponding to this bountyAppId, creator, hunter is set to 0
+        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Resolved)); // Check that Status enum set to Resolved
+        vm.stopPrank();
+    }
+
+    function testForceHunterDisputeERC20() public {
+        string memory bountyAppId = "AppId";
+        address creator = address(0xABCD);
+        address hunter = address(0xBEEF);
+        uint expiration = 1 weeks;
+
+        token.mint(creator, 100 * 10^18); // Mint 100 Test Token
+        vm.startPrank(creator); // Sets msg.sender = creator till stopPrank called
+        vm.warp(1000000); // Sets block.timestamp = 1000000
+        
+
+        token.approve(address(escrowContract), 1 * 10^18);
+        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10^18); // Escrow funds
+        vm.stopPrank();
+
+        vm.startPrank(hunter);
+        vm.warp(1000001); // Sets block.timestamp = 1000001
+
+        escrowContract.submit(bountyAppId, creator); // Submit work
+
+        vm.warp(1000001 + 2 weeks + 1); // set timestamp to be > 2 weeks since hunter submitted work
+
+        vm.expectEmit(true, true, true, true); // Want to check the first 3 indexed event params, and the last non-indexed param
+        emit FundsForceSentToHunter(creator, hunter, bountyAppId, "Funds force sent to hunter!"); // This is the event we expect to be emitted
+
+        uint escrowContractBalanceBefore = token.balanceOf(address(escrowContract));
+        uint hunterBalanceBefore = token.balanceOf(hunter);
+        uint valueToBePaidToHunter = escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter)));
+
+        escrowContract.forceHunterPayout(bountyAppId, creator, address(token)); // Force payout
+
+        assertEq(escrowContractBalanceBefore - token.balanceOf(address(escrowContract)), token.balanceOf(hunter) - hunterBalanceBefore); // Check that same amount paid out to hunter was deducted from the contract
+        assertEq(token.balanceOf(hunter) - hunterBalanceBefore, valueToBePaidToHunter); // Check that the value paid out to the hunter was the expected amount 
         assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that the bountyAmount corresponding to this bountyAppId, creator, hunter is set to 0
         assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Resolved)); // Check that Status enum set to Resolved
         vm.stopPrank();
@@ -482,11 +618,11 @@ contract EscrowTest is Test {
         vm.prank(creator); // Sets msg.sender = creator till stopPrank called
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration); // Escrow funds
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0); // Escrow funds
 
         vm.prank(hunter);
         vm.expectRevert(bytes("Work not Submitted")); // Expect this revert error
-        escrowContract.forceHunterPayout(bountyAppId, creator);   
+        escrowContract.forceHunterPayout(bountyAppId, creator, address(0));   
     }
 
     function testCreatorResponseWindowOpenForceHunterDispute() public {
@@ -499,7 +635,7 @@ contract EscrowTest is Test {
         vm.prank(creator); // Sets msg.sender = creator till stopPrank called
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration); // Escrow funds
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0); // Escrow funds
 
         vm.startPrank(hunter);
         vm.warp(1000001); // Sets block.timestamp = 1000001
@@ -507,11 +643,11 @@ contract EscrowTest is Test {
         escrowContract.submit(bountyAppId, creator); // Submit work
 
         vm.expectRevert(bytes("Creator can still pay or dispute")); // Expect this revert error
-        escrowContract.forceHunterPayout(bountyAppId, creator); 
+        escrowContract.forceHunterPayout(bountyAppId, creator, address(0)); 
         vm.stopPrank();
     }
 
-    function testCreatorWinsPayoutIfDispute() public {
+    function testCreatorWinsPayoutIfDisputeETH() public {
         string memory bountyAppId = "AppId";
         address creator = address(0xABCD);
         address hunter = address(0xBEEF);
@@ -526,7 +662,7 @@ contract EscrowTest is Test {
         vm.prank(creator); // Sets msg.sender = creator for next function call
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration);
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0);
 
         vm.prank(hunter);
         vm.warp(1000001); // Sets block.timestamp = 1000001
@@ -603,7 +739,8 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request2
+            request2,
+            address(0)
         );
 
         assertEq(2 ether, creator.balance); // Check that creator paid back the 1 eth they escrowed before
@@ -613,7 +750,7 @@ contract EscrowTest is Test {
         vm.stopPrank();
     }
 
-    function testHunterWinsPayoutIfDispute() public {
+    function testHunterWinsPayoutIfDisputeETH() public {
         string memory bountyAppId = "AppId";
         address creator = address(0xABCD);
         address hunter = address(0xBEEF);
@@ -628,7 +765,7 @@ contract EscrowTest is Test {
         vm.prank(creator); // Sets msg.sender = creator for next function call
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration);
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0);
 
         vm.prank(hunter);
         vm.warp(1000001); // Sets block.timestamp = 1000001
@@ -705,7 +842,8 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request2
+            request2,
+            address(0)
         );
 
         assertEq(1 ether, hunter.balance); // Check that hunter was paid the 1 eth escrowed
@@ -715,7 +853,7 @@ contract EscrowTest is Test {
         vm.stopPrank();
     }
 
-    function testTiePayoutIfDispute() public {
+    function testTiePayoutIfDisputeETH() public {
         string memory bountyAppId = "AppId";
         address creator = address(0xABCD);
         address hunter = address(0xBEEF);
@@ -730,7 +868,7 @@ contract EscrowTest is Test {
         vm.prank(creator); // Sets msg.sender = creator for next function call
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration);
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0);
 
         vm.prank(hunter);
         vm.warp(1000001); // Sets block.timestamp = 1000001
@@ -807,7 +945,8 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request2
+            request2,
+            address(0)
         );
 
         // Note: even if it's a tie, hunter is still considered the winner so they get the WETH as if the dispute was voted in their favor (price of 1)
@@ -819,7 +958,7 @@ contract EscrowTest is Test {
         vm.stopPrank();
     }
 
-    function testHunterNoDisputeExpiredPayoutIfDispute() public {
+    function testHunterNoDisputeExpiredPayoutIfDisputeETH() public {
         string memory bountyAppId = "AppId";
         address creator = address(0xABCD);
         address hunter = address(0xBEEF);
@@ -834,7 +973,7 @@ contract EscrowTest is Test {
         vm.prank(creator); // Sets msg.sender = creator for next function call
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration);
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0);
 
         vm.prank(hunter);
         vm.warp(1000001); // Sets block.timestamp = 1000001
@@ -881,10 +1020,403 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request
+            request,
+            address(0)
         );
 
         assertEq(2 ether, creator.balance); // Check that creator paid back the 1 eth they escrowed before
+        assertEq(bondAmt + finalFee, weth.balanceOf(creator) - creatorWETHBalanceBefore); // Check that the amount of WETH given to dispute default winner (creator) is bondAmt + finalFee 
+        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Resolved)); // Check that Status enum set to Resolved
+        assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that escrowed funds for the contract is now 0
+        vm.stopPrank();
+    }
+
+    function testCreatorWinsPayoutIfDisputeERC20() public {
+        string memory bountyAppId = "AppId";
+        address creator = address(0xABCD);
+        address hunter = address(0xBEEF);
+        uint expiration = 1 weeks;
+
+        // Input variables to initiateDispute function
+        uint bondAmt = 10 * 10^18; // 10 WETH bondAmt
+        string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
+
+        // Escrow funds first
+        token.mint(creator, 100 * 10^18); // Mint 100 Test Token
+        vm.startPrank(creator); // Sets msg.sender = creator for next function call
+        vm.warp(1000000); // Sets block.timestamp = 1000000
+
+        token.approve(address(escrowContract), 1 * 10^18);
+        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10^18);
+        vm.stopPrank();
+
+        vm.prank(hunter);
+        vm.warp(1000001); // Sets block.timestamp = 1000001
+
+        escrowContract.submit(bountyAppId, creator); // Submit work
+
+        // Test calling UMA requestAndProposePriceFor
+        setUpUMA(creator, hunter);
+
+        vm.startPrank(creator);
+        weth.approve(address(escrowContract), bondAmt + finalFee); // Approve escrowContract contract to spend on creator's behalf; should use icnreaseAllowance maybe?
+        // issue with allowances as msg.sender is not creator but the Escrow Contract
+        // we have to transfer the creator's assets into the escrow coontract before transferring into UMA
+        // escrow contract needs to call approve then
+        escrowContract.initiateDispute(
+            bountyAppId, 
+            hunter, 
+            address(optimisticOracle),
+            bondAmt, 
+            ancillaryData,
+            weth
+        ); // Initiate Dispute
+        vm.stopPrank();
+
+        vm.startPrank(hunter);
+        weth.approve(address(escrowContract), bondAmt + finalFee); // Approve escrowContract contract to spend on hunter's behalf; should use icnreaseAllowance maybe?
+
+        SkinnyOptimisticOracleInterface.Request memory request;
+        request.currency = weth;
+        request.reward = 0;
+        request.finalFee = 35 * 10^16;
+        request.bond = bondAmt;
+        request.customLiveness = 1 weeks;
+        request.proposer = creator;
+        request.proposedPrice = 0;
+        request.expirationTime = 1000001 + 1 weeks;
+
+        escrowContract.hunterDisputeResponse(
+            bountyAppId, 
+            creator, 
+            1000001, 
+            bytes(ancillaryData), 
+            request 
+        ); // Hunter responds to dispute
+        vm.stopPrank();
+
+        vm.startPrank(creator);
+
+        mockDVM.pushPrice(
+            bytes32("UMIP-107"), 
+            1000001, 
+            optimisticOracle.stampAncillaryData(bytes(ancillaryData), address(escrowContract)),
+            0
+        ); // Push price of 0 so creator wins
+        
+        vm.expectEmit(true, true, true, true); // Want to check the first 3 indexed event params, and the last non-indexed param
+        emit FundsSent(creator, hunter, bountyAppId, "Funds sent back to creator!"); // This is the event we expect to be emitted
+
+        uint creatorWETHBalanceBefore = weth.balanceOf(creator);
+
+        SkinnyOptimisticOracleInterface.Request memory request2;
+        request2.currency = weth;
+        request2.reward = 0;
+        request2.finalFee = 35 * 10^16;
+        request2.bond = bondAmt;
+        request2.customLiveness = 1 weeks;
+        request2.proposer = creator;
+        request2.proposedPrice = 0;
+        request2.expirationTime = 1000001 + 1 weeks;
+        request2.disputer = hunter; // Setting this field
+
+        escrowContract.payoutIfDispute(
+            bountyAppId, 
+            hunter,
+            1000001, 
+            bytes(ancillaryData), 
+            request2,
+            address(token)
+        );
+
+        assertEq(100 * 10^18, token.balanceOf(creator)); // Check that creator paid back the 1 Test Token they escrowed before
+        assertEq(bondAmt + finalFee + bondAmt / 2, weth.balanceOf(creator) - creatorWETHBalanceBefore); // Check that the amount of WETH given to dispute winner (creator) is bondAmt + finalFee + bondAmt/2 (last part is unburned part of loser's bond)
+        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Resolved)); // Check that Status enum set to Resolved
+        assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that escrowed funds for the contract is now 0
+        vm.stopPrank();
+    }
+
+    function testHunterWinsPayoutIfDisputeERC20() public {
+        string memory bountyAppId = "AppId";
+        address creator = address(0xABCD);
+        address hunter = address(0xBEEF);
+        uint expiration = 1 weeks;
+
+        // Input variables to initiateDispute function
+        uint bondAmt = 10 * 10^18; // 10 WETH bondAmt
+        string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
+
+        // Escrow funds first
+        token.mint(creator, 100 * 10^18); // Mint 100 Test Token
+        vm.startPrank(creator); // Sets msg.sender = creator for next function call
+        vm.warp(1000000); // Sets block.timestamp = 1000000
+
+        token.approve(address(escrowContract), 1 * 10^18);
+        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10^18);
+        vm.stopPrank();
+
+        vm.prank(hunter);
+        vm.warp(1000001); // Sets block.timestamp = 1000001
+
+        escrowContract.submit(bountyAppId, creator); // Submit work
+
+        // Test calling UMA requestAndProposePriceFor
+        setUpUMA(creator, hunter);
+
+        vm.startPrank(creator);
+        weth.approve(address(escrowContract), bondAmt + finalFee); // Approve escrowContract contract to spend on creator's behalf; should use icnreaseAllowance maybe?
+        // issue with allowances as msg.sender is not creator but the Escrow Contract
+        // we have to transfer the creator's assets into the escrow coontract before transferring into UMA
+        // escrow contract needs to call approve then
+        escrowContract.initiateDispute(
+            bountyAppId, 
+            hunter, 
+            address(optimisticOracle),
+            bondAmt, 
+            ancillaryData,
+            weth
+        ); // Initiate Dispute
+        vm.stopPrank();
+
+        vm.startPrank(hunter);
+        weth.approve(address(escrowContract), bondAmt + finalFee); // Approve escrowContract contract to spend on hunter's behalf; should use icnreaseAllowance maybe?
+
+        SkinnyOptimisticOracleInterface.Request memory request;
+        request.currency = weth;
+        request.reward = 0;
+        request.finalFee = 35 * 10^16;
+        request.bond = bondAmt;
+        request.customLiveness = 1 weeks;
+        request.proposer = creator;
+        request.proposedPrice = 0;
+        request.expirationTime = 1000001 + 1 weeks;
+
+        escrowContract.hunterDisputeResponse(
+            bountyAppId, 
+            creator, 
+            1000001, 
+            bytes(ancillaryData), 
+            request 
+        ); // Hunter responds to dispute
+        vm.stopPrank();
+
+        vm.startPrank(creator);
+
+        mockDVM.pushPrice(
+            bytes32("UMIP-107"), 
+            1000001, 
+            optimisticOracle.stampAncillaryData(bytes(ancillaryData), address(escrowContract)),
+            1
+        ); // Push price of 1 so hunter wins
+        
+        vm.expectEmit(true, true, true, true); // Want to check the first 3 indexed event params, and the last non-indexed param
+        emit FundsSent(creator, hunter, bountyAppId, "Funds sent to hunter!"); // This is the event we expect to be emitted
+
+        uint hunterWETHBalanceBefore = weth.balanceOf(hunter);
+
+        SkinnyOptimisticOracleInterface.Request memory request2;
+        request2.currency = weth;
+        request2.reward = 0;
+        request2.finalFee = 35 * 10^16;
+        request2.bond = bondAmt;
+        request2.customLiveness = 1 weeks;
+        request2.proposer = creator;
+        request2.proposedPrice = 0;
+        request2.expirationTime = 1000001 + 1 weeks;
+        request2.disputer = hunter; // Setting this field
+
+        escrowContract.payoutIfDispute(
+            bountyAppId, 
+            hunter,
+            1000001, 
+            bytes(ancillaryData), 
+            request2,
+            address(token)
+        );
+
+        assertEq(1 * 10^18, token.balanceOf(hunter)); // Check that hunter was paid the 1 Test Token escrowed
+        assertEq(bondAmt + finalFee + bondAmt / 2, weth.balanceOf(hunter) - hunterWETHBalanceBefore); // Check that the amount of WETH given to dispute winner (hunter) is bondAmt + finalFee + bondAmt/2 (last part is unburned part of loser's bond)
+        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Resolved)); // Check that Status enum set to Resolved
+        assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that escrowed funds for the contract is now 0
+        vm.stopPrank();
+    }
+
+    function testTiePayoutIfDisputeERC20() public {
+        string memory bountyAppId = "AppId";
+        address creator = address(0xABCD);
+        address hunter = address(0xBEEF);
+        uint expiration = 1 weeks;
+
+        // Input variables to initiateDispute function
+        uint bondAmt = 10 * 10^18; // 10 WETH bondAmt
+        string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
+
+        // Escrow funds first
+        token.mint(creator, 100 * 10^18); // Mint 100 Test Token
+        vm.startPrank(creator); // Sets msg.sender = creator for next function call
+        vm.warp(1000000); // Sets block.timestamp = 1000000
+
+        token.approve(address(escrowContract), 1 * 10^18);
+        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10^18);
+        vm.stopPrank();
+
+        vm.prank(hunter);
+        vm.warp(1000001); // Sets block.timestamp = 1000001
+
+        escrowContract.submit(bountyAppId, creator); // Submit work
+
+        // Test calling UMA requestAndProposePriceFor
+        setUpUMA(creator, hunter);
+
+        vm.startPrank(creator);
+        weth.approve(address(escrowContract), bondAmt + finalFee); // Approve escrowContract contract to spend on creator's behalf; should use icnreaseAllowance maybe?
+        // issue with allowances as msg.sender is not creator but the Escrow Contract
+        // we have to transfer the creator's assets into the escrow coontract before transferring into UMA
+        // escrow contract needs to call approve then
+        escrowContract.initiateDispute(
+            bountyAppId, 
+            hunter, 
+            address(optimisticOracle),
+            bondAmt, 
+            ancillaryData,
+            weth
+        ); // Initiate Dispute
+        vm.stopPrank();
+
+        vm.startPrank(hunter);
+        weth.approve(address(escrowContract), bondAmt + finalFee); // Approve escrowContract contract to spend on hunter's behalf; should use icnreaseAllowance maybe?
+
+        SkinnyOptimisticOracleInterface.Request memory request;
+        request.currency = weth;
+        request.reward = 0;
+        request.finalFee = 35 * 10^16;
+        request.bond = bondAmt;
+        request.customLiveness = 1 weeks;
+        request.proposer = creator;
+        request.proposedPrice = 0;
+        request.expirationTime = 1000001 + 1 weeks;
+
+        escrowContract.hunterDisputeResponse(
+            bountyAppId, 
+            creator, 
+            1000001, 
+            bytes(ancillaryData), 
+            request 
+        ); // Hunter responds to dispute
+        vm.stopPrank();
+
+        vm.startPrank(creator);
+
+        mockDVM.pushPrice(
+            bytes32("UMIP-107"), 
+            1000001, 
+            optimisticOracle.stampAncillaryData(bytes(ancillaryData), address(escrowContract)),
+            2
+        ); // Push price of 1 so hunter wins
+        
+        vm.expectEmit(true, true, true, true); // Want to check the first 3 indexed event params, and the last non-indexed param
+        emit FundsSent(creator, hunter, bountyAppId, "Half of funds sent back to creator and then to hunter!"); // This is the event we expect to be emitted
+
+        uint hunterWETHBalanceBefore = weth.balanceOf(hunter);
+
+        SkinnyOptimisticOracleInterface.Request memory request2;
+        request2.currency = weth;
+        request2.reward = 0;
+        request2.finalFee = 35 * 10^16;
+        request2.bond = bondAmt;
+        request2.customLiveness = 1 weeks;
+        request2.proposer = creator;
+        request2.proposedPrice = 0;
+        request2.expirationTime = 1000001 + 1 weeks;
+        request2.disputer = hunter; // Setting this field
+
+        escrowContract.payoutIfDispute(
+            bountyAppId, 
+            hunter,
+            1000001, 
+            bytes(ancillaryData), 
+            request2,
+            address(token)
+        );
+
+        // Note: even if it's a tie, hunter is still considered the winner so they get the WETH as if the dispute was voted in their favor (price of 1)
+        assertEq((1 * 10^18) / 2, token.balanceOf(hunter)); // Check that hunter was paid 0.5 Test Token (half escrowed amount)
+        assertEq(100 * 10^18 - (1 * 10^18) / 2, token.balanceOf(creator)); // Check that creator was paid 0.5 Test Token (half escrowed amount)
+        assertEq(bondAmt + finalFee + bondAmt / 2, weth.balanceOf(hunter) - hunterWETHBalanceBefore); // Check that the amount of WETH given to dispute winner (hunter) is bondAmt + finalFee + bondAmt/2 (last part is unburned part of loser's bond)
+        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Resolved)); // Check that Status enum set to Resolved
+        assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that escrowed funds for the contract is now 0
+        vm.stopPrank();
+    }
+
+    function testHunterNoDisputeExpiredPayoutIfDisputeERC20() public {
+        string memory bountyAppId = "AppId";
+        address creator = address(0xABCD);
+        address hunter = address(0xBEEF);
+        uint expiration = 1 weeks;
+
+        // Input variables to initiateDispute function
+        uint bondAmt = 10 * 10^18; // 10 WETH bondAmt
+        string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
+
+        // Escrow funds first
+        token.mint(creator, 100 * 10^18); // Mint 100 Test Token
+        vm.startPrank(creator); // Sets msg.sender = creator for next function call
+        vm.warp(1000000); // Sets block.timestamp = 1000000
+
+        token.approve(address(escrowContract), 1 * 10^18);
+        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10^18);
+        vm.stopPrank();
+
+        vm.prank(hunter);
+        vm.warp(1000001); // Sets block.timestamp = 1000001
+
+        escrowContract.submit(bountyAppId, creator); // Submit work
+
+        // Test calling UMA requestAndProposePriceFor
+        setUpUMA(creator, hunter);
+
+        vm.startPrank(creator);
+        weth.approve(address(escrowContract), bondAmt + finalFee); // Approve escrowContract contract to spend on creator's behalf; should use icnreaseAllowance maybe?
+        // issue with allowances as msg.sender is not creator but the Escrow Contract
+        // we have to transfer the creator's assets into the escrow coontract before transferring into UMA
+        // escrow contract needs to call approve then
+        escrowContract.initiateDispute(
+            bountyAppId, 
+            hunter, 
+            address(optimisticOracle),
+            bondAmt, 
+            ancillaryData,
+            weth
+        ); // Initiate Dispute
+        // vm.stopPrank();
+
+        vm.expectEmit(true, true, true, true); // Want to check the first 3 indexed event params, and the last non-indexed param
+        emit FundsSent(creator, hunter, bountyAppId, "Funds sent back to creator!"); // This is the event we expect to be emitted
+
+        uint creatorWETHBalanceBefore = weth.balanceOf(creator);
+
+        SkinnyOptimisticOracleInterface.Request memory request;
+        request.currency = weth;
+        request.reward = 0;
+        request.finalFee = 35 * 10^16;
+        request.bond = bondAmt;
+        request.customLiveness = 1 weeks;
+        request.proposer = creator;
+        request.proposedPrice = 0;
+        request.expirationTime = 1000001 + 1 weeks;
+
+        optimisticOracle.setCurrentTime(1000001 + 1 weeks + 1); // Set timestamp in DVM so that the creator's dispute intiation will be expired 
+
+        escrowContract.payoutIfDispute(
+            bountyAppId, 
+            hunter,
+            1000001, 
+            bytes(ancillaryData), 
+            request,
+            address(token)
+        );
+
+        assertEq(100 * 10^18, token.balanceOf(creator)); // Check that creator paid back the 1 Test Token they escrowed before
         assertEq(bondAmt + finalFee, weth.balanceOf(creator) - creatorWETHBalanceBefore); // Check that the amount of WETH given to dispute default winner (creator) is bondAmt + finalFee 
         assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Resolved)); // Check that Status enum set to Resolved
         assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that escrowed funds for the contract is now 0
@@ -906,7 +1438,7 @@ contract EscrowTest is Test {
         vm.prank(creator); // Sets msg.sender = creator for next function call
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration);
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0);
 
         vm.prank(hunter);
         vm.warp(1000001); // Sets block.timestamp = 1000001
@@ -972,7 +1504,8 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request2
+            request2,
+            address(0)
         );
         vm.stopPrank();
     }
@@ -992,7 +1525,7 @@ contract EscrowTest is Test {
         vm.prank(creator); // Sets msg.sender = creator for next function call
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration);
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0);
 
         vm.prank(hunter);
         vm.warp(1000001); // Sets block.timestamp = 1000001
@@ -1035,7 +1568,8 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request
+            request,
+            address(0)
         );
         vm.stopPrank();
     }
@@ -1055,7 +1589,7 @@ contract EscrowTest is Test {
         vm.prank(creator); // Sets msg.sender = creator for next function call
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration);
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0);
 
         vm.prank(hunter);
         vm.warp(1000001); // Sets block.timestamp = 1000001
@@ -1074,7 +1608,8 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request
+            request,
+            address(0)
         );
         vm.stopPrank();
     }
@@ -1094,7 +1629,7 @@ contract EscrowTest is Test {
         vm.prank(creator); // Sets msg.sender = creator for next function call
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration);
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0);
 
         vm.prank(hunter);
         vm.warp(1000001); // Sets block.timestamp = 1000001
@@ -1169,18 +1704,19 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request2
+            request2,
+            address(0)
         );
 
         request2.settled = true; // Set this value to true as this is the new request struct after a dispute has been settled (produced in settle in OO contract)
-        console.log(address(escrowContract.oracleInterface()));
         vm.expectRevert(bytes("Bounty has been payed out")); // Expect this revert error
         escrowContract.payoutIfDispute(
             bountyAppId, 
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request2
+            request2,
+            address(0)
         );
         
         vm.stopPrank();
@@ -1201,7 +1737,7 @@ contract EscrowTest is Test {
         vm.prank(creator); // Sets msg.sender = creator for next function call
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration);
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0);
 
         vm.prank(hunter);
         vm.warp(1000001); // Sets block.timestamp = 1000001
@@ -1214,7 +1750,7 @@ contract EscrowTest is Test {
 
         vm.startPrank(creator);
 
-        escrowContract.payout(bountyAppId, hunter);
+        escrowContract.payout(bountyAppId, hunter, address(0));
 
         vm.expectRevert(bytes("Bounty has been payed out")); // Expect this revert error
         escrowContract.payoutIfDispute(
@@ -1222,7 +1758,8 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request
+            request,
+            address(0)
         );
         vm.stopPrank();
     }
