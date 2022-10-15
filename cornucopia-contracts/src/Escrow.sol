@@ -15,6 +15,8 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 contract Escrow {
 
+    using SafeERC20 for IERC20;
+
     mapping(bytes32 => uint) public bountyAmounts;
     mapping(bytes32 => Status) public progress;
     mapping(bytes32 => uint) public expiration;
@@ -40,9 +42,16 @@ contract Escrow {
     event FundsForceSentToHunter(address indexed creator, address indexed hunter, string indexed bountyAppId, string message);
 
     // Mapping arweave bounty address => bounty amount 
-    function escrow(string memory _bountyAppId, address _hunter, uint _expiration) external payable {
-        require(bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] == 0, "Funds already escrowed"); 
-        bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = msg.value; 
+    function escrow(string memory _bountyAppId, address _hunter, uint _expiration, address _token, uint _amount) external payable {
+        require(bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] == 0, "Funds already escrowed");
+
+        if (msg.value > 0) { // User sends ETH
+            bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = msg.value; 
+        } else { // Creator escrows ERC20
+            IERC20(_token).safeTransferFrom(msg.sender, address(this), _amount);
+            bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = _amount;
+        }
+        
         expiration[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = block.timestamp + _expiration; 
         emit Escrowed(msg.sender, _hunter, _bountyAppId, "Escrowed!"); 
     }
@@ -68,8 +77,8 @@ contract Escrow {
         require(progress[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] == Status.Submitted, "Work not Submitted");
         bytes memory ancillaryData = bytes(_ancillaryData);
         
-        _currency.transferFrom(msg.sender, address(this), _bondAmt + 35 * 10^16); // Transfer WETH from creator to contract to then send to OO
-        _currency.approve(_oracleAddress, _bondAmt + 35 * 10^16); // Need to approve OO contract to transfer tokens from here to OO of bondAmt + 0.35 WETH
+        _currency.safeTransferFrom(msg.sender, address(this), _bondAmt + 35 * 10^16); // Transfer WETH from creator to contract to then send to OO
+        _currency.safeIncreaseAllowance(_oracleAddress, _bondAmt + 35 * 10^16); // Need to approve OO contract to transfer tokens from here to OO of bondAmt + 0.35 WETH
 
         oracleInterface = SkinnyOptimisticOracleInterface(_oracleAddress);
         uint creatorBondAmt = oracleInterface.requestAndProposePriceFor(
@@ -99,8 +108,8 @@ contract Escrow {
         ) external returns (uint) {
         require(progress[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] == Status.DisputeInitiated, "Bounty creator has not disputed");
 
-        _request.currency.transferFrom(msg.sender, address(this), _request.bond + 35 * 10^16); // Transfer WETH from hunter to contract to then send to OO
-        _request.currency.approve(address(oracleInterface), _request.bond + 35 * 10^16); // Need to approve OO contract to transfer tokens from here to OO of bondAmt + 0.35 WETH
+        _request.currency.safeTransferFrom(msg.sender, address(this), _request.bond + 35 * 10^16); // Transfer WETH from hunter to contract to then send to OO
+        _request.currency.safeIncreaseAllowance(address(oracleInterface), _request.bond + 35 * 10^16); // Need to approve OO contract to transfer tokens from here to OO of bondAmt + 0.35 WETH
 
         uint hunterBondAmt = oracleInterface.disputePriceFor(
             bytes32("UMIP-107"),
@@ -116,15 +125,21 @@ contract Escrow {
         return hunterBondAmt; // Hunter bond plus finalFee 
     }
     
-    function forceHunterPayout(string memory _bountyAppId, address _creator) external {
+    function forceHunterPayout(string memory _bountyAppId, address _creator, address _token) external {
         // Case 4: Bounty creator did not pay or dispute within 2 weeks following hunter submitting work.
         require(progress[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] == Status.Submitted, "Work not Submitted");
         require(payoutExpiration[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] <= block.timestamp, "Creator can still pay or dispute");
         
         uint value = bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))];
         bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] -= value;
-        (bool sent, ) = payable(msg.sender).call{value: value}("");
-        require(sent, "Failed to send Ether");
+
+        if (_token != address(0)) { // If ERC-20 token
+            IERC20(_token).safeTransfer(msg.sender, value);
+        } else {
+            (bool sent, ) = payable(msg.sender).call{value: value}("");
+            require(sent, "Failed to send Ether");
+        }
+
         emit FundsForceSentToHunter(_creator, msg.sender, _bountyAppId, "Funds force sent to hunter!");
         progress[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] = Status.Resolved;
     }
@@ -134,7 +149,8 @@ contract Escrow {
         address _hunter,
         uint32 _timestamp, 
         bytes memory _ancillaryData,
-        SkinnyOptimisticOracleInterface.Request memory _request
+        SkinnyOptimisticOracleInterface.Request memory _request,
+        address _token
     ) external {
         Status status = progress[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))];
         require(status != Status.Submitted, "Creator hasn't disputed work");
@@ -150,20 +166,33 @@ contract Escrow {
             (, int256 winner) = oracleInterface.settle(address(this), bytes32("UMIP-107"), _timestamp, _ancillaryData, _request); // Note: EscrowContract is actually the requester not the creator
             if (winner == 0) { // Send funds to creator
                 bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] -= value;
-                (bool sent, ) = payable(msg.sender).call{value: value}("");
-                require(sent, "Failed to send Ether");
+                if (_token != address(0)) { // If ERC-20 token
+                    IERC20(_token).safeTransfer(msg.sender, value);
+                } else {
+                    (bool sent, ) = payable(msg.sender).call{value: value}("");
+                    require(sent, "Failed to send Ether");
+                }
                 emit FundsSent(msg.sender, _hunter, _bountyAppId, "Funds sent back to creator!");
             } else if (winner == 1) { // Send funds to hunter
                 bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] -= value;
-                (bool sent, ) = payable(_hunter).call{value: value}("");
-                require(sent, "Failed to send Ether");
+                if (_token != address(0)) { // If ERC-20 token
+                    IERC20(_token).safeTransfer(_hunter, value);
+                } else {
+                    (bool sent, ) = payable(_hunter).call{value: value}("");
+                    require(sent, "Failed to send Ether");
+                }
                 emit FundsSent(msg.sender, _hunter, _bountyAppId, "Funds sent to hunter!");
             } else if (winner == 2) { // Send half funds to creator and half to hunter
                 bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] -= value;
-                (bool sent, ) = payable(_hunter).call{value: value / 2 }("");
-                require(sent, "Failed to send Ether");
-                (bool sent2, ) = payable(msg.sender).call{value: value / 2 }("");
-                require(sent2, "Failed to send Ether");
+                if (_token != address(0)) { // If ERC-20 token
+                    IERC20(_token).safeTransfer(_hunter, value / 2);
+                    IERC20(_token).safeTransfer(msg.sender, value / 2);
+                } else {
+                    (bool sent, ) = payable(_hunter).call{value: value / 2 }("");
+                    require(sent, "Failed to send Ether");
+                    (bool sent2, ) = payable(msg.sender).call{value: value / 2 }("");
+                    require(sent2, "Failed to send Ether");
+                }
                 emit FundsSent(msg.sender, _hunter, _bountyAppId, "Half of funds sent back to creator and then to hunter!");
             }
             progress[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = Status.Resolved;
@@ -174,15 +203,19 @@ contract Escrow {
         } 
     }
 
-    function payout(string memory _bountyAppId, address _hunter) external {
+    function payout(string memory _bountyAppId, address _hunter, address _token) external {
         uint value = bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))];
 
         // Case 5: Bounty Hunter doesn't submit work within specified time
         if(progress[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] == Status.NoBounty 
             && expiration[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] <= block.timestamp) {
                 bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] -= value;
-                (bool sent, ) = payable(msg.sender).call{value: value}("");
-                require(sent, "Failed to send Ether");
+                if (_token != address(0)) { // If ERC-20 token
+                    IERC20(_token).safeTransfer(msg.sender, value);
+                } else {
+                    (bool sent, ) = payable(msg.sender).call{value: value}("");
+                    require(sent, "Failed to send Ether");
+                }
                 emit FundsWithdrawnToCreator(msg.sender, _hunter, _bountyAppId, "Funds withdrawn to creator!");
                 progress[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = Status.Resolved; 
         } 
@@ -191,8 +224,12 @@ contract Escrow {
         // Case 1: Bounty creator doesn't dispute and pays out normal amount
         if (status == Status.Submitted) {
             bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] -= value;
-            (bool sent, ) = payable(_hunter).call{value: value}("");
-            require(sent, "Failed to send Ether");
+            if (_token != address(0)) { // If ERC-20 token
+                    IERC20(_token).safeTransfer(_hunter, value);
+            } else {
+                (bool sent, ) = payable(_hunter).call{value: value}("");
+                require(sent, "Failed to send Ether");
+            }
             emit FundsSent(msg.sender, _hunter, _bountyAppId, "Funds sent to hunter!");
             progress[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = Status.Resolved;
         } else if (status == Status.NoBounty && value > 0) {
