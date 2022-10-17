@@ -115,13 +115,18 @@
   text-align: center;
 }
 
-.arweaveHash{
+.arweaveHash {
   font-family: 'Space Grotesk' !important;
   font-weight: 300;
   font-size: 18px + 1vw;
   text-transform: capitalize;
   color: rgb(233, 233, 198) !important;
   display: flex;
+}
+
+.dialogBody {
+  font-family: 'Space Grotesk' !important;
+  color: rgb(233, 233, 198) !important;
 }
 
 .grid {
