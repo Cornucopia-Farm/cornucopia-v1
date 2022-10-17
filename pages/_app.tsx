@@ -121,6 +121,9 @@ const myTheme = merge(midnightTheme(), {
   },
   colors: {
     connectButtonText: 'rgb(233, 233, 198)',
+    connectButtonTextError: 'rgb(233, 233, 198)',
+    modalText: 'rgb(233, 233, 198)',
+    // connectionIndicator: 'rgb(233, 233, 198)',
   },
 } as Theme);
 

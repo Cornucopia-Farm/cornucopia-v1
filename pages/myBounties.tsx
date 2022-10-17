@@ -355,10 +355,10 @@ const MyBounties: NextPage = () => {
                                     aria-labelledby="alert-dialog-title"
                                     aria-describedby="alert-dialog-description"
                                 >
-                                    <DialogTitle id="alert-dialog-title">
+                                    <DialogTitle className={styles.formHeader} id="alert-dialog-title">
                                     {"Are you sure you want to challenge the creator's dispute of your work?"}
                                     </DialogTitle>
-                                    <DialogContent>
+                                    <DialogContent className={styles.cardBackground}>
                                     <DialogContentText id="alert-dialog-description">
                                         Responding to the creator's dispute within the 7 day challenger period, escalates this dispute to the UMA token holders and decided
                                         within that week. Once the decision is made (please see the docs for more details on this process), the escrowed funds will either be fully 
@@ -366,10 +366,10 @@ const MyBounties: NextPage = () => {
                                         will be returned to the creator once these 7 days are up. 
                                     </DialogContentText>
                                     </DialogContent>
-                                    <DialogActions>
-                                    <Button onClick={handleCloseDisputeFalse}>No I don't</Button>
+                                    <DialogActions className={styles.formHeader}>
+                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseDisputeFalse}>No I don't</Button>
                                     {/* <Button onClick={() => handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress)} autoFocus>Yes I want to</Button> */}
-                                    <Button onClick={() => {hunterDisputeResponse?.(); setOpenDispute(false);}} autoFocus disabled={!hunterDisputeResponse || isHunterDisputeResponseTxLoading}>{isHunterDisputeResponseTxLoading ? 'Responding to dispute...' : 'Yes I want to'}</Button>
+                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {hunterDisputeResponse?.(); setOpenDispute(false);}} autoFocus disabled={!hunterDisputeResponse || isHunterDisputeResponseTxLoading}>{isHunterDisputeResponseTxLoading ? 'Responding to dispute...' : 'Yes I want to'}</Button>
                                     </DialogActions>
                                 </Dialog>
                         </div> 
@@ -414,19 +414,19 @@ const MyBounties: NextPage = () => {
                                     aria-labelledby="alert-dialog-title"
                                     aria-describedby="alert-dialog-description"
                                 >
-                                    <DialogTitle id="alert-dialog-title">
+                                    <DialogTitle className={styles.formHeader} id="alert-dialog-title">
                                     {"Are you sure you want to claim the force-claim the bounty?"}
                                     </DialogTitle>
-                                    <DialogContent>
+                                    <DialogContent className={styles.cardBackground}>
                                     <DialogContentText id="alert-dialog-description">
                                         The bounty creator has not responded (payed or disputed) to your work submission within two weeks. To prevent the creator from withholding the funds, 
                                         you're able to claim the bounty yourself. 
                                     </DialogContentText>
                                     </DialogContent>
-                                    <DialogActions>
-                                    <Button onClick={handleCloseForceFalse}>No I don't</Button> 
+                                    <DialogActions className={styles.formHeader}>
+                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseForceFalse}>No I don't</Button> 
                                     {/* <Button onClick={() => handleCloseForceTrue(postData.data.postId, postData.data.creatorAddress)} autoFocus>Yes I want to</Button> */}
-                                    <Button onClick={() => {forceHunterPayout?.(); setOpenForce(false);}} autoFocus disabled={!forceHunterPayout || isForceHunterPayoutTxLoading}>{isForceHunterPayoutTxLoading ? 'Forcing payout...' : 'Yes I want to'}</Button>
+                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {forceHunterPayout?.(); setOpenForce(false);}} autoFocus disabled={!forceHunterPayout || isForceHunterPayoutTxLoading}>{isForceHunterPayoutTxLoading ? 'Forcing payout...' : 'Yes I want to'}</Button>
                                     </DialogActions>
                                 </Dialog>
                         </div>
