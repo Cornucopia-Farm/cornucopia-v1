@@ -491,11 +491,11 @@ const MyBounties: NextPage = () => {
             label: 'Dispute Initiated',
         },
         {
-            value: 60,
+            value: 65,
             label: 'Dispute Responded To',
         },
         {
-            value: 75,
+            value: 83,
             label: 'Force Payout',
         },
         {
@@ -533,10 +533,57 @@ const MyBounties: NextPage = () => {
                             defaultValue={0}
                             getAriaValueText={valuetext}
                             step={null}
-                            valueLabelDisplay="auto"
+                            valueLabelDisplay="off"
                             marks={marks}
                             onChange={(e, val) => setStage(marks.findIndex((mark) => mark.value === val) + 1)}
-                            sx={{ color: 'white', '& .MuiSlider-markLabel': { color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk' }}}
+                            sx={{ height: 12, color: 'rgb(233, 233, 198)', '& .MuiSlider-markLabel': { color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk' }, 
+                                // '& .MuiSlider-valueLabel': { 
+                                //     display: 'none', 
+                                // }, 
+                                '& .MuiSlider-thumb': {
+                                    height: 24,
+                                    width: 24,
+                                    backgroundColor: '#fff',
+                                    border: '2px solid currentColor',
+                                    '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
+                                      boxShadow: '0 0 0 8px rgba(58, 133, 137, 0.16)',
+                                    },
+                                    '&:before': {
+                                      display: 'none',
+                                    },
+                                },
+                                '& .MuiSlider-track': {
+                                    border: 'none',
+                                },
+                                '& .MuiSlider-mark': {
+                                    // backgroundColor: '#bfbfbf',
+                                    // height: 8,
+                                    // width: 1,
+                                    '&.MuiSlider-markActive': {
+                                      opacity: 1,
+                                      backgroundColor: 'currentColor',
+                                    },
+                                  },
+                                // '& .MuiSlider-valueLabel': {
+                                //     lineHeight: 1.2,
+                                //     fontSize: 12,
+                                //     background: 'unset',
+                                //     padding: 0,
+                                //     width: 32,
+                                //     height: 32,
+                                //     borderRadius: '50% 50% 50% 0',
+                                //     backgroundColor: '#52af77',
+                                //     transformOrigin: 'bottom left',
+                                //     transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
+                                //     '&:before': { display: 'none' },
+                                //     '&.MuiSlider-valueLabelOpen': {
+                                //       transform: 'translate(50%, -100%) rotate(-45deg) scale(1)',
+                                //     },
+                                //     '& > *': {
+                                //       transform: 'rotate(45deg)',
+                                //     },
+                                //   },
+                            }}
                         />
                         {stage === 1 && 
                             <div> 
