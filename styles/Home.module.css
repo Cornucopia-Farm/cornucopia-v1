@@ -200,7 +200,7 @@
   font-family: 'Space Grotesk';
   font-weight: 300;
   text-transform: capitalize;
-  color:rgb(245, 223, 183);
+  color:rgb(245, 223, 183) !important;
 }
 
 .accordionBackground {
