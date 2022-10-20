@@ -50,15 +50,15 @@ export default function HeaderTabs() {
         <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', marginLeft: '16px', gap: '32px'}}> 
         {/* <Tabs> */}
           <Link href="/openBounties" >
-            <Tab className={styles.headerFont} label="Open Bounties" style={{ fontSize: '16px' }} />
+            <Button className={styles.headerFont} sx={{ fontSize: '16px' }}>Open Bounties</Button>
           </Link>
 
           <Link href="/myBounties">
-              <Tab className={styles.headerFont} label="My Bounties" style={{ fontSize: '16px' }} />
+              <Button className={styles.headerFont} sx={{ fontSize: '16px' }}>My Bounties</Button>
           </Link>
           
           <Link href="/createBounties">
-            <Tab className={styles.headerFont} label="Create Bounties" style={{ fontSize: '16px' }} />
+            <Button className={styles.headerFont} sx={{ fontSize: '16px' }}>Create Bounties</Button>
           </Link>
 
           {/* <Link href="/disputes">
@@ -69,7 +69,7 @@ export default function HeaderTabs() {
         {/* <Button variant="contained" sx={{ backgroundColor: 'rgba(6, 72, 41, 0.15)', borderRadius: '12px', marginRight: '32px', }} onClick={handlePopUp}>Verify Account</Button> */}
         {/* <Button variant="contained" sx={{ backgroundColor: 'rgba(6, 72, 41, 0.85)', borderRadius: '12px', marginRight: '32px', }} onClick={handleClickOpen}>{address ? address : "Connect Wallet"}</Button>
         <Wallet open={open} onClose={handleClose} onConnect={setAddress} /> */}
-        <Box> 
+        <Box sx={{ marginRight: '16px'}}> 
           <ConnectButton />
         </Box>
         

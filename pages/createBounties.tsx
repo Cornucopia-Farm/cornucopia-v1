@@ -28,7 +28,7 @@ import FinishedPosts from '../components/finishedPosts';
 import styles from '../styles/Home.module.css';
 import Slider from '@mui/material/Slider';
 import { Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { makeStyles, propsToClassKey } from '@mui/styles';
 
 // Bounty Stages for Creator:
 // 1. Posted (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.NoBounty); CHECK PROGRESS MAPPING
@@ -261,7 +261,7 @@ const CreateBounties: NextPage = () => {
             label: 'Applied To',
         },
         {
-            value: 30,
+            value: 27,
             label: 'In Progress',
         },
         {
@@ -269,11 +269,11 @@ const CreateBounties: NextPage = () => {
             label: 'Submitted: Needs Approval',
         },
         {
-            value: 60,
+            value: 65,
             label: 'Dispute Initiated',
         },
         {
-            value: 75,
+            value: 83,
             label: 'Dispute Responded To',
         },
         {
@@ -299,13 +299,12 @@ const CreateBounties: NextPage = () => {
     
                 <main className={styles.background}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '160px', paddingRight: '160px', paddingTop: '24px', color: 'rgba(6, 72, 41, 0.85)' }}>
-                        <Form
+                        {/* <Form
                             creatorAddress={address!}
                             formName={"Post Bounty"}
                             summary={"Please fill out this form to create your bounty!"} 
                             formButtons={["Cancel", "Post"]}
                             formType={"createBounty"}
-                            // refetch={refetch}
                             tags={[
                                 {
                                     name: "Content-Type",
@@ -328,19 +327,127 @@ const CreateBounties: NextPage = () => {
                                     value: chain?.network!
                                 }
                             ]}
-                        /> 
+                        />  */}
                         <Slider
                             aria-label="Restricted values"
                             defaultValue={0}
                             getAriaValueText={valuetext}
                             step={null}
-                            valueLabelDisplay="auto"
+                            valueLabelDisplay="off"
                             marks={marks}
                             onChange={(e, val) => setStage(marks.findIndex((mark) => mark.value === val) + 1)}
-                            sx={{ color: 'white', '& .MuiSlider-markLabel': { color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk' }}}
+                            sx={{ 
+                                height: 12, 
+                                color: 'rgb(233, 233, 198)', 
+                                '& .MuiSlider-markLabel': { 
+                                    color: 'rgb(233, 233, 198)', 
+                                    fontFamily: 'Space Grotesk' 
+                                }, 
+                                '& .MuiSlider-thumb': {
+                                    height: 24,
+                                    width: 24,
+                                    backgroundColor: '#fff',
+                                    border: '2px solid currentColor',
+                                    '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
+                                      boxShadow: '0 0 0 8px rgba(58, 133, 137, 0.16)',
+                                    },
+                                    '&:before': {
+                                      display: 'none',
+                                    },
+                                },
+                                '& .MuiSlider-track': {
+                                    border: 'none',
+                                },
+                                '& .MuiSlider-mark': {
+                                    '&.MuiSlider-markActive': {
+                                      opacity: 1,
+                                      backgroundColor: 'currentColor',
+                                    },
+                                }
+                            }}
                         />
-                        {stage === 1 && 
-                            <div> 
+
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', }}> 
+                            {stage === 1 && <h2 className={styles.h2}>Posted</h2>}
+                            {stage === 2 && <h2 className={styles.h2}>Applied To</h2>}
+                            {stage === 3 && <h2 className={styles.h2}>In Progress</h2>}
+                            {stage === 4 && <h2 className={styles.h2}>Submitted: Needs Approval</h2>}
+                            {stage === 5 && <h2 className={styles.h2}>Dispute Initiated</h2>}
+                            {stage === 6 && <h2 className={styles.h2}>Dispute Responded To</h2>}
+                            {stage === 7 && <h2 className={styles.h2}>Finished</h2>}
+                            <Form
+                                creatorAddress={address!}
+                                formName={"Post Bounty"}
+                                summary={"Please fill out this form to create your bounty!"} 
+                                formButtons={["Cancel", "Post"]}
+                                formType={"createBounty"}
+                                tags={[
+                                    {
+                                        name: "Content-Type",
+                                        value: "application/json"
+                                    },
+                                    {
+                                        name: "App-Name",
+                                        value: "Cornucopia-test"
+                                    },
+                                    {
+                                        name: "Form-Type",
+                                        value: "bounty-post"
+                                    },
+                                    {
+                                        name: "Creator-Address",
+                                        value: address!
+                                    },
+                                    {
+                                        name: "Chain",
+                                        value: chain?.network!
+                                    }
+                                ]}
+                            /> 
+                        </Box> 
+                        <ClientOnly>
+                            {stage === 1 && postedComponents}
+                            {stage === 2 && appliedComponents}
+                            {stage === 3 && inProgressComponents}
+                            {stage === 4 && submittedComponents}
+                            {stage === 5 && disputeInitiatedComponents}
+                            {stage === 6 && disputeRespondedToComponents}
+                            {stage === 7 && finishedComponents}
+                        </ClientOnly>
+                        {/* {stage === 1 && 
+                            <div>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}> 
+                                    <h2 className={styles.h2}>Posted</h2>
+                                    <Form
+                                        creatorAddress={address!}
+                                        formName={"Post Bounty"}
+                                        summary={"Please fill out this form to create your bounty!"} 
+                                        formButtons={["Cancel", "Post"]}
+                                        formType={"createBounty"}
+                                        tags={[
+                                            {
+                                                name: "Content-Type",
+                                                value: "application/json"
+                                            },
+                                            {
+                                                name: "App-Name",
+                                                value: "Cornucopia-test"
+                                            },
+                                            {
+                                                name: "Form-Type",
+                                                value: "bounty-post"
+                                            },
+                                            {
+                                                name: "Creator-Address",
+                                                value: address!
+                                            },
+                                            {
+                                                name: "Chain",
+                                                value: chain?.network!
+                                            }
+                                        ]}
+                                    /> 
+                                </Box> 
                                 <h2 className={styles.h2}>Posted</h2>
                                 <ClientOnly>
                                     {postedComponents}
@@ -394,7 +501,7 @@ const CreateBounties: NextPage = () => {
                                     {finishedComponents}
                                 </ClientOnly>
                             </div>
-                        }
+                        } */}
                     </Box>
                 </main>
             </div>

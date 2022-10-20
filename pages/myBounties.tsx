@@ -521,7 +521,7 @@ const MyBounties: NextPage = () => {
                 </Head>
     
                 <main> 
-                    <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '160px', paddingRight: '160px', color: 'rgba(6, 72, 41, 0.85)' }}> 
+                    <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '160px', paddingRight: '160px', paddingTop: '24px', color: 'rgba(6, 72, 41, 0.85)' }}> 
                         {(isHunterDisputeResponseTxLoading || isHunterDisputeResponseTxSuccess) && 
                             <SimpleSnackBar msg={isHunterDisputeResponseTxLoading ? 'Responding to dispute...' : 'Responded to dispute!'}/>
                         }
@@ -536,10 +536,13 @@ const MyBounties: NextPage = () => {
                             valueLabelDisplay="off"
                             marks={marks}
                             onChange={(e, val) => setStage(marks.findIndex((mark) => mark.value === val) + 1)}
-                            sx={{ height: 12, color: 'rgb(233, 233, 198)', '& .MuiSlider-markLabel': { color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk' }, 
-                                // '& .MuiSlider-valueLabel': { 
-                                //     display: 'none', 
-                                // }, 
+                            sx={{ 
+                                height: 12, 
+                                color: 'rgb(233, 233, 198)', 
+                                '& .MuiSlider-markLabel': { 
+                                    color: 'rgb(233, 233, 198)', 
+                                    fontFamily: 'Space Grotesk' 
+                                }, 
                                 '& .MuiSlider-thumb': {
                                     height: 24,
                                     width: 24,
@@ -556,33 +559,11 @@ const MyBounties: NextPage = () => {
                                     border: 'none',
                                 },
                                 '& .MuiSlider-mark': {
-                                    // backgroundColor: '#bfbfbf',
-                                    // height: 8,
-                                    // width: 1,
                                     '&.MuiSlider-markActive': {
                                       opacity: 1,
                                       backgroundColor: 'currentColor',
                                     },
-                                  },
-                                // '& .MuiSlider-valueLabel': {
-                                //     lineHeight: 1.2,
-                                //     fontSize: 12,
-                                //     background: 'unset',
-                                //     padding: 0,
-                                //     width: 32,
-                                //     height: 32,
-                                //     borderRadius: '50% 50% 50% 0',
-                                //     backgroundColor: '#52af77',
-                                //     transformOrigin: 'bottom left',
-                                //     transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
-                                //     '&:before': { display: 'none' },
-                                //     '&.MuiSlider-valueLabelOpen': {
-                                //       transform: 'translate(50%, -100%) rotate(-45deg) scale(1)',
-                                //     },
-                                //     '& > *': {
-                                //       transform: 'rotate(45deg)',
-                                //     },
-                                //   },
+                                }
                             }}
                         />
                         {stage === 1 && 
