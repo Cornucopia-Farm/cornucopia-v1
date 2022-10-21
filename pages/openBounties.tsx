@@ -173,7 +173,7 @@ const OpenBounties: NextPage = () => {
     
     if (!loading && openBountyPosts.length > 0) {
         return (
-            <div className={styles.background}>
+            <div>
                 <Head>
                     <title>Open Bounties</title>
                     <meta name="description" content="Cornucopia is a permissionless freelancing protocol where projects/DAOs can create bounties for freelancers to complete." />

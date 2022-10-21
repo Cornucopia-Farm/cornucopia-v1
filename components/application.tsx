@@ -220,7 +220,7 @@ const Application: React.FC<Props> = props => {
           id="panel1a-header"
         >
           {/* <Typography sx={{ width: '90%', flexShrink: 0, color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk', fontSize: '15px'}}>{ensName ? ensName : props.person}</Typography> */}
-          <Typography className={styles.h2} sx={{ color: '#064829', fontSize: '15px' }}><Link target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.person)}>{ensName ? ensName : (props.person.slice(0,4) + '...' + props.person.slice(-4))}</Link></Typography>
+          <Typography className={styles.h2} sx={{ color: '#064829', fontSize: '15px' }}><Link sx= {{ color: 'rgb(233, 233, 198)'}} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.person)}>{ensName ? ensName : (props.person.slice(0,4) + '...' + props.person.slice(-4))}</Link></Typography>
 
         </AccordionSummary>
         <AccordionDetails>

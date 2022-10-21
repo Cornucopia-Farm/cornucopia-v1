@@ -68,7 +68,7 @@ const defaultValues: ArweaveData = {
     postId: "",
     title: "", 
     description: "", 
-    amount: 0, 
+    amount: undefined,
     date: "", 
     time: "", 
     postLinks: [""],
@@ -209,7 +209,30 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
-                        sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInputLabel-root': { color: 'rgb(233, 233, 198)'}}} 
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)',
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            },
+                        }} 
                     />
                     <TextField
                         autoFocus
@@ -222,20 +245,66 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
-                        sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInputLabel-root': { color: 'rgb(233, 233, 198)'}}} 
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            },
+                        }} 
                     />
                     <TextField
                         autoFocus
                         margin="dense"
                         id="amount-input"
                         name="amount"
-                        label="Amount (ETH)"
+                        label="Amount"
                         value={formValues.amount}
                         onChange={handleInputChange}
-                        type="number"
+                        type="text" // Need to add ERC20
                         fullWidth
                         variant="standard"
-                        sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInputLabel-root': { color: 'rgb(233, 233, 198)'}}} 
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            },
+                        }}
                     />
                     <TextField
                         autoFocus
@@ -248,7 +317,30 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
-                        sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInputLabel-root': { color: 'rgb(233, 233, 198)'}}} 
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            },
+                        }}
                     />
                     <TextField
                         autoFocus
@@ -261,7 +353,30 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
-                        sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInputLabel-root': { color: 'rgb(233, 233, 198)'}}} 
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            },
+                        }}
                     />
                     <TextField
                         autoFocus
@@ -274,7 +389,30 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
-                        sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInputLabel-root': { color: 'rgb(233, 233, 198)'}}} 
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            },
+                        }} 
                     />
                 </div>
             );
@@ -292,8 +430,30 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
-                        sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInputLabel-root': { color: 'rgb(233, 233, 198)'}}} // base is the text color when you type while label is the default that goes to the top
-                        // sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInput-underline:after': { borderBottomColor: 'red', }}} // example of how to change underline text when you click on a field
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            },
+                        }}
                     />
                     <TextField
                         autoFocus
@@ -306,7 +466,30 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
-                        sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInputLabel-root': { color: 'rgb(233, 233, 198)'}}} 
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            },
+                        }}
                     />
                     <TextField
                         autoFocus
@@ -319,7 +502,30 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
-                        sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInputLabel-root': { color: 'rgb(233, 233, 198)'}}} 
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            },
+                        }} 
                     />
                 </div>
             );
@@ -337,7 +543,30 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
-                        sx={{ '& .MuiInputBase-input': { color: 'rgb(233, 233, 198)'}, '& .MuiInputLabel-root': { color: 'rgb(233, 233, 198)'}}} 
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            },
+                        }} 
                     />
                 </div>
             );
@@ -359,9 +588,9 @@ const Form: React.FC<Props> = props => {
                     {dialogBoxes(props.formType)}
                 </DialogContent>
                 <DialogActions className={styles.formHeader}>
-                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleClose}>{props.formButtons[0]}</Button>
+                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleClose}>{props.formButtons[0]}</Button>
                     {props.formName !== "Submit" && 
-                        <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleCloseSubmit}>{props.formButtons[1]}</Button>
+                        <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleCloseSubmit}>{props.formButtons[1]}</Button>
                     }
                     {props.formName === "Submit" &&
                         <div>

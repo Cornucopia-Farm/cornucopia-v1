@@ -123,6 +123,10 @@ const myTheme = merge(midnightTheme(), {
     connectButtonText: 'rgb(233, 233, 198)',
     connectButtonTextError: 'rgb(233, 233, 198)',
     modalText: 'rgb(233, 233, 198)',
+    // selectedOptionBorder: 'rgb(248, 215, 154)',
+    // connectButtonInnerBackground: 'rgb(233, 233, 198)',
+    // modalTextSecondary:'rgb(233, 233, 198)',
+    // standby: 'rgb(248, 215, 154)',
     // connectionIndicator: 'rgb(233, 233, 198)',
   },
 } as Theme);
