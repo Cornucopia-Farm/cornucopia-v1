@@ -42,7 +42,7 @@ const BasicCard: React.FC<Props> = props => {
           <Box sx={{ display: 'flex', paddingLeft: 0}}> 
             <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Arweave Hash </Typography>
             <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%'}}>
-              <Link target="_blank" rel="noopener" href={"https://arweave.net/" + props.arweaveHash}>{props.arweaveHash}</Link>
+              <Link sx= {{ color: 'rgb(233, 233, 198)'}} target="_blank" rel="noopener" href={"https://arweave.net/" + props.arweaveHash}>{props.arweaveHash}</Link>
             </Typography>
           </Box>
         </Box>
