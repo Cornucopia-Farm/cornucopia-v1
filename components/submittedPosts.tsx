@@ -77,6 +77,7 @@ const SubmittedPosts: React.FC<Props> = props => {
                         postId={postData.data.postId}
                         workLinks={postData.data.workLinks}
                         postLinks={postData.data.postLinks}
+                        tokenAddress={postData.data.tokenAddress}
                     />
                 );
             }

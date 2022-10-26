@@ -90,6 +90,8 @@ const OpenBounties: NextPage = () => {
                         description={postData.data.description}
                         title={postData.data.title}
                         amount={postData.data.amount}
+                        tokenAddress={postData.data.tokenAddress}
+                        tokenSymbol={postData.data.tokenSymbol}
                         formName={"Apply"}
                         summary={"Please fill out this form to apply to this bounty!"}  
                         formButtons={["Cancel", "Apply"]}

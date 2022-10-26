@@ -100,6 +100,7 @@ const DisputeRespondedToPosts: React.FC<Props> = props => {
                         timestamp={umaEventData.timestamp}
                         ancillaryData={umaEventData.ancillaryData}
                         request={umaEventData.request}
+                        tokenAddress={postData.data.tokenAddress}
                     />
                 );
             }

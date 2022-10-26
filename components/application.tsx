@@ -35,6 +35,7 @@ type Props = {
     timestamp?: number;
     ancillaryData?: string; // Ancillary Data in byte form from UMA event used during payoutIfDispute call
     request?: Request; 
+    tokenAddress?: string;
 };
 
 // Escrow Contract Config
@@ -61,8 +62,12 @@ const Application: React.FC<Props> = props => {
   const debouncedBountyAppId = useDebounce(bountyAppId, 10); // use debounce makes it so that usePrepareContractWrite is only called every 500ms by limiting bountyAppId to be updated every 500ms; prevent getting RPC rate-limited!
   const [hunterAddress, setHunterAddress] = React.useState('');
   const debouncedHunterAddress = useDebounce(hunterAddress, 10);
-  const [bountyAmt, setBountyAmt] = React.useState('');
-  const debouncedBountyAmt = useDebounce(bountyAmt, 10);
+  const [tokenAddressERC20, setTokenAddressERC20] = React.useState('');
+  const debouncedTokenAddressERC20 = useDebounce(tokenAddressERC20, 10);
+  const [bountyAmtETH, setBountyAmtETH] = React.useState('');
+  const debouncedBountyAmtETH = useDebounce(bountyAmtETH, 10);
+  const [bountyAmtERC20, setBountyAmtERC20] = React.useState('');
+  const debouncedBountyAmtERC20 = useDebounce(bountyAmtERC20, 10);
   const bountyExpirationTime = 2*7*24*60*60;
 
   // Submitted State
@@ -83,7 +88,7 @@ const Application: React.FC<Props> = props => {
 
   // Applied Contract Interactions
   // set enabled to be this boolean triple so that usePrepareContractWrite doesn't run before these vars have been assigned
-  const { config: escrowConfig } = usePrepareContractWrite({...contractConfig, functionName: 'escrow', args: [debouncedBountyAppId, debouncedHunterAddress, bountyExpirationTime], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedBountyAmt), overrides: {value: ethers.utils.parseEther(debouncedBountyAmt || '0')}});
+  const { config: escrowConfig } = usePrepareContractWrite({...contractConfig, functionName: 'escrow', args: [debouncedBountyAppId, debouncedHunterAddress, bountyExpirationTime, debouncedTokenAddressERC20, debouncedBountyAmtERC20], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedBountyAmtETH) && Boolean(debouncedTokenAddressERC20) && Boolean(debouncedBountyAmtERC20), overrides: {value: ethers.utils.parseEther(debouncedBountyAmtETH || '0')}});
   const { data: escrowData, error: escrowError, isLoading: isEscrowLoading, isSuccess: isEscrowSuccess, write: escrow } = useContractWrite(escrowConfig);
   const { data: escrowTxData, isLoading: isEscrowTxLoading, isSuccess: isEscrowTxSuccess, error: escrowTxError } = useWaitForTransaction({ hash: escrowData?.hash, enabled: true,});
 
@@ -92,11 +97,11 @@ const Application: React.FC<Props> = props => {
   const { data: initiateDisputeData, error: initiateDisputeError, isLoading: isInitiateDisputeLoading, isSuccess: isInitiateDisputeSuccess, write: initiateDispute } = useContractWrite(initiateDisputeConfig);
   const { data: initiateDisputeTxData, isLoading: isInitiateDisputeTxLoading, isSuccess: isInitiateDisputeTxSuccess, error: initiateDisputeTxError } = useWaitForTransaction({ hash: initiateDisputeData?.hash, enabled: true,});
 
-  const { config: payoutIfDisputeConfig } = usePrepareContractWrite({...contractConfig, functionName: 'payoutIfDispute', args: [debouncedBountyAppId, debouncedHunterAddress, umaData.timestamp, umaData.ancillaryData, umaData.request], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(umaData.timestamp), });
+  const { config: payoutIfDisputeConfig } = usePrepareContractWrite({...contractConfig, functionName: 'payoutIfDispute', args: [debouncedBountyAppId, debouncedHunterAddress, umaData.timestamp, umaData.ancillaryData, umaData.request, debouncedTokenAddressERC20], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(umaData.timestamp) && Boolean(debouncedTokenAddressERC20), });
   const { data: payoutIfDisputeData, error: payoutIfDisputeError, isLoading: isPayoutIfDisputeLoading, isSuccess: isPayoutIfDisputeSuccess, write: payoutIfDispute } = useContractWrite(payoutIfDisputeConfig);
   const { data: payoutIfDisputeTxData, isLoading: isPayoutIfDisputeTxLoading, isSuccess: isPayoutIfDisputeTxSuccess, error: payoutIfDisputeTxError } = useWaitForTransaction({ hash: payoutIfDisputeData?.hash, enabled: true,});
 
-  const { config: payoutConfig } = usePrepareContractWrite({...contractConfig, functionName: 'payout', args: [debouncedBountyAppId, debouncedHunterAddress], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress),});
+  const { config: payoutConfig } = usePrepareContractWrite({...contractConfig, functionName: 'payout', args: [debouncedBountyAppId, debouncedHunterAddress, debouncedTokenAddressERC20], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedTokenAddressERC20),});
   const { data: payoutData, error: payoutError, isLoading: isPayoutLoading, isSuccess: isPayoutSuccess, write: payout } = useContractWrite(payoutConfig);
   const { data: payoutTxData, isLoading: isPayoutTxLoading, isSuccess: isPayoutTxSuccess, error: payoutTxError } = useWaitForTransaction({ hash: payoutData?.hash, enabled: true,});
 
@@ -114,11 +119,19 @@ const Application: React.FC<Props> = props => {
     setOpenEscrow(true);
   };
 
-  const handleCloseEscrowTrue = (bountyAppId: string, hunterAddress: string, ethAmount: string) => {
+  const handleCloseEscrowTrue = (bountyAppId: string, hunterAddress: string, tokenAddress: string, bountyAmount: string) => {
     // setOpenEscrow(false);
     setBountyAppId(bountyAppId);
     setHunterAddress(hunterAddress);
-    setBountyAmt(ethAmount);
+    setTokenAddressERC20(tokenAddress);
+    
+    if (tokenAddress === '0x0000000000000000000000000000000000000000') { // ETH Bounty
+      setBountyAmtETH(bountyAmount);
+      setBountyAmtERC20('0');
+    } else { // ERC20 Bounty
+      setBountyAmtETH('0');
+      setBountyAmtERC20(bountyAmount);
+    }
     // escrow?.();
   };
 
@@ -144,10 +157,11 @@ const Application: React.FC<Props> = props => {
     setOpenPay(false);
   };
 
-  const handleClosePayTrue = (bountyAppId: string, hunterAddress: string) => {
+  const handleClosePayTrue = (bountyAppId: string, hunterAddress: string, tokenAddress: string) => {
     // setOpenPay(false);
     setBountyAppId(bountyAppId);
     setHunterAddress(hunterAddress);
+    setTokenAddressERC20(tokenAddress);
     // payout?.();
   };
 
@@ -167,7 +181,7 @@ const Application: React.FC<Props> = props => {
     setOpenSettle(false);
   };
 
-  const handleCloseSettleTrue = (bountyAppId: string, hunterAddress: string, timestamp: number, ancillaryData: string, request: Request) => {
+  const handleCloseSettleTrue = (bountyAppId: string, hunterAddress: string, timestamp: number, ancillaryData: string, request: Request, tokenAddress: string) => {
     // setOpenSettle(false);
     setBountyAppId(bountyAppId);
     setHunterAddress(hunterAddress);
@@ -177,6 +191,8 @@ const Application: React.FC<Props> = props => {
       ancillaryData: ancillaryData,
       request: request
     });
+
+    setTokenAddressERC20(tokenAddress);
     // payoutIfDispute?.();
   };
 
@@ -248,7 +264,7 @@ const Application: React.FC<Props> = props => {
                       <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleCloseReject} autoFocus>Yes I want to</Button>
                   </DialogActions>
                 </Dialog>
-                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenEscrow(); handleCloseEscrowTrue(props.postId!, props.person, props.amount!);}}>Escrow</Button>
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenEscrow(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!);}}>Escrow</Button>
                 <Dialog
                   open={openEscrow}
                   onClose={handleCloseEscrowFalse}
@@ -299,7 +315,7 @@ const Application: React.FC<Props> = props => {
                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {initiateDispute?.(); setOpenContest(false);}} autoFocus disabled={!initiateDispute || isInitiateDisputeTxLoading}>{isInitiateDisputeTxLoading ? 'Initiating dispute...' : 'Yes I want to'}</Button>
                   </DialogActions>
                 </Dialog>
-                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenPay(); handleClosePayTrue(props.postId!, props.person);}}>Pay</Button>
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenPay(); handleClosePayTrue(props.postId!, props.person, props.tokenAddress!);}}>Pay</Button>
                 <Dialog
                   open={openPay}
                   onClose={handleClosePayFalse}
@@ -339,7 +355,7 @@ const Application: React.FC<Props> = props => {
                       <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleCloseSettleFalse} autoFocus>Yes I don't want to</Button> 
                   </DialogActions>
                 </Dialog>
-                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenSettle(); handleCloseSettleTrue(props.postId!, props.person, props.timestamp!, props.ancillaryData!, props.request!);}}>Settle</Button>
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenSettle(); handleCloseSettleTrue(props.postId!, props.person, props.timestamp!, props.ancillaryData!, props.request!, props.tokenAddress!);}}>Settle</Button>
                 <Dialog
                   open={openSettle}
                   onClose={handleCloseSettleFalse}

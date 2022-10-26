@@ -96,6 +96,8 @@ const MyBounties: NextPage = () => {
     const debouncedBountyAppId = useDebounce(bountyAppId, 10);
     const [creatorAddress, setCreatorAddress] = React.useState('');
     const debouncedCreatorAddress = useDebounce(creatorAddress, 10);
+    const [tokenAddressERC20, setTokenAddressERC20] = React.useState('');
+    const debouncedTokenAddressERC20 = useDebounce(tokenAddressERC20, 10);
     const [umaData, setUmaData] = React.useState({
         timestamp: 0,
         ancillaryData: '',
@@ -118,7 +120,7 @@ const MyBounties: NextPage = () => {
     const { data: hunterDisputeResponseTxData, isLoading: isHunterDisputeResponseTxLoading, isSuccess: isHunterDisputeResponseTxSuccess, error: hunterDisputeResponseTxError } = useWaitForTransaction({ hash: hunterDisputeResponseData?.hash, enabled: true, });
 
     // ForceHunterPayout Contract Interactions
-    const { config: forceHunterPayoutConfig } = usePrepareContractWrite({...contractConfig, functionName: 'forceHunterPayout', args: [debouncedBountyAppId, debouncedCreatorAddress], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedCreatorAddress),});
+    const { config: forceHunterPayoutConfig } = usePrepareContractWrite({...contractConfig, functionName: 'forceHunterPayout', args: [debouncedBountyAppId, debouncedCreatorAddress, debouncedTokenAddressERC20], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedCreatorAddress) && Boolean(debouncedTokenAddressERC20),});
     const { data: forceHunterPayoutData, error: forceHunterPayoutError, isLoading: isForceHunterPayoutLoading, isSuccess: isForceHunterPayoutSuccess, write: forceHunterPayout } = useContractWrite(forceHunterPayoutConfig);
     const { data: forceHunterPayoutTxData, isLoading: isForceHunterPayoutTxLoading, isSuccess: isForceHunterPayoutTxSuccess, error: forceHunterPayoutTxError } = useWaitForTransaction({ hash: forceHunterPayoutData?.hash, enabled: true, });
 
@@ -247,6 +249,8 @@ const MyBounties: NextPage = () => {
                             experience={postData.data.experience}
                             contact={postData.data.contact}
                             appLinks={postData.data.appLinks}
+                            tokenAddress={postData.data.tokenAddress}
+                            tokenSymbol={postData.data.tokenSymbol}
                             formName={"Submit"}
                             summary={"Please fill out this form to submit your work for this bounty!"}  
                             formButtons={["Cancel", "Submit"]}
