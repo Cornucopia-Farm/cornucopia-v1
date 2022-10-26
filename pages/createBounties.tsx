@@ -29,6 +29,7 @@ import styles from '../styles/Home.module.css';
 import Slider from '@mui/material/Slider';
 import { Typography } from '@mui/material';
 import { makeStyles, propsToClassKey } from '@mui/styles';
+import WelcomeCard from '../components/welcomeCard';
 
 // Bounty Stages for Creator:
 // 1. Posted (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.NoBounty); CHECK PROGRESS MAPPING
@@ -74,12 +75,6 @@ const CreateBounties: NextPage = () => {
     const { data: ensName } = useEnsName({ address, enabled: false, });
     const { data: signer, isError, isLoading } = useSigner();
     const { chain } = useNetwork();
-    
-    if (!isConnected) {
-        return (
-            <h2>Please Connect Your Wallet!!</h2>
-        );
-    }
 
     const [postedComponents, setPostedComponents] = React.useState(Array<JSX.Element>);
     const [appliedComponents, setAppliedComponents] = React.useState(Array<JSX.Element>);
@@ -288,7 +283,11 @@ const CreateBounties: NextPage = () => {
       
     const [stage, setStage] = React.useState(1);
 
-    if (!loading) {
+    if (!isConnected) {
+        return (
+            <WelcomeCard isConnected={isConnected}/>
+        );
+    } else if (!loading) {
         return (
             <div>
                 <Head>
@@ -299,35 +298,6 @@ const CreateBounties: NextPage = () => {
     
                 <main className={styles.background}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '160px', paddingRight: '160px', paddingTop: '24px', color: 'rgba(6, 72, 41, 0.85)' }}>
-                        {/* <Form
-                            creatorAddress={address!}
-                            formName={"Post Bounty"}
-                            summary={"Please fill out this form to create your bounty!"} 
-                            formButtons={["Cancel", "Post"]}
-                            formType={"createBounty"}
-                            tags={[
-                                {
-                                    name: "Content-Type",
-                                    value: "application/json"
-                                },
-                                {
-                                    name: "App-Name",
-                                    value: "Cornucopia-test"
-                                },
-                                {
-                                    name: "Form-Type",
-                                    value: "bounty-post"
-                                },
-                                {
-                                    name: "Creator-Address",
-                                    value: address!
-                                },
-                                {
-                                    name: "Chain",
-                                    value: chain?.network!
-                                }
-                            ]}
-                        />  */}
                         <Slider
                             aria-label="Restricted values"
                             defaultValue={0}
@@ -366,7 +336,6 @@ const CreateBounties: NextPage = () => {
                                 }
                             }}
                         />
-
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', }}> 
                             {stage === 1 && <h2 className={styles.h2}>Posted</h2>}
                             {stage === 2 && <h2 className={styles.h2}>Applied To</h2>}
@@ -414,94 +383,6 @@ const CreateBounties: NextPage = () => {
                             {stage === 6 && disputeRespondedToComponents}
                             {stage === 7 && finishedComponents}
                         </ClientOnly>
-                        {/* {stage === 1 && 
-                            <div>
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}> 
-                                    <h2 className={styles.h2}>Posted</h2>
-                                    <Form
-                                        creatorAddress={address!}
-                                        formName={"Post Bounty"}
-                                        summary={"Please fill out this form to create your bounty!"} 
-                                        formButtons={["Cancel", "Post"]}
-                                        formType={"createBounty"}
-                                        tags={[
-                                            {
-                                                name: "Content-Type",
-                                                value: "application/json"
-                                            },
-                                            {
-                                                name: "App-Name",
-                                                value: "Cornucopia-test"
-                                            },
-                                            {
-                                                name: "Form-Type",
-                                                value: "bounty-post"
-                                            },
-                                            {
-                                                name: "Creator-Address",
-                                                value: address!
-                                            },
-                                            {
-                                                name: "Chain",
-                                                value: chain?.network!
-                                            }
-                                        ]}
-                                    /> 
-                                </Box> 
-                                <h2 className={styles.h2}>Posted</h2>
-                                <ClientOnly>
-                                    {postedComponents}
-                                </ClientOnly>
-                            </div>
-                        } 
-                        {stage === 2 && 
-                            <div> 
-                                <h2 className={styles.h2}>Applied To</h2>
-                                <ClientOnly>
-                                    {appliedComponents}
-                                </ClientOnly>
-                            </div>
-                        }
-                        {stage === 3 && 
-                            <div> 
-                                <h2 className={styles.h2}>In Progress</h2>
-                                <ClientOnly>
-                                    {inProgressComponents}
-                                </ClientOnly>
-                            </div>
-                        }
-                        {stage === 4 && 
-                            <div> 
-                                <h2 className={styles.h2}>Submitted: Needs Approval</h2>
-                                <ClientOnly>
-                                    {submittedComponents}
-                                </ClientOnly>
-                            </div>
-                        }
-                        {stage === 5 && 
-                            <div> 
-                                <h2 className={styles.h2}>Dispute Initiated</h2>
-                                <ClientOnly>
-                                    {disputeInitiatedComponents}
-                                </ClientOnly>
-                            </div>
-                        }
-                        {stage === 6 && 
-                            <div> 
-                                <h2 className={styles.h2}>Dispute Responded To</h2>
-                                <ClientOnly>
-                                    {disputeRespondedToComponents}
-                                </ClientOnly>
-                            </div>
-                        }
-                        {stage === 7 && 
-                            <div> 
-                                <h2 className={styles.h2}>Finished</h2>
-                                <ClientOnly>
-                                    {finishedComponents}
-                                </ClientOnly>
-                            </div>
-                        } */}
                     </Box>
                 </main>
             </div>

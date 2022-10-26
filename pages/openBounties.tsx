@@ -29,6 +29,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Link from '@mui/material/Link';
+import WelcomeCard from '../components/welcomeCard';
 
 type ArData = {
     address: string;
@@ -44,7 +45,7 @@ type ArData = {
 };
 
 const OpenBounties: NextPage = () => {
-    const { address } = useAccount();
+    const { address, isConnected } = useAccount();
     const { data: ensName } = useEnsName({ address, enabled: false, });
     const { chain } = useNetwork();
 
@@ -170,8 +171,11 @@ const OpenBounties: NextPage = () => {
         );
     }
     
-    
-    if (!loading && openBountyPosts.length > 0) {
+    if (!isConnected) {
+        return (
+            <WelcomeCard isConnected={isConnected}/>
+        );
+    } else if (!loading && openBountyPosts.length > 0) {
         return (
             <div>
                 <Head>
