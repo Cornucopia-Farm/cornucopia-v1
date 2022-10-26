@@ -14,13 +14,13 @@ function Icon() {
 
         gsap.fromTo(cow.current, {
             paused: true,
-            x: 0,
+            x: -300,
             repeat: -1,
-            ease:"none"
+            ease:"linear.out"
           },{
-            x: 1000,
+            x: 1500,
             repeat: -1,
-            ease:"none",
+            ease:"linear.out",
             duration: 30
           });
 
@@ -116,7 +116,7 @@ function Icon() {
       version="1.1"
       viewBox="0 0 1332.014 947.007"
       xmlSpace="preserve"
-      style={{ width: "100%", height: "100%" }}
+      style={{ width: "100%", height: "100%", marginTop: "-45%"}}
       className="cow"
     >
       <g className="s-cow-move-right" ref={cow}>

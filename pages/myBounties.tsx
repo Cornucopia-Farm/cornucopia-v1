@@ -32,6 +32,8 @@ import SimpleSnackBar from '../components/simpleSnackBar';
 import { Request, getUMAEventData } from '../getUMAEventData';
 import styles from '../styles/Home.module.css';
 import Slider from '@mui/material/Slider';
+import Link from 'next/link';
+import WelcomeCard from '../components/welcomeCard';
 
 // Bounty Stages for Hunter:
 // 1. Applied (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.NoBounty); CHECK PROGRESS MAPPING
@@ -81,12 +83,6 @@ const MyBounties: NextPage = () => {
     const { data: signer, isError, isLoading } = useSigner();
     const provider = useProvider();
     const { chain } = useNetwork();
-    
-    if (!isConnected) {
-        return (
-            <h2>Please Connect Your Wallet!!</h2>
-        );
-    }
 
     const escrowContract = useContract({...contractConfig, signerOrProvider: signer, });
     const umaContract = useContract({...umaContractConfig, signerOrProvider: signer, });
@@ -510,8 +506,11 @@ const MyBounties: NextPage = () => {
 
     const [stage, setStage] = React.useState(1);
 
-
-    if (!loading && !submittedLoading) {
+    if (!isConnected) {
+        return (
+            <WelcomeCard isConnected={isConnected}/>
+        );
+    } else if (!loading && !submittedLoading) {
         return (
             <div className={styles.background}>
                 <Head>
@@ -627,6 +626,7 @@ const MyBounties: NextPage = () => {
             </div>
         );
     }
+    
     return (
         <Box sx={{ marginLeft: 'auto', marginRight: 'auto' }}> 
             <TailSpin color={"rgb(151, 208, 252)"}/>
