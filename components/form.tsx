@@ -18,6 +18,7 @@ import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // a
 import useDebounce from './useDebounce';
 import SimpleSnackBar from './simpleSnackBar';
 import styles from '../styles/Home.module.css';
+import MenuItem from '@mui/material/MenuItem';
 
 type Props = {
     creatorAddress: string;
@@ -38,6 +39,8 @@ type Props = {
     experience?: string;
     contact?: string;
     appLinks?: Array<string>;
+    tokenAddress?: string;
+    tokenSymbol?: string;
     // refetch?: () => any;
 };
 
@@ -55,6 +58,8 @@ type ArweaveData = {
     experience?: string;
     contact?: string;
     workLinks?: Array<string>;
+    tokenAddress?: string;
+    tokenSymbol?: string; 
 };
 
 type Tags = {
@@ -76,7 +81,28 @@ const defaultValues: ArweaveData = {
     experience: "",
     contact: "",
     workLinks: [""],
+    tokenAddress: "",
+    tokenSymbol: ""
 };
+
+const tokens = [
+    {
+      value: '0x0000000000000000000000000000000000000000', // Set Address for ETH to zero address b/c if zero address then frontend knows you're sending ETH
+      label: 'ETH',
+    },
+    {
+      value: 'EUR',
+      label: '€',
+    },
+    {
+      value: 'BTC',
+      label: '฿',
+    },
+    {
+      value: 'JPY',
+      label: '¥',
+    },
+];
 
 // Escrow Contract Config
 const contractConfig = {
@@ -118,6 +144,17 @@ const Form: React.FC<Props> = props => {
         });
     };
 
+    const handleInputChangeToken = (e: any) => {
+        // const { name, value } = e.target;
+        const tokenAddress = e.target.value;
+        const tokenSymbol = e.target.label;
+        setFormValues({
+          ...formValues,
+          [tokenAddress]: tokenAddress,
+          [tokenSymbol]: tokenSymbol,
+        });
+    };
+
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -144,6 +181,9 @@ const Form: React.FC<Props> = props => {
         if (props.experience) formValues.experience = props.experience;
         if (props.contact) formValues.contact = props.contact;
         if (props.appLinks) formValues.appLinks = props.appLinks;
+        if (props.tokenAddress) formValues.tokenAddress = props.tokenAddress;
+        if (props.tokenSymbol) formValues.tokenSymbol = props.tokenSymbol;
+
         setArweaveTrigger(!arweaveTrigger); // Trigger useeffect to call arweave upload api
         setOpen(false);
         setOpenSubmitCheck(false);
@@ -270,6 +310,48 @@ const Form: React.FC<Props> = props => {
                             },
                         }} 
                     />
+                    <TextField // Fix Dropdown Menu Formatting!!
+                        autoFocus
+                        margin="dense"
+                        id="token-input"
+                        name="token"
+                        label="Token"
+                        value={formValues.tokenAddress}
+                        onChange={handleInputChangeToken}
+                        select
+                        fullWidth
+                        variant="standard"
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            },
+                        }}
+                    >
+                        {tokens.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
                     <TextField
                         autoFocus
                         margin="dense"

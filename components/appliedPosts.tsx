@@ -90,6 +90,7 @@ const AppliedPosts: React.FC<Props> = props => {
                         appStatus={"applied"}
                         postId={postData.data.postId}
                         amount={postData.data.amount}
+                        tokenAddress={postData.data.tokenAddress}
                     />
                 );
             } 
