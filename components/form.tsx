@@ -19,6 +19,14 @@ import useDebounce from './useDebounce';
 import SimpleSnackBar from './simpleSnackBar';
 import styles from '../styles/Home.module.css';
 import MenuItem from '@mui/material/MenuItem';
+import EthTokenList from '../ethTokenList.json';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import MenuList from '@mui/material/MenuList';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import List from '@mui/material/List';
+import Paper from '@mui/material/Paper';
+import Menu from '@mui/material/Menu';
 
 type Props = {
     creatorAddress: string;
@@ -41,6 +49,7 @@ type Props = {
     appLinks?: Array<string>;
     tokenAddress?: string;
     tokenSymbol?: string;
+    tokenDecimals?: number;
     // refetch?: () => any;
 };
 
@@ -60,6 +69,7 @@ type ArweaveData = {
     workLinks?: Array<string>;
     tokenAddress?: string;
     tokenSymbol?: string; 
+    tokenDecimals?: number;
 };
 
 type Tags = {
@@ -82,7 +92,8 @@ const defaultValues: ArweaveData = {
     contact: "",
     workLinks: [""],
     tokenAddress: "",
-    tokenSymbol: ""
+    tokenSymbol: "",
+    tokenDecimals: undefined
 };
 
 const tokens = [
@@ -103,6 +114,9 @@ const tokens = [
       label: '¥',
     },
 ];
+
+const ethTokens = EthTokenList['tokens'];
+
 
 // Escrow Contract Config
 const contractConfig = {
@@ -138,6 +152,8 @@ const Form: React.FC<Props> = props => {
 
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
+        console.log(value)
+        console.log()
         setFormValues({
           ...formValues,
           [name]: value,
@@ -146,13 +162,25 @@ const Form: React.FC<Props> = props => {
 
     const handleInputChangeToken = (e: any) => {
         // const { name, value } = e.target;
+        console.log("push")
+        console.log(e.target)
+        // const tokenAddress = e.target.address;
+        // const tokenSymbol = e.target.symbol;
         const tokenAddress = e.target.value;
-        const tokenSymbol = e.target.label;
+        // console.log(tokenAddress)
+        // console.log(tokenSymbol)
+        // setOpenTokenList(false);
+        const tokenObj = ethTokens.filter((obj: any) => {
+            return obj.address === tokenAddress;
+        }); // Returns Array of matches so we take first one as there will only be one match
         setFormValues({
           ...formValues,
-          [tokenAddress]: tokenAddress,
-          [tokenSymbol]: tokenSymbol,
+          ["tokenAddress"]: tokenAddress,
+          ["tokenSymbol"]: tokenObj[0].symbol,
+          ["tokenDecimals"]: tokenObj[0].decimals,
         });
+
+        console.log(formValues)
     };
 
     const handleClickOpen = () => {
@@ -183,6 +211,7 @@ const Form: React.FC<Props> = props => {
         if (props.appLinks) formValues.appLinks = props.appLinks;
         if (props.tokenAddress) formValues.tokenAddress = props.tokenAddress;
         if (props.tokenSymbol) formValues.tokenSymbol = props.tokenSymbol;
+        if (props.tokenDecimals) formValues.tokenDecimals = props.tokenDecimals;
 
         setArweaveTrigger(!arweaveTrigger); // Trigger useeffect to call arweave upload api
         setOpen(false);
@@ -314,7 +343,7 @@ const Form: React.FC<Props> = props => {
                         autoFocus
                         margin="dense"
                         id="token-input"
-                        name="token"
+                        name="tokenAddress"
                         label="Token"
                         value={formValues.tokenAddress}
                         onChange={handleInputChangeToken}
@@ -344,13 +373,23 @@ const Form: React.FC<Props> = props => {
                                     borderBottomColor: 'rgb(248, 215, 154) !important',
                                 }
                             },
+                            '& .MuiSelect-icon': {
+                                color: 'rgb(233, 233, 198)'
+                            },
                         }}
                     >
-                        {tokens.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                                {option.label}
+                        {/* <MenuList sx={{  '& .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper': { backgroundColor: 'rgb(23, 21, 20) !important', } }}>  */}
+                        {ethTokens.map((token) => (
+                            <MenuItem key={token.address} value={token.address}>
+                                <Box sx={{ display: 'flex', }}> 
+                                <ListItemIcon>
+                                    <img width="25px" height="25px" src={token.logoURI} />
+                                </ListItemIcon>
+                                <Typography sx={{color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk'}}>{token.symbol}</Typography>
+                                </Box>
                             </MenuItem>
                         ))}
+                        {/* </MenuList> */}
                     </TextField>
                     <TextField
                         autoFocus

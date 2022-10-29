@@ -34,6 +34,7 @@ const PostedPosts: React.FC<Props> = props => {
                         bountyName={postData.data.title}
                         amount={postData.data.amount}
                         arweaveHash={openBountyId}
+                        tokenSymbol={postData.data.tokenSymbol}
                     />
                 );
             }

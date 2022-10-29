@@ -79,6 +79,7 @@ const OpenBounties: NextPage = () => {
                     amount={postData.data.amount}
                     arweaveHash={openBountyId}
                     disputes={false} 
+                    tokenSymbol={postData.data.tokenSymbol}
                 >
                     <Form 
                         creatorAddress={postData.data.creatorAddress}
@@ -92,6 +93,7 @@ const OpenBounties: NextPage = () => {
                         amount={postData.data.amount}
                         tokenAddress={postData.data.tokenAddress}
                         tokenSymbol={postData.data.tokenSymbol}
+                        tokenDecimals={postData.data.tokenDecimals}
                         formName={"Apply"}
                         summary={"Please fill out this form to apply to this bounty!"}  
                         formButtons={["Cancel", "Apply"]}

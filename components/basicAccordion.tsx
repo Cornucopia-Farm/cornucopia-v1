@@ -22,6 +22,7 @@ type Props = { // need to change bounty card to specify which component it is fo
   workLinks?: Array<string>;
   disputes: boolean;
   children?: React.ReactNode;
+  tokenSymbol: string;
 };
 
 const BasicAccordion: React.FC<Props> = props => {
@@ -70,7 +71,7 @@ const BasicAccordion: React.FC<Props> = props => {
             <Typography className={styles.h2} sx={{ color: '#064829' }}><Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
           </Box>
           <Typography className={styles.h2} sx={{ width: '45%', flexShrink: 0, color: '#064829' }}>{props.bountyName}</Typography> 
-          <Typography className={styles.h2} sx={{ color: '#064829' }}>{props.amount} ETH</Typography> 
+          <Typography className={styles.h2} sx={{ color: '#064829' }}>{props.amount} {props.tokenSymbol}</Typography> 
             
         </AccordionSummary>
         <AccordionDetails >
