@@ -221,6 +221,7 @@ const MyBounties: NextPage = () => {
                         amount={postData.data.amount}
                         arweaveHash={openBountyId}
                         disputes={false} 
+                        tokenSymbol={postData.data.tokenSymbol}
                     />
                 );
             } else if ( isEscrowed.length > 0 ) { // Case 2: In Progress
@@ -235,6 +236,7 @@ const MyBounties: NextPage = () => {
                         amount={postData.data.amount}
                         arweaveHash={openBountyId}
                         disputes={false} 
+                        tokenSymbol={postData.data.tokenSymbol}
                     >
                         <Form  
                             creatorAddress={postData.data.creatorAddress}
@@ -251,6 +253,7 @@ const MyBounties: NextPage = () => {
                             appLinks={postData.data.appLinks}
                             tokenAddress={postData.data.tokenAddress}
                             tokenSymbol={postData.data.tokenSymbol}
+                            tokenDecimals={postData.data.tokenDecimals}
                             formName={"Submit"}
                             summary={"Please fill out this form to submit your work for this bounty!"}  
                             formButtons={["Cancel", "Submit"]}
@@ -330,6 +333,7 @@ const MyBounties: NextPage = () => {
                         arweaveHash={openBountyId}
                         workLinks={postData.data.workLinks}
                         disputes={false} 
+                        tokenSymbol={postData.data.tokenSymbol}
                     />
                 );
             // } else if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 2 ) { // Case 4: Hunter needs to respond to creator dispute; need to send tx associated with this!!
@@ -346,6 +350,7 @@ const MyBounties: NextPage = () => {
                         arweaveHash={openBountyId}
                         workLinks={postData.data.workLinks}
                         disputes={false} 
+                        tokenSymbol={postData.data.tokenSymbol}
                     >
                         <div> 
                             <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }}  onClick={() => {handleClickOpenDispute(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress);}}>Dispute</Button>
@@ -389,6 +394,7 @@ const MyBounties: NextPage = () => {
                         arweaveHash={openBountyId}
                         workLinks={postData.data.workLinks}
                         disputes={false} 
+                        tokenSymbol={postData.data.tokenSymbol}
                     />
                 );
             // } else if ( ispayoutExpirationSuccess && blockNumber && payoutExpirationData! as unknown as number > blockNumber! && bountyProgressData! as unknown as number === 1) { // Case 6: Creator hasn't payed or disputed work within 2 weeks after work submission; assume that payoutExpirationData is a BigNumber
@@ -405,6 +411,7 @@ const MyBounties: NextPage = () => {
                         arweaveHash={openBountyId}
                         workLinks={postData.data.workLinks}
                         disputes={false} 
+                        tokenSymbol={postData.data.tokenSymbol}
                     >
                         <div> 
                             <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenForce(); handleCloseForceTrue(postData.data.postId, postData.data.creatorAddress);}}>Force Claim</Button>
@@ -446,6 +453,7 @@ const MyBounties: NextPage = () => {
                         arweaveHash={openBountyId}
                         workLinks={postData.data.workLinks}
                         disputes={false} 
+                        tokenSymbol={postData.data.tokenSymbol}
                     />
                 );
             }

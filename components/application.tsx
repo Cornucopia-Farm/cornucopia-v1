@@ -20,6 +20,7 @@ import SimpleSnackBar from './simpleSnackBar';
 import { Request } from '../getUMAEventData';
 import wethABI from '../WETH9.json';
 import styles from '../styles/Home.module.css';
+import { StringNullableChain } from 'lodash';
 
 type Props = {
     person: string;
@@ -36,6 +37,7 @@ type Props = {
     ancillaryData?: string; // Ancillary Data in byte form from UMA event used during payoutIfDispute call
     request?: Request; 
     tokenAddress?: string;
+    tokenDecimals?: number; 
 };
 
 // Escrow Contract Config
@@ -68,6 +70,8 @@ const Application: React.FC<Props> = props => {
   const debouncedBountyAmtETH = useDebounce(bountyAmtETH, 10);
   const [bountyAmtERC20, setBountyAmtERC20] = React.useState('');
   const debouncedBountyAmtERC20 = useDebounce(bountyAmtERC20, 10);
+  const [decimals, setDecimals] = React.useState(0);
+  const debouncedDecimals = useDebounce(decimals, 10);
   const bountyExpirationTime = 2*7*24*60*60;
 
   // Submitted State
@@ -88,7 +92,7 @@ const Application: React.FC<Props> = props => {
 
   // Applied Contract Interactions
   // set enabled to be this boolean triple so that usePrepareContractWrite doesn't run before these vars have been assigned
-  const { config: escrowConfig } = usePrepareContractWrite({...contractConfig, functionName: 'escrow', args: [debouncedBountyAppId, debouncedHunterAddress, bountyExpirationTime, debouncedTokenAddressERC20, debouncedBountyAmtERC20], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedBountyAmtETH) && Boolean(debouncedTokenAddressERC20) && Boolean(debouncedBountyAmtERC20), overrides: {value: ethers.utils.parseEther(debouncedBountyAmtETH || '0')}});
+  const { config: escrowConfig } = usePrepareContractWrite({...contractConfig, functionName: 'escrow', args: [debouncedBountyAppId, debouncedHunterAddress, bountyExpirationTime, debouncedTokenAddressERC20, ethers.utils.parseUnits(debouncedBountyAmtERC20, debouncedDecimals)], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedBountyAmtETH) && Boolean(debouncedTokenAddressERC20) && Boolean(debouncedBountyAmtERC20) && Boolean(debouncedDecimals), overrides: {value: ethers.utils.parseEther(debouncedBountyAmtETH || '0')}});
   const { data: escrowData, error: escrowError, isLoading: isEscrowLoading, isSuccess: isEscrowSuccess, write: escrow } = useContractWrite(escrowConfig);
   const { data: escrowTxData, isLoading: isEscrowTxLoading, isSuccess: isEscrowTxSuccess, error: escrowTxError } = useWaitForTransaction({ hash: escrowData?.hash, enabled: true,});
 
@@ -119,11 +123,12 @@ const Application: React.FC<Props> = props => {
     setOpenEscrow(true);
   };
 
-  const handleCloseEscrowTrue = (bountyAppId: string, hunterAddress: string, tokenAddress: string, bountyAmount: string) => {
+  const handleCloseEscrowTrue = (bountyAppId: string, hunterAddress: string, tokenAddress: string, bountyAmount: string, tokenDecimals: number) => {
     // setOpenEscrow(false);
     setBountyAppId(bountyAppId);
     setHunterAddress(hunterAddress);
     setTokenAddressERC20(tokenAddress);
+    setDecimals(tokenDecimals);
     
     if (tokenAddress === '0x0000000000000000000000000000000000000000') { // ETH Bounty
       setBountyAmtETH(bountyAmount);
@@ -264,7 +269,7 @@ const Application: React.FC<Props> = props => {
                       <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleCloseReject} autoFocus>Yes I want to</Button>
                   </DialogActions>
                 </Dialog>
-                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenEscrow(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!);}}>Escrow</Button>
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenEscrow(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!);}}>Escrow</Button>
                 <Dialog
                   open={openEscrow}
                   onClose={handleCloseEscrowFalse}

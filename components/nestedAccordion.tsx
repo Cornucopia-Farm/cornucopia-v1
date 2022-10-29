@@ -24,6 +24,7 @@ type Props = {
   workLinks?: Array<string>;
   // children?: React.ReactNode;
   applications?: Array<JSX.Element>;
+  tokenSymbol: string;
 };
 const NestedAccordion: React.FC<Props> = props => {
   return (
@@ -35,7 +36,7 @@ const NestedAccordion: React.FC<Props> = props => {
           id="panel1a-header"
         >
             <Typography className={styles.h2} sx={{ width: '90%', flexShrink: 0, color: '#064829' }}>{props.bountyName}</Typography>
-            <Typography className={styles.h2} sx={{ color: '#064829' }}>{props.amount} ETH</Typography>     
+            <Typography className={styles.h2} sx={{ color: '#064829' }}>{props.amount} {props.tokenSymbol}</Typography>     
         </AccordionSummary>
         <AccordionDetails>
           <BountyCard 

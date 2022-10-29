@@ -130,6 +130,7 @@ const DisputeRespondedToPosts: React.FC<Props> = props => {
                 bountyName={thisPostData[0].data.title}
                 amount={thisPostData[0].data.amount}
                 arweaveHash={thisPostData[0].data.postId} // Arweave Hash of Original Creator Post
+                tokenSymbol={thisPostData[0].data.tokenSymbol}
                 applications={disputeRespondedToBountyPosts}
             />
         );
