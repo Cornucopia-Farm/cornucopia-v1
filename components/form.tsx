@@ -378,7 +378,7 @@ const Form: React.FC<Props> = props => {
                             },
                         }}
                     >
-                        {/* <MenuList sx={{  '& .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper': { backgroundColor: 'rgb(23, 21, 20) !important', } }}>  */}
+                        {/* <Box sx={{ backgroundColor: 'rgb(23, 21, 20) !important', '& .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper': { backgroundColor: 'rgb(23, 21, 20) !important', } }}>  */}
                         {ethTokens.map((token) => (
                             <MenuItem key={token.address} value={token.address}>
                                 <Box sx={{ display: 'flex', }}> 
@@ -389,7 +389,7 @@ const Form: React.FC<Props> = props => {
                                 </Box>
                             </MenuItem>
                         ))}
-                        {/* </MenuList> */}
+                        {/* </Box> */}
                     </TextField>
                     <TextField
                         autoFocus
@@ -509,7 +509,7 @@ const Form: React.FC<Props> = props => {
                         onChange={handleInputChange}
                         type="text"
                         fullWidth
-                        variant="standard"
+                        variant="standard" 
                         sx={{ 
                             '& .MuiInputBase-input': { 
                                 color: 'rgb(248, 215, 154)', 

@@ -12,6 +12,18 @@
         }
     }
     },
+    {
+      "name": "Wrapped Ether Test",
+      "address": "0xc4740A7D685D3a940b3CFbdAD1cA261701888EC6",
+      "symbol": "WETHTest",
+      "decimals": 18,
+      "chainId": 1,
+      "logoURI": "https://tokens.1inch.io/0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee.png",
+      "extensions": {
+          "bridgeInfo": {
+          }
+      }
+      },
  {
     "name": "Wrapped Ether",
     "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
