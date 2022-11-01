@@ -14,13 +14,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Link from '@mui/material/Link';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction, useContract, useEnsName, useNetwork } from 'wagmi';
-import { ContractInterface, ethers } from 'ethers';
+import { BigNumber, ContractInterface, ethers } from 'ethers';
 import useDebounce from './useDebounce';
 import SimpleSnackBar from './simpleSnackBar';
 import { Request } from '../getUMAEventData';
 import wethABI from '../WETH9.json';
 import styles from '../styles/Home.module.css';
-import { StringNullableChain } from 'lodash';
 
 type Props = {
     person: string;
@@ -66,11 +65,11 @@ const Application: React.FC<Props> = props => {
   const debouncedHunterAddress = useDebounce(hunterAddress, 10);
   const [tokenAddressERC20, setTokenAddressERC20] = React.useState('');
   const debouncedTokenAddressERC20 = useDebounce(tokenAddressERC20, 10);
-  const [bountyAmtETH, setBountyAmtETH] = React.useState('');
+  const [bountyAmtETH, setBountyAmtETH] = React.useState('' as unknown as BigNumber);
   const debouncedBountyAmtETH = useDebounce(bountyAmtETH, 10);
-  const [bountyAmtERC20, setBountyAmtERC20] = React.useState('');
+  const [bountyAmtERC20, setBountyAmtERC20] = React.useState('' as unknown as BigNumber);
   const debouncedBountyAmtERC20 = useDebounce(bountyAmtERC20, 10);
-  const [decimals, setDecimals] = React.useState(0);
+  const [decimals, setDecimals] = React.useState(null);
   const debouncedDecimals = useDebounce(decimals, 10);
   const bountyExpirationTime = 2*7*24*60*60;
 
@@ -90,9 +89,10 @@ const Application: React.FC<Props> = props => {
   const oracleAddress = process.env.NEXT_PUBLIC_OO_ADDRESS!; // Goerli OO
   const wethContract = useContract(wethContractConfig);
 
+  console.log(debouncedDecimals)
   // Applied Contract Interactions
   // set enabled to be this boolean triple so that usePrepareContractWrite doesn't run before these vars have been assigned
-  const { config: escrowConfig } = usePrepareContractWrite({...contractConfig, functionName: 'escrow', args: [debouncedBountyAppId, debouncedHunterAddress, bountyExpirationTime, debouncedTokenAddressERC20, ethers.utils.parseUnits(debouncedBountyAmtERC20, debouncedDecimals)], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedBountyAmtETH) && Boolean(debouncedTokenAddressERC20) && Boolean(debouncedBountyAmtERC20) && Boolean(debouncedDecimals), overrides: {value: ethers.utils.parseEther(debouncedBountyAmtETH || '0')}});
+  const { config: escrowConfig } = usePrepareContractWrite({...contractConfig, functionName: 'escrow', args: [debouncedBountyAppId, debouncedHunterAddress, bountyExpirationTime, debouncedTokenAddressERC20, debouncedBountyAmtERC20], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedBountyAmtETH) && Boolean(debouncedTokenAddressERC20) && Boolean(debouncedBountyAmtERC20), overrides: {value: debouncedBountyAmtETH }});
   const { data: escrowData, error: escrowError, isLoading: isEscrowLoading, isSuccess: isEscrowSuccess, write: escrow } = useContractWrite(escrowConfig);
   const { data: escrowTxData, isLoading: isEscrowTxLoading, isSuccess: isEscrowTxSuccess, error: escrowTxError } = useWaitForTransaction({ hash: escrowData?.hash, enabled: true,});
 
@@ -128,14 +128,14 @@ const Application: React.FC<Props> = props => {
     setBountyAppId(bountyAppId);
     setHunterAddress(hunterAddress);
     setTokenAddressERC20(tokenAddress);
-    setDecimals(tokenDecimals);
+    // setDecimals(tokenDecimals);
     
     if (tokenAddress === '0x0000000000000000000000000000000000000000') { // ETH Bounty
-      setBountyAmtETH(bountyAmount);
-      setBountyAmtERC20('0');
+      setBountyAmtETH(ethers.utils.parseEther(bountyAmount));
+      setBountyAmtERC20(ethers.utils.parseUnits('0', 18));
     } else { // ERC20 Bounty
-      setBountyAmtETH('0');
-      setBountyAmtERC20(bountyAmount);
+      setBountyAmtETH(ethers.utils.parseEther('0'));
+      setBountyAmtERC20(ethers.utils.parseUnits(bountyAmount, tokenDecimals));
     }
     // escrow?.();
   };

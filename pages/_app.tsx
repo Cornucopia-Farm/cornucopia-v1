@@ -82,10 +82,10 @@ type AppPropsWithLayout = AppProps & {
 // }
 
 const { chains, provider, webSocketProvider  } = configureChains(
-  [chain.mainnet, chain.polygon, chain.arbitrum, chain.optimism, chain.goerli, chain.localhost], // chain.localhost,
+  [chain.mainnet, chain.polygon, chain.arbitrum, chain.optimism, chain.goerli], // chain.localhost,
   [
-    // alchemyProvider({ apiKey: '8kuy75lJC7Rq_P7tpu-n2_q1cOJ0nctf' }),
-    publicProvider(),
+    alchemyProvider({ apiKey: '8kuy75lJC7Rq_P7tpu-n2_q1cOJ0nctf' }),
+    // publicProvider(),
     // jsonRpcProvider({ rpc: (chain: any) => ({ http: `http://localhost:8545/ ` })}),
   ]
 );
