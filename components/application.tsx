@@ -13,13 +13,22 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Link from '@mui/material/Link';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
-import { useContractWrite, usePrepareContractWrite, useWaitForTransaction, useContract, useEnsName, useNetwork } from 'wagmi';
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction, useContract, useEnsName, useNetwork, useAccount, useContractRead } from 'wagmi';
 import { BigNumber, ContractInterface, ethers } from 'ethers';
 import useDebounce from './useDebounce';
 import SimpleSnackBar from './simpleSnackBar';
 import { Request } from '../getUMAEventData';
 import wethABI from '../WETH9.json';
 import styles from '../styles/Home.module.css';
+import IncreaseAllowance from './increaseAllowance';
+import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
+
+// TODO: 
+// Finish increase allowance logic
+// Check in this component if you need to increase and if so call the component otherwise don't; 
+// The component should render above the button which will hopefully block it out and all that's needed if for the debounced erc20 
+// Address to be logged and then a bool for the increaseAllowance popup to show should then be passed to it
+// Then below the button can proceed as usual
 
 type Props = {
     person: string;
@@ -55,10 +64,12 @@ const Application: React.FC<Props> = props => {
 
   const { data: ensName } = useEnsName({ address: props.person });
   const { chain } = useNetwork();
+  const { address, isConnected } = useAccount();
 
   // Applied State
   const [openReject, setOpenReject] = React.useState(false);
   const [openEscrow, setOpenEscrow] = React.useState(false);
+  const [allowanceIncreased, setAllowanceIncreased] = React.useState(false);
   const [bountyAppId, setBountyAppId] = React.useState('');
   const debouncedBountyAppId = useDebounce(bountyAppId, 10); // use debounce makes it so that usePrepareContractWrite is only called every 500ms by limiting bountyAppId to be updated every 500ms; prevent getting RPC rate-limited!
   const [hunterAddress, setHunterAddress] = React.useState('');
@@ -89,10 +100,9 @@ const Application: React.FC<Props> = props => {
   const oracleAddress = process.env.NEXT_PUBLIC_OO_ADDRESS!; // Goerli OO
   const wethContract = useContract(wethContractConfig);
 
-  console.log(debouncedDecimals)
   // Applied Contract Interactions
   // set enabled to be this boolean triple so that usePrepareContractWrite doesn't run before these vars have been assigned
-  const { config: escrowConfig } = usePrepareContractWrite({...contractConfig, functionName: 'escrow', args: [debouncedBountyAppId, debouncedHunterAddress, bountyExpirationTime, debouncedTokenAddressERC20, debouncedBountyAmtERC20], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedBountyAmtETH) && Boolean(debouncedTokenAddressERC20) && Boolean(debouncedBountyAmtERC20), overrides: {value: debouncedBountyAmtETH }});
+  const { config: escrowConfig } = usePrepareContractWrite({...contractConfig, functionName: 'escrow', args: [debouncedBountyAppId, debouncedHunterAddress, bountyExpirationTime, debouncedTokenAddressERC20, debouncedBountyAmtERC20], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedBountyAmtETH) && Boolean(debouncedTokenAddressERC20) && Boolean(debouncedBountyAmtERC20) && Boolean(allowanceIncreased), overrides: {value: debouncedBountyAmtETH }});
   const { data: escrowData, error: escrowError, isLoading: isEscrowLoading, isSuccess: isEscrowSuccess, write: escrow } = useContractWrite(escrowConfig);
   const { data: escrowTxData, isLoading: isEscrowTxLoading, isSuccess: isEscrowTxSuccess, error: escrowTxError } = useWaitForTransaction({ hash: escrowData?.hash, enabled: true,});
 
@@ -201,6 +211,16 @@ const Application: React.FC<Props> = props => {
     // payoutIfDispute?.();
   };
 
+  const handleIncreasedAllowance = () => {
+    setAllowanceIncreased(true);
+  };
+
+  // const handleCloseIncreaseAllowanceAlwaysTrue = () => {
+
+  // };
+  
+
+
   const blockExplorer = (network: any) => {
     if (network === 'polygon') {
       return 'https://polygonscan.com/address/'
@@ -269,7 +289,16 @@ const Application: React.FC<Props> = props => {
                       <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleCloseReject} autoFocus>Yes I want to</Button>
                   </DialogActions>
                 </Dialog>
-                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenEscrow(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!);}}>Escrow</Button>
+                {/* <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenEscrow(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!);}}>Escrow</Button> */}
+                  {props.tokenAddress! !== '0x0000000000000000000000000000000000000000' &&
+                    <>
+                      <IncreaseAllowance erc20Address={props.tokenAddress!} ownerAddress={address!} amount={ethers.utils.parseUnits(props.amount!, props.tokenDecimals!)} bountyStage={'escrow'} handleIncreasedAllowance={handleIncreasedAllowance} />
+                      <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenEscrow(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!);}}>Escrow</Button>
+                    </>
+                  } 
+                  {props.tokenAddress! === '0x0000000000000000000000000000000000000000' &&
+                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenEscrow(); handleIncreasedAllowance(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!);}}>Escrow</Button>
+                  }
                 <Dialog
                   open={openEscrow}
                   onClose={handleCloseEscrowFalse}
@@ -288,7 +317,8 @@ const Application: React.FC<Props> = props => {
                   <DialogActions className={styles.formHeader}>
                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseEscrowFalse}>No I don't</Button>
                     {/* <Button onClick={() => handleCloseEscrowTrue(props.postId!, props.person, props.amount!)} autoFocus>Yes I want to</Button> */}
-                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {escrow?.(); setOpenEscrow(false);}} autoFocus disabled={!escrow || isEscrowTxLoading}>{isEscrowTxLoading ? 'Escrowing...' : 'Yes I want to'}</Button>
+                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {escrow?.(); setOpenEscrow(false);}} autoFocus disabled={!escrow || isEscrowTxLoading}>{isEscrowTxLoading ? 'Escrowing...' : 'Yes I want to'}
+                    </Button>
                   </DialogActions>
                 </Dialog>
               </div>
