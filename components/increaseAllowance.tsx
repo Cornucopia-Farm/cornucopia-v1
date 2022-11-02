@@ -34,8 +34,6 @@ const IncreaseAllowance: React.FC<Props> = props => {
     const escrowAddress = process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
     const hexAlwaysApprove = '0x8000000000000000000000000000000000000000000000000000000000000000';
 
-    // const erc20Contract = useContract(erc20ContractConfig);
-
     const { config: increaseAllowanceConfig } = usePrepareContractWrite({...erc20ContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmt], enabled: Boolean(debouncedAllowanceAmt), });
     const { data: increaseAllowanceData, error: increaseAllowanceError, isLoading: isIncreaseAllowanceLoading, isSuccess: isIncreaseAllowanceSuccess, write: increaseAllowance } = useContractWrite(increaseAllowanceConfig);
     const { data: increaseAllowanceTxData, isLoading: isIncreaseAllowanceTxLoading, isSuccess: isIncreaseAllowanceTxSuccess, error: increaseAllowanceTxError } = useWaitForTransaction({ hash: increaseAllowanceData?.hash, enabled: true,});
