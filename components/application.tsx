@@ -30,6 +30,12 @@ import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
 // Address to be logged and then a bool for the increaseAllowance popup to show should then be passed to it
 // Then below the button can proceed as usual
 
+// Need to fix timing of when increase allowance pops up--tricky bc we just render it ontop of the button once it's pressed but the button also does 
+// some action so we get a bad loop--only two cases so I think that it's simplier to just move the component logic up into application here
+// otherwise we're getting a lot of rerenders; using readContract is working well so I think that we could just use that; easy bc then preparecontract 
+// write needed for escrow can just be called from the increaseallowance function in the case that it shows and will otherwise be how it normally is 
+// from the escrow function itself!
+
 type Props = {
     person: string;
     experience: string;
@@ -211,6 +217,45 @@ const Application: React.FC<Props> = props => {
     // payoutIfDispute?.();
   };
 
+  // INCREASE ALLOWANCE WIP:
+  // ERC20 Contract Config
+  const [openAllowance, setOpenAllowance] = React.useState(false);
+  const [allowanceAmt, setAllowanceAmt] = React.useState('' as unknown as BigNumber);
+  const debouncedAllowanceAmt = useDebounce(allowanceAmt, 10);
+
+  const erc20ContractConfig = {
+    addressOrName: debouncedTokenAddressERC20, // contract address
+    contractInterface: erc20ABI['abi'], // contract abi in json or JS format
+};
+
+  const escrowAddress = process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
+  const hexAlwaysApprove = '0x8000000000000000000000000000000000000000000000000000000000000000';
+
+  const { config: increaseAllowanceConfig } = usePrepareContractWrite({...erc20ContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmt], enabled: Boolean(debouncedAllowanceAmt), });
+  const { data: increaseAllowanceData, error: increaseAllowanceError, isLoading: isIncreaseAllowanceLoading, isSuccess: isIncreaseAllowanceSuccess, write: increaseAllowance } = useContractWrite(increaseAllowanceConfig);
+  const { data: increaseAllowanceTxData, isLoading: isIncreaseAllowanceTxLoading, isSuccess: isIncreaseAllowanceTxSuccess, error: increaseAllowanceTxError } = useWaitForTransaction({ hash: increaseAllowanceData?.hash, enabled: true,});
+
+  const { data: allowance, error: isAllowanceError, isLoading: isAllowanceLoading } = useContractRead({...erc20ContractConfig, functionName: 'allowance', args: [address, escrowAddress], enabled: Boolean(address)});
+
+  const handleClickOpenIncreaseAllowance = (tokenAddress: string) => {
+    setTokenAddressERC20(tokenAddress);
+    setOpenAllowance(true);
+  };
+
+  const handleCloseIncreaseAllowanceFalse = () => {
+    setOpenAllowance(false);
+  };
+
+  const handleCloseIncreaseAllowanceTrue = (amount: string, decimals: number, always: boolean) => {
+    const amountBN = ethers.utils.parseUnits(amount, decimals);
+
+    if (!always && allowance && amountBN.gt(allowance)) {
+      setAllowanceAmt(BigNumber.from(allowance));
+    } else if (always && allowance && amountBN.gt(allowance)) {
+      setAllowanceAmt(BigNumber.from(hexAlwaysApprove));
+    }
+  };
+
   const handleIncreasedAllowance = () => {
     setAllowanceIncreased(true);
   };
@@ -292,8 +337,25 @@ const Application: React.FC<Props> = props => {
                 {/* <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenEscrow(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!);}}>Escrow</Button> */}
                   {props.tokenAddress! !== '0x0000000000000000000000000000000000000000' &&
                     <>
-                      <IncreaseAllowance erc20Address={props.tokenAddress!} ownerAddress={address!} amount={ethers.utils.parseUnits(props.amount!, props.tokenDecimals!)} bountyStage={'escrow'} handleIncreasedAllowance={handleIncreasedAllowance} />
-                      <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenEscrow(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!);}}>Escrow</Button>
+                      <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenIncreaseAllowance(props.tokenAddress!);}}>Escrow</Button>
+                      <Dialog open={openAllowance} onClose={handleCloseIncreaseAllowanceFalse}>
+                        <DialogTitle className={styles.formHeader}>Increase Allowance</DialogTitle>
+                        <DialogContent className={styles.cardBackground}>
+                            <DialogContentText className={styles.dialogBody}>
+                            To use an ERC-20 token with Cornucopia, you must first allow Cornucopia to transfer tokens from your wallet to the
+                            protocol contract to escrow the funds for the bounty. 
+                            <br />
+                            <br />
+                            You can choose either to allow Cornucopia to spend an unlimited amount of funds so you won't have to approve Cornucopia 
+                            everytime you create a bounty or you can choose to just allow Cornucopia to spend the funds you want to esrow. While the 
+                            former is potentially more cost effective, the latter protects you incase of any future smart contract vulnerabilities.   
+                            </DialogContentText>    
+                        </DialogContent>
+                        <DialogActions className={styles.formHeader}>
+                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {handleCloseIncreaseAllowanceTrue(props.amount!, props.tokenDecimals!, true); increaseAllowance?.(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!); handleCloseIncreaseAllowanceFalse(); handleClickOpenEscrow(); }} autoFocus disabled={isIncreaseAllowanceTxLoading}>{isIncreaseAllowanceTxLoading ? 'Increasing Allowance...' : 'Allow Always'}</Button>
+                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleCloseIncreaseAllowanceTrue(props.amount!, props.tokenDecimals!, false); increaseAllowance?.(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!); handleCloseIncreaseAllowanceFalse(); handleClickOpenEscrow(); }} autoFocus disabled={isIncreaseAllowanceTxLoading}>{isIncreaseAllowanceTxLoading ? 'Increasing Allowance...' : 'Allow Once'}</Button>
+                        </DialogActions>
+                      </Dialog>
                     </>
                   } 
                   {props.tokenAddress! === '0x0000000000000000000000000000000000000000' &&
