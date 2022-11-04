@@ -13,7 +13,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Link from '@mui/material/Link';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
-import { useContractWrite, usePrepareContractWrite, useWaitForTransaction, useContract, useEnsName, useNetwork, useAccount, useContractRead } from 'wagmi';
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction, useContract, useEnsName, useNetwork, useAccount, useContractRead, useSigner } from 'wagmi';
 import { BigNumber, ContractInterface, ethers } from 'ethers';
 import useDebounce from './useDebounce';
 import SimpleSnackBar from './simpleSnackBar';
@@ -24,17 +24,9 @@ import IncreaseAllowance from './increaseAllowance';
 import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
 
 // TODO: 
-// Finish increase allowance logic
-// Check in this component if you need to increase and if so call the component otherwise don't; 
-// The component should render above the button which will hopefully block it out and all that's needed if for the debounced erc20 
-// Address to be logged and then a bool for the increaseAllowance popup to show should then be passed to it
-// Then below the button can proceed as usual
+// Toast popup for increaseAllowance popup!
+// Delay in reading allowance and then processing it meaning you have to try twice to submit tx so is there a way to do a prepare like method? issue is read is async
 
-// Need to fix timing of when increase allowance pops up--tricky bc we just render it ontop of the button once it's pressed but the button also does 
-// some action so we get a bad loop--only two cases so I think that it's simplier to just move the component logic up into application here
-// otherwise we're getting a lot of rerenders; using readContract is working well so I think that we could just use that; easy bc then preparecontract 
-// write needed for escrow can just be called from the increaseallowance function in the case that it shows and will otherwise be how it normally is 
-// from the escrow function itself!
 
 type Props = {
     person: string;
@@ -105,6 +97,7 @@ const Application: React.FC<Props> = props => {
   const bondAmt = ethers.utils.parseUnits("0.1", "ether"); // Hard-coded (for now) bondAmt
   const oracleAddress = process.env.NEXT_PUBLIC_OO_ADDRESS!; // Goerli OO
   const wethContract = useContract(wethContractConfig);
+  const zeroAddress = '0x0000000000000000000000000000000000000000';
 
   // Applied Contract Interactions
   // set enabled to be this boolean triple so that usePrepareContractWrite doesn't run before these vars have been assigned
@@ -220,8 +213,11 @@ const Application: React.FC<Props> = props => {
   // INCREASE ALLOWANCE WIP:
   // ERC20 Contract Config
   const [openAllowance, setOpenAllowance] = React.useState(false);
-  const [allowanceAmt, setAllowanceAmt] = React.useState('' as unknown as BigNumber);
-  const debouncedAllowanceAmt = useDebounce(allowanceAmt, 10);
+  const [allowance, setAllowance] = React.useState('' as unknown as BigNumber);
+  const [allowanceAmtOnce, setAllowanceAmtOnce] = React.useState('' as unknown as BigNumber);
+  const [allowanceAmtAlways, setAllowanceAmtAlways] = React.useState('' as unknown as BigNumber);
+  const debouncedAllowanceAmtOnce = useDebounce(allowanceAmtOnce, 10);
+  const debouncedAllowanceAmtAlways = useDebounce(allowanceAmtAlways, 10);
 
   const erc20ContractConfig = {
     addressOrName: debouncedTokenAddressERC20, // contract address
@@ -230,12 +226,34 @@ const Application: React.FC<Props> = props => {
 
   const escrowAddress = process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
   const hexAlwaysApprove = '0x8000000000000000000000000000000000000000000000000000000000000000';
+  const { data: signer, isError, isLoading } = useSigner();
+  const erc20Contract = useContract({...erc20ContractConfig, signerOrProvider: signer});
 
-  const { config: increaseAllowanceConfig } = usePrepareContractWrite({...erc20ContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmt], enabled: Boolean(debouncedAllowanceAmt), });
-  const { data: increaseAllowanceData, error: increaseAllowanceError, isLoading: isIncreaseAllowanceLoading, isSuccess: isIncreaseAllowanceSuccess, write: increaseAllowance } = useContractWrite(increaseAllowanceConfig);
-  const { data: increaseAllowanceTxData, isLoading: isIncreaseAllowanceTxLoading, isSuccess: isIncreaseAllowanceTxSuccess, error: increaseAllowanceTxError } = useWaitForTransaction({ hash: increaseAllowanceData?.hash, enabled: true,});
+  const { config: increaseAllowanceOnceConfig } = usePrepareContractWrite({...erc20ContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmtOnce], enabled: Boolean(debouncedAllowanceAmtOnce), });
+  const { data: increaseAllowanceOnceData, error: increaseAllowanceOnceError, isLoading: isIncreaseAllowanceOnceLoading, isSuccess: isIncreaseAllowanceOnceSuccess, write: increaseAllowanceOnce } = useContractWrite(increaseAllowanceOnceConfig);
+  const { data: increaseAllowanceOnceTxData, isLoading: isIncreaseAllowanceOnceTxLoading, isSuccess: isIncreaseAllowanceOnceTxSuccess, error: increaseAllowanceOnceTxError } = useWaitForTransaction({ hash: increaseAllowanceOnceData?.hash, enabled: true,});
 
-  const { data: allowance, error: isAllowanceError, isLoading: isAllowanceLoading } = useContractRead({...erc20ContractConfig, functionName: 'allowance', args: [address, escrowAddress], enabled: Boolean(address)});
+  const { config: increaseAllowanceAlwaysConfig } = usePrepareContractWrite({...erc20ContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmtAlways], enabled: Boolean(debouncedAllowanceAmtAlways), });
+  const { data: increaseAllowanceAlwaysData, error: increaseAllowanceAlwaysError, isLoading: isIncreaseAllowanceAlwaysLoading, isSuccess: isIncreaseAllowanceAlwaysSuccess, write: increaseAllowanceAlways } = useContractWrite(increaseAllowanceAlwaysConfig);
+  const { data: increaseAllowanceAlwaysTxData, isLoading: isIncreaseAllowanceAlwaysTxLoading, isSuccess: isIncreaseAllowanceAlwaysTxSuccess, error: increaseAllowanceAlwaysTxError } = useWaitForTransaction({ hash: increaseAllowanceAlwaysData?.hash, enabled: true,});
+
+  // const { data: allowance, error: isAllowanceError, isLoading: isAllowanceLoading } = useContractRead({...erc20ContractConfig, functionName: 'allowance', args: [address, escrowAddress], enabled: Boolean(address), });
+
+  const getAllowance = async () => {
+    console.log(address)
+    console.log(escrowAddress)
+    const thisAllowance: BigNumber = await erc20Contract.allowance(address, escrowAddress);
+    console.log(thisAllowance)
+    setAllowance(thisAllowance);
+  };
+
+  React.useEffect(() => {
+    if (debouncedTokenAddressERC20) {
+      getAllowance();
+    }
+    
+  }, [debouncedTokenAddressERC20])
+
 
   const handleClickOpenIncreaseAllowance = (tokenAddress: string) => {
     setTokenAddressERC20(tokenAddress);
@@ -246,14 +264,23 @@ const Application: React.FC<Props> = props => {
     setOpenAllowance(false);
   };
 
-  const handleCloseIncreaseAllowanceTrue = (amount: string, decimals: number, always: boolean) => {
+  const handleCloseIncreaseAllowanceOnceTrue = (amount: string, decimals: number) => {
     const amountBN = ethers.utils.parseUnits(amount, decimals);
 
-    if (!always && allowance && amountBN.gt(allowance)) {
-      setAllowanceAmt(BigNumber.from(allowance));
-    } else if (always && allowance && amountBN.gt(allowance)) {
-      setAllowanceAmt(BigNumber.from(hexAlwaysApprove));
+    if (allowance && amountBN.gt(allowance)) {
+      setAllowanceAmtOnce(BigNumber.from(allowance));
+    } 
+
+    console.log("once")
+  };
+
+  const handleCloseIncreaseAllowanceAlwaysTrue = (amount: string, decimals: number) => {
+    const amountBN = ethers.utils.parseUnits(amount, decimals);
+
+    if (allowance && amountBN.gt(allowance)) {
+      setAllowanceAmtAlways(BigNumber.from(hexAlwaysApprove));
     }
+    console.log("always")
   };
 
   const handleIncreasedAllowance = () => {
@@ -264,9 +291,7 @@ const Application: React.FC<Props> = props => {
 
   // };
   
-
-
-  const blockExplorer = (network: any) => {
+  const blockExplorer = (network: string | undefined) => {
     if (network === 'polygon') {
       return 'https://polygonscan.com/address/'
     } else if (network === 'goerli') {
@@ -335,9 +360,9 @@ const Application: React.FC<Props> = props => {
                   </DialogActions>
                 </Dialog>
                 {/* <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenEscrow(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!);}}>Escrow</Button> */}
-                  {props.tokenAddress! !== '0x0000000000000000000000000000000000000000' &&
+                  {props.tokenAddress! !== zeroAddress &&
                     <>
-                      <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenIncreaseAllowance(props.tokenAddress!);}}>Escrow</Button>
+                      <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenIncreaseAllowance(props.tokenAddress!); handleCloseIncreaseAllowanceOnceTrue(props.amount!, props.tokenDecimals!); handleCloseIncreaseAllowanceAlwaysTrue(props.amount!, props.tokenDecimals!);}}>Escrow</Button>
                       <Dialog open={openAllowance} onClose={handleCloseIncreaseAllowanceFalse}>
                         <DialogTitle className={styles.formHeader}>Increase Allowance</DialogTitle>
                         <DialogContent className={styles.cardBackground}>
@@ -350,15 +375,15 @@ const Application: React.FC<Props> = props => {
                             everytime you create a bounty or you can choose to just allow Cornucopia to spend the funds you want to esrow. While the 
                             former is potentially more cost effective, the latter protects you incase of any future smart contract vulnerabilities.   
                             </DialogContentText>    
-                        </DialogContent>
+                        </DialogContent> 
                         <DialogActions className={styles.formHeader}>
-                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {handleCloseIncreaseAllowanceTrue(props.amount!, props.tokenDecimals!, true); increaseAllowance?.(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!); handleCloseIncreaseAllowanceFalse(); handleClickOpenEscrow(); }} autoFocus disabled={isIncreaseAllowanceTxLoading}>{isIncreaseAllowanceTxLoading ? 'Increasing Allowance...' : 'Allow Always'}</Button>
-                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleCloseIncreaseAllowanceTrue(props.amount!, props.tokenDecimals!, false); increaseAllowance?.(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!); handleCloseIncreaseAllowanceFalse(); handleClickOpenEscrow(); }} autoFocus disabled={isIncreaseAllowanceTxLoading}>{isIncreaseAllowanceTxLoading ? 'Increasing Allowance...' : 'Allow Once'}</Button>
+                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {increaseAllowanceAlways?.(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!); handleCloseIncreaseAllowanceFalse(); handleClickOpenEscrow(); }} autoFocus disabled={!increaseAllowanceAlways || isIncreaseAllowanceAlwaysTxLoading}>{isIncreaseAllowanceAlwaysTxLoading ? 'Increasing Allowance...' : 'Allow Always'}</Button>
+                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {increaseAllowanceOnce?.(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!); handleCloseIncreaseAllowanceFalse(); handleClickOpenEscrow(); }} autoFocus disabled={!increaseAllowanceOnce || isIncreaseAllowanceOnceTxLoading}>{isIncreaseAllowanceOnceTxLoading ? 'Increasing Allowance...' : 'Allow Once'}</Button>
                         </DialogActions>
                       </Dialog>
                     </>
                   } 
-                  {props.tokenAddress! === '0x0000000000000000000000000000000000000000' &&
+                  {props.tokenAddress! === zeroAddress &&
                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenEscrow(); handleIncreasedAllowance(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!);}}>Escrow</Button>
                   }
                 <Dialog
