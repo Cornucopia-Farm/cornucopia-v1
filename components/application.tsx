@@ -107,7 +107,7 @@ const Application: React.FC<Props> = props => {
   const { data: escrowTxData, isLoading: isEscrowTxLoading, isSuccess: isEscrowTxSuccess, error: escrowTxError } = useWaitForTransaction({ hash: escrowData?.hash, enabled: true,});
 
   // Submitted Contract Interactions: Initiate Dispute/Payout If Dispute/Payout
-  const { config: initiateDisputeConfig } = usePrepareContractWrite({...contractConfig, functionName: 'initiateDispute', args: [debouncedBountyAppId, debouncedHunterAddress, oracleAddress, bondAmt, debouncedAncillaryData, wethContract], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedAncillaryData), });
+  const { config: initiateDisputeConfig } = usePrepareContractWrite({...contractConfig, functionName: 'initiateDispute', args: [debouncedBountyAppId, debouncedHunterAddress, oracleAddress, bondAmt, debouncedAncillaryData, wethContract], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedAncillaryData) && Boolean(allowanceIncreased), });
   const { data: initiateDisputeData, error: initiateDisputeError, isLoading: isInitiateDisputeLoading, isSuccess: isInitiateDisputeSuccess, write: initiateDispute } = useContractWrite(initiateDisputeConfig);
   const { data: initiateDisputeTxData, isLoading: isInitiateDisputeTxLoading, isSuccess: isInitiateDisputeTxSuccess, error: initiateDisputeTxError } = useWaitForTransaction({ hash: initiateDisputeData?.hash, enabled: true,});
 
@@ -211,10 +211,8 @@ const Application: React.FC<Props> = props => {
     // payoutIfDispute?.();
   };
 
-  // INCREASE ALLOWANCE WIP:
-  // ERC20 Contract Config
+  
   const [openAllowance, setOpenAllowance] = React.useState(false);
-  const [allowance, setAllowance] = React.useState('' as unknown as BigNumber);
   const [allowanceAmtOnce, setAllowanceAmtOnce] = React.useState('' as unknown as BigNumber);
   const [allowanceAmtAlways, setAllowanceAmtAlways] = React.useState('' as unknown as BigNumber);
   const debouncedAllowanceAmtOnce = useDebounce(allowanceAmtOnce, 10);
@@ -263,16 +261,16 @@ const Application: React.FC<Props> = props => {
   // }, [debouncedTokenAddressERC20])
 
 
-  const handleClickOpenIncreaseAllowance = (tokenAddress: string) => {
-    setTokenAddressERC20(tokenAddress);
-    setOpenAllowance(true);
-  };
+  // const handleClickOpenIncreaseAllowance = (tokenAddress: string) => {
+  //   setTokenAddressERC20(tokenAddress);
+  //   setOpenAllowance(true);
+  // };
 
   const handleCloseIncreaseAllowanceFalse = () => {
     setOpenAllowance(false);
   };
 
-  const handleCloseIncreaseAllowanceOnceTrue = (amount: string, decimals: number, allowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string) => {
+  const handleCloseIncreaseAllowanceEscrowOnceTrue = (amount: string, decimals: number, allowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string) => {
     const amountBN = ethers.utils.parseUnits(amount, decimals);
 
     if (amountBN.gt(allowance)) {
@@ -284,14 +282,9 @@ const Application: React.FC<Props> = props => {
       handleCloseEscrowTrue(bountyAppId, hunterAddress, tokenAddress, amount, decimals);
       handleClickOpenEscrow();
     }
-
-    console.log("allowance once", amountBN)
-    console.log("alloowance once state var", allowanceAmtOnce);
-
-    console.log("once")
   };
 
-  const handleCloseIncreaseAllowanceAlwaysTrue = (amount: string, decimals: number, allowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string) => {
+  const handleCloseIncreaseAllowanceEscrowAlwaysTrue = (amount: string, decimals: number, allowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string) => {
     const amountBN = ethers.utils.parseUnits(amount, decimals);
 
     if (amountBN.gt(allowance)) {
@@ -303,7 +296,34 @@ const Application: React.FC<Props> = props => {
       handleCloseEscrowTrue(bountyAppId, hunterAddress, tokenAddress, amount, decimals);
       handleClickOpenEscrow();
     }
-    console.log("always")
+  };
+
+  const handleCloseIncreaseAllowanceDisputeOnceTrue = (amount: string, decimals: number, allowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string, workLinks: Array<string>, postLinks: Array<string>) => {
+    const amountBN = ethers.utils.parseUnits(amount, decimals);
+
+    if (amountBN.gt(allowance)) {
+      setAllowanceAmtOnce(amountBN);
+      setTokenAddressERC20(tokenAddress);
+      setOpenAllowance(true);
+    } else {
+      setAllowanceIncreased(true); // Allowance sufficient for amount
+      handleCloseContestTrue(bountyAppId, hunterAddress, workLinks, postLinks);
+      handleClickOpenContest();
+    }
+  };
+
+  const handleCloseIncreaseAllowanceDisputeAlwaysTrue = (amount: string, decimals: number, allowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string, workLinks: Array<string>, postLinks: Array<string>) => {
+    const amountBN = ethers.utils.parseUnits(amount, decimals);
+
+    if (amountBN.gt(allowance)) {
+      setAllowanceAmtAlways(BigNumber.from(hexAlwaysApprove));
+      setTokenAddressERC20(tokenAddress);
+      setOpenAllowance(true);
+    } else {
+      setAllowanceIncreased(true); // Allowance sufficient for amount
+      handleCloseContestTrue(bountyAppId, hunterAddress, workLinks, postLinks);
+      handleClickOpenContest();
+    }
   };
 
   const handleIncreasedAllowance = () => {
@@ -391,7 +411,7 @@ const Application: React.FC<Props> = props => {
                 {/* <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenEscrow(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!);}}>Escrow</Button> */}
                   {props.tokenAddress! !== zeroAddress &&
                     <>
-                      <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleCloseIncreaseAllowanceOnceTrue(props.amount!, props.tokenDecimals!, props.allowance!, props.postId!, props.person, props.tokenAddress!); handleCloseIncreaseAllowanceAlwaysTrue(props.amount!, props.tokenDecimals!, props.allowance!, props.postId!, props.person, props.tokenAddress!);}}>Escrow</Button>
+                      <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleCloseIncreaseAllowanceEscrowOnceTrue(props.amount!, props.tokenDecimals!, props.allowance!, props.postId!, props.person, props.tokenAddress!); handleCloseIncreaseAllowanceEscrowAlwaysTrue(props.amount!, props.tokenDecimals!, props.allowance!, props.postId!, props.person, props.tokenAddress!);}}>Escrow</Button>
                       <Dialog open={openAllowance} onClose={handleCloseIncreaseAllowanceFalse}>
                         <DialogTitle className={styles.formHeader}>Increase Allowance</DialogTitle>
                         <DialogContent className={styles.cardBackground}>
@@ -441,7 +461,33 @@ const Application: React.FC<Props> = props => {
             }
             {props.appStatus === "submitted" &&  
               <div>
-                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {handleClickOpenContest(); handleCloseContestTrue(props.postId!, props.person, props.workLinks!, props.postLinks!);}}>Contest</Button>
+                {/* <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {handleClickOpenContest(); handleCloseContestTrue(props.postId!, props.person, props.workLinks!, props.postLinks!);}}>Contest</Button> */}
+                {props.tokenAddress! !== zeroAddress &&
+                  <>
+                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {handleCloseIncreaseAllowanceDisputeOnceTrue(props.amount!, props.tokenDecimals!, props.allowance!, props.postId!, props.person, props.tokenAddress!, props.workLinks!, props.postLinks!); handleCloseIncreaseAllowanceDisputeAlwaysTrue(props.amount!, props.tokenDecimals!, props.allowance!, props.postId!, props.person, props.tokenAddress!, props.workLinks!, props.postLinks!);}}>Contest</Button>
+                    <Dialog open={openAllowance} onClose={handleCloseIncreaseAllowanceFalse}>
+                      <DialogTitle className={styles.formHeader}>Increase Allowance</DialogTitle>
+                      <DialogContent className={styles.cardBackground}>
+                          <DialogContentText className={styles.dialogBody}>
+                          To initiate a dispute as a creator or respond to a dispute as a hunter, you must first allow Cornucopia to transfer tokens from your wallet to the
+                          protocol contract to then send these funds to the UMA contract for your dispute bond.  
+                          <br />
+                          <br />
+                          You can choose either to allow Cornucopia to spend an unlimited amount of funds so you won't have to approve Cornucopia 
+                          everytime you dispute a bounty or you can choose to just allow Cornucopia to spend the dispute bond amount. While the 
+                          former is potentially more cost effective, the latter protects you incase of any future smart contract vulnerabilities.    
+                          </DialogContentText>    
+                      </DialogContent> 
+                      <DialogActions className={styles.formHeader}>
+                          <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {increaseAllowanceAlways?.(); handleCloseContestTrue(props.postId!, props.person, props.workLinks!, props.postLinks!); handleCloseIncreaseAllowanceFalse(); handleClickOpenContest(); }} autoFocus disabled={!increaseAllowanceAlways || isIncreaseAllowanceAlwaysTxLoading}>{isIncreaseAllowanceAlwaysTxLoading ? 'Increasing Allowance...' : 'Allow Always'}</Button>
+                          <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {increaseAllowanceOnce?.(); handleCloseContestTrue(props.postId!, props.person, props.workLinks!, props.postLinks!); handleCloseIncreaseAllowanceFalse(); handleClickOpenContest(); }} autoFocus disabled={!increaseAllowanceOnce || isIncreaseAllowanceOnceTxLoading}>{isIncreaseAllowanceOnceTxLoading ? 'Increasing Allowance...' : 'Allow Once'}</Button>
+                      </DialogActions>
+                    </Dialog>
+                  </>
+                } 
+                {props.tokenAddress! === zeroAddress &&
+                  <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {handleClickOpenContest(); handleIncreasedAllowance(); handleCloseContestTrue(props.postId!, props.person, props.workLinks!, props.postLinks!);}}>Contest</Button>
+                }
                 <Dialog
                   open={openContest}
                   onClose={handleCloseContestFalse}
