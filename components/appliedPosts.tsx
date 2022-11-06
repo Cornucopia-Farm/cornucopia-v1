@@ -11,7 +11,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
 import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransaction, useContractRead, useBlockNumber, useContract, usePrepareContractWrite, useContractEvent, useSigner, useNetwork } from 'wagmi';
-import { ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
+import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
 
 type Props = {
     postId: string;
@@ -30,6 +31,8 @@ const AppliedPosts: React.FC<Props> = props => {
     const { address, isConnected } = useAccount();
     const { data: signer, isError, isLoading } = useSigner();
     const { chain } = useNetwork();
+    const zeroAddress = '0x0000000000000000000000000000000000000000';
+    const escrowAddress = process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
 
     const escrowContract = useContract({...contractConfig, signerOrProvider: signer,});
 
@@ -76,6 +79,19 @@ const AppliedPosts: React.FC<Props> = props => {
             const isEscrowed = await escrowContract.queryFilter(filter);
 
             const progress = await escrowContract.progress(bountyIdentifierInput);
+
+            let allowance = BigNumber.from(0);
+
+            // Allowance Data
+            if (postData.data.tokenAddress !== zeroAddress && postData.data.tokenAddress) {
+                console.log(postData.data.tokenAddress)
+                const erc20Contract = new ethers.Contract(postData.data.tokenAddress, erc20ABI['abi'], signer!);
+                allowance = await erc20Contract.allowance(address, escrowAddress);
+                console.log("allowance", allowance)
+                console.log("parsed allowance", ethers.utils.formatUnits(allowance, postData.data.tokenDecimals))
+            }
+            
+            console.log("amount", ethers.utils.parseUnits(postData.data.amount, postData.data.tokenDecimals))
             
             // Case 2: Applied To
             // if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 0 && isEscrowed.length === 0 ) {
@@ -92,6 +108,7 @@ const AppliedPosts: React.FC<Props> = props => {
                         amount={postData.data.amount}
                         tokenAddress={postData.data.tokenAddress}
                         tokenDecimals={postData.data.tokenDecimals}
+                        allowance={allowance}
                     />
                 );
             } 
