@@ -715,22 +715,22 @@ const Form: React.FC<Props> = props => {
                     }
                     {props.formName === "Submit" &&
                         <div>
-                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleOpenSubmitCheck(); handleCloseSubmitTrue(props.postId!, props.creatorAddress);}}>{props.formButtons[1]}</Button>
+                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginLeft: '8px'}} onClick={() => {handleOpenSubmitCheck(); handleCloseSubmitTrue(props.postId!, props.creatorAddress);}}>{props.formButtons[1]}</Button>
                             <Dialog
                                 open={openSubmitCheck}
                                 onClose={handleClose}
                                 aria-labelledby="alert-dialog-title"
                                 aria-describedby="alert-dialog-description"
                             >
-                                <DialogTitle id="alert-dialog-title">
+                                <DialogTitle className={styles.formHeader} id="alert-dialog-title">
                                     {"Are you sure you want to submit your work?"}
                                 </DialogTitle>
-                                <DialogContent>
-                                    <DialogContentText id="alert-dialog-description">
+                                <DialogContent className={styles.cardBackground}>
+                                    <DialogContentText className={styles.h2} id="alert-dialog-description">
                                         Once you submit your work, the bounty creator will have 2 weeks to either payout or dispute your work.
                                     </DialogContentText>
                                 </DialogContent>
-                                <DialogActions>
+                                <DialogActions className={styles.formHeader}>
                                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleClose}>No I don't</Button>
                                     {/* <Button onClick={() => handleCloseSubmitTrue(props.postId!, props.creatorAddress)} autoFocus>Yes I want to</Button> */}
                                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {submit?.(); handleCloseSubmit();}} autoFocus disabled={!submit || isSubmitTxLoading}>{isSubmitTxLoading ? 'Submitting work...' : 'Yes I want to'}</Button>

@@ -44,6 +44,7 @@ type Props = {
     request?: Request; 
     tokenAddress?: string;
     tokenDecimals?: number; 
+    allowance?: BigNumber;
 };
 
 // Escrow Contract Config
@@ -139,7 +140,7 @@ const Application: React.FC<Props> = props => {
     setTokenAddressERC20(tokenAddress);
     // setDecimals(tokenDecimals);
     
-    if (tokenAddress === '0x0000000000000000000000000000000000000000') { // ETH Bounty
+    if (tokenAddress === zeroAddress) { // ETH Bounty
       setBountyAmtETH(ethers.utils.parseEther(bountyAmount));
       setBountyAmtERC20(ethers.utils.parseUnits('0', 18));
     } else { // ERC20 Bounty
@@ -222,37 +223,44 @@ const Application: React.FC<Props> = props => {
   const erc20ContractConfig = {
     addressOrName: debouncedTokenAddressERC20, // contract address
     contractInterface: erc20ABI['abi'], // contract abi in json or JS format
-};
+  };
 
   const escrowAddress = process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
   const hexAlwaysApprove = '0x8000000000000000000000000000000000000000000000000000000000000000';
-  const { data: signer, isError, isLoading } = useSigner();
-  const erc20Contract = useContract({...erc20ContractConfig, signerOrProvider: signer});
+  // const { data: signer, isError, isLoading } = useSigner();
+  // const erc20Contract = useContract({...erc20ContractConfig, signerOrProvider: signer});
 
   const { config: increaseAllowanceOnceConfig } = usePrepareContractWrite({...erc20ContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmtOnce], enabled: Boolean(debouncedAllowanceAmtOnce), });
   const { data: increaseAllowanceOnceData, error: increaseAllowanceOnceError, isLoading: isIncreaseAllowanceOnceLoading, isSuccess: isIncreaseAllowanceOnceSuccess, write: increaseAllowanceOnce } = useContractWrite(increaseAllowanceOnceConfig);
-  const { data: increaseAllowanceOnceTxData, isLoading: isIncreaseAllowanceOnceTxLoading, isSuccess: isIncreaseAllowanceOnceTxSuccess, error: increaseAllowanceOnceTxError } = useWaitForTransaction({ hash: increaseAllowanceOnceData?.hash, enabled: true,});
+  const { data: increaseAllowanceOnceTxData, isLoading: isIncreaseAllowanceOnceTxLoading, isSuccess: isIncreaseAllowanceOnceTxSuccess, error: increaseAllowanceOnceTxError } = useWaitForTransaction({ hash: increaseAllowanceOnceData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
 
   const { config: increaseAllowanceAlwaysConfig } = usePrepareContractWrite({...erc20ContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmtAlways], enabled: Boolean(debouncedAllowanceAmtAlways), });
   const { data: increaseAllowanceAlwaysData, error: increaseAllowanceAlwaysError, isLoading: isIncreaseAllowanceAlwaysLoading, isSuccess: isIncreaseAllowanceAlwaysSuccess, write: increaseAllowanceAlways } = useContractWrite(increaseAllowanceAlwaysConfig);
-  const { data: increaseAllowanceAlwaysTxData, isLoading: isIncreaseAllowanceAlwaysTxLoading, isSuccess: isIncreaseAllowanceAlwaysTxSuccess, error: increaseAllowanceAlwaysTxError } = useWaitForTransaction({ hash: increaseAllowanceAlwaysData?.hash, enabled: true,});
+  const { data: increaseAllowanceAlwaysTxData, isLoading: isIncreaseAllowanceAlwaysTxLoading, isSuccess: isIncreaseAllowanceAlwaysTxSuccess, error: increaseAllowanceAlwaysTxError } = useWaitForTransaction({ hash: increaseAllowanceAlwaysData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
 
-  // const { data: allowance, error: isAllowanceError, isLoading: isAllowanceLoading } = useContractRead({...erc20ContractConfig, functionName: 'allowance', args: [address, escrowAddress], enabled: Boolean(address), });
+  // const { data: allowanceData, error: isAllowanceError, isLoading: isAllowanceLoading, refetch: getAllowance} = useContractRead({...erc20ContractConfig, functionName: 'allowance', args: [address, escrowAddress], enabled: Boolean(address), });
 
-  const getAllowance = async () => {
-    console.log(address)
-    console.log(escrowAddress)
-    const thisAllowance: BigNumber = await erc20Contract.allowance(address, escrowAddress);
-    console.log(thisAllowance)
-    setAllowance(thisAllowance);
-  };
-
-  React.useEffect(() => {
-    if (debouncedTokenAddressERC20) {
-      getAllowance();
-    }
+  // React.useEffect(() => {
+  //   if (allowanceData) {
+  //     setAllowance(BigNumber.from(allowanceData));
+  //   }
     
-  }, [debouncedTokenAddressERC20])
+  // }, [allowanceData]);
+
+  // const getAllowance = async () => {
+  //   console.log(address)
+  //   console.log(escrowAddress)
+  //   const thisAllowance: BigNumber = await erc20Contract.allowance(address, escrowAddress);
+  //   console.log(thisAllowance)
+  //   setAllowance(thisAllowance);
+  // };
+
+  // React.useEffect(() => {
+  //   if (debouncedTokenAddressERC20) {
+  //     getAllowance();
+  //   }
+    
+  // }, [debouncedTokenAddressERC20])
 
 
   const handleClickOpenIncreaseAllowance = (tokenAddress: string) => {
@@ -264,21 +272,36 @@ const Application: React.FC<Props> = props => {
     setOpenAllowance(false);
   };
 
-  const handleCloseIncreaseAllowanceOnceTrue = (amount: string, decimals: number) => {
+  const handleCloseIncreaseAllowanceOnceTrue = (amount: string, decimals: number, allowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string) => {
     const amountBN = ethers.utils.parseUnits(amount, decimals);
 
-    if (allowance && amountBN.gt(allowance)) {
-      setAllowanceAmtOnce(BigNumber.from(allowance));
-    } 
+    if (amountBN.gt(allowance)) {
+      setAllowanceAmtOnce(amountBN);
+      setTokenAddressERC20(tokenAddress);
+      setOpenAllowance(true);
+    } else {
+      setAllowanceIncreased(true); // Allowance sufficient for amount
+      handleCloseEscrowTrue(bountyAppId, hunterAddress, tokenAddress, amount, decimals);
+      handleClickOpenEscrow();
+    }
+
+    console.log("allowance once", amountBN)
+    console.log("alloowance once state var", allowanceAmtOnce);
 
     console.log("once")
   };
 
-  const handleCloseIncreaseAllowanceAlwaysTrue = (amount: string, decimals: number) => {
+  const handleCloseIncreaseAllowanceAlwaysTrue = (amount: string, decimals: number, allowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string) => {
     const amountBN = ethers.utils.parseUnits(amount, decimals);
 
-    if (allowance && amountBN.gt(allowance)) {
+    if (amountBN.gt(allowance)) {
       setAllowanceAmtAlways(BigNumber.from(hexAlwaysApprove));
+      setTokenAddressERC20(tokenAddress);
+      setOpenAllowance(true);
+    } else {
+      setAllowanceIncreased(true); // Allowance sufficient for amount
+      handleCloseEscrowTrue(bountyAppId, hunterAddress, tokenAddress, amount, decimals);
+      handleClickOpenEscrow();
     }
     console.log("always")
   };
@@ -323,6 +346,12 @@ const Application: React.FC<Props> = props => {
         {(isPayoutTxLoading || isPayoutTxSuccess) && 
           <SimpleSnackBar msg={isPayoutTxLoading ? 'Paying hunter...' : 'Hunter paid!'}/>
         }
+        {(isIncreaseAllowanceOnceTxLoading || isIncreaseAllowanceOnceTxSuccess) && 
+          <SimpleSnackBar msg={isIncreaseAllowanceOnceTxLoading ? 'Increasing allowance once...' : 'Allowance increased once!'}/>
+        }
+        {(isIncreaseAllowanceAlwaysTxLoading || isIncreaseAllowanceAlwaysTxSuccess) && 
+          <SimpleSnackBar msg={isIncreaseAllowanceAlwaysTxLoading ? 'Increasing allowance always...' : 'Allowance increased always!'}/>
+        }
 
       <Accordion square={true} sx={{ borderRadius: '12px', backgroundColor: 'rgba(6, 72, 41, 0.05)' }}>
         <AccordionSummary
@@ -362,7 +391,7 @@ const Application: React.FC<Props> = props => {
                 {/* <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenEscrow(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!);}}>Escrow</Button> */}
                   {props.tokenAddress! !== zeroAddress &&
                     <>
-                      <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenIncreaseAllowance(props.tokenAddress!); handleCloseIncreaseAllowanceOnceTrue(props.amount!, props.tokenDecimals!); handleCloseIncreaseAllowanceAlwaysTrue(props.amount!, props.tokenDecimals!);}}>Escrow</Button>
+                      <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleCloseIncreaseAllowanceOnceTrue(props.amount!, props.tokenDecimals!, props.allowance!, props.postId!, props.person, props.tokenAddress!); handleCloseIncreaseAllowanceAlwaysTrue(props.amount!, props.tokenDecimals!, props.allowance!, props.postId!, props.person, props.tokenAddress!);}}>Escrow</Button>
                       <Dialog open={openAllowance} onClose={handleCloseIncreaseAllowanceFalse}>
                         <DialogTitle className={styles.formHeader}>Increase Allowance</DialogTitle>
                         <DialogContent className={styles.cardBackground}>
@@ -423,7 +452,7 @@ const Application: React.FC<Props> = props => {
                   {"Are you sure you want to dispute the bounty hunter's work?"}
                   </DialogTitle>
                   <DialogContent className={styles.cardBackground}>
-                    <DialogContentText id="alert-dialog-description">
+                    <DialogContentText className={styles.dialogBody} id="alert-dialog-description">
                         Disputing their work will open up a 7 day challenger period, in which the bounty hunter can challenge your dispute and assert 
                         that their work is up to specification. If they decide to do this, then the dispute will be escalated to UMA token holders and decided
                         within that week. Once the decision is made (please see the docs for more details on this process), the escrowed funds will either be fully 
@@ -448,7 +477,7 @@ const Application: React.FC<Props> = props => {
                   {"Are you sure you want to pay the bounty hunter for their work?"}
                   </DialogTitle>
                   <DialogContent className={styles.cardBackground}>
-                    <DialogContentText id="alert-dialog-description">
+                    <DialogContentText className={styles.dialogBody} id="alert-dialog-description">
                         This will release the funds from escrow and send them to the bounty hunter for their work. 
                     </DialogContentText>
                   </DialogContent>
@@ -488,7 +517,7 @@ const Application: React.FC<Props> = props => {
                   {"Are you sure you want to settle this dispute?"}
                   </DialogTitle>
                   <DialogContent className={styles.cardBackground}>
-                    <DialogContentText id="alert-dialog-description">
+                    <DialogContentText className={styles.dialogBody} id="alert-dialog-description">
                         Settling this dispute will result in 1 of 3 outcomes: 
                         1. You win the dispute and your escrowed funds plus the dispute bond + dispute fee + 1/2 of the hunter's dispute bond will be sent to you; 
                         2. The hunter wins the dispute and your escrowed funds plus their dispute bond + their dispute fee + 1/2 of your dispute bond will be sent to them. 
