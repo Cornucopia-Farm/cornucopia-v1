@@ -80,19 +80,14 @@ const AppliedPosts: React.FC<Props> = props => {
 
             const progress = await escrowContract.progress(bountyIdentifierInput);
 
+            // Allowance Data
             let allowance = BigNumber.from(0);
 
-            // Allowance Data
             if (postData.data.tokenAddress !== zeroAddress && postData.data.tokenAddress) {
-                console.log(postData.data.tokenAddress)
                 const erc20Contract = new ethers.Contract(postData.data.tokenAddress, erc20ABI['abi'], signer!);
                 allowance = await erc20Contract.allowance(address, escrowAddress);
-                console.log("allowance", allowance)
-                console.log("parsed allowance", ethers.utils.formatUnits(allowance, postData.data.tokenDecimals))
             }
-            
-            console.log("amount", ethers.utils.parseUnits(postData.data.amount, postData.data.tokenDecimals))
-            
+                        
             // Case 2: Applied To
             // if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 0 && isEscrowed.length === 0 ) {
             if (progress === 0 && isEscrowed.length === 0) {

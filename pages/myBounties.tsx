@@ -24,7 +24,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { TailSpin } from 'react-loader-spinner';
 import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransaction, useContractRead, useBlockNumber, useContract, usePrepareContractWrite, useContractEvent, useNetwork, useProvider, useSigner } from 'wagmi';
-import { ethers } from 'ethers';
+import { ethers, BigNumber } from 'ethers';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
 import umaABI from '../cornucopia-contracts/out/SkinnyOptimisticOracle.sol/SkinnyOptimisticOracle.json';
 import useDebounce from '../components/useDebounce';
@@ -34,6 +34,7 @@ import styles from '../styles/Home.module.css';
 import Slider from '@mui/material/Slider';
 import Link from 'next/link';
 import WelcomeCard from '../components/welcomeCard';
+import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
 
 // Bounty Stages for Hunter:
 // 1. Applied (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.NoBounty); CHECK PROGRESS MAPPING
@@ -83,6 +84,8 @@ const MyBounties: NextPage = () => {
     const { data: signer, isError, isLoading } = useSigner();
     const provider = useProvider();
     const { chain } = useNetwork();
+    const zeroAddress = '0x0000000000000000000000000000000000000000';
+    const escrowAddress = process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
 
     const escrowContract = useContract({...contractConfig, signerOrProvider: signer, });
     const umaContract = useContract({...umaContractConfig, signerOrProvider: signer, });
@@ -92,6 +95,7 @@ const MyBounties: NextPage = () => {
     const [openSubmit, setOpenSubmit] = React.useState(false);
     const [openDispute, setOpenDispute] = React.useState(false);
     const [openForce, setOpenForce] = React.useState(false);
+    const [allowanceIncreased, setAllowanceIncreased] = React.useState(false);
     const [bountyAppId, setBountyAppId] = React.useState('');
     const debouncedBountyAppId = useDebounce(bountyAppId, 10);
     const [creatorAddress, setCreatorAddress] = React.useState('');
@@ -115,7 +119,7 @@ const MyBounties: NextPage = () => {
     // Escrow Smart Contracts Calls    
 
     // HunterDisputeResponse Contract Interactions
-    const { config: hunterDisputeResponseConfig } = usePrepareContractWrite({...contractConfig, functionName: 'hunterDisputeResponse', args: [debouncedBountyAppId, debouncedCreatorAddress, umaData.timestamp, umaData.ancillaryData, umaData.request], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedCreatorAddress) && Boolean(umaData.timestamp),});
+    const { config: hunterDisputeResponseConfig } = usePrepareContractWrite({...contractConfig, functionName: 'hunterDisputeResponse', args: [debouncedBountyAppId, debouncedCreatorAddress, umaData.timestamp, umaData.ancillaryData, umaData.request], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedCreatorAddress) && Boolean(umaData.timestamp) && Boolean(allowanceIncreased),});
     const { data: hunterDisputeResponseData, error: hunterDisputeResponseError, isLoading: isHunterDisputeResponseLoading, isSuccess: isHunterDisputeResponseSuccess, write: hunterDisputeResponse } = useContractWrite(hunterDisputeResponseConfig);
     const { data: hunterDisputeResponseTxData, isLoading: isHunterDisputeResponseTxLoading, isSuccess: isHunterDisputeResponseTxSuccess, error: hunterDisputeResponseTxError } = useWaitForTransaction({ hash: hunterDisputeResponseData?.hash, enabled: true, });
 
@@ -163,6 +167,65 @@ const MyBounties: NextPage = () => {
         setBountyAppId(bountyAppId);
         setCreatorAddress(creatorAddress);
         // forceHunterPayout?.(); 
+    };
+
+    const [openAllowance, setOpenAllowance] = React.useState(false);
+    const [allowanceAmtOnce, setAllowanceAmtOnce] = React.useState('' as unknown as BigNumber);
+    const [allowanceAmtAlways, setAllowanceAmtAlways] = React.useState('' as unknown as BigNumber);
+    const debouncedAllowanceAmtOnce = useDebounce(allowanceAmtOnce, 10);
+    const debouncedAllowanceAmtAlways = useDebounce(allowanceAmtAlways, 10);
+
+    const erc20ContractConfig = {
+        addressOrName: debouncedTokenAddressERC20, // contract address
+        contractInterface: erc20ABI['abi'], // contract abi in json or JS format
+    };
+
+    const hexAlwaysApprove = '0x8000000000000000000000000000000000000000000000000000000000000000';
+
+    const { config: increaseAllowanceOnceConfig } = usePrepareContractWrite({...erc20ContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmtOnce], enabled: Boolean(debouncedAllowanceAmtOnce), });
+    const { data: increaseAllowanceOnceData, error: increaseAllowanceOnceError, isLoading: isIncreaseAllowanceOnceLoading, isSuccess: isIncreaseAllowanceOnceSuccess, write: increaseAllowanceOnce } = useContractWrite(increaseAllowanceOnceConfig);
+    const { data: increaseAllowanceOnceTxData, isLoading: isIncreaseAllowanceOnceTxLoading, isSuccess: isIncreaseAllowanceOnceTxSuccess, error: increaseAllowanceOnceTxError } = useWaitForTransaction({ hash: increaseAllowanceOnceData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
+
+    const { config: increaseAllowanceAlwaysConfig } = usePrepareContractWrite({...erc20ContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmtAlways], enabled: Boolean(debouncedAllowanceAmtAlways), });
+    const { data: increaseAllowanceAlwaysData, error: increaseAllowanceAlwaysError, isLoading: isIncreaseAllowanceAlwaysLoading, isSuccess: isIncreaseAllowanceAlwaysSuccess, write: increaseAllowanceAlways } = useContractWrite(increaseAllowanceAlwaysConfig);
+    const { data: increaseAllowanceAlwaysTxData, isLoading: isIncreaseAllowanceAlwaysTxLoading, isSuccess: isIncreaseAllowanceAlwaysTxSuccess, error: increaseAllowanceAlwaysTxError } = useWaitForTransaction({ hash: increaseAllowanceAlwaysData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
+
+
+
+    const handleCloseIncreaseAllowanceFalse = () => {
+        setOpenAllowance(false);
+    };
+    
+    const handleCloseIncreaseAllowanceDisputeResponseOnceTrue = (amount: string, decimals: number, allowance: BigNumber, bountyAppId: string, creatorAddress: string, tokenAddress: string) => {
+        const amountBN = ethers.utils.parseUnits(amount, decimals);
+    
+        if (amountBN.gt(allowance)) {
+            setAllowanceAmtOnce(amountBN);
+            setTokenAddressERC20(tokenAddress);
+            setOpenAllowance(true);
+        } else {
+            setAllowanceIncreased(true); // Allowance sufficient for amount
+            handleCloseDisputeTrue(bountyAppId, creatorAddress);
+            handleClickOpenDispute();
+        }
+    };
+    
+    const handleCloseIncreaseAllowanceDisputeResponseAlwaysTrue = (amount: string, decimals: number, allowance: BigNumber, bountyAppId: string, creatorAddress: string, tokenAddress: string) => {
+        const amountBN = ethers.utils.parseUnits(amount, decimals);
+
+        if (amountBN.gt(allowance)) {
+            setAllowanceAmtAlways(BigNumber.from(hexAlwaysApprove));
+            setTokenAddressERC20(tokenAddress);
+            setOpenAllowance(true);
+        } else {
+            setAllowanceIncreased(true); // Allowance sufficient for amount
+            handleCloseDisputeTrue(bountyAppId, creatorAddress);
+            handleClickOpenDispute();
+        }
+    };
+
+    const handleIncreasedAllowance = () => {
+        setAllowanceIncreased(true);
     };
 
     // Get bounties that this address is a hunter in
@@ -319,6 +382,14 @@ const MyBounties: NextPage = () => {
             const progress = await escrowContract.progress(bountyIdentifierInput);
             const payoutExpirationTime = await escrowContract.payoutExpiration(bountyIdentifierInput);
 
+            // Allowance Data
+            let allowance = BigNumber.from(0);
+            
+            if (postData.data.tokenAddress !== zeroAddress && postData.data.tokenAddress) {
+                const erc20Contract = new ethers.Contract(postData.data.tokenAddress, erc20ABI['abi'], signer!);
+                allowance = await erc20Contract.allowance(address, escrowAddress);
+            }
+
             // if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 1 ) { // Case 3: Submitted
             if (progress === 1) {
                 submittedBounties.push(
@@ -353,30 +424,58 @@ const MyBounties: NextPage = () => {
                         tokenSymbol={postData.data.tokenSymbol}
                     >
                         <div> 
-                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }}  onClick={() => {handleClickOpenDispute(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress);}}>Dispute</Button>
-                                <Dialog
-                                    open={openDispute}
-                                    onClose={handleCloseDisputeFalse}
-                                    aria-labelledby="alert-dialog-title"
-                                    aria-describedby="alert-dialog-description"
-                                >
-                                    <DialogTitle className={styles.formHeader} id="alert-dialog-title">
-                                    {"Are you sure you want to challenge the creator's dispute of your work?"}
-                                    </DialogTitle>
+                            {/* <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }}  onClick={() => {handleClickOpenDispute(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress);}}>Dispute</Button> */}
+
+                            {postData.data.tokenAddress !== zeroAddress &&
+                                <>
+                                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleCloseIncreaseAllowanceDisputeResponseOnceTrue(postData.data.amount, postData.data.tokenDecimals, allowance, postData.data.postId, postData.data.creatorAddress, postData.data.tokenAddress); handleCloseIncreaseAllowanceDisputeResponseAlwaysTrue(postData.data.amount, postData.data.tokenDecimals, allowance, postData.data.postId, postData.data.creatorAddress, postData.data.tokenAddress);}}>Escrow</Button>
+                                <Dialog open={openAllowance} onClose={handleCloseIncreaseAllowanceFalse}>
+                                    <DialogTitle className={styles.formHeader}>Increase Allowance</DialogTitle>
                                     <DialogContent className={styles.cardBackground}>
-                                    <DialogContentText id="alert-dialog-description">
-                                        Responding to the creator's dispute within the 7 day challenger period, escalates this dispute to the UMA token holders and decided
-                                        within that week. Once the decision is made (please see the docs for more details on this process), the escrowed funds will either be fully 
-                                        paid out to you, half payed out to you, or fully given back to the creator. If you don't challenge the creator's dispute, then the full bounty amount  
-                                        will be returned to the creator once these 7 days are up. 
-                                    </DialogContentText>
-                                    </DialogContent>
+                                        <DialogContentText className={styles.dialogBody}>
+                                        To use an ERC-20 token with Cornucopia, you must first allow Cornucopia to transfer tokens from your wallet to the
+                                        protocol contract to escrow the funds for the bounty. 
+                                        <br />
+                                        <br />
+                                        You can choose either to allow Cornucopia to spend an unlimited amount of funds so you won't have to approve Cornucopia 
+                                        everytime you create a bounty or you can choose to just allow Cornucopia to spend the funds you want to esrow. While the 
+                                        former is potentially more cost effective, the latter protects you incase of any future smart contract vulnerabilities.   
+                                        </DialogContentText>    
+                                    </DialogContent> 
                                     <DialogActions className={styles.formHeader}>
-                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseDisputeFalse}>No I don't</Button>
-                                    {/* <Button onClick={() => handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress)} autoFocus>Yes I want to</Button> */}
-                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {hunterDisputeResponse?.(); setOpenDispute(false);}} autoFocus disabled={!hunterDisputeResponse || isHunterDisputeResponseTxLoading}>{isHunterDisputeResponseTxLoading ? 'Responding to dispute...' : 'Yes I want to'}</Button>
+                                        <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {increaseAllowanceAlways?.(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress); handleCloseIncreaseAllowanceFalse(); handleClickOpenDispute(); }} autoFocus disabled={!increaseAllowanceAlways || isIncreaseAllowanceAlwaysTxLoading}>{isIncreaseAllowanceAlwaysTxLoading ? 'Increasing Allowance...' : 'Allow Always'}</Button>
+                                        <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {increaseAllowanceOnce?.(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress); handleCloseIncreaseAllowanceFalse(); handleClickOpenDispute(); }} autoFocus disabled={!increaseAllowanceOnce || isIncreaseAllowanceOnceTxLoading}>{isIncreaseAllowanceOnceTxLoading ? 'Increasing Allowance...' : 'Allow Once'}</Button>
                                     </DialogActions>
                                 </Dialog>
+                                </>
+                            } 
+                            {postData.data.tokenAddress! === zeroAddress &&
+                                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenDispute(); handleIncreasedAllowance(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress); }}>Escrow</Button>
+                            }
+
+                            <Dialog
+                                open={openDispute}
+                                onClose={handleCloseDisputeFalse}
+                                aria-labelledby="alert-dialog-title"
+                                aria-describedby="alert-dialog-description"
+                            >
+                                <DialogTitle className={styles.formHeader} id="alert-dialog-title">
+                                {"Are you sure you want to challenge the creator's dispute of your work?"}
+                                </DialogTitle>
+                                <DialogContent className={styles.cardBackground}>
+                                <DialogContentText className={styles.dialogBody} id="alert-dialog-description">
+                                    Responding to the creator's dispute within the 7 day challenger period, escalates this dispute to the UMA token holders and decided
+                                    within that week. Once the decision is made (please see the docs for more details on this process), the escrowed funds will either be fully 
+                                    paid out to you, half payed out to you, or fully given back to the creator. If you don't challenge the creator's dispute, then the full bounty amount  
+                                    will be returned to the creator once these 7 days are up. 
+                                </DialogContentText>
+                                </DialogContent>
+                                <DialogActions className={styles.formHeader}>
+                                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseDisputeFalse}>No I don't</Button>
+                                {/* <Button onClick={() => handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress)} autoFocus>Yes I want to</Button> */}
+                                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {hunterDisputeResponse?.(); setOpenDispute(false);}} autoFocus disabled={!hunterDisputeResponse || isHunterDisputeResponseTxLoading}>{isHunterDisputeResponseTxLoading ? 'Responding to dispute...' : 'Yes I want to'}</Button>
+                                </DialogActions>
+                            </Dialog>
                         </div> 
                     </BasicAccordian>
                 );
@@ -425,7 +524,7 @@ const MyBounties: NextPage = () => {
                                     {"Are you sure you want to claim the force-claim the bounty?"}
                                     </DialogTitle>
                                     <DialogContent className={styles.cardBackground}>
-                                    <DialogContentText id="alert-dialog-description">
+                                    <DialogContentText className={styles.dialogBody} id="alert-dialog-description">
                                         The bounty creator has not responded (payed or disputed) to your work submission within two weeks. To prevent the creator from withholding the funds, 
                                         you're able to claim the bounty yourself. 
                                     </DialogContentText>
