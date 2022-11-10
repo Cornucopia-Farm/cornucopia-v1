@@ -77,6 +77,12 @@ const umaContractConfig = {
     contractInterface: umaABI['abi'],
 };
 
+// WETH Contract Config (For UMA Bonds)
+const wethContractConfig = {
+    addressOrName: process.env.NEXT_PUBLIC_WETH_ADDRESS!, // contract address
+    contractInterface: erc20ABI['abi'], // contract abi in json or JS format
+};
+
 const MyBounties: NextPage = () => {
     
     const { address, isConnected } = useAccount();
@@ -175,21 +181,20 @@ const MyBounties: NextPage = () => {
     const debouncedAllowanceAmtOnce = useDebounce(allowanceAmtOnce, 10);
     const debouncedAllowanceAmtAlways = useDebounce(allowanceAmtAlways, 10);
 
-    const erc20ContractConfig = {
-        addressOrName: debouncedTokenAddressERC20, // contract address
-        contractInterface: erc20ABI['abi'], // contract abi in json or JS format
-    };
+    // const erc20ContractConfig = {
+    //     addressOrName: debouncedTokenAddressERC20, // contract address
+    //     contractInterface: erc20ABI['abi'], // contract abi in json or JS format
+    // };
 
     const hexAlwaysApprove = '0x8000000000000000000000000000000000000000000000000000000000000000';
 
-    const { config: increaseAllowanceOnceConfig } = usePrepareContractWrite({...erc20ContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmtOnce], enabled: Boolean(debouncedAllowanceAmtOnce), });
+    const { config: increaseAllowanceOnceConfig } = usePrepareContractWrite({...wethContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmtOnce], enabled: Boolean(debouncedAllowanceAmtOnce), });
     const { data: increaseAllowanceOnceData, error: increaseAllowanceOnceError, isLoading: isIncreaseAllowanceOnceLoading, isSuccess: isIncreaseAllowanceOnceSuccess, write: increaseAllowanceOnce } = useContractWrite(increaseAllowanceOnceConfig);
     const { data: increaseAllowanceOnceTxData, isLoading: isIncreaseAllowanceOnceTxLoading, isSuccess: isIncreaseAllowanceOnceTxSuccess, error: increaseAllowanceOnceTxError } = useWaitForTransaction({ hash: increaseAllowanceOnceData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
 
-    const { config: increaseAllowanceAlwaysConfig } = usePrepareContractWrite({...erc20ContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmtAlways], enabled: Boolean(debouncedAllowanceAmtAlways), });
+    const { config: increaseAllowanceAlwaysConfig } = usePrepareContractWrite({...wethContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmtAlways], enabled: Boolean(debouncedAllowanceAmtAlways), });
     const { data: increaseAllowanceAlwaysData, error: increaseAllowanceAlwaysError, isLoading: isIncreaseAllowanceAlwaysLoading, isSuccess: isIncreaseAllowanceAlwaysSuccess, write: increaseAllowanceAlways } = useContractWrite(increaseAllowanceAlwaysConfig);
     const { data: increaseAllowanceAlwaysTxData, isLoading: isIncreaseAllowanceAlwaysTxLoading, isSuccess: isIncreaseAllowanceAlwaysTxSuccess, error: increaseAllowanceAlwaysTxError } = useWaitForTransaction({ hash: increaseAllowanceAlwaysData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
-
 
 
     const handleCloseIncreaseAllowanceFalse = () => {
@@ -425,33 +430,30 @@ const MyBounties: NextPage = () => {
                     >
                         <div> 
                             {/* <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }}  onClick={() => {handleClickOpenDispute(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress);}}>Dispute</Button> */}
-
-                            {postData.data.tokenAddress !== zeroAddress &&
-                                <>
-                                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleCloseIncreaseAllowanceDisputeResponseOnceTrue(postData.data.amount, postData.data.tokenDecimals, allowance, postData.data.postId, postData.data.creatorAddress, postData.data.tokenAddress); handleCloseIncreaseAllowanceDisputeResponseAlwaysTrue(postData.data.amount, postData.data.tokenDecimals, allowance, postData.data.postId, postData.data.creatorAddress, postData.data.tokenAddress);}}>Escrow</Button>
-                                <Dialog open={openAllowance} onClose={handleCloseIncreaseAllowanceFalse}>
-                                    <DialogTitle className={styles.formHeader}>Increase Allowance</DialogTitle>
-                                    <DialogContent className={styles.cardBackground}>
-                                        <DialogContentText className={styles.dialogBody}>
-                                        To use an ERC-20 token with Cornucopia, you must first allow Cornucopia to transfer tokens from your wallet to the
-                                        protocol contract to escrow the funds for the bounty. 
-                                        <br />
-                                        <br />
-                                        You can choose either to allow Cornucopia to spend an unlimited amount of funds so you won't have to approve Cornucopia 
-                                        everytime you create a bounty or you can choose to just allow Cornucopia to spend the funds you want to esrow. While the 
-                                        former is potentially more cost effective, the latter protects you incase of any future smart contract vulnerabilities.   
-                                        </DialogContentText>    
-                                    </DialogContent> 
-                                    <DialogActions className={styles.formHeader}>
-                                        <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {increaseAllowanceAlways?.(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress); handleCloseIncreaseAllowanceFalse(); handleClickOpenDispute(); }} autoFocus disabled={!increaseAllowanceAlways || isIncreaseAllowanceAlwaysTxLoading}>{isIncreaseAllowanceAlwaysTxLoading ? 'Increasing Allowance...' : 'Allow Always'}</Button>
-                                        <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {increaseAllowanceOnce?.(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress); handleCloseIncreaseAllowanceFalse(); handleClickOpenDispute(); }} autoFocus disabled={!increaseAllowanceOnce || isIncreaseAllowanceOnceTxLoading}>{isIncreaseAllowanceOnceTxLoading ? 'Increasing Allowance...' : 'Allow Once'}</Button>
-                                    </DialogActions>
-                                </Dialog>
-                                </>
-                            } 
-                            {postData.data.tokenAddress! === zeroAddress &&
+                            {/* {postData.data.tokenAddress !== zeroAddress && */} 
+                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleCloseIncreaseAllowanceDisputeResponseOnceTrue(postData.data.amount, postData.data.tokenDecimals, allowance, postData.data.postId, postData.data.creatorAddress, postData.data.tokenAddress); handleCloseIncreaseAllowanceDisputeResponseAlwaysTrue(postData.data.amount, postData.data.tokenDecimals, allowance, postData.data.postId, postData.data.creatorAddress, postData.data.tokenAddress);}}>Dispute</Button>
+                            <Dialog open={openAllowance} onClose={handleCloseIncreaseAllowanceFalse}>
+                                <DialogTitle className={styles.formHeader}>Increase Allowance</DialogTitle>
+                                <DialogContent className={styles.cardBackground}>
+                                    <DialogContentText className={styles.dialogBody}>
+                                    To respond to a creator's dispute, you must put up a bond of 0.1 WETH. To put up this bond, you must first allow Cornucopia to transfer 
+                                    tokens from your wallet to the protocol contract, which are then transferred into the UMA Optimistic Oracle contract.
+                                    <br />
+                                    <br />
+                                    You can choose either to allow Cornucopia to spend an unlimited amount of funds so you won't have to approve Cornucopia 
+                                    everytime you respond to a dispute or you can choose to just allow Cornucopia to spend the funds you need to dispute. While the 
+                                    former is potentially more cost effective, the latter protects you incase of any future smart contract vulnerabilities.   
+                                    </DialogContentText>    
+                                </DialogContent> 
+                                <DialogActions className={styles.formHeader}>
+                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {increaseAllowanceAlways?.(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress); handleCloseIncreaseAllowanceFalse(); handleClickOpenDispute(); }} autoFocus disabled={!increaseAllowanceAlways || isIncreaseAllowanceAlwaysTxLoading}>{isIncreaseAllowanceAlwaysTxLoading ? 'Increasing Allowance...' : 'Allow Always'}</Button>
+                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {increaseAllowanceOnce?.(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress); handleCloseIncreaseAllowanceFalse(); handleClickOpenDispute(); }} autoFocus disabled={!increaseAllowanceOnce || isIncreaseAllowanceOnceTxLoading}>{isIncreaseAllowanceOnceTxLoading ? 'Increasing Allowance...' : 'Allow Once'}</Button>
+                                </DialogActions>
+                            </Dialog>
+                            {/* }  */}
+                            {/* {postData.data.tokenAddress! === zeroAddress &&
                                 <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenDispute(); handleIncreasedAllowance(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress); }}>Escrow</Button>
-                            }
+                            } */}
 
                             <Dialog
                                 open={openDispute}
@@ -637,6 +639,12 @@ const MyBounties: NextPage = () => {
                         }
                         {(isForceHunterPayoutTxLoading || isForceHunterPayoutTxSuccess) && 
                             <SimpleSnackBar msg={isForceHunterPayoutTxLoading ? 'Forcing payout...' : 'Forced payout!'}/>
+                        }
+                        {(isIncreaseAllowanceOnceTxLoading || isIncreaseAllowanceOnceTxSuccess) && 
+                            <SimpleSnackBar msg={isIncreaseAllowanceOnceTxLoading ? 'Increasing allowance once...' : 'Allowance increased once!'}/>
+                        }
+                        {(isIncreaseAllowanceAlwaysTxLoading || isIncreaseAllowanceAlwaysTxSuccess) && 
+                            <SimpleSnackBar msg={isIncreaseAllowanceAlwaysTxLoading ? 'Increasing allowance always...' : 'Allowance increased always!'}/>
                         }
                         <Slider
                             aria-label="Restricted values"
