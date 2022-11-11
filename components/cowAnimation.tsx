@@ -116,7 +116,7 @@ function Icon() {
       version="1.1"
       viewBox="0 0 1332.014 947.007"
       xmlSpace="preserve"
-      style={{ width: "100%", height: "100%", marginTop: "-45%"}}
+      style={{ width: "100%", height: "100%", marginTop: "-45%", marginBottom: "-20%"}}
       className="cow"
     >
       <g className="s-cow-move-right" ref={cow}>

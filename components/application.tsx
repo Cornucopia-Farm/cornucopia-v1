@@ -399,11 +399,12 @@ const Application: React.FC<Props> = props => {
                   onClose={handleCloseReject} 
                   aria-labelledby="alert-dialog-title"
                   aria-describedby="alert-dialog-description"
+                  PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}
                 >
                   <DialogTitle className={styles.formHeader} id="alert-dialog-title">
                   {"Are you sure you want to reject this candidate?"}
                   </DialogTitle>
-                  <DialogActions className={styles.formHeader}>
+                  <DialogActions className={styles.formFooter}>
                       <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseReject}>No I don't</Button>
                       <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleCloseReject} autoFocus>Yes I want to</Button>
                   </DialogActions>
@@ -412,7 +413,7 @@ const Application: React.FC<Props> = props => {
                   {props.tokenAddress! !== zeroAddress &&
                     <>
                       <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleCloseIncreaseAllowanceEscrowOnceTrue(props.amount!, props.tokenDecimals!, props.allowance!, props.postId!, props.person, props.tokenAddress!); handleCloseIncreaseAllowanceEscrowAlwaysTrue(props.amount!, props.tokenDecimals!, props.allowance!, props.postId!, props.person, props.tokenAddress!);}}>Escrow</Button>
-                      <Dialog open={openAllowance} onClose={handleCloseIncreaseAllowanceFalse}>
+                      <Dialog open={openAllowance} onClose={handleCloseIncreaseAllowanceFalse} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
                         <DialogTitle className={styles.formHeader}>Increase Allowance</DialogTitle>
                         <DialogContent className={styles.cardBackground}>
                             <DialogContentText className={styles.dialogBody}>
@@ -425,7 +426,7 @@ const Application: React.FC<Props> = props => {
                             former is potentially more cost effective, the latter protects you incase of any future smart contract vulnerabilities.   
                             </DialogContentText>    
                         </DialogContent> 
-                        <DialogActions className={styles.formHeader}>
+                        <DialogActions className={styles.formFooter}>
                             <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {increaseAllowanceAlways?.(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!); handleCloseIncreaseAllowanceFalse(); handleClickOpenEscrow(); }} autoFocus disabled={!increaseAllowanceAlways || isIncreaseAllowanceAlwaysTxLoading}>{isIncreaseAllowanceAlwaysTxLoading ? 'Increasing Allowance...' : 'Allow Always'}</Button>
                             <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {increaseAllowanceOnce?.(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!); handleCloseIncreaseAllowanceFalse(); handleClickOpenEscrow(); }} autoFocus disabled={!increaseAllowanceOnce || isIncreaseAllowanceOnceTxLoading}>{isIncreaseAllowanceOnceTxLoading ? 'Increasing Allowance...' : 'Allow Once'}</Button>
                         </DialogActions>
@@ -440,6 +441,7 @@ const Application: React.FC<Props> = props => {
                   onClose={handleCloseEscrowFalse}
                   aria-labelledby="alert-dialog-title"
                   aria-describedby="alert-dialog-description"
+                  PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}
                 >
                   <DialogTitle className={styles.formHeader} id="alert-dialog-title">
                   {"Are you sure you want to escrow these funds?"}
@@ -450,7 +452,7 @@ const Application: React.FC<Props> = props => {
                         refunded to you if the dispute is settled in your favor, or partially refunded if a dispute winner isn't chosen.
                     </DialogContentText>
                   </DialogContent>
-                  <DialogActions className={styles.formHeader}>
+                  <DialogActions className={styles.formFooter}>
                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseEscrowFalse}>No I don't</Button>
                     {/* <Button onClick={() => handleCloseEscrowTrue(props.postId!, props.person, props.amount!)} autoFocus>Yes I want to</Button> */}
                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {escrow?.(); setOpenEscrow(false);}} autoFocus disabled={!escrow || isEscrowTxLoading}>{isEscrowTxLoading ? 'Escrowing...' : 'Yes I want to'}
@@ -465,7 +467,7 @@ const Application: React.FC<Props> = props => {
                 {props.tokenAddress! !== zeroAddress &&
                   <>
                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {handleCloseIncreaseAllowanceDisputeOnceTrue(props.amount!, props.tokenDecimals!, props.allowance!, props.postId!, props.person, props.tokenAddress!, props.workLinks!, props.postLinks!); handleCloseIncreaseAllowanceDisputeAlwaysTrue(props.amount!, props.tokenDecimals!, props.allowance!, props.postId!, props.person, props.tokenAddress!, props.workLinks!, props.postLinks!);}}>Contest</Button>
-                    <Dialog open={openAllowance} onClose={handleCloseIncreaseAllowanceFalse}>
+                    <Dialog open={openAllowance} onClose={handleCloseIncreaseAllowanceFalse} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
                       <DialogTitle className={styles.formHeader}>Increase Allowance</DialogTitle>
                       <DialogContent className={styles.cardBackground}>
                           <DialogContentText className={styles.dialogBody}>
@@ -478,7 +480,7 @@ const Application: React.FC<Props> = props => {
                           former is potentially more cost effective, the latter protects you incase of any future smart contract vulnerabilities.    
                           </DialogContentText>    
                       </DialogContent> 
-                      <DialogActions className={styles.formHeader}>
+                      <DialogActions className={styles.formFooter}>
                           <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {increaseAllowanceAlways?.(); handleCloseContestTrue(props.postId!, props.person, props.workLinks!, props.postLinks!); handleCloseIncreaseAllowanceFalse(); handleClickOpenContest(); }} autoFocus disabled={!increaseAllowanceAlways || isIncreaseAllowanceAlwaysTxLoading}>{isIncreaseAllowanceAlwaysTxLoading ? 'Increasing Allowance...' : 'Allow Always'}</Button>
                           <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {increaseAllowanceOnce?.(); handleCloseContestTrue(props.postId!, props.person, props.workLinks!, props.postLinks!); handleCloseIncreaseAllowanceFalse(); handleClickOpenContest(); }} autoFocus disabled={!increaseAllowanceOnce || isIncreaseAllowanceOnceTxLoading}>{isIncreaseAllowanceOnceTxLoading ? 'Increasing Allowance...' : 'Allow Once'}</Button>
                       </DialogActions>
@@ -493,6 +495,7 @@ const Application: React.FC<Props> = props => {
                   onClose={handleCloseContestFalse}
                   aria-labelledby="alert-dialog-title"
                   aria-describedby="alert-dialog-description"
+                  PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}
                 >
                   <DialogTitle className={styles.formHeader} id="alert-dialog-title">
                   {"Are you sure you want to dispute the bounty hunter's work?"}
@@ -506,7 +509,7 @@ const Application: React.FC<Props> = props => {
                         will be refunded in full after those 7 days. 
                     </DialogContentText>
                   </DialogContent>
-                  <DialogActions className={styles.formHeader}>
+                  <DialogActions className={styles.formFooter}>
                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseContestFalse}>No I don't</Button>
                     {/* <Button onClick={() => handleCloseContestTrue(props.postId!, props.person, props.workLinks!, props.postLinks!)} autoFocus>Yes I want to</Button> */}
                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {initiateDispute?.(); setOpenContest(false);}} autoFocus disabled={!initiateDispute || isInitiateDisputeTxLoading}>{isInitiateDisputeTxLoading ? 'Initiating dispute...' : 'Yes I want to'}</Button>
@@ -518,6 +521,7 @@ const Application: React.FC<Props> = props => {
                   onClose={handleClosePayFalse}
                   aria-labelledby="alert-dialog-title"
                   aria-describedby="alert-dialog-description"
+                  PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}
                 >
                   <DialogTitle className={styles.formHeader} id="alert-dialog-title">
                   {"Are you sure you want to pay the bounty hunter for their work?"}
@@ -527,7 +531,7 @@ const Application: React.FC<Props> = props => {
                         This will release the funds from escrow and send them to the bounty hunter for their work. 
                     </DialogContentText>
                   </DialogContent>
-                  <DialogActions className={styles.formHeader}>
+                  <DialogActions className={styles.formFooter}>
                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleClosePayFalse}>No I don't</Button>
                     {/* <Button onClick={() => handleClosePayTrue(props.postId!, props.person)} autoFocus>Yes I want to</Button> */}
                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {payout?.(); setOpenPay(false);}} autoFocus disabled={!payout || isPayoutTxLoading}>{isPayoutTxLoading ? 'Paying hunter...' : 'Yes I want to'}</Button>
@@ -543,11 +547,12 @@ const Application: React.FC<Props> = props => {
                   onClose={handleCloseSettleFalse} 
                   aria-labelledby="alert-dialog-title"
                   aria-describedby="alert-dialog-description"
+                  PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}
                 >
                   <DialogTitle className={styles.formHeader} id="alert-dialog-title">
                   {"Are you sure you don't want to settle this dispute?"}
                   </DialogTitle>
-                  <DialogActions className={styles.formHeader}>
+                  <DialogActions className={styles.formFooter}>
                       <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseSettleFalse}>No I want to settle</Button>
                       <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleCloseSettleFalse} autoFocus>Yes I don't want to</Button> 
                   </DialogActions>
@@ -558,6 +563,7 @@ const Application: React.FC<Props> = props => {
                   onClose={handleCloseSettleFalse}
                   aria-labelledby="alert-dialog-title"
                   aria-describedby="alert-dialog-description"
+                  PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}
                 >
                   <DialogTitle className={styles.formHeader} id="alert-dialog-title">
                   {"Are you sure you want to settle this dispute?"}
@@ -571,7 +577,7 @@ const Application: React.FC<Props> = props => {
                         plus their dispute bond + their dispute fee + 1/2 of your dispute bond.
                     </DialogContentText>
                   </DialogContent>
-                  <DialogActions className={styles.formHeader}>
+                  <DialogActions className={styles.formFooter}>
                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseSettleFalse}>No I don't</Button>
                     {/* <Button onClick={() => handleCloseSettleTrue(props.postId!, props.person, props.timestamp!, props.ancillaryData!, props.request!)} autoFocus>Yes I want to</Button> */}
                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {payoutIfDispute?.(); setOpenSettle(false);}} autoFocus disabled={!payoutIfDispute || isPayoutIfDisputeTxLoading}>{isPayoutIfDisputeTxLoading ? 'Settling dispute...' : 'Yes I want to'}</Button>

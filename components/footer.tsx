@@ -6,7 +6,7 @@ import CowAnimation from '../components/cowAnimation';
 
 export default function Footer() {
     return ( 
-      <Box sx={{  }}>
+      <Box sx={{ }}>
         <CowAnimation />
       </Box>   
     );
