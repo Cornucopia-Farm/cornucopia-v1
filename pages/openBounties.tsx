@@ -147,7 +147,7 @@ const OpenBounties: NextPage = () => {
 
     if (showModal) {
         return (
-            <Dialog open={showModal} onClose={hideModal}>
+            <Dialog open={showModal} onClose={hideModal} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
                 <DialogTitle className={styles.formHeader}>Welcome to Cornucopia!</DialogTitle>
                 <DialogContent className={styles.cardBackground}>
                     <DialogContentText className={styles.dialogBody}>
@@ -168,7 +168,7 @@ const OpenBounties: NextPage = () => {
                     Connect your wallet and select your chain of choice to view and apply for open bounties and create bounties of your own!  
                     </DialogContentText>
                 </DialogContent>
-                <DialogActions className={styles.formHeader}>
+                <DialogActions className={styles.formFooter}>
                         <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={hideModal}>Got it!</Button>
                 </DialogActions>
             </Dialog>

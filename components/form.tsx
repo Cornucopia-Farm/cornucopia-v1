@@ -152,8 +152,7 @@ const Form: React.FC<Props> = props => {
 
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
-        console.log(value)
-        console.log()
+        
         setFormValues({
           ...formValues,
           [name]: value,
@@ -162,8 +161,6 @@ const Form: React.FC<Props> = props => {
 
     const handleInputChangeToken = (e: any) => {
         // const { name, value } = e.target;
-        console.log("push")
-        console.log(e.target)
         // const tokenAddress = e.target.address;
         // const tokenSymbol = e.target.symbol;
         const tokenAddress = e.target.value;
@@ -179,8 +176,6 @@ const Form: React.FC<Props> = props => {
           ["tokenSymbol"]: tokenObj[0].symbol,
           ["tokenDecimals"]: tokenObj[0].decimals,
         });
-
-        console.log(formValues)
     };
 
     const handleClickOpen = () => {
@@ -379,6 +374,7 @@ const Form: React.FC<Props> = props => {
                         }}
                     >
                         {/* <Box sx={{ backgroundColor: 'rgb(23, 21, 20) !important', '& .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper': { backgroundColor: 'rgb(23, 21, 20) !important', } }}>  */}
+                        {/* <Dialog PaperProps={{ style: { backgroundColor: "black", boxShadow: "none" }, }}> */}
                         {ethTokens.map((token) => (
                             <MenuItem key={token.address} value={token.address}>
                                 <Box sx={{ display: 'flex', }}> 
@@ -389,6 +385,7 @@ const Form: React.FC<Props> = props => {
                                 </Box>
                             </MenuItem>
                         ))}
+                         {/* </Dialog> */}
                         {/* </Box> */}
                     </TextField>
                     <TextField
@@ -700,7 +697,7 @@ const Form: React.FC<Props> = props => {
                 <SimpleSnackBar msg={isSubmitTxLoading ? 'Submitting work...' : 'Submitted work!'}/>
             }
             <ButtonType />
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog open={open} onClose={handleClose} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
                 <DialogTitle className={styles.formHeader}>{props.formName}</DialogTitle>
                 <DialogContent className={styles.cardBackground}>
                     <DialogContentText className={styles.h2}>
@@ -708,7 +705,7 @@ const Form: React.FC<Props> = props => {
                     </DialogContentText>
                     {dialogBoxes(props.formType)}
                 </DialogContent>
-                <DialogActions className={styles.formHeader}>
+                <DialogActions className={styles.formFooter}>
                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleClose}>{props.formButtons[0]}</Button>
                     {props.formName !== "Submit" && 
                         <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleCloseSubmit}>{props.formButtons[1]}</Button>
@@ -730,7 +727,7 @@ const Form: React.FC<Props> = props => {
                                         Once you submit your work, the bounty creator will have 2 weeks to either payout or dispute your work.
                                     </DialogContentText>
                                 </DialogContent>
-                                <DialogActions className={styles.formHeader}>
+                                <DialogActions className={styles.formFooter}>
                                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleClose}>No I don't</Button>
                                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {submit?.(); handleCloseSubmit();}} autoFocus disabled={!submit || isSubmitTxLoading}>{isSubmitTxLoading ? 'Submitting work...' : 'Yes I want to'}</Button>
                                 </DialogActions>

@@ -217,6 +217,18 @@
   text-transform: capitalize;
   color: rgb(233, 233, 198);
   background-color: rgb(23, 21, 20);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.formFooter {
+  font-family: 'Space Grotesk' !important;
+  font-weight: 300;
+  text-transform: capitalize;
+  color: rgb(233, 233, 198);
+  background-color: rgb(23, 21, 20);
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
 
 .grass {
