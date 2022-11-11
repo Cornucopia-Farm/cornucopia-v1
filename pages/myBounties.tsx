@@ -187,6 +187,7 @@ const MyBounties: NextPage = () => {
     // };
 
     const hexAlwaysApprove = '0x8000000000000000000000000000000000000000000000000000000000000000';
+    const wethContract = useContract({...wethContractConfig, signerOrProvider: signer, });
 
     const { config: increaseAllowanceOnceConfig } = usePrepareContractWrite({...wethContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmtOnce], enabled: Boolean(debouncedAllowanceAmtOnce), });
     const { data: increaseAllowanceOnceData, error: increaseAllowanceOnceError, isLoading: isIncreaseAllowanceOnceLoading, isSuccess: isIncreaseAllowanceOnceSuccess, write: increaseAllowanceOnce } = useContractWrite(increaseAllowanceOnceConfig);
@@ -384,16 +385,20 @@ const MyBounties: NextPage = () => {
 
             const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, postData.data.creatorAddress, address ]);
 
+            console.log(bountyIdentifierInput)
+            console.log(escrowContract)
             const progress = await escrowContract.progress(bountyIdentifierInput);
             const payoutExpirationTime = await escrowContract.payoutExpiration(bountyIdentifierInput);
 
             // Allowance Data
-            let allowance = BigNumber.from(0);
+            // let allowance = BigNumber.from(0);
             
-            if (postData.data.tokenAddress !== zeroAddress && postData.data.tokenAddress) {
-                const erc20Contract = new ethers.Contract(postData.data.tokenAddress, erc20ABI['abi'], signer!);
-                allowance = await erc20Contract.allowance(address, escrowAddress);
-            }
+            // if (postData.data.tokenAddress !== zeroAddress && postData.data.tokenAddress) {
+            //     const wethContract = new ethers.Contract(process.env.NEXT_PUBLIC_WETH_ADDRESS!, erc20ABI['abi'], signer!);
+            //     allowance = await wethContract.allowance(address, escrowAddress);
+            // }
+
+            const allowance = await wethContract.allowance(address, escrowAddress);
 
             // if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 1 ) { // Case 3: Submitted
             if (progress === 1) {
@@ -431,7 +436,7 @@ const MyBounties: NextPage = () => {
                         <div> 
                             {/* <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }}  onClick={() => {handleClickOpenDispute(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress);}}>Dispute</Button> */}
                             {/* {postData.data.tokenAddress !== zeroAddress && */} 
-                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleCloseIncreaseAllowanceDisputeResponseOnceTrue(postData.data.amount, postData.data.tokenDecimals, allowance, postData.data.postId, postData.data.creatorAddress, postData.data.tokenAddress); handleCloseIncreaseAllowanceDisputeResponseAlwaysTrue(postData.data.amount, postData.data.tokenDecimals, allowance, postData.data.postId, postData.data.creatorAddress, postData.data.tokenAddress);}}>Dispute</Button>
+                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleCloseIncreaseAllowanceDisputeResponseOnceTrue(postData.data.amount, postData.data.tokenDecimals, allowance, postData.data.postId, postData.data.creatorAddress, postData.data.tokenAddress); handleCloseIncreaseAllowanceDisputeResponseAlwaysTrue(postData.data.amount, postData.data.tokenDecimals, allowance, postData.data.postId, postData.data.creatorAddress, postData.data.tokenAddress);}}>Dispute</Button>
                             <Dialog open={openAllowance} onClose={handleCloseIncreaseAllowanceFalse}>
                                 <DialogTitle className={styles.formHeader}>Increase Allowance</DialogTitle>
                                 <DialogContent className={styles.cardBackground}>
@@ -446,8 +451,8 @@ const MyBounties: NextPage = () => {
                                     </DialogContentText>    
                                 </DialogContent> 
                                 <DialogActions className={styles.formHeader}>
-                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {increaseAllowanceAlways?.(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress); handleCloseIncreaseAllowanceFalse(); handleClickOpenDispute(); }} autoFocus disabled={!increaseAllowanceAlways || isIncreaseAllowanceAlwaysTxLoading}>{isIncreaseAllowanceAlwaysTxLoading ? 'Increasing Allowance...' : 'Allow Always'}</Button>
-                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {increaseAllowanceOnce?.(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress); handleCloseIncreaseAllowanceFalse(); handleClickOpenDispute(); }} autoFocus disabled={!increaseAllowanceOnce || isIncreaseAllowanceOnceTxLoading}>{isIncreaseAllowanceOnceTxLoading ? 'Increasing Allowance...' : 'Allow Once'}</Button>
+                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {increaseAllowanceAlways?.(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress); handleCloseIncreaseAllowanceFalse(); handleClickOpenDispute(); }} autoFocus disabled={!increaseAllowanceAlways || isIncreaseAllowanceAlwaysTxLoading}>{isIncreaseAllowanceAlwaysTxLoading ? 'Increasing Allowance...' : 'Allow Always'}</Button>
+                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {increaseAllowanceOnce?.(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress); handleCloseIncreaseAllowanceFalse(); handleClickOpenDispute(); }} autoFocus disabled={!increaseAllowanceOnce || isIncreaseAllowanceOnceTxLoading}>{isIncreaseAllowanceOnceTxLoading ? 'Increasing Allowance...' : 'Allow Once'}</Button>
                                 </DialogActions>
                             </Dialog>
                             {/* }  */}
@@ -473,9 +478,9 @@ const MyBounties: NextPage = () => {
                                 </DialogContentText>
                                 </DialogContent>
                                 <DialogActions className={styles.formHeader}>
-                                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseDisputeFalse}>No I don't</Button>
+                                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseDisputeFalse}>No I don't</Button>
                                 {/* <Button onClick={() => handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress)} autoFocus>Yes I want to</Button> */}
-                                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {hunterDisputeResponse?.(); setOpenDispute(false);}} autoFocus disabled={!hunterDisputeResponse || isHunterDisputeResponseTxLoading}>{isHunterDisputeResponseTxLoading ? 'Responding to dispute...' : 'Yes I want to'}</Button>
+                                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {hunterDisputeResponse?.(); setOpenDispute(false);}} autoFocus disabled={!hunterDisputeResponse || isHunterDisputeResponseTxLoading}>{isHunterDisputeResponseTxLoading ? 'Responding to dispute...' : 'Yes I want to'}</Button>
                                 </DialogActions>
                             </Dialog>
                         </div> 
@@ -515,7 +520,7 @@ const MyBounties: NextPage = () => {
                         tokenSymbol={postData.data.tokenSymbol}
                     >
                         <div> 
-                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenForce(); handleCloseForceTrue(postData.data.postId, postData.data.creatorAddress);}}>Force Claim</Button>
+                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenForce(); handleCloseForceTrue(postData.data.postId, postData.data.creatorAddress);}}>Force Claim</Button>
                                 <Dialog
                                     open={openForce}
                                     onClose={handleCloseForceFalse}
@@ -532,9 +537,9 @@ const MyBounties: NextPage = () => {
                                     </DialogContentText>
                                     </DialogContent>
                                     <DialogActions className={styles.formHeader}>
-                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseForceFalse}>No I don't</Button> 
+                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseForceFalse}>No I don't</Button> 
                                     {/* <Button onClick={() => handleCloseForceTrue(postData.data.postId, postData.data.creatorAddress)} autoFocus>Yes I want to</Button> */}
-                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {forceHunterPayout?.(); setOpenForce(false);}} autoFocus disabled={!forceHunterPayout || isForceHunterPayoutTxLoading}>{isForceHunterPayoutTxLoading ? 'Forcing payout...' : 'Yes I want to'}</Button>
+                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {forceHunterPayout?.(); setOpenForce(false);}} autoFocus disabled={!forceHunterPayout || isForceHunterPayoutTxLoading}>{isForceHunterPayoutTxLoading ? 'Forcing payout...' : 'Yes I want to'}</Button>
                                     </DialogActions>
                                 </Dialog>
                         </div>
