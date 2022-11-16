@@ -22,6 +22,7 @@ import wethABI from '../WETH9.json';
 import styles from '../styles/Home.module.css';
 import IncreaseAllowance from './increaseAllowance';
 import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
+import { CollectionsOutlined } from '@mui/icons-material';
 
 // TODO: 
 // Toast popup for increaseAllowance popup!
@@ -45,6 +46,7 @@ type Props = {
     tokenAddress?: string;
     tokenDecimals?: number; 
     allowance?: BigNumber;
+    wethAllowance?: BigNumber;
 };
 
 // Escrow Contract Config
@@ -165,6 +167,7 @@ const Application: React.FC<Props> = props => {
     setAncillaryData(thisAncillaryData);
     setBountyAppId(bountyAppId);
     setHunterAddress(hunterAddress);
+
     // initiateDispute?.();
   };
 
@@ -236,6 +239,16 @@ const Application: React.FC<Props> = props => {
   const { data: increaseAllowanceAlwaysData, error: increaseAllowanceAlwaysError, isLoading: isIncreaseAllowanceAlwaysLoading, isSuccess: isIncreaseAllowanceAlwaysSuccess, write: increaseAllowanceAlways } = useContractWrite(increaseAllowanceAlwaysConfig);
   const { data: increaseAllowanceAlwaysTxData, isLoading: isIncreaseAllowanceAlwaysTxLoading, isSuccess: isIncreaseAllowanceAlwaysTxSuccess, error: increaseAllowanceAlwaysTxError } = useWaitForTransaction({ hash: increaseAllowanceAlwaysData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
 
+  const { config: approveOnceConfig } = usePrepareContractWrite({...wethContractConfig, functionName: 'approve', args: [escrowAddress, debouncedAllowanceAmtOnce], enabled: Boolean(debouncedAllowanceAmtOnce), });
+  const { data: approveOnceData, error: approveOnceError, isLoading: isApproveOnceLoading, isSuccess: isApproveOnceSuccess, write: approveOnce } = useContractWrite(approveOnceConfig);
+  const { data: approveOnceTxData, isLoading: isApproveOnceTxLoading, isSuccess: isApproveOnceTxSuccess, error: approveOnceTxError } = useWaitForTransaction({ hash: approveOnceData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
+
+  const { config: approveAlwaysConfig } = usePrepareContractWrite({...wethContractConfig, functionName: 'approve', args: [escrowAddress, debouncedAllowanceAmtAlways], enabled: Boolean(debouncedAllowanceAmtAlways), });
+  const { data: approveAlwaysData, error: approveAlwaysError, isLoading: isApproveAlwaysLoading, isSuccess: isApproveAlwaysSuccess, write: approveAlways } = useContractWrite(approveAlwaysConfig);
+  const { data: approveAlwaysTxData, isLoading: isApproveAlwaysTxLoading, isSuccess: isApproveAlwaysTxSuccess, error: approveAlwaysTxError } = useWaitForTransaction({ hash: approveAlwaysData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
+
+  console.log(approveOnceConfig)
+
   // const { data: allowanceData, error: isAllowanceError, isLoading: isAllowanceLoading, refetch: getAllowance} = useContractRead({...erc20ContractConfig, functionName: 'allowance', args: [address, escrowAddress], enabled: Boolean(address), });
 
   // React.useEffect(() => {
@@ -298,12 +311,12 @@ const Application: React.FC<Props> = props => {
     }
   };
 
-  const handleCloseIncreaseAllowanceDisputeOnceTrue = (amount: string, decimals: number, allowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string, workLinks: Array<string>, postLinks: Array<string>) => {
-    const amountBN = ethers.utils.parseUnits(amount, decimals);
-
-    if (amountBN.gt(allowance)) {
-      setAllowanceAmtOnce(amountBN);
-      setTokenAddressERC20(tokenAddress);
+  const handleCloseIncreaseAllowanceDisputeOnceTrue = (amount: string, decimals: number, wethAllowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string, workLinks: Array<string>, postLinks: Array<string>) => {
+    // const amountBN = ethers.utils.parseUnits(amount, decimals);
+    console.log(wethContractConfig)
+    if (bondAmt.gt(wethAllowance)) {
+      setAllowanceAmtOnce(bondAmt);
+      // setTokenAddressERC20(tokenAddress);
       setOpenAllowance(true);
     } else {
       setAllowanceIncreased(true); // Allowance sufficient for amount
@@ -312,12 +325,11 @@ const Application: React.FC<Props> = props => {
     }
   };
 
-  const handleCloseIncreaseAllowanceDisputeAlwaysTrue = (amount: string, decimals: number, allowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string, workLinks: Array<string>, postLinks: Array<string>) => {
-    const amountBN = ethers.utils.parseUnits(amount, decimals);
-
-    if (amountBN.gt(allowance)) {
+  const handleCloseIncreaseAllowanceDisputeAlwaysTrue = (amount: string, decimals: number, wethAllowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string, workLinks: Array<string>, postLinks: Array<string>) => {
+    // const amountBN = ethers.utils.parseUnits(amount, decimals);
+    if (bondAmt.gt(wethAllowance)) {
       setAllowanceAmtAlways(BigNumber.from(hexAlwaysApprove));
-      setTokenAddressERC20(tokenAddress);
+      // setTokenAddressERC20(tokenAddress);
       setOpenAllowance(true);
     } else {
       setAllowanceIncreased(true); // Allowance sufficient for amount
@@ -371,6 +383,12 @@ const Application: React.FC<Props> = props => {
         }
         {(isIncreaseAllowanceAlwaysTxLoading || isIncreaseAllowanceAlwaysTxSuccess) && 
           <SimpleSnackBar msg={isIncreaseAllowanceAlwaysTxLoading ? 'Increasing allowance always...' : 'Allowance increased always!'}/>
+        }
+        {(isApproveOnceTxLoading || isApproveOnceTxSuccess) && 
+          <SimpleSnackBar msg={isApproveOnceTxLoading ? 'Approving once...' : 'Approved once!'}/>
+        }
+        {(isApproveAlwaysTxLoading || isApproveAlwaysTxSuccess) && 
+          <SimpleSnackBar msg={isApproveAlwaysTxLoading ? 'Approving always...' : 'Approved always!'}/>
         }
 
       <Accordion square={true} sx={{ borderRadius: '12px', backgroundColor: 'rgba(6, 72, 41, 0.05)' }}>
@@ -464,32 +482,32 @@ const Application: React.FC<Props> = props => {
             {props.appStatus === "submitted" &&  
               <div>
                 {/* <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {handleClickOpenContest(); handleCloseContestTrue(props.postId!, props.person, props.workLinks!, props.postLinks!);}}>Contest</Button> */}
-                {props.tokenAddress! !== zeroAddress &&
-                  <>
-                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {handleCloseIncreaseAllowanceDisputeOnceTrue(props.amount!, props.tokenDecimals!, props.allowance!, props.postId!, props.person, props.tokenAddress!, props.workLinks!, props.postLinks!); handleCloseIncreaseAllowanceDisputeAlwaysTrue(props.amount!, props.tokenDecimals!, props.allowance!, props.postId!, props.person, props.tokenAddress!, props.workLinks!, props.postLinks!);}}>Contest</Button>
-                    <Dialog open={openAllowance} onClose={handleCloseIncreaseAllowanceFalse} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
-                      <DialogTitle className={styles.formHeader}>Increase Allowance</DialogTitle>
-                      <DialogContent className={styles.cardBackground}>
-                          <DialogContentText className={styles.dialogBody}>
-                          To initiate a dispute as a creator or respond to a dispute as a hunter, you must first allow Cornucopia to transfer tokens from your wallet to the
-                          protocol contract to then send these funds to the UMA contract for your dispute bond.  
-                          <br />
-                          <br />
-                          You can choose either to allow Cornucopia to spend an unlimited amount of funds so you won't have to approve Cornucopia 
-                          everytime you dispute a bounty or you can choose to just allow Cornucopia to spend the dispute bond amount. While the 
-                          former is potentially more cost effective, the latter protects you incase of any future smart contract vulnerabilities.    
-                          </DialogContentText>    
-                      </DialogContent> 
-                      <DialogActions className={styles.formFooter}>
-                          <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {increaseAllowanceAlways?.(); handleCloseContestTrue(props.postId!, props.person, props.workLinks!, props.postLinks!); handleCloseIncreaseAllowanceFalse(); handleClickOpenContest(); }} autoFocus disabled={!increaseAllowanceAlways || isIncreaseAllowanceAlwaysTxLoading}>{isIncreaseAllowanceAlwaysTxLoading ? 'Increasing Allowance...' : 'Allow Always'}</Button>
-                          <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {increaseAllowanceOnce?.(); handleCloseContestTrue(props.postId!, props.person, props.workLinks!, props.postLinks!); handleCloseIncreaseAllowanceFalse(); handleClickOpenContest(); }} autoFocus disabled={!increaseAllowanceOnce || isIncreaseAllowanceOnceTxLoading}>{isIncreaseAllowanceOnceTxLoading ? 'Increasing Allowance...' : 'Allow Once'}</Button>
-                      </DialogActions>
-                    </Dialog>
-                  </>
-                } 
-                {props.tokenAddress! === zeroAddress &&
+                {/* {props.tokenAddress! !== zeroAddress && */}
+                
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {handleCloseIncreaseAllowanceDisputeOnceTrue(props.amount!, props.tokenDecimals!, props.wethAllowance!, props.postId!, props.person, props.tokenAddress!, props.workLinks!, props.postLinks!); handleCloseIncreaseAllowanceDisputeAlwaysTrue(props.amount!, props.tokenDecimals!, props.wethAllowance!, props.postId!, props.person, props.tokenAddress!, props.workLinks!, props.postLinks!);}}>Contest</Button>
+                <Dialog open={openAllowance} onClose={handleCloseIncreaseAllowanceFalse} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
+                  <DialogTitle className={styles.formHeader}>Approve</DialogTitle>
+                  <DialogContent className={styles.cardBackground}>
+                      <DialogContentText className={styles.dialogBody}>
+                      To initiate a dispute as a creator or respond to a dispute as a hunter, you must first allow Cornucopia to transfer tokens from your wallet to the
+                      protocol contract to then send these funds to the UMA contract for your dispute bond.  
+                      <br />
+                      <br />
+                      You can choose either to allow Cornucopia to spend an unlimited amount of funds so you won't have to approve Cornucopia 
+                      everytime you dispute a bounty or you can choose to just allow Cornucopia to spend the dispute bond amount. While the 
+                      former is potentially more cost effective, the latter protects you incase of any future smart contract vulnerabilities.    
+                      </DialogContentText>    
+                  </DialogContent> 
+                  <DialogActions className={styles.formFooter}>
+                      <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {approveAlways?.(); handleCloseContestTrue(props.postId!, props.person, props.workLinks!, props.postLinks!); handleCloseIncreaseAllowanceFalse(); handleClickOpenContest(); }} autoFocus disabled={!increaseAllowanceAlways || isIncreaseAllowanceAlwaysTxLoading}>{isIncreaseAllowanceAlwaysTxLoading ? 'Approving...' : 'Approve Always'}</Button>
+                      <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {approveOnce?.(); handleCloseContestTrue(props.postId!, props.person, props.workLinks!, props.postLinks!); handleCloseIncreaseAllowanceFalse(); handleClickOpenContest(); }} autoFocus disabled={!increaseAllowanceOnce || isIncreaseAllowanceOnceTxLoading}>{isIncreaseAllowanceOnceTxLoading ? 'Approving...' : 'Approve Once'}</Button>
+                  </DialogActions>
+                </Dialog>
+                
+                 
+                {/* {props.tokenAddress! === zeroAddress &&
                   <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {handleClickOpenContest(); handleIncreasedAllowance(); handleCloseContestTrue(props.postId!, props.person, props.workLinks!, props.postLinks!);}}>Contest</Button>
-                }
+                } */}
                 <Dialog
                   open={openContest}
                   onClose={handleCloseContestFalse}
