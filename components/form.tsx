@@ -373,8 +373,9 @@ const Form: React.FC<Props> = props => {
                             },
                         }}
                     >
-                        {/* <Box sx={{ backgroundColor: 'rgb(23, 21, 20) !important', '& .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper': { backgroundColor: 'rgb(23, 21, 20) !important', } }}>  */}
+                        {/* <Box sx={{ backgroundColor: 'rgb(23, 21, 20) !important', }}>  */}
                         {/* <Dialog PaperProps={{ style: { backgroundColor: "black", boxShadow: "none" }, }}> */}
+                        {/* <MenuList sx={{ backgroundColor: 'rgb(23, 21, 20)', disablePadding: true, '&& .Mui-root': {backgroundColor: 'rgb(23, 21, 20)'}, }} >  */}
                         {ethTokens.map((token) => (
                             <MenuItem key={token.address} value={token.address}>
                                 <Box sx={{ display: 'flex', }}> 
@@ -385,7 +386,8 @@ const Form: React.FC<Props> = props => {
                                 </Box>
                             </MenuItem>
                         ))}
-                         {/* </Dialog> */}
+                        {/* </MenuList> */}
+                        {/* </Dialog> */}
                         {/* </Box> */}
                     </TextField>
                     <TextField
@@ -718,6 +720,7 @@ const Form: React.FC<Props> = props => {
                                 onClose={handleClose}
                                 aria-labelledby="alert-dialog-title"
                                 aria-describedby="alert-dialog-description"
+                                PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}
                             >
                                 <DialogTitle className={styles.formHeader} id="alert-dialog-title">
                                     {"Are you sure you want to submit your work?"}

@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { useQuery, gql } from '@apollo/client';
 import axios from 'axios';
-import { ethers } from 'ethers';
+import { BigNumber, ContractInterface, ethers } from 'ethers';
 import NestedAccordian from './nestedAccordion';
 import Application from './application';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
 import { useAccount, useContract, useSigner, useNetwork } from 'wagmi';
+import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
+import wethABI from '../WETH9.json';
 
 type Props = {
     postId: string;
@@ -18,6 +20,12 @@ const contractConfig = {
     contractInterface: escrowABI['abi'], // contract abi in json or JS format
 };
 
+// WETH Contract Config (For UMA Bonds)
+const wethContractConfig = {
+    addressOrName: process.env.NEXT_PUBLIC_WETH_ADDRESS!, // contract address
+    contractInterface: wethABI as ContractInterface, // contract abi in json or JS format
+  };
+
 const SubmittedPosts: React.FC<Props> = props => {
 
     // Wagmi address/contract info
@@ -25,8 +33,11 @@ const SubmittedPosts: React.FC<Props> = props => {
 
     const { data: signer, isError, isLoading } = useSigner();
     const { chain } = useNetwork();
+    const zeroAddress = '0x0000000000000000000000000000000000000000';
+    const escrowAddress = process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
 
     const escrowContract = useContract({...contractConfig, signerOrProvider: signer, });
+    const wethContract = useContract({...wethContractConfig, signerOrProvider: signer, });
 
     const [submittedBountyPosts, setSubmittedBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
@@ -63,7 +74,17 @@ const SubmittedPosts: React.FC<Props> = props => {
             // bountyProgress();
 
             const progress = await escrowContract.progress(bountyIdentifierInput);
-            
+
+            // Allowance Data
+            let allowance = BigNumber.from(0);
+
+            if (postData.data.tokenAddress !== zeroAddress && postData.data.tokenAddress) {
+                const erc20Contract = new ethers.Contract(postData.data.tokenAddress, erc20ABI['abi'], signer!);
+                allowance = await erc20Contract.allowance(address, escrowAddress);
+            }
+
+            const wethAllowance = await wethContract.allowance(address, escrowAddress);
+
             // if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 1 ) { // Case 4: Submitted
             if (progress === 1) {
                 submittedBountiesApps.push(
@@ -78,6 +99,10 @@ const SubmittedPosts: React.FC<Props> = props => {
                         workLinks={postData.data.workLinks}
                         postLinks={postData.data.postLinks}
                         tokenAddress={postData.data.tokenAddress}
+                        amount={postData.data.amount}
+                        tokenDecimals={postData.data.tokenDecimals}
+                        allowance={allowance}
+                        wethAllowance={wethAllowance}
                     />
                 );
             }
