@@ -61,6 +61,12 @@ const wethContractConfig = {
   contractInterface: wethABI as ContractInterface, // contract abi in json or JS format
 };
 
+// WETH Contract ERC-20 Config
+const wethERC20ContractConfig = {
+  addressOrName: process.env.NEXT_PUBLIC_WETH_ADDRESS!, // contract address
+  contractInterface: erc20ABI['abi'], // contract abi in json or JS format
+};
+
 const Application: React.FC<Props> = props => {
 
   const { data: ensName } = useEnsName({ address: props.person });
@@ -83,7 +89,7 @@ const Application: React.FC<Props> = props => {
   const debouncedBountyAmtERC20 = useDebounce(bountyAmtERC20, 10);
   const [decimals, setDecimals] = React.useState(null);
   const debouncedDecimals = useDebounce(decimals, 10);
-  const bountyExpirationTime = 2*7*24*60*60;
+  const bountyExpirationTime = 2*7*24*60*60; // TODO: need to fix this to be the due date!!
 
   // Submitted State
   const [openContest, setOpenContest] = React.useState(false);
@@ -99,7 +105,7 @@ const Application: React.FC<Props> = props => {
 
   const bondAmt = ethers.utils.parseUnits("0.1", "ether"); // Hard-coded (for now) bondAmt
   const oracleAddress = process.env.NEXT_PUBLIC_OO_ADDRESS!; // Goerli OO
-  const wethContract = useContract(wethContractConfig);
+  const wethContract = useContract(wethERC20ContractConfig);
   const zeroAddress = '0x0000000000000000000000000000000000000000';
 
   // Applied Contract Interactions
@@ -120,6 +126,17 @@ const Application: React.FC<Props> = props => {
   const { config: payoutConfig } = usePrepareContractWrite({...contractConfig, functionName: 'payout', args: [debouncedBountyAppId, debouncedHunterAddress, debouncedTokenAddressERC20], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedTokenAddressERC20),});
   const { data: payoutData, error: payoutError, isLoading: isPayoutLoading, isSuccess: isPayoutSuccess, write: payout } = useContractWrite(payoutConfig);
   const { data: payoutTxData, isLoading: isPayoutTxLoading, isSuccess: isPayoutTxSuccess, error: payoutTxError } = useWaitForTransaction({ hash: payoutData?.hash, enabled: true,});
+
+  console.log(debouncedBountyAppId)
+  console.log(debouncedHunterAddress)
+  console.log(oracleAddress)
+  console.log(bondAmt)
+  console.log(debouncedAncillaryData)
+  console.log(wethContract)
+  console.log(allowanceIncreased)
+  console.log(initiateDispute)
+  console.log(initiateDisputeConfig)
+  console.log()
 
   // Applied State Helper Functions
   const handleClickOpenReject = () => {
@@ -167,7 +184,6 @@ const Application: React.FC<Props> = props => {
     setAncillaryData(thisAncillaryData);
     setBountyAppId(bountyAppId);
     setHunterAddress(hunterAddress);
-
     // initiateDispute?.();
   };
 
@@ -247,7 +263,6 @@ const Application: React.FC<Props> = props => {
   const { data: approveAlwaysData, error: approveAlwaysError, isLoading: isApproveAlwaysLoading, isSuccess: isApproveAlwaysSuccess, write: approveAlways } = useContractWrite(approveAlwaysConfig);
   const { data: approveAlwaysTxData, isLoading: isApproveAlwaysTxLoading, isSuccess: isApproveAlwaysTxSuccess, error: approveAlwaysTxError } = useWaitForTransaction({ hash: approveAlwaysData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
 
-  console.log(approveOnceConfig)
 
   // const { data: allowanceData, error: isAllowanceError, isLoading: isAllowanceLoading, refetch: getAllowance} = useContractRead({...erc20ContractConfig, functionName: 'allowance', args: [address, escrowAddress], enabled: Boolean(address), });
 
@@ -313,7 +328,6 @@ const Application: React.FC<Props> = props => {
 
   const handleCloseIncreaseAllowanceDisputeOnceTrue = (amount: string, decimals: number, wethAllowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string, workLinks: Array<string>, postLinks: Array<string>) => {
     // const amountBN = ethers.utils.parseUnits(amount, decimals);
-    console.log(wethContractConfig)
     if (bondAmt.gt(wethAllowance)) {
       setAllowanceAmtOnce(bondAmt);
       // setTokenAddressERC20(tokenAddress);
@@ -499,8 +513,8 @@ const Application: React.FC<Props> = props => {
                       </DialogContentText>    
                   </DialogContent> 
                   <DialogActions className={styles.formFooter}>
-                      <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {approveAlways?.(); handleCloseContestTrue(props.postId!, props.person, props.workLinks!, props.postLinks!); handleCloseIncreaseAllowanceFalse(); handleClickOpenContest(); }} autoFocus disabled={!increaseAllowanceAlways || isIncreaseAllowanceAlwaysTxLoading}>{isIncreaseAllowanceAlwaysTxLoading ? 'Approving...' : 'Approve Always'}</Button>
-                      <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {approveOnce?.(); handleCloseContestTrue(props.postId!, props.person, props.workLinks!, props.postLinks!); handleCloseIncreaseAllowanceFalse(); handleClickOpenContest(); }} autoFocus disabled={!increaseAllowanceOnce || isIncreaseAllowanceOnceTxLoading}>{isIncreaseAllowanceOnceTxLoading ? 'Approving...' : 'Approve Once'}</Button>
+                      <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {approveAlways?.(); handleCloseContestTrue(props.postId!, props.person, props.workLinks!, props.postLinks!); handleCloseIncreaseAllowanceFalse(); handleClickOpenContest(); }} autoFocus disabled={!approveAlways || isApproveAlwaysTxLoading}>{isApproveAlwaysTxLoading ? 'Approving...' : 'Approve Always'}</Button>
+                      <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {approveOnce?.(); handleCloseContestTrue(props.postId!, props.person, props.workLinks!, props.postLinks!); handleCloseIncreaseAllowanceFalse(); handleClickOpenContest(); }} autoFocus disabled={!approveOnce || isApproveOnceTxLoading}>{isApproveOnceTxLoading ? 'Approving...' : 'Approve Once'}</Button>
                   </DialogActions>
                 </Dialog>
                 
