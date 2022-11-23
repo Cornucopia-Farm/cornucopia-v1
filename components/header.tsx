@@ -46,7 +46,7 @@ export default function HeaderTabs() {
 
 
   return ( 
-    <Box className={styles.header} sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', borderColor: 'divider', paddingTop: '12px', paddingBottom: '12px', justifyContent: 'space-between' }}>
+    <Box className={styles.header} sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', borderColor: 'divider', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', marginLeft: '16px', gap: '32px'}}> 
         {/* <Tabs> */}
           <Link href="/openBounties" >
@@ -69,10 +69,16 @@ export default function HeaderTabs() {
         {/* <Button variant="contained" sx={{ backgroundColor: 'rgba(6, 72, 41, 0.15)', borderRadius: '12px', marginRight: '32px', }} onClick={handlePopUp}>Verify Account</Button> */}
         {/* <Button variant="contained" sx={{ backgroundColor: 'rgba(6, 72, 41, 0.85)', borderRadius: '12px', marginRight: '32px', }} onClick={handleClickOpen}>{address ? address : "Connect Wallet"}</Button>
         <Wallet open={open} onClose={handleClose} onConnect={setAddress} /> */}
-        <Box sx={{ marginRight: '16px'}}> 
+
+        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center',  }}> 
+          <Box> 
           <ConnectButton />
+          </Box>
+        <Box>
+          <Image src="/corn_logo.png" height="125px" width="125px"/>
+          {/* <Image src="/corn_logo copy.png" height="125px" width="125px"/> */}
         </Box>
-        
+        </Box>
     </Box>   
   );
 };

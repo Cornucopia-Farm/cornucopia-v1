@@ -13,7 +13,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Link from '@mui/material/Link';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
-import { useContractWrite, usePrepareContractWrite, useWaitForTransaction, useContract, useEnsName, useNetwork, useAccount, useContractRead, useSigner } from 'wagmi';
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction, useContract, useEnsName, useNetwork, useAccount, useContractRead, useSigner, useProvider } from 'wagmi';
 import { BigNumber, ContractInterface, ethers } from 'ethers';
 import useDebounce from './useDebounce';
 import SimpleSnackBar from './simpleSnackBar';
@@ -72,6 +72,8 @@ const Application: React.FC<Props> = props => {
   const { data: ensName } = useEnsName({ address: props.person });
   const { chain } = useNetwork();
   const { address, isConnected } = useAccount();
+  const { data: signer } = useSigner();
+  const provider = useProvider();
 
   // Applied State
   const [openReject, setOpenReject] = React.useState(false);
@@ -104,8 +106,10 @@ const Application: React.FC<Props> = props => {
   });
 
   const bondAmt = ethers.utils.parseUnits("0.1", "ether"); // Hard-coded (for now) bondAmt
+  const finalFee = ethers.utils.parseUnits("0.35", "ether"); // Hard-coded finalFee
   const oracleAddress = process.env.NEXT_PUBLIC_OO_ADDRESS!; // Goerli OO
-  const wethContract = useContract(wethERC20ContractConfig);
+  const wethContract = useContract({...wethContractConfig});
+  // const wethContract = new ethers.Contract(process.env.NEXT_PUBLIC_WETH_ADDRESS!, erc20ABI['abi'], signer!);
   const zeroAddress = '0x0000000000000000000000000000000000000000';
 
   // Applied Contract Interactions
@@ -115,7 +119,7 @@ const Application: React.FC<Props> = props => {
   const { data: escrowTxData, isLoading: isEscrowTxLoading, isSuccess: isEscrowTxSuccess, error: escrowTxError } = useWaitForTransaction({ hash: escrowData?.hash, enabled: true,});
 
   // Submitted Contract Interactions: Initiate Dispute/Payout If Dispute/Payout
-  const { config: initiateDisputeConfig } = usePrepareContractWrite({...contractConfig, functionName: 'initiateDispute', args: [debouncedBountyAppId, debouncedHunterAddress, oracleAddress, bondAmt, debouncedAncillaryData, wethContract], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedAncillaryData) && Boolean(allowanceIncreased), });
+  const { config: initiateDisputeConfig } = usePrepareContractWrite({...contractConfig, functionName: 'initiateDispute', args: [debouncedBountyAppId, debouncedHunterAddress, oracleAddress, bondAmt, debouncedAncillaryData, wethContract.address], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedAncillaryData) && Boolean(allowanceIncreased), overrides: { gasLimit: 250000 }});
   const { data: initiateDisputeData, error: initiateDisputeError, isLoading: isInitiateDisputeLoading, isSuccess: isInitiateDisputeSuccess, write: initiateDispute } = useContractWrite(initiateDisputeConfig);
   const { data: initiateDisputeTxData, isLoading: isInitiateDisputeTxLoading, isSuccess: isInitiateDisputeTxSuccess, error: initiateDisputeTxError } = useWaitForTransaction({ hash: initiateDisputeData?.hash, enabled: true,});
 
@@ -137,6 +141,9 @@ const Application: React.FC<Props> = props => {
   console.log(initiateDispute)
   console.log(initiateDisputeConfig)
   console.log()
+  console.log('weth contract', wethContract)
+  console.log('provider', provider)
+  // console.log(wethContract.callStatic.name())
 
   // Applied State Helper Functions
   const handleClickOpenReject = () => {
@@ -328,8 +335,9 @@ const Application: React.FC<Props> = props => {
 
   const handleCloseIncreaseAllowanceDisputeOnceTrue = (amount: string, decimals: number, wethAllowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string, workLinks: Array<string>, postLinks: Array<string>) => {
     // const amountBN = ethers.utils.parseUnits(amount, decimals);
-    if (bondAmt.gt(wethAllowance)) {
-      setAllowanceAmtOnce(bondAmt);
+    const total = bondAmt.add(finalFee);
+    if (total.gt(wethAllowance)) {
+      setAllowanceAmtOnce(total);
       // setTokenAddressERC20(tokenAddress);
       setOpenAllowance(true);
     } else {
@@ -341,7 +349,8 @@ const Application: React.FC<Props> = props => {
 
   const handleCloseIncreaseAllowanceDisputeAlwaysTrue = (amount: string, decimals: number, wethAllowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string, workLinks: Array<string>, postLinks: Array<string>) => {
     // const amountBN = ethers.utils.parseUnits(amount, decimals);
-    if (bondAmt.gt(wethAllowance)) {
+    const total = bondAmt.add(finalFee);
+    if (total.gt(wethAllowance)) {
       setAllowanceAmtAlways(BigNumber.from(hexAlwaysApprove));
       // setTokenAddressERC20(tokenAddress);
       setOpenAllowance(true);

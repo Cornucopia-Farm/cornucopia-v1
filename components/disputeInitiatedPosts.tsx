@@ -70,7 +70,6 @@ const DisputeInitiatedPosts: React.FC<Props> = props => {
             // bountyProgress();
 
             const progress = await escrowContract.progress(bountyIdentifierInput);
-            
             if (progress === 2) { // Case 5: Hunter needs to respond to creator dispute
                 disputeInitiatedBountiesApps.push(
                     <Application key={postId} 
