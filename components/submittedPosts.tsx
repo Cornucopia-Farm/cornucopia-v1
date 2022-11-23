@@ -24,7 +24,13 @@ const contractConfig = {
 const wethContractConfig = {
     addressOrName: process.env.NEXT_PUBLIC_WETH_ADDRESS!, // contract address
     contractInterface: wethABI as ContractInterface, // contract abi in json or JS format
-  };
+};
+
+// // WETH Contract ERC-20 Config
+// const wethERC20ContractConfig = {
+//     addressOrName: process.env.NEXT_PUBLIC_WETH_ADDRESS!, // contract address
+//     contractInterface: erc20ABI['abi'], // contract abi in json or JS format
+// };
 
 const SubmittedPosts: React.FC<Props> = props => {
 
@@ -38,6 +44,7 @@ const SubmittedPosts: React.FC<Props> = props => {
 
     const escrowContract = useContract({...contractConfig, signerOrProvider: signer, });
     const wethContract = useContract({...wethContractConfig, signerOrProvider: signer, });
+    // const wethContract20 = useContract({...wethERC20ContractConfig, signerOrProvider: signer, });
 
     const [submittedBountyPosts, setSubmittedBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
