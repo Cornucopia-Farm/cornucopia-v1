@@ -336,7 +336,7 @@ const Form: React.FC<Props> = props => {
                             },
                         }} 
                     />
-                    <TextField // Fix Dropdown Menu Formatting!!
+                    <TextField 
                         autoFocus
                         margin="dense"
                         id="token-input"
@@ -350,11 +350,19 @@ const Form: React.FC<Props> = props => {
                         inputProps={{ autoComplete: 'off'}}
                         SelectProps={{
                             MenuProps: {
-                                sx: { maxHeight: '50%', },
-                                MenuListProps: {
-                                    sx: { backgroundColor: 'rgb(23, 21, 20)', }
+                                sx: { 
+                                    maxHeight: '50%', 
+                                    '& .MuiMenu-paper': { 
+                                        borderBottomLeftRadius: '12px',
+                                        borderBottomRightRadius: '12px',
+                                    } 
                                 },
-                            },
+                                MenuListProps: {
+                                    sx: { 
+                                        backgroundColor: 'rgb(23, 21, 20)',           
+                                    }
+                                },
+                            },   
                         }}
                         sx={{ 
                             '& .MuiInputBase-input': { 
@@ -386,11 +394,11 @@ const Form: React.FC<Props> = props => {
                     >
                         {ethTokens.map((token) => (
                             <MenuItem key={token.address} value={token.address}>
-                                <Box sx={{ display: 'flex', }}> 
-                                <ListItemIcon>
-                                    <img width="25px" height="25px" src={token.logoURI} />
-                                </ListItemIcon>
-                                <Typography sx={{color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk'}}>{token.symbol}</Typography>
+                                <Box sx={{ display: 'flex', gap: '12px' }}> 
+                                    <ListItemIcon sx={{ minWidth: '25px !important'}} >
+                                        <img width="25px" height="25px" src={token.logoURI} />
+                                    </ListItemIcon>
+                                    <Typography sx={{color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk'}}>{token.symbol}</Typography>
                                 </Box>
                             </MenuItem>
                         ))}
