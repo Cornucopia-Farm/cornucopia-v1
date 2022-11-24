@@ -75,7 +75,7 @@ export default function HeaderTabs() {
           <ConnectButton />
           </Box>
         <Box>
-          <Image src="/corn_logo.png" height="125px" width="125px"/>
+          <Image src="/corn_logo.png" height="100px" width="100px"/>
           {/* <Image src="/corn_logo copy.png" height="125px" width="125px"/> */}
         </Box>
         </Box>

@@ -36,6 +36,8 @@ import Link from 'next/link';
 import WelcomeCard from '../components/welcomeCard';
 import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
 import Tooltip from '@mui/material/Tooltip';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import MyBountiesInfo from '../components/myBountiesInfo';
 
 // Bounty Stages for Hunter:
 // 1. Applied (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.NoBounty); CHECK PROGRESS MAPPING
@@ -624,6 +626,7 @@ const MyBounties: NextPage = () => {
     }
 
     const [stage, setStage] = React.useState(1);
+    const [stageInfo, setStageInfo] = React.useState(false);
 
     if (!isConnected) {
         return (
@@ -639,7 +642,7 @@ const MyBounties: NextPage = () => {
                 </Head>
     
                 <main> 
-                    <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '160px', paddingRight: '160px', paddingTop: '24px', color: 'rgba(6, 72, 41, 0.85)' }}> 
+                    <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '160px', paddingRight: '160px', paddingTop: '24px', color: 'rgba(6, 72, 41, 0.85)', }}> 
                         {(isHunterDisputeResponseTxLoading || isHunterDisputeResponseTxSuccess) && 
                             <SimpleSnackBar msg={isHunterDisputeResponseTxLoading ? 'Responding to dispute...' : 'Responded to dispute!'}/>
                         }
@@ -652,44 +655,53 @@ const MyBounties: NextPage = () => {
                         {(isIncreaseAllowanceAlwaysTxLoading || isIncreaseAllowanceAlwaysTxSuccess) && 
                             <SimpleSnackBar msg={isIncreaseAllowanceAlwaysTxLoading ? 'Increasing allowance always...' : 'Allowance increased always!'}/>
                         }
-                        <Slider
-                            aria-label="Restricted values"
-                            defaultValue={0}
-                            getAriaValueText={valuetext}
-                            step={null}
-                            valueLabelDisplay="off"
-                            marks={marks}
-                            onChange={(e, val) => setStage(marks.findIndex((mark) => mark.value === val) + 1)}
-                            sx={{ 
-                                height: 12, 
-                                color: 'rgb(233, 233, 198)', 
-                                '& .MuiSlider-markLabel': { 
+                        <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center'}}> 
+                            <Box sx={{ display: 'flex', flexDirection: 'column', }}>
+                                <Button onClick={() => setStageInfo(true)} sx={{ width: '13px !important', height: '13px !important', position: 'absolute', paddingBottom: '20px', paddingLeft: '68px', }}> 
+                                    <InfoOutlinedIcon sx={{ color: 'rgb(233, 233, 198)', fontSize: '12px', }}/>
+                                </Button>
+                                <MyBountiesInfo open={stageInfo} setOpen={setStageInfo}/>
+                                <Typography sx={{ color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk', fontStyle: 'italic', fontWeight: '300', fontSize: '18px', position: 'relative', }}>Stages</Typography>
+                            </Box>
+                            <Slider
+                                aria-label="Restricted values"
+                                defaultValue={0}
+                                getAriaValueText={valuetext}
+                                step={null}
+                                valueLabelDisplay="off"
+                                marks={marks}
+                                onChange={(e, val) => setStage(marks.findIndex((mark) => mark.value === val) + 1)}
+                                sx={{ 
+                                    height: 12, 
                                     color: 'rgb(233, 233, 198)', 
-                                    fontFamily: 'Space Grotesk' 
-                                }, 
-                                '& .MuiSlider-thumb': {
-                                    height: 24,
-                                    width: 24,
-                                    backgroundColor: '#fff',
-                                    border: '2px solid currentColor',
-                                    '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
-                                      boxShadow: '0 0 0 8px rgba(58, 133, 137, 0.16)',
+                                    '& .MuiSlider-markLabel': { 
+                                        color: 'rgb(233, 233, 198)', 
+                                        fontFamily: 'Space Grotesk' 
+                                    }, 
+                                    '& .MuiSlider-thumb': {
+                                        height: 24,
+                                        width: 24,
+                                        backgroundColor: '#fff',
+                                        border: '2px solid currentColor',
+                                        '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
+                                        boxShadow: '0 0 0 8px rgba(58, 133, 137, 0.16)',
+                                        },
+                                        '&:before': {
+                                        display: 'none',
+                                        },
                                     },
-                                    '&:before': {
-                                      display: 'none',
+                                    '& .MuiSlider-track': {
+                                        border: 'none',
                                     },
-                                },
-                                '& .MuiSlider-track': {
-                                    border: 'none',
-                                },
-                                '& .MuiSlider-mark': {
-                                    '&.MuiSlider-markActive': {
-                                      opacity: 1,
-                                      backgroundColor: 'currentColor',
-                                    },
-                                }
-                            }}
-                        />
+                                    '& .MuiSlider-mark': {
+                                        '&.MuiSlider-markActive': {
+                                        opacity: 1,
+                                        backgroundColor: 'currentColor',
+                                        },
+                                    }
+                                }}
+                            />
+                        </Box>
                         {stage === 1 && 
                             <div> 
                                 <h2 className={styles.h2}>Applied</h2>

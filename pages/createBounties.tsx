@@ -30,6 +30,9 @@ import Slider from '@mui/material/Slider';
 import { Typography } from '@mui/material';
 import { makeStyles, propsToClassKey } from '@mui/styles';
 import WelcomeCard from '../components/welcomeCard';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import CreateBountiesInfo from '../components/createBountiesInfo';
+
 
 // Bounty Stages for Creator:
 // 1. Posted (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.NoBounty); CHECK PROGRESS MAPPING
@@ -282,6 +285,7 @@ const CreateBounties: NextPage = () => {
     }
       
     const [stage, setStage] = React.useState(1);
+    const [stageInfo, setStageInfo] = React.useState(false);
 
     if (!isConnected) {
         return (
@@ -298,44 +302,53 @@ const CreateBounties: NextPage = () => {
     
                 <main className={styles.background}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '160px', paddingRight: '160px', paddingTop: '24px', color: 'rgba(6, 72, 41, 0.85)' }}>
-                        <Slider
-                            aria-label="Restricted values"
-                            defaultValue={0}
-                            getAriaValueText={valuetext}
-                            step={null}
-                            valueLabelDisplay="off"
-                            marks={marks}
-                            onChange={(e, val) => setStage(marks.findIndex((mark) => mark.value === val) + 1)}
-                            sx={{ 
-                                height: 12, 
-                                color: 'rgb(233, 233, 198)', 
-                                '& .MuiSlider-markLabel': { 
+                        <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center'}}> 
+                            <Box sx={{ display: 'flex', flexDirection: 'column', }}>
+                                <Button onClick={() => setStageInfo(true)} sx={{ width: '13px !important', height: '13px !important', position: 'absolute', paddingBottom: '20px', paddingLeft: '68px', }}> 
+                                    <InfoOutlinedIcon sx={{ color: 'rgb(233, 233, 198)', fontSize: '12px', }}/>
+                                </Button>
+                                <CreateBountiesInfo open={stageInfo} setOpen={setStageInfo}/>
+                                <Typography sx={{ color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk', fontStyle: 'italic', fontWeight: '300', fontSize: '18px', position: 'relative', }}>Stages</Typography>
+                            </Box>
+                            <Slider
+                                aria-label="Restricted values"
+                                defaultValue={0}
+                                getAriaValueText={valuetext}
+                                step={null}
+                                valueLabelDisplay="off"
+                                marks={marks}
+                                onChange={(e, val) => setStage(marks.findIndex((mark) => mark.value === val) + 1)}
+                                sx={{ 
+                                    height: 12, 
                                     color: 'rgb(233, 233, 198)', 
-                                    fontFamily: 'Space Grotesk' 
-                                }, 
-                                '& .MuiSlider-thumb': {
-                                    height: 24,
-                                    width: 24,
-                                    backgroundColor: '#fff',
-                                    border: '2px solid currentColor',
-                                    '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
-                                      boxShadow: '0 0 0 8px rgba(58, 133, 137, 0.16)',
+                                    '& .MuiSlider-markLabel': { 
+                                        color: 'rgb(233, 233, 198)', 
+                                        fontFamily: 'Space Grotesk' 
+                                    }, 
+                                    '& .MuiSlider-thumb': {
+                                        height: 24,
+                                        width: 24,
+                                        backgroundColor: '#fff',
+                                        border: '2px solid currentColor',
+                                        '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
+                                        boxShadow: '0 0 0 8px rgba(58, 133, 137, 0.16)',
+                                        },
+                                        '&:before': {
+                                        display: 'none',
+                                        },
                                     },
-                                    '&:before': {
-                                      display: 'none',
+                                    '& .MuiSlider-track': {
+                                        border: 'none',
                                     },
-                                },
-                                '& .MuiSlider-track': {
-                                    border: 'none',
-                                },
-                                '& .MuiSlider-mark': {
-                                    '&.MuiSlider-markActive': {
-                                      opacity: 1,
-                                      backgroundColor: 'currentColor',
-                                    },
-                                }
-                            }}
-                        />
+                                    '& .MuiSlider-mark': {
+                                        '&.MuiSlider-markActive': {
+                                        opacity: 1,
+                                        backgroundColor: 'currentColor',
+                                        },
+                                    }
+                                }}
+                            />
+                        </Box>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', }}> 
                             {stage === 1 && <h2 className={styles.h2}>Posted</h2>}
                             {stage === 2 && <h2 className={styles.h2}>Applied To</h2>}
