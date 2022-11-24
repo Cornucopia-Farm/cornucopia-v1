@@ -86,11 +86,11 @@ const defaultValues: ArweaveData = {
     amount: undefined,
     date: "", 
     time: "", 
-    postLinks: [""],
-    appLinks: [""],
+    postLinks: undefined, // [""],
+    appLinks: undefined, //[""],
     experience: "",
     contact: "",
-    workLinks: [""],
+    workLinks: undefined, //[""],
     tokenAddress: "",
     tokenSymbol: "",
     tokenDecimals: undefined
@@ -273,6 +273,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        inputProps={{ autoComplete: 'off'}}
                         sx={{ 
                             '& .MuiInputBase-input': { 
                                 color: 'rgb(248, 215, 154)', 
@@ -309,6 +310,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        inputProps={{ autoComplete: 'off'}}
                         sx={{ 
                             '& .MuiInputBase-input': { 
                                 color: 'rgb(248, 215, 154)', 
@@ -345,6 +347,7 @@ const Form: React.FC<Props> = props => {
                         select
                         fullWidth
                         variant="standard"
+                        inputProps={{ autoComplete: 'off'}}
                         sx={{ 
                             '& .MuiInputBase-input': { 
                                 color: 'rgb(248, 215, 154)', 
@@ -401,6 +404,7 @@ const Form: React.FC<Props> = props => {
                         type="text" // Need to add ERC20
                         fullWidth
                         variant="standard"
+                        inputProps={{ autoComplete: 'off'}}
                         sx={{ 
                             '& .MuiInputBase-input': { 
                                 color: 'rgb(248, 215, 154)', 
@@ -437,6 +441,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        inputProps={{ autoComplete: 'off'}}
                         sx={{ 
                             '& .MuiInputBase-input': { 
                                 color: 'rgb(248, 215, 154)', 
@@ -473,6 +478,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        inputProps={{ autoComplete: 'off'}}
                         sx={{ 
                             '& .MuiInputBase-input': { 
                                 color: 'rgb(248, 215, 154)', 
@@ -509,6 +515,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard" 
+                        inputProps={{ autoComplete: 'off'}}
                         sx={{ 
                             '& .MuiInputBase-input': { 
                                 color: 'rgb(248, 215, 154)', 
@@ -550,6 +557,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        inputProps={{ autoComplete: 'off'}}
                         sx={{ 
                             '& .MuiInputBase-input': { 
                                 color: 'rgb(248, 215, 154)', 
@@ -586,6 +594,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        inputProps={{ autoComplete: 'off'}}
                         sx={{ 
                             '& .MuiInputBase-input': { 
                                 color: 'rgb(248, 215, 154)', 
@@ -622,6 +631,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        inputProps={{ autoComplete: 'off'}}
                         sx={{ 
                             '& .MuiInputBase-input': { 
                                 color: 'rgb(248, 215, 154)', 
@@ -663,6 +673,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        inputProps={{ autoComplete: 'off'}}
                         sx={{ 
                             '& .MuiInputBase-input': { 
                                 color: 'rgb(248, 215, 154)', 
