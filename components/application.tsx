@@ -385,21 +385,34 @@ const Application: React.FC<Props> = props => {
   };
 
   const blockExplorerURL = blockExplorer(chain?.network);
+  console.log('tx data', initiateDisputeTxData)
 
   if (props.person) {
     return(
       <div>
-        {(isEscrowTxLoading || isEscrowTxSuccess) && 
+        {(isEscrowTxLoading || (isEscrowTxSuccess && escrowTxData?.status === 1)) && 
           <SimpleSnackBar msg={isEscrowTxLoading ? 'Escrowing funds...' : 'Funds escrowed!'}/>
         }
-        {(isInitiateDisputeTxLoading || isInitiateDisputeTxSuccess) && 
+        {(isEscrowTxSuccess && escrowTxData?.status === 0) && 
+          <SimpleSnackBar msg={'Escrow transaction failed!'}/>
+        }
+        {(isInitiateDisputeTxLoading || (isInitiateDisputeTxSuccess && initiateDisputeTxData?.status === 1)) && 
           <SimpleSnackBar msg={isInitiateDisputeTxLoading ? 'Initiating dispute...' : 'Dispute initiated!'}/>
         }
-        {(isPayoutIfDisputeTxLoading || isPayoutIfDisputeTxSuccess) && 
+        {(isInitiateDisputeTxSuccess && initiateDisputeTxData?.status === 0) && 
+          <SimpleSnackBar msg={'Initiate Dispute transaction failed!'}/>
+        }
+        {(isPayoutIfDisputeTxLoading || (isPayoutIfDisputeTxSuccess && payoutIfDisputeTxData?.status === 1)) && 
           <SimpleSnackBar msg={isPayoutIfDisputeTxLoading ? 'Settling dispute...' : 'Dispute settled and winner paid'}/>
         }
-        {(isPayoutTxLoading || isPayoutTxSuccess) && 
+        {(isPayoutIfDisputeSuccess && payoutIfDisputeTxData?.status === 0) && 
+          <SimpleSnackBar msg={'Settle Dispute transaction failed!'}/>
+        }
+        {(isPayoutTxLoading || (isPayoutTxSuccess && payoutTxData?.status === 1)) && 
           <SimpleSnackBar msg={isPayoutTxLoading ? 'Paying hunter...' : 'Hunter paid!'}/>
+        }
+        {(isPayoutTxSuccess && payoutTxData?.status === 0) && 
+          <SimpleSnackBar msg={'Payout transaction failed!'}/>
         }
         {(isIncreaseAllowanceOnceTxLoading || isIncreaseAllowanceOnceTxSuccess) && 
           <SimpleSnackBar msg={isIncreaseAllowanceOnceTxLoading ? 'Increasing allowance once...' : 'Allowance increased once!'}/>

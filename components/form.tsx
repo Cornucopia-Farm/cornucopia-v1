@@ -716,8 +716,11 @@ const Form: React.FC<Props> = props => {
 
     return (
         <div>
-            {(isSubmitTxLoading || isSubmitTxSuccess) && 
+            {(isSubmitTxLoading || (isSubmitTxSuccess && submitTxData?.status === 1)) && 
                 <SimpleSnackBar msg={isSubmitTxLoading ? 'Submitting work...' : 'Submitted work!'}/>
+            }
+            {(isSubmitTxSuccess && submitTxData?.status === 0) && 
+                <SimpleSnackBar msg={'Submit transaction failed!'}/>
             }
             <ButtonType />
             <Dialog open={open} onClose={handleClose} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
