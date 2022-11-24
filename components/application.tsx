@@ -47,6 +47,7 @@ type Props = {
     tokenDecimals?: number; 
     allowance?: BigNumber;
     wethAllowance?: BigNumber;
+    expirationTime?: number;
 };
 
 // Escrow Contract Config
@@ -89,8 +90,10 @@ const Application: React.FC<Props> = props => {
   const debouncedBountyAmtETH = useDebounce(bountyAmtETH, 10);
   const [bountyAmtERC20, setBountyAmtERC20] = React.useState('' as unknown as BigNumber);
   const debouncedBountyAmtERC20 = useDebounce(bountyAmtERC20, 10);
-  const [decimals, setDecimals] = React.useState(null);
-  const debouncedDecimals = useDebounce(decimals, 10);
+  // const [decimals, setDecimals] = React.useState(null);
+  // const debouncedDecimals = useDebounce(decimals, 10);
+  const [expirationTime, setExpirationTime] = React.useState(0);
+  const debouncedExpirationTime =  useDebounce(expirationTime, 10);
   const bountyExpirationTime = 2*7*24*60*60; // TODO: need to fix this to be the due date!!
 
   // Submitted State
@@ -114,7 +117,7 @@ const Application: React.FC<Props> = props => {
 
   // Applied Contract Interactions
   // set enabled to be this boolean triple so that usePrepareContractWrite doesn't run before these vars have been assigned
-  const { config: escrowConfig } = usePrepareContractWrite({...contractConfig, functionName: 'escrow', args: [debouncedBountyAppId, debouncedHunterAddress, bountyExpirationTime, debouncedTokenAddressERC20, debouncedBountyAmtERC20], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedBountyAmtETH) && Boolean(debouncedTokenAddressERC20) && Boolean(debouncedBountyAmtERC20) && Boolean(allowanceIncreased), overrides: {value: debouncedBountyAmtETH }});
+  const { config: escrowConfig } = usePrepareContractWrite({...contractConfig, functionName: 'escrow', args: [debouncedBountyAppId, debouncedHunterAddress, debouncedExpirationTime, debouncedTokenAddressERC20, debouncedBountyAmtERC20], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedExpirationTime) && Boolean(debouncedBountyAmtETH) && Boolean(debouncedTokenAddressERC20) && Boolean(debouncedBountyAmtERC20) && Boolean(allowanceIncreased), overrides: {value: debouncedBountyAmtETH }});
   const { data: escrowData, error: escrowError, isLoading: isEscrowLoading, isSuccess: isEscrowSuccess, write: escrow } = useContractWrite(escrowConfig);
   const { data: escrowTxData, isLoading: isEscrowTxLoading, isSuccess: isEscrowTxSuccess, error: escrowTxError } = useWaitForTransaction({ hash: escrowData?.hash, enabled: true,});
 
@@ -159,11 +162,12 @@ const Application: React.FC<Props> = props => {
     setOpenEscrow(true);
   };
 
-  const handleCloseEscrowTrue = (bountyAppId: string, hunterAddress: string, tokenAddress: string, bountyAmount: string, tokenDecimals: number) => {
+  const handleCloseEscrowTrue = (bountyAppId: string, hunterAddress: string, tokenAddress: string, bountyAmount: string, tokenDecimals: number, expirationTime: number) => {
     // setOpenEscrow(false);
     setBountyAppId(bountyAppId);
     setHunterAddress(hunterAddress);
     setTokenAddressERC20(tokenAddress);
+    setExpirationTime(expirationTime);
     // setDecimals(tokenDecimals);
     
     if (tokenAddress === zeroAddress) { // ETH Bounty
@@ -305,7 +309,7 @@ const Application: React.FC<Props> = props => {
     setOpenAllowance(false);
   };
 
-  const handleCloseIncreaseAllowanceEscrowOnceTrue = (amount: string, decimals: number, allowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string) => {
+  const handleCloseIncreaseAllowanceEscrowOnceTrue = (amount: string, decimals: number, allowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string, expirationTime: number) => {
     const amountBN = ethers.utils.parseUnits(amount, decimals);
 
     if (amountBN.gt(allowance)) {
@@ -314,12 +318,12 @@ const Application: React.FC<Props> = props => {
       setOpenAllowance(true);
     } else {
       setAllowanceIncreased(true); // Allowance sufficient for amount
-      handleCloseEscrowTrue(bountyAppId, hunterAddress, tokenAddress, amount, decimals);
+      handleCloseEscrowTrue(bountyAppId, hunterAddress, tokenAddress, amount, decimals, expirationTime);
       handleClickOpenEscrow();
     }
   };
 
-  const handleCloseIncreaseAllowanceEscrowAlwaysTrue = (amount: string, decimals: number, allowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string) => {
+  const handleCloseIncreaseAllowanceEscrowAlwaysTrue = (amount: string, decimals: number, allowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string, expirationTime: number) => {
     const amountBN = ethers.utils.parseUnits(amount, decimals);
 
     if (amountBN.gt(allowance)) {
@@ -328,7 +332,7 @@ const Application: React.FC<Props> = props => {
       setOpenAllowance(true);
     } else {
       setAllowanceIncreased(true); // Allowance sufficient for amount
-      handleCloseEscrowTrue(bountyAppId, hunterAddress, tokenAddress, amount, decimals);
+      handleCloseEscrowTrue(bountyAppId, hunterAddress, tokenAddress, amount, decimals, expirationTime);
       handleClickOpenEscrow();
     }
   };
@@ -466,7 +470,7 @@ const Application: React.FC<Props> = props => {
                 {/* <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenEscrow(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!);}}>Escrow</Button> */}
                   {props.tokenAddress! !== zeroAddress &&
                     <>
-                      <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleCloseIncreaseAllowanceEscrowOnceTrue(props.amount!, props.tokenDecimals!, props.allowance!, props.postId!, props.person, props.tokenAddress!); handleCloseIncreaseAllowanceEscrowAlwaysTrue(props.amount!, props.tokenDecimals!, props.allowance!, props.postId!, props.person, props.tokenAddress!);}}>Escrow</Button>
+                      <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleCloseIncreaseAllowanceEscrowOnceTrue(props.amount!, props.tokenDecimals!, props.allowance!, props.postId!, props.person, props.tokenAddress!, props.expirationTime!); handleCloseIncreaseAllowanceEscrowAlwaysTrue(props.amount!, props.tokenDecimals!, props.allowance!, props.postId!, props.person, props.tokenAddress!, props.expirationTime!);}}>Escrow</Button>
                       <Dialog open={openAllowance} onClose={handleCloseIncreaseAllowanceFalse} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
                         <DialogTitle className={styles.formHeader}>Increase Allowance</DialogTitle>
                         <DialogContent className={styles.cardBackground}>
@@ -481,14 +485,14 @@ const Application: React.FC<Props> = props => {
                             </DialogContentText>    
                         </DialogContent> 
                         <DialogActions className={styles.formFooter}>
-                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {increaseAllowanceAlways?.(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!); handleCloseIncreaseAllowanceFalse(); handleClickOpenEscrow(); }} autoFocus disabled={!increaseAllowanceAlways || isIncreaseAllowanceAlwaysTxLoading}>{isIncreaseAllowanceAlwaysTxLoading ? 'Increasing Allowance...' : 'Allow Always'}</Button>
-                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {increaseAllowanceOnce?.(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!); handleCloseIncreaseAllowanceFalse(); handleClickOpenEscrow(); }} autoFocus disabled={!increaseAllowanceOnce || isIncreaseAllowanceOnceTxLoading}>{isIncreaseAllowanceOnceTxLoading ? 'Increasing Allowance...' : 'Allow Once'}</Button>
+                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {increaseAllowanceAlways?.(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!, props.expirationTime!); handleCloseIncreaseAllowanceFalse(); handleClickOpenEscrow(); }} autoFocus disabled={!increaseAllowanceAlways || isIncreaseAllowanceAlwaysTxLoading}>{isIncreaseAllowanceAlwaysTxLoading ? 'Increasing Allowance...' : 'Allow Always'}</Button>
+                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {increaseAllowanceOnce?.(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!, props.expirationTime!); handleCloseIncreaseAllowanceFalse(); handleClickOpenEscrow(); }} autoFocus disabled={!increaseAllowanceOnce || isIncreaseAllowanceOnceTxLoading}>{isIncreaseAllowanceOnceTxLoading ? 'Increasing Allowance...' : 'Allow Once'}</Button>
                         </DialogActions>
                       </Dialog>
                     </>
                   } 
                   {props.tokenAddress! === zeroAddress &&
-                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenEscrow(); handleIncreasedAllowance(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!);}}>Escrow</Button>
+                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenEscrow(); handleIncreasedAllowance(); handleCloseEscrowTrue(props.postId!, props.person, props.tokenAddress!, props.amount!, props.tokenDecimals!, props.expirationTime!);}}>Escrow</Button>
                   }
                 <Dialog
                   open={openEscrow}
