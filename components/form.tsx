@@ -27,14 +27,18 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import Paper from '@mui/material/Paper';
 import Menu from '@mui/material/Menu';
+import { Dayjs } from 'dayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 type Props = {
     creatorAddress: string;
     hunterAddress?: string;
     postId?: string;
     postLinks?: Array<string>;
-    date?: string;
-    time?: string;
+    startDate?: Dayjs;
+    endDate?: Dayjs;
     description?: string;
     amount?: number; 
     title?: string;
@@ -60,8 +64,8 @@ type ArweaveData = {
     title?: string;
     description?: string; 
     amount?: number; 
-    date?: string; 
-    time?: string; 
+    startDate?: Dayjs | null; 
+    endDate?: Dayjs | null; 
     postLinks?: Array<string>;
     appLinks?: Array<string>;
     experience?: string;
@@ -84,8 +88,8 @@ const defaultValues: ArweaveData = {
     title: "", 
     description: "", 
     amount: undefined,
-    date: "", 
-    time: "", 
+    startDate: null, 
+    endDate: null, 
     postLinks: undefined, // [""],
     appLinks: undefined, //[""],
     experience: "",
@@ -95,25 +99,6 @@ const defaultValues: ArweaveData = {
     tokenSymbol: "",
     tokenDecimals: undefined
 };
-
-const tokens = [
-    {
-      value: '0x0000000000000000000000000000000000000000', // Set Address for ETH to zero address b/c if zero address then frontend knows you're sending ETH
-      label: 'ETH',
-    },
-    {
-      value: 'EUR',
-      label: '€',
-    },
-    {
-      value: 'BTC',
-      label: '฿',
-    },
-    {
-      value: 'JPY',
-      label: '¥',
-    },
-];
 
 const ethTokens = EthTokenList['tokens'];
 
@@ -159,6 +144,23 @@ const Form: React.FC<Props> = props => {
         });
     };
 
+    const handleInputChangeStartDate = (newDate: any) => {
+        console.log(newDate)
+        // console.log(newDate.format('MM-DD-YYYY'))  
+        setFormValues({
+          ...formValues,
+          ["startDate"]: newDate,
+        });
+    };
+
+    const handleInputChangeEndDate = (newDate: any) => {
+        console.log(newDate)  
+        setFormValues({
+          ...formValues,
+          ["endDate"]: newDate,
+        });
+    };
+
     const handleInputChangeToken = (e: any) => {
         // const { name, value } = e.target;
         // const tokenAddress = e.target.address;
@@ -198,8 +200,8 @@ const Form: React.FC<Props> = props => {
         if (props.title) formValues.title = props.title;
         if (props.description) formValues.description = props.description;
         if (props.amount) formValues.amount = props.amount;
-        if (props.date) formValues.date = props.date;
-        if (props.time) formValues.time = props.time;
+        if (props.startDate) formValues.startDate = props.startDate;
+        if (props.endDate) formValues.endDate = props.endDate;
         if (props.postLinks) formValues.postLinks = props.postLinks;
         if (props.experience) formValues.experience = props.experience;
         if (props.contact) formValues.contact = props.contact;
@@ -440,7 +442,98 @@ const Form: React.FC<Props> = props => {
                             },
                         }}
                     />
-                    <TextField
+                    <LocalizationProvider dateAdapter={AdapterDayjs}> 
+                        <DatePicker
+                            PaperProps={{
+                                sx: {
+                                    backgroundColor: 'rgb(11, 11, 9)',
+                                    '& .MuiCalendarPicker-root': {
+                                        backgroundColor: 'rgb(11, 11, 9)',
+                                        color: 'rgb(248, 215, 154)',
+                                        fontFamily: 'Space Grotesk',
+                                        borderRadius: '12px',
+                                    },
+                                    '& .MuiPickersCalendarHeader-switchViewIcon': {
+                                        color: 'rgb(248, 215, 154)',
+                                        '&:hover': { // DO WE WANT THIS TO GLOW??
+                                            backgroundColor: 'rgb(248, 215, 154)',
+                                            color: 'rgb(23, 21, 20)',
+                                        },
+                                        borderRadius: '50%',
+                                    },
+                                    '& .MuiSvgIcon-root': {
+                                        color: 'rgb(248, 215, 154)',
+                                        '&:hover': { // DO WE WANT THIS TO GLOW??
+                                            backgroundColor: 'rgb(248, 215, 154)',
+                                            color: 'rgb(23, 21, 20)',
+                                        },
+                                        borderRadius: '50%',   
+                                    },
+                                    '& .MuiDayPicker-weekDayLabel': {
+                                        color: 'rgb(248, 215, 154)',
+                                        fontFamily: 'Space Grotesk',
+                                    },
+                                    
+                                    '& .MuiPickersDay-root': {
+                                        backgroundColor: 'rgb(23, 21, 20)',
+                                        color: 'rgb(248, 215, 154)',
+                                        fontFamily: 'Space Grotesk',
+                                        '&:hover': {
+                                            backgroundColor: 'rgb(248, 215, 154)',
+                                            color: 'rgb(23, 21, 20)',
+                                        },
+                                        '&.Mui-selected': {
+                                            backgroundColor: 'rgb(233, 233, 198)',
+                                            color: 'rgb(23, 21, 20)',
+                                        },
+                                    },
+                                    '& .MuiPickersDay-today:not(.Mui-selected)': {
+                                        border: '1px solid rgb(248, 215, 154)',
+                                    },
+                                },
+                            }}
+                            label="Start Date"
+                            disablePast={true}
+                            value={formValues.startDate}
+                            onChange={handleInputChangeStartDate}
+                            renderInput={(params) => 
+                                <TextField
+                                    {...params}
+                                    autoFocus
+                                    margin="dense"
+                                    fullWidth
+                                    variant="standard"
+                                    sx={{ 
+                                        '& .MuiInputBase-input': { 
+                                            color: 'rgb(248, 215, 154)', 
+                                            fontFamily: 'Space Grotesk'
+                                        }, 
+                                        '& .MuiInputLabel-root': { 
+                                            color: 'rgb(233, 233, 198)', 
+                                            fontFamily: 'Space Grotesk'
+                                        }, 
+                                        '& label.Mui-focused': {
+                                            color: 'rgb(248, 215, 154)',
+                                        }, 
+                                        '& .MuiInput-underline:after': {
+                                            borderBottomColor: 'rgb(248, 215, 154)',
+                                        }, 
+                                        '& .MuiInput-underline:before': {
+                                            borderBottomColor: 'rgb(233, 233, 198)',
+                                        }, 
+                                        '& .MuiInput-underline': {
+                                            '&:hover:before': {
+                                                borderBottomColor: 'rgb(248, 215, 154) !important',
+                                            }
+                                        },
+                                        input: { color: 'rgb(248, 215, 154)' },
+                                        svg: { color: 'rgb(248, 215, 154)', fontSize: '24px' },
+                                    }}
+                                />
+                            }
+                        />
+                    </LocalizationProvider>
+                    {/* <TextField
                         autoFocus
                         margin="dense"
                         id="date-input"
@@ -476,8 +569,99 @@ const Form: React.FC<Props> = props => {
                                 }
                             },
                         }}
-                    />
-                    <TextField
+                    /> */}
+                    <LocalizationProvider dateAdapter={AdapterDayjs}> 
+                        <DatePicker
+                            PaperProps={{
+                                sx: {
+                                    backgroundColor: 'rgb(11, 11, 9)',
+                                    '& .MuiCalendarPicker-root': {
+                                        backgroundColor: 'rgb(11, 11, 9)',
+                                        color: 'rgb(248, 215, 154)',
+                                        fontFamily: 'Space Grotesk',
+                                        borderRadius: '12px',
+                                    },
+                                    '& .MuiPickersCalendarHeader-switchViewIcon': {
+                                        color: 'rgb(248, 215, 154)',
+                                        '&:hover': { // DO WE WANT THIS TO GLOW??
+                                            backgroundColor: 'rgb(248, 215, 154)',
+                                            color: 'rgb(23, 21, 20)',
+                                        },
+                                        borderRadius: '50%',
+                                    },
+                                    '& .MuiSvgIcon-root': {
+                                        color: 'rgb(248, 215, 154)',
+                                        '&:hover': { // DO WE WANT THIS TO GLOW??
+                                            backgroundColor: 'rgb(248, 215, 154)',
+                                            color: 'rgb(23, 21, 20)',
+                                        },
+                                        borderRadius: '50%',   
+                                    },
+                                    '& .MuiDayPicker-weekDayLabel': {
+                                        color: 'rgb(248, 215, 154)',
+                                        fontFamily: 'Space Grotesk',
+                                    },
+                                    
+                                    '& .MuiPickersDay-root': {
+                                        backgroundColor: 'rgb(23, 21, 20)',
+                                        color: 'rgb(248, 215, 154)',
+                                        fontFamily: 'Space Grotesk',
+                                        '&:hover': {
+                                            backgroundColor: 'rgb(248, 215, 154)',
+                                            color: 'rgb(23, 21, 20)',
+                                        },
+                                        '&.Mui-selected': {
+                                            backgroundColor: 'rgb(233, 233, 198)',
+                                            color: 'rgb(23, 21, 20)',
+                                        },
+                                    },
+                                    '& .MuiPickersDay-today:not(.Mui-selected)': {
+                                        border: '1px solid rgb(248, 215, 154)',
+                                    },
+                                },
+                            }}
+                            label="End Date"
+                            disablePast={true}
+                            value={formValues.endDate}
+                            onChange={handleInputChangeEndDate}
+                            renderInput={(params) => 
+                                <TextField
+                                    {...params}
+                                    autoFocus
+                                    margin="dense"
+                                    fullWidth
+                                    variant="standard"
+                                    sx={{ 
+                                        '& .MuiInputBase-input': { 
+                                            color: 'rgb(248, 215, 154)', 
+                                            fontFamily: 'Space Grotesk'
+                                        }, 
+                                        '& .MuiInputLabel-root': { 
+                                            color: 'rgb(233, 233, 198)', 
+                                            fontFamily: 'Space Grotesk'
+                                        }, 
+                                        '& label.Mui-focused': {
+                                            color: 'rgb(248, 215, 154)',
+                                        }, 
+                                        '& .MuiInput-underline:after': {
+                                            borderBottomColor: 'rgb(248, 215, 154)',
+                                        }, 
+                                        '& .MuiInput-underline:before': {
+                                            borderBottomColor: 'rgb(233, 233, 198)',
+                                        }, 
+                                        '& .MuiInput-underline': {
+                                            '&:hover:before': {
+                                                borderBottomColor: 'rgb(248, 215, 154) !important',
+                                            }
+                                        },
+                                        input: { color: 'rgb(248, 215, 154)' },
+                                        svg: { color: 'rgb(248, 215, 154)', fontSize: '24px' },
+                                    }}
+                                />
+                            }
+                        />
+                    </LocalizationProvider>
+                    {/* <TextField
                         autoFocus
                         margin="dense"
                         id="time-input"
@@ -513,7 +697,7 @@ const Form: React.FC<Props> = props => {
                                 }
                             },
                         }}
-                    />
+                    /> */}
                     <TextField
                         autoFocus
                         margin="dense"
