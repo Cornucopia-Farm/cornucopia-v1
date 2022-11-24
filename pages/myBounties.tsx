@@ -643,11 +643,17 @@ const MyBounties: NextPage = () => {
     
                 <main> 
                     <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '160px', paddingRight: '160px', paddingTop: '24px', color: 'rgba(6, 72, 41, 0.85)', }}> 
-                        {(isHunterDisputeResponseTxLoading || isHunterDisputeResponseTxSuccess) && 
+                        {(isHunterDisputeResponseTxLoading || (isHunterDisputeResponseTxSuccess && hunterDisputeResponseTxData?.status === 1)) && 
                             <SimpleSnackBar msg={isHunterDisputeResponseTxLoading ? 'Responding to dispute...' : 'Responded to dispute!'}/>
                         }
-                        {(isForceHunterPayoutTxLoading || isForceHunterPayoutTxSuccess) && 
+                        {(isHunterDisputeResponseTxSuccess && hunterDisputeResponseTxData?.status === 0) && 
+                            <SimpleSnackBar msg={'Hunter Dispute Response transaction failed!'}/>
+                        }
+                        {(isForceHunterPayoutTxLoading || (isForceHunterPayoutTxSuccess && forceHunterPayoutTxData?.status === 1)) && 
                             <SimpleSnackBar msg={isForceHunterPayoutTxLoading ? 'Forcing payout...' : 'Forced payout!'}/>
+                        }
+                        {(isForceHunterPayoutTxSuccess && forceHunterPayoutTxData?.status === 0) && 
+                            <SimpleSnackBar msg={'Force Hunter Payout transaction failed!'}/>
                         }
                         {(isIncreaseAllowanceOnceTxLoading || isIncreaseAllowanceOnceTxSuccess) && 
                             <SimpleSnackBar msg={isIncreaseAllowanceOnceTxLoading ? 'Increasing allowance once...' : 'Allowance increased once!'}/>
