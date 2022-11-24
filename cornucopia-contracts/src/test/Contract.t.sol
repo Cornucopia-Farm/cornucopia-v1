@@ -57,7 +57,7 @@ contract EscrowTest is Test {
         weth = new ExpandedERC20("Wrapped Ether", "WETH", 18); // fake WETH to use UMA
 
         // Add the identifier we'll be using
-        identifierWhitelist.addSupportedIdentifier(bytes32("UMIP-107")); 
+        identifierWhitelist.addSupportedIdentifier(bytes32("YES_OR_NO_QUERY")); 
 
         // Set addresses of UMA oracle related contracts in finder
         finderContract.changeImplementationAddress(OracleInterfaces.Oracle, address(mockDVM));
@@ -712,7 +712,7 @@ contract EscrowTest is Test {
         vm.startPrank(creator);
 
         mockDVM.pushPrice(
-            bytes32("UMIP-107"), 
+            bytes32("YES_OR_NO_QUERY"), 
             1000001, 
             optimisticOracle.stampAncillaryData(bytes(ancillaryData), address(escrowContract)),
             0
@@ -815,7 +815,7 @@ contract EscrowTest is Test {
         vm.startPrank(creator);
 
         mockDVM.pushPrice(
-            bytes32("UMIP-107"), 
+            bytes32("YES_OR_NO_QUERY"), 
             1000001, 
             optimisticOracle.stampAncillaryData(bytes(ancillaryData), address(escrowContract)),
             1
@@ -918,7 +918,7 @@ contract EscrowTest is Test {
         vm.startPrank(creator);
 
         mockDVM.pushPrice(
-            bytes32("UMIP-107"), 
+            bytes32("YES_OR_NO_QUERY"), 
             1000001, 
             optimisticOracle.stampAncillaryData(bytes(ancillaryData), address(escrowContract)),
             2
@@ -1098,7 +1098,7 @@ contract EscrowTest is Test {
         vm.startPrank(creator);
 
         mockDVM.pushPrice(
-            bytes32("UMIP-107"), 
+            bytes32("YES_OR_NO_QUERY"), 
             1000001, 
             optimisticOracle.stampAncillaryData(bytes(ancillaryData), address(escrowContract)),
             0
@@ -1203,7 +1203,7 @@ contract EscrowTest is Test {
         vm.startPrank(creator);
 
         mockDVM.pushPrice(
-            bytes32("UMIP-107"), 
+            bytes32("YES_OR_NO_QUERY"), 
             1000001, 
             optimisticOracle.stampAncillaryData(bytes(ancillaryData), address(escrowContract)),
             1
@@ -1308,7 +1308,7 @@ contract EscrowTest is Test {
         vm.startPrank(creator);
 
         mockDVM.pushPrice(
-            bytes32("UMIP-107"), 
+            bytes32("YES_OR_NO_QUERY"), 
             1000001, 
             optimisticOracle.stampAncillaryData(bytes(ancillaryData), address(escrowContract)),
             2
@@ -1679,7 +1679,7 @@ contract EscrowTest is Test {
         vm.startPrank(creator);
 
         mockDVM.pushPrice(
-            bytes32("UMIP-107"), 
+            bytes32("YES_OR_NO_QUERY"), 
             1000001, 
             optimisticOracle.stampAncillaryData(bytes(ancillaryData), address(escrowContract)),
             0

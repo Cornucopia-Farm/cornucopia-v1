@@ -82,7 +82,7 @@ contract Escrow {
 
         oracleInterface = SkinnyOptimisticOracleInterface(_oracleAddress);
         uint creatorBondAmt = oracleInterface.requestAndProposePriceFor(
-            bytes32("UMIP-107"), // bytes32 identifier - FIX
+            bytes32("YES_OR_NO_QUERY"), // bytes32 identifier 
             uint32(block.timestamp), // uint32
             ancillaryData, // bytes memory, github link
             _currency, // WETH 
@@ -112,7 +112,7 @@ contract Escrow {
         _request.currency.safeIncreaseAllowance(address(oracleInterface), _request.bond + 35 * 10^16); // Need to approve OO contract to transfer tokens from here to OO of bondAmt + 0.35 WETH
 
         uint hunterBondAmt = oracleInterface.disputePriceFor(
-            bytes32("UMIP-107"),
+            bytes32("YES_OR_NO_QUERY"),
             _timestamp,
             _ancillaryData,
             _request, //struct
@@ -156,14 +156,14 @@ contract Escrow {
         require(status != Status.Submitted, "Creator hasn't disputed work");
         require(status != Status.Resolved, "Bounty has been payed out");
 
-        OptimisticOracleInterface.State state = oracleInterface.getState(address(this), bytes32("UMIP-107"), _timestamp, _ancillaryData, _request); // Note: EscrowContract is actually the requester not the creator
+        OptimisticOracleInterface.State state = oracleInterface.getState(address(this), bytes32("YES_OR_NO_QUERY"), _timestamp, _ancillaryData, _request); // Note: EscrowContract is actually the requester not the creator
 
         uint value = bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))];
 
         if (status != Status.Resolved && 
             (state == OptimisticOracleInterface.State.Resolved || state == OptimisticOracleInterface.State.Expired)) { // Case 2 or Case 3
             // Hunter disputes and it's resolved by DVM or Hunter doesn't dispute and it expires after 1 week; returns how much dvm pays winner and "price" (0, 1, 2)
-            (, int256 winner) = oracleInterface.settle(address(this), bytes32("UMIP-107"), _timestamp, _ancillaryData, _request); // Note: EscrowContract is actually the requester not the creator
+            (, int256 winner) = oracleInterface.settle(address(this), bytes32("YES_OR_NO_QUERY"), _timestamp, _ancillaryData, _request); // Note: EscrowContract is actually the requester not the creator
             if (winner == 0) { // Send funds to creator
                 bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] -= value;
                 if (_token != address(0)) { // If ERC-20 token
