@@ -7,6 +7,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
 import BountyCard from './bountyCard';
 import AppCard from './appCard';
+import { Dayjs } from 'dayjs';
 import styles from '../styles/Home.module.css';
 
 type Props = {
@@ -16,8 +17,8 @@ type Props = {
   postLinks: Array<string>;
   // appLinks: Array<string>;
   description: string;
-  date: string;
-  time: string;
+  startDate: Dayjs;
+  endDate: Dayjs;
   bountyName: string;
   amount: number;
   arweaveHash: string;
@@ -41,8 +42,8 @@ const NestedAccordion: React.FC<Props> = props => {
         <AccordionDetails>
           <BountyCard 
             description={props.description}
-            date={props.date}
-            time={props.time} 
+            startDate={props.startDate}
+            endDate={props.endDate} 
             links={props.postLinks}
             workLinks={props.workLinks}
             arweaveHash={props.arweaveHash}

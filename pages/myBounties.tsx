@@ -286,8 +286,8 @@ const MyBounties: NextPage = () => {
                     <BasicAccordian key={postId}  
                         company={postData.data.creatorAddress}
                         postLinks={postData.data.postLinks}
-                        date={postData.data.date}
-                        time={postData.data.time}
+                        startDate={postData.data.startDate}
+                        endDate={postData.data.endDate}
                         description={postData.data.description}
                         bountyName={postData.data.title}
                         amount={postData.data.amount}
@@ -301,8 +301,8 @@ const MyBounties: NextPage = () => {
                     <BasicAccordian key={postId}  
                         company={postData.data.creatorAddress}
                         postLinks={postData.data.postLinks}
-                        date={postData.data.date}
-                        time={postData.data.time}
+                        startDate={postData.data.startDate}
+                        endDate={postData.data.endDate}
                         description={postData.data.description}
                         bountyName={postData.data.title}
                         amount={postData.data.amount}
@@ -315,8 +315,8 @@ const MyBounties: NextPage = () => {
                             hunterAddress={address!}
                             postId={postData.data.postId}
                             postLinks={postData.data.postLinks}
-                            date={postData.data.date}
-                            time={postData.data.time}
+                            startDate={postData.data.startDate}
+                            endDate={postData.data.endDate}
                             description={postData.data.description}
                             title={postData.data.title}
                             amount={postData.data.amount}
@@ -407,8 +407,8 @@ const MyBounties: NextPage = () => {
                     <BasicAccordian key={postId}  
                         company={postData.data.creatorAddress}
                         postLinks={postData.data.postLinks}
-                        date={postData.data.date}
-                        time={postData.data.time}
+                        startDate={postData.data.startDate}
+                        endDate={postData.data.endDate}
                         description={postData.data.description}
                         bountyName={postData.data.title}
                         amount={postData.data.amount}
@@ -424,8 +424,8 @@ const MyBounties: NextPage = () => {
                     <BasicAccordian key={postId}  
                         company={postData.data.creatorAddress}
                         postLinks={postData.data.postLinks}
-                        date={postData.data.date}
-                        time={postData.data.time}
+                        startDate={postData.data.startDate}
+                        endDate={postData.data.endDate}
                         description={postData.data.description}
                         bountyName={postData.data.title}
                         amount={postData.data.amount}
@@ -494,8 +494,8 @@ const MyBounties: NextPage = () => {
                     <BasicAccordian key={postId}  
                         company={postData.data.creatorAddress}
                         postLinks={postData.data.postLinks}
-                        date={postData.data.date}
-                        time={postData.data.time}
+                        startDate={postData.data.startDate}
+                        endDate={postData.data.endDate}
                         description={postData.data.description}
                         bountyName={postData.data.title}
                         amount={postData.data.amount}
@@ -511,8 +511,8 @@ const MyBounties: NextPage = () => {
                     <BasicAccordian key={postId}  
                         company={postData.data.creatorAddress}
                         postLinks={postData.data.postLinks}
-                        date={postData.data.date}
-                        time={postData.data.time}
+                        startDate={postData.data.startDate}
+                        endDate={postData.data.endDate}
                         description={postData.data.description}
                         bountyName={postData.data.title}
                         amount={postData.data.amount}
@@ -554,8 +554,8 @@ const MyBounties: NextPage = () => {
                     <BasicAccordian key={postId}  
                         company={postData.data.creatorAddress}
                         postLinks={postData.data.postLinks}
-                        date={postData.data.date}
-                        time={postData.data.time}
+                        startDate={postData.data.startDate}
+                        endDate={postData.data.endDate}
                         description={postData.data.description}
                         bountyName={postData.data.title}
                         amount={postData.data.amount}

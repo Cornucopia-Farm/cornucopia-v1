@@ -7,12 +7,15 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { flexbox } from '@mui/system';
 import Link from '@mui/material/Link';
+import { Dayjs, isDayjs } from 'dayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import styles from '../styles/Home.module.css';
 
 type Props = {
   description: string;
-  date: string;
-  time: string;
+  startDate: Dayjs;
+  endDate: Dayjs;
   arweaveHash: string;
   links: Array<string>;
   workLinks?: Array<string>;
@@ -29,12 +32,12 @@ const BasicCard: React.FC<Props> = props => {
             <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%'}}>{props.description}</Typography>
           </Box>
           <Box sx={{ display: 'flex', paddingLeft: 0}}> 
-            <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Date Posted </Typography>
-            <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%'}}>{props.date}</Typography>
+            <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Start Date </Typography>
+            <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%'}}>{props.startDate.format('MM-DD-YYYY')}</Typography>
           </Box>
           <Box sx={{ display: 'flex', paddingLeft: 0}}> 
-            <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Time to Complete </Typography>
-            <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%'}}>{props.time}</Typography>
+            <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>End Date </Typography>
+            <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%'}}>{props.endDate.format('MM-DD-YYYY')}</Typography>
           </Box>
           <Box sx={{ display: 'flex', paddingLeft: 0}}> 
             <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Links </Typography>

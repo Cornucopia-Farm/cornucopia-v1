@@ -8,14 +8,15 @@ import BountyCard from './bountyCard';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import { useEnsName, useNetwork } from 'wagmi';
+import { Dayjs } from 'dayjs';
 import styles from '../styles/Home.module.css';
 
 type Props = { // need to change bounty card to specify which component it is for!
   company: string;
   bountyName: string;
   description: string;
-  date: string;
-  time: string;
+  startDate: Dayjs;
+  endDate: Dayjs;
   postLinks: Array<string>;
   amount: number;
   arweaveHash: string;
@@ -78,8 +79,8 @@ const BasicAccordion: React.FC<Props> = props => {
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <BountyCard  
               description={props.description}
-              date={props.date}
-              time={props.time} 
+              startDate={props.startDate}
+              endDate={props.endDate} 
               arweaveHash={props.arweaveHash}
               links={props.postLinks}
               workLinks={props.workLinks}

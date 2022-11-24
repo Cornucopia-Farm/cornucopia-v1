@@ -28,8 +28,8 @@ const PostedPosts: React.FC<Props> = props => {
                 postedBounties.push( 
                     <NestedAccordian key={postId}
                         postLinks={postData.data.postLinks}
-                        date={postData.data.date}
-                        time={postData.data.time}
+                        startDate={postData.data.startDate}
+                        endDate={postData.data.endDate}
                         description={postData.data.description}
                         bountyName={postData.data.title}
                         amount={postData.data.amount}
