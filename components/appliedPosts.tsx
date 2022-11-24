@@ -12,6 +12,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
 import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransaction, useContractRead, useBlockNumber, useContract, usePrepareContractWrite, useContractEvent, useSigner, useNetwork } from 'wagmi';
 import { BigNumber, ethers } from 'ethers';
+import { Dayjs } from 'dayjs';
 import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
 
 type Props = {
@@ -87,6 +88,10 @@ const AppliedPosts: React.FC<Props> = props => {
                 const erc20Contract = new ethers.Contract(postData.data.tokenAddress, erc20ABI['abi'], signer!);
                 allowance = await erc20Contract.allowance(address, escrowAddress);
             }
+
+            const startDate: Dayjs = postData.data.startDate;
+            const endDate: Dayjs = postData.data.endDate;
+            const expirationTime = endDate.diff(startDate, 'second');
                         
             // Case 2: Applied To
             // if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 0 && isEscrowed.length === 0 ) {
@@ -104,6 +109,7 @@ const AppliedPosts: React.FC<Props> = props => {
                         tokenAddress={postData.data.tokenAddress}
                         tokenDecimals={postData.data.tokenDecimals}
                         allowance={allowance}
+                        expirationTime={expirationTime}
                     />
                 );
             } 
