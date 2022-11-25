@@ -370,7 +370,7 @@ const CreateBounties: NextPage = () => {
                                     },
                                     {
                                         name: "App-Name",
-                                        value: "Cornucopia-test"
+                                        value: "Cornucopia-test2"
                                     },
                                     {
                                         name: "Form-Type",
@@ -419,7 +419,7 @@ const GETPOSTS = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test"]
+                    values: ["Cornucopia-test2"]
                 },
                 {
                     name: "Form-Type",
