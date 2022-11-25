@@ -48,7 +48,7 @@ const DisputeRespondedToPosts: React.FC<Props> = props => {
     // const { data: bountyProgressData, error: bountyProgressError, isLoading: isBountyProgressLoading, isSuccess: isBountyProgressSuccess, refetch: bountyProgress } = useContractRead({...contractConfig, functionName: 'progress', args: [bountyIdentifier], enabled: false, }); // watch causing error not sure why rn
 
     const { data, loading, error, startPolling } = useQuery(GETWORKSUBMITTEDPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, });
-    startPolling(10000);
+    startPolling(1000);
     
     if (error) {
         console.error(error);

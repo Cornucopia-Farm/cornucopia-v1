@@ -385,7 +385,6 @@ const Application: React.FC<Props> = props => {
   };
 
   const blockExplorerURL = blockExplorer(chain?.network);
-  console.log('tx data', initiateDisputeTxData)
 
   if (props.person) {
     return(

@@ -40,7 +40,7 @@ const FinishedPosts: React.FC<Props> = props => {
 
     
     const { data, loading, error, startPolling } = useQuery(GETWORKSUBMITTEDPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, pollInterval: 10000, });
-    startPolling(10000);
+    startPolling(1000);
 
     if (error) {
         console.error(error);

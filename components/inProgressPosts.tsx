@@ -37,7 +37,7 @@ const InProgressPosts: React.FC<Props> = props => {
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
     
     const { data, loading, error, startPolling } = useQuery(GETAPPLIEDTOPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, });
-    startPolling(10000);
+    startPolling(1000);
 
     if (error) {
         console.error(error);

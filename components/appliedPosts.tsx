@@ -43,7 +43,7 @@ const AppliedPosts: React.FC<Props> = props => {
 
     // Fetch Data
     const { data, loading, error, startPolling } = useQuery(GETAPPLIEDTOPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, });
-    startPolling(10000);
+    startPolling(1000);
     
     if (error) {
         console.error(error);
@@ -87,7 +87,11 @@ const AppliedPosts: React.FC<Props> = props => {
 
             if (postData.data.tokenAddress !== zeroAddress && postData.data.tokenAddress) {
                 const erc20Contract = new ethers.Contract(postData.data.tokenAddress, erc20ABI['abi'], signer!);
-                allowance = await erc20Contract.allowance(address, escrowAddress);
+                try { 
+                    allowance = await erc20Contract.allowance(address, escrowAddress); 
+                } catch (e) {
+                    console.log('allowance fetch error', e);
+                }    
             }
 
             const startDate = dayjs(postData.data.startDate);
