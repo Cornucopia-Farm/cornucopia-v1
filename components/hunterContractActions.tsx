@@ -92,9 +92,6 @@ const HunterContractActions: React.FC<Props> = props => {
     const { data: forceHunterPayoutData, error: forceHunterPayoutError, isLoading: isForceHunterPayoutLoading, isSuccess: isForceHunterPayoutSuccess, write: forceHunterPayout } = useContractWrite(forceHunterPayoutConfig);
     const { data: forceHunterPayoutTxData, isLoading: isForceHunterPayoutTxLoading, isSuccess: isForceHunterPayoutTxSuccess, error: forceHunterPayoutTxError } = useWaitForTransaction({ hash: forceHunterPayoutData?.hash, enabled: true, });    
 
-    console.log(hunterDisputeResponseError)
-    console.log(hunterDisputeResponseData)
-
     const handleClickOpenDispute = () => {
         setOpenDispute(true);
     };
@@ -111,6 +108,9 @@ const HunterContractActions: React.FC<Props> = props => {
         // setOpenDispute(false);
         setBountyAppId(bountyAppId);
         setCreatorAddress(creatorAddress);
+        setTimestamp(timestamp);
+        setAncillaryData(ancillaryData);
+        setRequest(request);
 
         // // Get UMA data
         // const umaEventData = getUMAEventData(umaContract, escrowContract, provider, 'propose', creatorAddress, address!, bountyAppId);
@@ -119,15 +119,6 @@ const HunterContractActions: React.FC<Props> = props => {
         //     ancillaryData: ancillaryData,
         //     request: request
         // });
-        setTimestamp(timestamp);
-        setAncillaryData(ancillaryData);
-        setRequest(request);
-        console.log(bountyAppId)
-        console.log(creatorAddress)
-        console.log(timestamp)
-        console.log(ancillaryData)
-        console.log(request)
-
         // hunterDisputeResponse?.();
     };
 
