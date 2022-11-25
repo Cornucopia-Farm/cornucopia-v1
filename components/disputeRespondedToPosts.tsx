@@ -85,7 +85,7 @@ const DisputeRespondedToPosts: React.FC<Props> = props => {
 
             // Get UMA data
             const umaEventData = await getUMAEventData(umaContract, escrowContract, provider, 'dispute', address!, postData.data.hunterAddress, postData.data.postId);
-            
+            console.log(umaEventData)
             if (progress === 3) { // Case 6: Waiting for dispute to be resolved
                 disputeRespondedToPostsBountiesApps.push(
                     <Application key={postId} 

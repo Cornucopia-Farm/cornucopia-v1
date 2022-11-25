@@ -74,11 +74,11 @@ export const getUMAEventData = async (umaContract: any, escrowContract: any, pro
         const filter = umaContract.filters.DisputePrice(escrowContractAddress, identifier);
         const parsedLogs = await umaContract.queryFilter(filter);
 
-        const filterDisputeRespondedTo = escrowContract.filters.DisputeRespondedTo(creatorAddress, hunterAddress, bountyAppId);
-        const logsDisputeRespondedTo = await escrowContract.queryFilter(filterDisputeRespondedTo);// We know that only 1 log for this creator, hunter, bountyAppId triple
-
+        const filterDisputeInitiated = escrowContract.filters.Disputed(creatorAddress, hunterAddress, bountyAppId);
+        const logsDisputeInitiated = await escrowContract.queryFilter(filterDisputeInitiated);// We know that only 1 log for this creator, hunter, bountyAppId triple
+       
         parsedLogs.forEach( (parsedLog: any) => {
-            if (parsedLog.args.request.proposer === creatorAddress && parsedLog.args.timestamp === logsDisputeRespondedTo[0].args.timestamp) { // Know we have the right UMA loog if proposer is the creator and timestamp is the same as the one emmitted from disputeInitiated call which specified the timestamp in the request struct
+            if (parsedLog.args.request.proposer === creatorAddress && parsedLog.args.request.disputer === hunterAddress && parsedLog.args.timestamp === logsDisputeInitiated[0].args.timestamp) { // Know we have the right UMA log if proposer is the creator, disputer is hunter, and timestamp is the same as the one emmitted from disputeInitiated call which specified the timestamp in the request struct
                 timestamp = parsedLog.args.timestamp;
                 ancillaryData = parsedLog.args.ancillaryData;
                 request.currency = parsedLog.args.request.currency;
