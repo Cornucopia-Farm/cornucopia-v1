@@ -52,7 +52,8 @@ const OpenBounties: NextPage = () => {
     const [openBountyPosts, setOpenBountyPosts] = React.useState(Array<JSX.Element>);
 
     const { data, loading, error, startPolling } = useQuery(OPENBOUNTIES, { variables: { chain: chain?.network! ? chain?.network! : 'ethereum' }, }); // Set default chain to ethereum if nothing connected
-    startPolling(10000);
+    startPolling(1000);
+    console.log(data)
 
     if (error) {
         console.error(error); // add snackbar error msg;
@@ -62,7 +63,7 @@ const OpenBounties: NextPage = () => {
 
     const getPosts = async (openBountyIds?: Array<string>) => {
         let bountyPosts: Array<JSX.Element> = [];
-
+        console.log('bounty ids',openBountyIds)
         const promises = openBountyIds?.map( async (openBountyId: string) => {
 
             const postData = await axios.get(`https://arweave.net/${openBountyId}`);
@@ -141,7 +142,7 @@ const OpenBounties: NextPage = () => {
         if (!loading) {
             getPosts(postIds);
         } 
-    }, [loading]);
+    }, [loading, postIds.length]);
 
     const [showModal, hideModal] = useSessionModal();
 

@@ -92,7 +92,7 @@ const CreateBounties: NextPage = () => {
 
     // Query takes in user's address and returns all bounties that they've created 
     const { data, loading, error, startPolling } = useQuery(GETPOSTS, { variables: { address, chain: chain?.network }, });
-    startPolling(10000);
+    startPolling(1000);
     
     if (error) {
         console.error(error);

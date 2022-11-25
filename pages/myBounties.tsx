@@ -253,7 +253,7 @@ const MyBounties: NextPage = () => {
 
     // Get bounties that this address is a hunter in
     const { data, loading, error, startPolling } = useQuery(MYBOUNTIES, { variables: { address, chain: chain?.network! }, }); // will repoll every 500 s
-    startPolling(10000);
+    startPolling(1000);
 
     if (error) {
         console.error(error);
@@ -261,8 +261,8 @@ const MyBounties: NextPage = () => {
 
     const postIds = data?.transactions.edges.map((edge: any) => edge.node.id);
     const { data: submittedData, loading: submittedLoading, error: submittedError, startPolling: startPollingSubmitted } = useQuery(MYSUBMITTEDBOUNTIES, { variables: { address, chain: chain?.network! }, });
-    startPollingSubmitted(10000);
-
+    startPollingSubmitted(1000);
+    console.log(data)
     if (submittedError) {
         console.error(submittedError);
     }
