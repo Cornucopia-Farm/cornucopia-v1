@@ -100,6 +100,8 @@ const Application: React.FC<Props> = props => {
   const [openContest, setOpenContest] = React.useState(false);
   const [openSettle, setOpenSettle] = React.useState(false);
   const [openPay, setOpenPay] = React.useState(false);
+  const [payoutBool, setPayoutBool] = React.useState(false);
+  const debouncedPayoutBool = useDebounce(payoutBool, 10);
   const [ancillaryData, setAncillaryData] = React.useState('');
   const debouncedAncillaryData = useDebounce(ancillaryData, 10);
   // const [umaData, setUmaData] = React.useState({
@@ -134,7 +136,7 @@ const Application: React.FC<Props> = props => {
   const { data: payoutIfDisputeData, error: payoutIfDisputeError, isLoading: isPayoutIfDisputeLoading, isSuccess: isPayoutIfDisputeSuccess, write: payoutIfDispute } = useContractWrite(payoutIfDisputeConfig);
   const { data: payoutIfDisputeTxData, isLoading: isPayoutIfDisputeTxLoading, isSuccess: isPayoutIfDisputeTxSuccess, error: payoutIfDisputeTxError } = useWaitForTransaction({ hash: payoutIfDisputeData?.hash, enabled: true,});
 
-  const { config: payoutConfig } = usePrepareContractWrite({...contractConfig, functionName: 'payout', args: [debouncedBountyAppId, debouncedHunterAddress, debouncedTokenAddressERC20], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedTokenAddressERC20),});
+  const { config: payoutConfig } = usePrepareContractWrite({...contractConfig, functionName: 'payout', args: [debouncedBountyAppId, debouncedHunterAddress, debouncedTokenAddressERC20], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedTokenAddressERC20) && Boolean(debouncedPayoutBool),});
   const { data: payoutData, error: payoutError, isLoading: isPayoutLoading, isSuccess: isPayoutSuccess, write: payout } = useContractWrite(payoutConfig);
   const { data: payoutTxData, isLoading: isPayoutTxLoading, isSuccess: isPayoutTxSuccess, error: payoutTxError } = useWaitForTransaction({ hash: payoutData?.hash, enabled: true,});
 
@@ -198,6 +200,7 @@ const Application: React.FC<Props> = props => {
     setBountyAppId(bountyAppId);
     setHunterAddress(hunterAddress);
     setTokenAddressERC20(tokenAddress);
+    setPayoutBool(true);
     // payout?.();
   };
 
@@ -622,9 +625,12 @@ const Application: React.FC<Props> = props => {
                   <DialogContent className={styles.cardBackground}>
                     <DialogContentText className={styles.dialogBody} id="alert-dialog-description">
                         Settling this dispute will result in 1 of 3 outcomes: 
-                        1. You win the dispute and your escrowed funds plus the dispute bond + dispute fee + 1/2 of the hunter's dispute bond will be sent to you; 
+                        <br />
+                        1. You win the dispute and your escrowed funds plus the dispute bond + dispute fee + 1/2 of the hunter's dispute bond will be sent to you.
+                        <br />
                         2. The hunter wins the dispute and your escrowed funds plus their dispute bond + their dispute fee + 1/2 of your dispute bond will be sent to them. 
-                        3. The dispute ends in a tie and you get 1/2 of your escrowed funds back while the hunter gets 1/2 of the escrowed funds 
+                        <br />
+                        3. The dispute ends in a tie and you get 1/2 of your escrowed funds back while the hunter gets 1/2 of the escrowed funds
                         plus their dispute bond + their dispute fee + 1/2 of your dispute bond.
                     </DialogContentText>
                   </DialogContent>

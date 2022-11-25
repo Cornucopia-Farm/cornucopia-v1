@@ -59,7 +59,7 @@ const OpenBounties: NextPage = () => {
     }
 
     const postIds = data?.transactions.edges.map((edge: any) => edge.node.id);
-    
+
     const getPosts = async (openBountyIds?: Array<string>) => {
         let bountyPosts: Array<JSX.Element> = [];
 
