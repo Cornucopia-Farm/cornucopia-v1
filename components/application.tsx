@@ -102,11 +102,15 @@ const Application: React.FC<Props> = props => {
   const [openPay, setOpenPay] = React.useState(false);
   const [ancillaryData, setAncillaryData] = React.useState('');
   const debouncedAncillaryData = useDebounce(ancillaryData, 10);
-  const [umaData, setUmaData] = React.useState({
-    timestamp: 0,
-    ancillaryData: '',
-    request: {} as Request
-  });
+  // const [umaData, setUmaData] = React.useState({
+  //   timestamp: 0,
+  //   ancillaryData: '',
+  //   request: {} as Request
+  // });
+  const [timestamp, setTimestamp] = React.useState(0);
+  const debouncedTimestamp = useDebounce(timestamp, 10);
+  const [request, setRequest] = React.useState({} as Request);
+  const debouncedRequest = useDebounce(request, 10);
 
   const bondAmt = ethers.utils.parseUnits("0.1", "ether"); // Hard-coded (for now) bondAmt
   const finalFee = ethers.utils.parseUnits("0.35", "ether"); // Hard-coded finalFee
@@ -126,7 +130,7 @@ const Application: React.FC<Props> = props => {
   const { data: initiateDisputeData, error: initiateDisputeError, isLoading: isInitiateDisputeLoading, isSuccess: isInitiateDisputeSuccess, write: initiateDispute } = useContractWrite(initiateDisputeConfig);
   const { data: initiateDisputeTxData, isLoading: isInitiateDisputeTxLoading, isSuccess: isInitiateDisputeTxSuccess, error: initiateDisputeTxError } = useWaitForTransaction({ hash: initiateDisputeData?.hash, enabled: true,});
 
-  const { config: payoutIfDisputeConfig } = usePrepareContractWrite({...contractConfig, functionName: 'payoutIfDispute', args: [debouncedBountyAppId, debouncedHunterAddress, umaData.timestamp, umaData.ancillaryData, umaData.request, debouncedTokenAddressERC20], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(umaData.timestamp) && Boolean(debouncedTokenAddressERC20), });
+  const { config: payoutIfDisputeConfig } = usePrepareContractWrite({...contractConfig, functionName: 'payoutIfDispute', args: [debouncedBountyAppId, debouncedHunterAddress, debouncedTimestamp, debouncedAncillaryData, debouncedRequest, debouncedTokenAddressERC20], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedTimestamp) && Boolean(debouncedAncillaryData) && Boolean(debouncedRequest) && Boolean(debouncedTokenAddressERC20), });
   const { data: payoutIfDisputeData, error: payoutIfDisputeError, isLoading: isPayoutIfDisputeLoading, isSuccess: isPayoutIfDisputeSuccess, write: payoutIfDispute } = useContractWrite(payoutIfDisputeConfig);
   const { data: payoutIfDisputeTxData, isLoading: isPayoutIfDisputeTxLoading, isSuccess: isPayoutIfDisputeTxSuccess, error: payoutIfDisputeTxError } = useWaitForTransaction({ hash: payoutIfDisputeData?.hash, enabled: true,});
 
@@ -134,19 +138,6 @@ const Application: React.FC<Props> = props => {
   const { data: payoutData, error: payoutError, isLoading: isPayoutLoading, isSuccess: isPayoutSuccess, write: payout } = useContractWrite(payoutConfig);
   const { data: payoutTxData, isLoading: isPayoutTxLoading, isSuccess: isPayoutTxSuccess, error: payoutTxError } = useWaitForTransaction({ hash: payoutData?.hash, enabled: true,});
 
-  console.log(debouncedBountyAppId)
-  console.log(debouncedHunterAddress)
-  console.log(oracleAddress)
-  console.log(bondAmt)
-  console.log(debouncedAncillaryData)
-  console.log(wethContract)
-  console.log(allowanceIncreased)
-  console.log(initiateDispute)
-  console.log(initiateDisputeConfig)
-  console.log()
-  console.log('weth contract', wethContract)
-  console.log('provider', provider)
-  // console.log(wethContract.callStatic.name())
 
   // Applied State Helper Functions
   const handleClickOpenReject = () => {
@@ -230,14 +221,16 @@ const Application: React.FC<Props> = props => {
     // setOpenSettle(false);
     setBountyAppId(bountyAppId);
     setHunterAddress(hunterAddress);
-    
-    setUmaData({
-      timestamp: timestamp,
-      ancillaryData: ancillaryData,
-      request: request
-    });
-
+    setTimestamp(timestamp);
+    setAncillaryData(ancillaryData);
+    setRequest(request);
     setTokenAddressERC20(tokenAddress);
+    
+    // setUmaData({
+    //   timestamp: timestamp,
+    //   ancillaryData: ancillaryData,
+    //   request: request
+    // });
     // payoutIfDispute?.();
   };
 
