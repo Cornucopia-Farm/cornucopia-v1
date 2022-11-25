@@ -24,9 +24,10 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { TailSpin } from 'react-loader-spinner';
 import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransaction, useContractRead, useBlockNumber, useContract, usePrepareContractWrite, useContractEvent, useNetwork, useProvider, useSigner } from 'wagmi';
-import { ethers, BigNumber } from 'ethers';
+import { ethers, BigNumber, ContractInterface } from 'ethers';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
 import umaABI from '../cornucopia-contracts/out/SkinnyOptimisticOracle.sol/SkinnyOptimisticOracle.json';
+import wethABI from '../WETH9.json';
 import useDebounce from '../components/useDebounce';
 import SimpleSnackBar from '../components/simpleSnackBar';
 import { Request, getUMAEventData } from '../getUMAEventData';
@@ -38,6 +39,7 @@ import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
 import Tooltip from '@mui/material/Tooltip';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import MyBountiesInfo from '../components/myBountiesInfo';
+import HunterContractActions from '../components/hunterContractActions';
 
 // Bounty Stages for Hunter:
 // 1. Applied (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.NoBounty); CHECK PROGRESS MAPPING
@@ -83,7 +85,7 @@ const umaContractConfig = {
 // WETH Contract Config (For UMA Bonds)
 const wethContractConfig = {
     addressOrName: process.env.NEXT_PUBLIC_WETH_ADDRESS!, // contract address
-    contractInterface: erc20ABI['abi'], // contract abi in json or JS format
+    contractInterface: wethABI as ContractInterface, // contract abi in json or JS format
 };
 
 const MyBounties: NextPage = () => {
@@ -158,12 +160,12 @@ const MyBounties: NextPage = () => {
         setCreatorAddress(creatorAddress);
 
         // Get UMA data
-        const umaEventData = getUMAEventData(umaContract, escrowContract, provider, 'propose', creatorAddress, address!, bountyAppId);
-        setUmaData({
-            timestamp: umaEventData.timestamp,
-            ancillaryData: umaEventData.ancillaryData,
-            request: umaEventData.request
-        });
+        // const umaEventData = getUMAEventData(umaContract, escrowContract, provider, 'propose', creatorAddress, address!, bountyAppId);
+        // setUmaData({
+        //     timestamp: umaEventData.timestamp,
+        //     ancillaryData: umaEventData.ancillaryData,
+        //     request: umaEventData.request
+        // });
         // hunterDisputeResponse?.();
     };
 
@@ -189,16 +191,26 @@ const MyBounties: NextPage = () => {
     //     contractInterface: erc20ABI['abi'], // contract abi in json or JS format
     // };
 
+    const bondAmt = ethers.utils.parseUnits("0.1", "ether"); // Hard-coded (for now) bondAmt
+    const finalFee = ethers.utils.parseUnits("0.35", "ether"); // Hard-coded finalFee
     const hexAlwaysApprove = '0x8000000000000000000000000000000000000000000000000000000000000000';
     const wethContract = useContract({...wethContractConfig, signerOrProvider: signer, });
 
-    const { config: increaseAllowanceOnceConfig } = usePrepareContractWrite({...wethContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmtOnce], enabled: Boolean(debouncedAllowanceAmtOnce), });
-    const { data: increaseAllowanceOnceData, error: increaseAllowanceOnceError, isLoading: isIncreaseAllowanceOnceLoading, isSuccess: isIncreaseAllowanceOnceSuccess, write: increaseAllowanceOnce } = useContractWrite(increaseAllowanceOnceConfig);
-    const { data: increaseAllowanceOnceTxData, isLoading: isIncreaseAllowanceOnceTxLoading, isSuccess: isIncreaseAllowanceOnceTxSuccess, error: increaseAllowanceOnceTxError } = useWaitForTransaction({ hash: increaseAllowanceOnceData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
+    // const { config: increaseAllowanceOnceConfig } = usePrepareContractWrite({...wethContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmtOnce], enabled: Boolean(debouncedAllowanceAmtOnce), });
+    // const { data: increaseAllowanceOnceData, error: increaseAllowanceOnceError, isLoading: isIncreaseAllowanceOnceLoading, isSuccess: isIncreaseAllowanceOnceSuccess, write: increaseAllowanceOnce } = useContractWrite(increaseAllowanceOnceConfig);
+    // const { data: increaseAllowanceOnceTxData, isLoading: isIncreaseAllowanceOnceTxLoading, isSuccess: isIncreaseAllowanceOnceTxSuccess, error: increaseAllowanceOnceTxError } = useWaitForTransaction({ hash: increaseAllowanceOnceData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
 
-    const { config: increaseAllowanceAlwaysConfig } = usePrepareContractWrite({...wethContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmtAlways], enabled: Boolean(debouncedAllowanceAmtAlways), });
-    const { data: increaseAllowanceAlwaysData, error: increaseAllowanceAlwaysError, isLoading: isIncreaseAllowanceAlwaysLoading, isSuccess: isIncreaseAllowanceAlwaysSuccess, write: increaseAllowanceAlways } = useContractWrite(increaseAllowanceAlwaysConfig);
-    const { data: increaseAllowanceAlwaysTxData, isLoading: isIncreaseAllowanceAlwaysTxLoading, isSuccess: isIncreaseAllowanceAlwaysTxSuccess, error: increaseAllowanceAlwaysTxError } = useWaitForTransaction({ hash: increaseAllowanceAlwaysData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
+    // const { config: increaseAllowanceAlwaysConfig } = usePrepareContractWrite({...wethContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmtAlways], enabled: Boolean(debouncedAllowanceAmtAlways), });
+    // const { data: increaseAllowanceAlwaysData, error: increaseAllowanceAlwaysError, isLoading: isIncreaseAllowanceAlwaysLoading, isSuccess: isIncreaseAllowanceAlwaysSuccess, write: increaseAllowanceAlways } = useContractWrite(increaseAllowanceAlwaysConfig);
+    // const { data: increaseAllowanceAlwaysTxData, isLoading: isIncreaseAllowanceAlwaysTxLoading, isSuccess: isIncreaseAllowanceAlwaysTxSuccess, error: increaseAllowanceAlwaysTxError } = useWaitForTransaction({ hash: increaseAllowanceAlwaysData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
+
+    const { config: approveOnceConfig } = usePrepareContractWrite({...wethContractConfig, functionName: 'approve', args: [escrowAddress, debouncedAllowanceAmtOnce], enabled: Boolean(debouncedAllowanceAmtOnce), });
+    const { data: approveOnceData, error: approveOnceError, isLoading: isApproveOnceLoading, isSuccess: isApproveOnceSuccess, write: approveOnce } = useContractWrite(approveOnceConfig);
+    const { data: approveOnceTxData, isLoading: isApproveOnceTxLoading, isSuccess: isApproveOnceTxSuccess, error: approveOnceTxError } = useWaitForTransaction({ hash: approveOnceData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
+  
+    const { config: approveAlwaysConfig } = usePrepareContractWrite({...wethContractConfig, functionName: 'approve', args: [escrowAddress, debouncedAllowanceAmtAlways], enabled: Boolean(debouncedAllowanceAmtAlways), });
+    const { data: approveAlwaysData, error: approveAlwaysError, isLoading: isApproveAlwaysLoading, isSuccess: isApproveAlwaysSuccess, write: approveAlways } = useContractWrite(approveAlwaysConfig);
+    const { data: approveAlwaysTxData, isLoading: isApproveAlwaysTxLoading, isSuccess: isApproveAlwaysTxSuccess, error: approveAlwaysTxError } = useWaitForTransaction({ hash: approveAlwaysData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
 
 
     const handleCloseIncreaseAllowanceFalse = () => {
@@ -206,11 +218,12 @@ const MyBounties: NextPage = () => {
     };
     
     const handleCloseIncreaseAllowanceDisputeResponseOnceTrue = (amount: string, decimals: number, allowance: BigNumber, bountyAppId: string, creatorAddress: string, tokenAddress: string) => {
-        const amountBN = ethers.utils.parseUnits(amount, decimals);
+        // const amountBN = ethers.utils.parseUnits(amount, decimals);
+        const total = bondAmt.add(finalFee);
     
-        if (amountBN.gt(allowance)) {
-            setAllowanceAmtOnce(amountBN);
-            setTokenAddressERC20(tokenAddress);
+        if (total.gt(allowance)) {
+            setAllowanceAmtOnce(total);
+            // setTokenAddressERC20(tokenAddress);
             setOpenAllowance(true);
         } else {
             setAllowanceIncreased(true); // Allowance sufficient for amount
@@ -220,11 +233,12 @@ const MyBounties: NextPage = () => {
     };
     
     const handleCloseIncreaseAllowanceDisputeResponseAlwaysTrue = (amount: string, decimals: number, allowance: BigNumber, bountyAppId: string, creatorAddress: string, tokenAddress: string) => {
-        const amountBN = ethers.utils.parseUnits(amount, decimals);
+        // const amountBN = ethers.utils.parseUnits(amount, decimals);
+        const total = bondAmt.add(finalFee);
 
-        if (amountBN.gt(allowance)) {
+        if (total.gt(allowance)) {
             setAllowanceAmtAlways(BigNumber.from(hexAlwaysApprove));
-            setTokenAddressERC20(tokenAddress);
+            // setTokenAddressERC20(tokenAddress);
             setOpenAllowance(true);
         } else {
             setAllowanceIncreased(true); // Allowance sufficient for amount
@@ -337,7 +351,7 @@ const MyBounties: NextPage = () => {
                                 },
                                 {
                                     name: "App-Name",
-                                    value: "Cornucopia-test"
+                                    value: "Cornucopia-test2"
                                 },
                                 {
                                     name: "Form-Type",
@@ -400,6 +414,14 @@ const MyBounties: NextPage = () => {
             // }
 
             const allowance = await wethContract.allowance(address, escrowAddress);
+            console.log(allowance)
+            console.log('addres', address)
+
+            // let umaEventData;
+
+            // if (progress === 2) {
+            //     const umaEventData = getUMAEventData(umaContract, escrowContract, provider, 'propose', postData.data.creatorAddress, address!, postData.data.postId);
+            // }
 
             // if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 1 ) { // Case 3: Submitted
             if (progress === 1) {
@@ -420,6 +442,9 @@ const MyBounties: NextPage = () => {
                 );
             // } else if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 2 ) { // Case 4: Hunter needs to respond to creator dispute; need to send tx associated with this!!
             } else if (progress === 2) {
+                const umaEventData = await getUMAEventData(umaContract, escrowContract, provider, 'propose', postData.data.creatorAddress, address!, postData.data.postId);
+                console.log('uma data', umaEventData)
+                console.log('ancil data', umaEventData.ancillaryData)
                 disputeInitiatedBounties.push(
                     <BasicAccordian key={postId}  
                         company={postData.data.creatorAddress}
@@ -434,9 +459,16 @@ const MyBounties: NextPage = () => {
                         disputes={false} 
                         tokenSymbol={postData.data.tokenSymbol}
                     >
-                        <div> 
-                            {/* <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }}  onClick={() => {handleClickOpenDispute(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress);}}>Dispute</Button> */}
-                            {/* {postData.data.tokenAddress !== zeroAddress && */} 
+                        <HunterContractActions key={postId}
+                            allowance={allowance}
+                            postId={postData.data.postId}
+                            creatorAddress={postData.data.creatorAddress}
+                            appStatus={"disputeResponse"}
+                            timestamp={umaEventData.timestamp}
+                            ancillaryData={umaEventData.ancillaryData}
+                            request={umaEventData.request}
+                        />
+                        {/* <div> 
                             <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleCloseIncreaseAllowanceDisputeResponseOnceTrue(postData.data.amount, postData.data.tokenDecimals, allowance, postData.data.postId, postData.data.creatorAddress, postData.data.tokenAddress); handleCloseIncreaseAllowanceDisputeResponseAlwaysTrue(postData.data.amount, postData.data.tokenDecimals, allowance, postData.data.postId, postData.data.creatorAddress, postData.data.tokenAddress);}}>Dispute</Button>
                             <Dialog open={openAllowance} onClose={handleCloseIncreaseAllowanceFalse} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
                                 <DialogTitle className={styles.formHeader}>Increase Allowance</DialogTitle>
@@ -452,15 +484,10 @@ const MyBounties: NextPage = () => {
                                     </DialogContentText>    
                                 </DialogContent> 
                                 <DialogActions className={styles.formFooter}>
-                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {increaseAllowanceAlways?.(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress); handleCloseIncreaseAllowanceFalse(); handleClickOpenDispute(); }} autoFocus disabled={!increaseAllowanceAlways || isIncreaseAllowanceAlwaysTxLoading}>{isIncreaseAllowanceAlwaysTxLoading ? 'Increasing Allowance...' : 'Allow Always'}</Button>
-                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {increaseAllowanceOnce?.(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress); handleCloseIncreaseAllowanceFalse(); handleClickOpenDispute(); }} autoFocus disabled={!increaseAllowanceOnce || isIncreaseAllowanceOnceTxLoading}>{isIncreaseAllowanceOnceTxLoading ? 'Increasing Allowance...' : 'Allow Once'}</Button>
+                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {approveAlways?.(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress); handleCloseIncreaseAllowanceFalse(); handleClickOpenDispute(); }} autoFocus disabled={!approveAlways || isApproveAlwaysTxLoading}>{isApproveAlwaysTxLoading ? 'Approving...' : 'Approve Always'}</Button>
+                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {approveOnce?.(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress); handleCloseIncreaseAllowanceFalse(); handleClickOpenDispute(); }} autoFocus disabled={!approveOnce || isApproveOnceTxLoading}>{isApproveOnceTxLoading ? 'Approving...' : 'Approve Once'}</Button>
                                 </DialogActions>
                             </Dialog>
-                            {/* }  */}
-                            {/* {postData.data.tokenAddress! === zeroAddress &&
-                                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenDispute(); handleIncreasedAllowance(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress); }}>Escrow</Button>
-                            } */}
-
                             <Dialog
                                 open={openDispute}
                                 onClose={handleCloseDisputeFalse}
@@ -481,11 +508,10 @@ const MyBounties: NextPage = () => {
                                 </DialogContent>
                                 <DialogActions className={styles.formFooter}>
                                 <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseDisputeFalse}>No I don't</Button>
-                                {/* <Button onClick={() => handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress)} autoFocus>Yes I want to</Button> */}
                                 <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {hunterDisputeResponse?.(); setOpenDispute(false);}} autoFocus disabled={!hunterDisputeResponse || isHunterDisputeResponseTxLoading}>{isHunterDisputeResponseTxLoading ? 'Responding to dispute...' : 'Yes I want to'}</Button>
                                 </DialogActions>
                             </Dialog>
-                        </div> 
+                        </div>  */}
                     </BasicAccordian>
                 );
             // } else if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 3 ) { // Case 5: Waiting for dispute to be resolved
@@ -521,7 +547,12 @@ const MyBounties: NextPage = () => {
                         disputes={false} 
                         tokenSymbol={postData.data.tokenSymbol}
                     >
-                        <div> 
+                        <HunterContractActions key={postId}
+                            postId={postData.data.postId}
+                            creatorAddress={postData.data.creatorAddress}
+                            appStatus={"forceClaim"}
+                        />
+                        {/* <div> 
                             <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenForce(); handleCloseForceTrue(postData.data.postId, postData.data.creatorAddress);}}>Force Claim</Button>
                                 <Dialog
                                     open={openForce}
@@ -541,11 +572,10 @@ const MyBounties: NextPage = () => {
                                     </DialogContent>
                                     <DialogActions className={styles.formFooter}>
                                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseForceFalse}>No I don't</Button> 
-                                    {/* <Button onClick={() => handleCloseForceTrue(postData.data.postId, postData.data.creatorAddress)} autoFocus>Yes I want to</Button> */}
                                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {forceHunterPayout?.(); setOpenForce(false);}} autoFocus disabled={!forceHunterPayout || isForceHunterPayoutTxLoading}>{isForceHunterPayoutTxLoading ? 'Forcing payout...' : 'Yes I want to'}</Button>
                                     </DialogActions>
                                 </Dialog>
-                        </div>
+                        </div> */}
                     </BasicAccordian>
                 );
             // } else if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 4 ) { // Case 7: Finished; need to check FundsSent event to see how they were resolved!!
@@ -643,24 +673,24 @@ const MyBounties: NextPage = () => {
     
                 <main> 
                     <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '160px', paddingRight: '160px', paddingTop: '24px', color: 'rgba(6, 72, 41, 0.85)', }}> 
-                        {(isHunterDisputeResponseTxLoading || (isHunterDisputeResponseTxSuccess && hunterDisputeResponseTxData?.status === 1)) && 
-                            <SimpleSnackBar msg={isHunterDisputeResponseTxLoading ? 'Responding to dispute...' : 'Responded to dispute!'}/>
+                        {/* {(isHunterDisputeResponseTxLoading || (isHunterDisputeResponseTxSuccess && hunterDisputeResponseTxData?.status === 1)) && 
+                            <SimpleSnackBar severity={'success'} msg={isHunterDisputeResponseTxLoading ? 'Responding to dispute...' : 'Responded to dispute!'}/>
                         }
                         {(isHunterDisputeResponseTxSuccess && hunterDisputeResponseTxData?.status === 0) && 
-                            <SimpleSnackBar msg={'Hunter Dispute Response transaction failed!'}/>
+                            <SimpleSnackBar severity={'error'} msg={'Hunter Dispute Response transaction failed!'}/>
                         }
                         {(isForceHunterPayoutTxLoading || (isForceHunterPayoutTxSuccess && forceHunterPayoutTxData?.status === 1)) && 
-                            <SimpleSnackBar msg={isForceHunterPayoutTxLoading ? 'Forcing payout...' : 'Forced payout!'}/>
+                            <SimpleSnackBar severity={'success'} msg={isForceHunterPayoutTxLoading ? 'Forcing payout...' : 'Forced payout!'}/>
                         }
                         {(isForceHunterPayoutTxSuccess && forceHunterPayoutTxData?.status === 0) && 
-                            <SimpleSnackBar msg={'Force Hunter Payout transaction failed!'}/>
+                            <SimpleSnackBar severity={'error'} msg={'Force Hunter Payout transaction failed!'}/>
                         }
-                        {(isIncreaseAllowanceOnceTxLoading || isIncreaseAllowanceOnceTxSuccess) && 
-                            <SimpleSnackBar msg={isIncreaseAllowanceOnceTxLoading ? 'Increasing allowance once...' : 'Allowance increased once!'}/>
+                        {(isApproveOnceTxLoading || isApproveOnceTxSuccess) && 
+                            <SimpleSnackBar severity={'success'} msg={isApproveOnceTxLoading ? 'Approving once...' : 'Approved once!'}/>
                         }
-                        {(isIncreaseAllowanceAlwaysTxLoading || isIncreaseAllowanceAlwaysTxSuccess) && 
-                            <SimpleSnackBar msg={isIncreaseAllowanceAlwaysTxLoading ? 'Increasing allowance always...' : 'Allowance increased always!'}/>
-                        }
+                        {(isApproveAlwaysTxLoading || isApproveAlwaysTxSuccess) && 
+                            <SimpleSnackBar severity={'success'} msg={isApproveAlwaysTxLoading ? 'Approving always...' : 'Approved always!'}/>
+                        } */}
                         <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center'}}> 
                             <Box sx={{ display: 'flex', flexDirection: 'column', }}>
                                 <Button onClick={() => setStageInfo(true)} sx={{ width: '13px !important', height: '13px !important', position: 'absolute', paddingBottom: '20px', paddingLeft: '68px', }}> 
@@ -790,7 +820,7 @@ const MYBOUNTIES = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test"]
+                    values: ["Cornucopia-test2"]
                 },
                 {
                     name: "Form-Type",
@@ -826,7 +856,7 @@ const MYSUBMITTEDBOUNTIES = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test"]
+                    values: ["Cornucopia-test2"]
                 },
                 {
                     name: "Form-Type",

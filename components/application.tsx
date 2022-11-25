@@ -122,7 +122,7 @@ const Application: React.FC<Props> = props => {
   const { data: escrowTxData, isLoading: isEscrowTxLoading, isSuccess: isEscrowTxSuccess, error: escrowTxError } = useWaitForTransaction({ hash: escrowData?.hash, enabled: true,});
 
   // Submitted Contract Interactions: Initiate Dispute/Payout If Dispute/Payout
-  const { config: initiateDisputeConfig } = usePrepareContractWrite({...contractConfig, functionName: 'initiateDispute', args: [debouncedBountyAppId, debouncedHunterAddress, oracleAddress, bondAmt, debouncedAncillaryData, wethContract.address], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedAncillaryData) && Boolean(allowanceIncreased), overrides: { gasLimit: 250000 }});
+  const { config: initiateDisputeConfig } = usePrepareContractWrite({...contractConfig, functionName: 'initiateDispute', args: [debouncedBountyAppId, debouncedHunterAddress, oracleAddress, bondAmt, debouncedAncillaryData, wethContract.address], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedAncillaryData) && Boolean(allowanceIncreased), });
   const { data: initiateDisputeData, error: initiateDisputeError, isLoading: isInitiateDisputeLoading, isSuccess: isInitiateDisputeSuccess, write: initiateDispute } = useContractWrite(initiateDisputeConfig);
   const { data: initiateDisputeTxData, isLoading: isInitiateDisputeTxLoading, isSuccess: isInitiateDisputeTxSuccess, error: initiateDisputeTxError } = useWaitForTransaction({ hash: initiateDisputeData?.hash, enabled: true,});
 
@@ -395,40 +395,40 @@ const Application: React.FC<Props> = props => {
     return(
       <div>
         {(isEscrowTxLoading || (isEscrowTxSuccess && escrowTxData?.status === 1)) && 
-          <SimpleSnackBar msg={isEscrowTxLoading ? 'Escrowing funds...' : 'Funds escrowed!'}/>
+          <SimpleSnackBar severity={'success'} msg={isEscrowTxLoading ? 'Escrowing funds...' : 'Funds escrowed!'}/>
         }
         {(isEscrowTxSuccess && escrowTxData?.status === 0) && 
-          <SimpleSnackBar msg={'Escrow transaction failed!'}/>
+          <SimpleSnackBar severity={'error'} msg={'Escrow transaction failed!'}/>
         }
         {(isInitiateDisputeTxLoading || (isInitiateDisputeTxSuccess && initiateDisputeTxData?.status === 1)) && 
-          <SimpleSnackBar msg={isInitiateDisputeTxLoading ? 'Initiating dispute...' : 'Dispute initiated!'}/>
+          <SimpleSnackBar severity={'success'} msg={isInitiateDisputeTxLoading ? 'Initiating dispute...' : 'Dispute initiated!'}/>
         }
         {(isInitiateDisputeTxSuccess && initiateDisputeTxData?.status === 0) && 
-          <SimpleSnackBar msg={'Initiate Dispute transaction failed!'}/>
+          <SimpleSnackBar severity={'error'} msg={'Initiate Dispute transaction failed!'}/>
         }
         {(isPayoutIfDisputeTxLoading || (isPayoutIfDisputeTxSuccess && payoutIfDisputeTxData?.status === 1)) && 
-          <SimpleSnackBar msg={isPayoutIfDisputeTxLoading ? 'Settling dispute...' : 'Dispute settled and winner paid'}/>
+          <SimpleSnackBar severity={'success'} msg={isPayoutIfDisputeTxLoading ? 'Settling dispute...' : 'Dispute settled and winner paid'}/>
         }
         {(isPayoutIfDisputeSuccess && payoutIfDisputeTxData?.status === 0) && 
-          <SimpleSnackBar msg={'Settle Dispute transaction failed!'}/>
+          <SimpleSnackBar severity={'error'} msg={'Settle Dispute transaction failed!'}/>
         }
         {(isPayoutTxLoading || (isPayoutTxSuccess && payoutTxData?.status === 1)) && 
-          <SimpleSnackBar msg={isPayoutTxLoading ? 'Paying hunter...' : 'Hunter paid!'}/>
+          <SimpleSnackBar severity={'success'} msg={isPayoutTxLoading ? 'Paying hunter...' : 'Hunter paid!'}/>
         }
         {(isPayoutTxSuccess && payoutTxData?.status === 0) && 
-          <SimpleSnackBar msg={'Payout transaction failed!'}/>
+          <SimpleSnackBar severity={'error'} msg={'Payout transaction failed!'}/>
         }
         {(isIncreaseAllowanceOnceTxLoading || isIncreaseAllowanceOnceTxSuccess) && 
-          <SimpleSnackBar msg={isIncreaseAllowanceOnceTxLoading ? 'Increasing allowance once...' : 'Allowance increased once!'}/>
+          <SimpleSnackBar severity={'success'} msg={isIncreaseAllowanceOnceTxLoading ? 'Increasing allowance once...' : 'Allowance increased once!'}/>
         }
         {(isIncreaseAllowanceAlwaysTxLoading || isIncreaseAllowanceAlwaysTxSuccess) && 
-          <SimpleSnackBar msg={isIncreaseAllowanceAlwaysTxLoading ? 'Increasing allowance always...' : 'Allowance increased always!'}/>
+          <SimpleSnackBar severity={'success'} msg={isIncreaseAllowanceAlwaysTxLoading ? 'Increasing allowance always...' : 'Allowance increased always!'}/>
         }
         {(isApproveOnceTxLoading || isApproveOnceTxSuccess) && 
-          <SimpleSnackBar msg={isApproveOnceTxLoading ? 'Approving once...' : 'Approved once!'}/>
+          <SimpleSnackBar severity={'success'} msg={isApproveOnceTxLoading ? 'Approving once...' : 'Approved once!'}/>
         }
         {(isApproveAlwaysTxLoading || isApproveAlwaysTxSuccess) && 
-          <SimpleSnackBar msg={isApproveAlwaysTxLoading ? 'Approving always...' : 'Approved always!'}/>
+          <SimpleSnackBar severity={'success'} msg={isApproveAlwaysTxLoading ? 'Approving always...' : 'Approved always!'}/>
         }
 
       <Accordion square={true} sx={{ borderRadius: '12px', backgroundColor: 'rgba(6, 72, 41, 0.05)' }}>
@@ -599,7 +599,7 @@ const Application: React.FC<Props> = props => {
             }
             {props.appStatus === "settle" &&
               <div> 
-                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleClickOpenReject}>Reject</Button>
+                {/* <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleClickOpenReject}>Reject</Button> */}
                 <Dialog
                   open={openReject!}
                   onClose={handleCloseSettleFalse} 

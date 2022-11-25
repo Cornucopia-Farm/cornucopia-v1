@@ -84,7 +84,7 @@ const DisputeRespondedToPosts: React.FC<Props> = props => {
             }
 
             // Get UMA data
-            const umaEventData = getUMAEventData(umaContract, escrowContract, provider, 'dispute', address!, postData.data.hunterAddress, postData.data.postId);
+            const umaEventData = await getUMAEventData(umaContract, escrowContract, provider, 'dispute', address!, postData.data.hunterAddress, postData.data.postId);
             
             if (progress === 3) { // Case 6: Waiting for dispute to be resolved
                 disputeRespondedToPostsBountiesApps.push(
@@ -151,7 +151,7 @@ const GETWORKSUBMITTEDPOSTS = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test"]
+                    values: ["Cornucopia-test2"]
                 },
                 {
                     name: "Form-Type",

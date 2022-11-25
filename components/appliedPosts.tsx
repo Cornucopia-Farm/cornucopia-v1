@@ -13,6 +13,7 @@ import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // a
 import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransaction, useContractRead, useBlockNumber, useContract, usePrepareContractWrite, useContractEvent, useSigner, useNetwork } from 'wagmi';
 import { BigNumber, ethers } from 'ethers';
 import { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
 
 type Props = {
@@ -89,8 +90,8 @@ const AppliedPosts: React.FC<Props> = props => {
                 allowance = await erc20Contract.allowance(address, escrowAddress);
             }
 
-            const startDate: Dayjs = postData.data.startDate;
-            const endDate: Dayjs = postData.data.endDate;
+            const startDate = dayjs(postData.data.startDate);
+            const endDate = dayjs(postData.data.endDate);
             const expirationTime = endDate.diff(startDate, 'second');
                         
             // Case 2: Applied To
@@ -157,7 +158,7 @@ const GETAPPLIEDTOPOSTS = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test"]
+                    values: ["Cornucopia-test2"]
                 },
                 {
                     name: "Form-Type",

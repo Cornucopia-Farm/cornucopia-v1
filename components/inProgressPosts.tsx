@@ -129,7 +129,7 @@ const GETAPPLIEDTOPOSTS = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test"]
+                    values: ["Cornucopia-test2"]
                 },
                 {
                     name: "Form-Type",

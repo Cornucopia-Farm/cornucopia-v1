@@ -7,7 +7,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { flexbox } from '@mui/system';
 import Link from '@mui/material/Link';
-import { Dayjs, isDayjs } from 'dayjs';
+import { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import styles from '../styles/Home.module.css';
@@ -33,11 +34,11 @@ const BasicCard: React.FC<Props> = props => {
           </Box>
           <Box sx={{ display: 'flex', paddingLeft: 0}}> 
             <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Start Date </Typography>
-            <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%'}}>{props.startDate.format('MM-DD-YYYY')}</Typography>
+            <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%'}}>{dayjs(props.startDate).format('MM-DD-YYYY')}</Typography>
           </Box>
           <Box sx={{ display: 'flex', paddingLeft: 0}}> 
             <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>End Date </Typography>
-            <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%'}}>{props.endDate.format('MM-DD-YYYY')}</Typography>
+            <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%'}}>{dayjs(props.endDate).format('MM-DD-YYYY')}</Typography>
           </Box>
           <Box sx={{ display: 'flex', paddingLeft: 0}}> 
             <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Links </Typography>

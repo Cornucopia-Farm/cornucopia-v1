@@ -269,7 +269,7 @@ const Form: React.FC<Props> = props => {
                         margin="dense"
                         id="title-input"
                         name="title"
-                        label="Title (5 words)"
+                        label= "Title" //"Title (5 words)"
                         value={formValues.title}
                         onChange={handleInputChange}
                         type="text"
@@ -901,10 +901,10 @@ const Form: React.FC<Props> = props => {
     return (
         <div>
             {(isSubmitTxLoading || (isSubmitTxSuccess && submitTxData?.status === 1)) && 
-                <SimpleSnackBar msg={isSubmitTxLoading ? 'Submitting work...' : 'Submitted work!'}/>
+                <SimpleSnackBar severity={'success'} msg={isSubmitTxLoading ? 'Submitting work...' : 'Submitted work!'}/>
             }
             {(isSubmitTxSuccess && submitTxData?.status === 0) && 
-                <SimpleSnackBar msg={'Submit transaction failed!'}/>
+                <SimpleSnackBar severity={'error'} msg={'Submit transaction failed!'}/>
             }
             <ButtonType />
             <Dialog open={open} onClose={handleClose} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>

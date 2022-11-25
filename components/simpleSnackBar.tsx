@@ -1,9 +1,10 @@
 import * as React from 'react';
 import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import MuiAlert, { AlertColor, AlertProps } from '@mui/material/Alert';
 
 type Props = {
     msg: string;
+    severity: AlertColor;
 };
 
 const SimpleSnackBar: React.FC<Props> = (props) => {
@@ -36,7 +37,7 @@ const SimpleSnackBar: React.FC<Props> = (props) => {
             //     }
             // }}
         >
-            <Alert onClose={handleClose} severity="error" sx={{ width: '100%', backgroundColor: 'rgb(23, 21, 20)', color: 'rgb(233, 233, 198)' }}>
+            <Alert onClose={handleClose} severity={props.severity} sx={{ width: '100%', backgroundColor: 'rgb(23, 21, 20)', color: 'rgb(233, 233, 198)' }}>
                 {props.msg}
             </Alert>
         </Snackbar>
