@@ -142,7 +142,7 @@ const MyBounties: NextPage = () => {
     const { data: forceHunterPayoutData, error: forceHunterPayoutError, isLoading: isForceHunterPayoutLoading, isSuccess: isForceHunterPayoutSuccess, write: forceHunterPayout } = useContractWrite(forceHunterPayoutConfig);
     const { data: forceHunterPayoutTxData, isLoading: isForceHunterPayoutTxLoading, isSuccess: isForceHunterPayoutTxSuccess, error: forceHunterPayoutTxError } = useWaitForTransaction({ hash: forceHunterPayoutData?.hash, enabled: true, });
 
-    const { data: blockNumber, isError: isBlockNumberError, isLoading: isBlockNumberLoading } = useBlockNumber({ enabled: true,});
+    // const { data: blockNumber, isError: isBlockNumberError, isLoading: isBlockNumberLoading } = useBlockNumber({ enabled: true,});
     
 
     const handleClickOpenDispute = () => {
@@ -425,6 +425,8 @@ const MyBounties: NextPage = () => {
             const progress = await escrowContract.progress(bountyIdentifierInput);
             const payoutExpirationTime = await escrowContract.payoutExpiration(bountyIdentifierInput);
 
+            const currentBlocktime = await provider.getBlock("latest");
+
             // Allowance Data
             // let allowance = BigNumber.from(0);
             
@@ -488,50 +490,6 @@ const MyBounties: NextPage = () => {
                             ancillaryData={umaEventData.ancillaryData}
                             request={umaEventData.request}
                         />
-                        {/* <div> 
-                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleCloseIncreaseAllowanceDisputeResponseOnceTrue(postData.data.amount, postData.data.tokenDecimals, allowance, postData.data.postId, postData.data.creatorAddress, postData.data.tokenAddress); handleCloseIncreaseAllowanceDisputeResponseAlwaysTrue(postData.data.amount, postData.data.tokenDecimals, allowance, postData.data.postId, postData.data.creatorAddress, postData.data.tokenAddress);}}>Dispute</Button>
-                            <Dialog open={openAllowance} onClose={handleCloseIncreaseAllowanceFalse} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
-                                <DialogTitle className={styles.formHeader}>Increase Allowance</DialogTitle>
-                                <DialogContent className={styles.cardBackground}>
-                                    <DialogContentText className={styles.dialogBody}>
-                                    To respond to a creator's dispute, you must put up a bond of 0.1 WETH. To put up this bond, you must first allow Cornucopia to transfer 
-                                    tokens from your wallet to the protocol contract, which are then transferred into the UMA Optimistic Oracle contract.
-                                    <br />
-                                    <br />
-                                    You can choose either to allow Cornucopia to spend an unlimited amount of funds so you won't have to approve Cornucopia 
-                                    everytime you respond to a dispute or you can choose to just allow Cornucopia to spend the funds you need to dispute. While the 
-                                    former is potentially more cost effective, the latter protects you incase of any future smart contract vulnerabilities.   
-                                    </DialogContentText>    
-                                </DialogContent> 
-                                <DialogActions className={styles.formFooter}>
-                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {approveAlways?.(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress); handleCloseIncreaseAllowanceFalse(); handleClickOpenDispute(); }} autoFocus disabled={!approveAlways || isApproveAlwaysTxLoading}>{isApproveAlwaysTxLoading ? 'Approving...' : 'Approve Always'}</Button>
-                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {approveOnce?.(); handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress); handleCloseIncreaseAllowanceFalse(); handleClickOpenDispute(); }} autoFocus disabled={!approveOnce || isApproveOnceTxLoading}>{isApproveOnceTxLoading ? 'Approving...' : 'Approve Once'}</Button>
-                                </DialogActions>
-                            </Dialog>
-                            <Dialog
-                                open={openDispute}
-                                onClose={handleCloseDisputeFalse}
-                                aria-labelledby="alert-dialog-title"
-                                aria-describedby="alert-dialog-description"
-                                PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}
-                            >
-                                <DialogTitle className={styles.formHeader} id="alert-dialog-title">
-                                {"Are you sure you want to challenge the creator's dispute of your work?"}
-                                </DialogTitle>
-                                <DialogContent className={styles.cardBackground}>
-                                <DialogContentText className={styles.dialogBody} id="alert-dialog-description">
-                                    Responding to the creator's dispute within the 7 day challenger period, escalates this dispute to the UMA token holders and decided
-                                    within that week. Once the decision is made (please see the docs for more details on this process), the escrowed funds will either be fully 
-                                    paid out to you, half payed out to you, or fully given back to the creator. If you don't challenge the creator's dispute, then the full bounty amount  
-                                    will be returned to the creator once these 7 days are up. 
-                                </DialogContentText>
-                                </DialogContent>
-                                <DialogActions className={styles.formFooter}>
-                                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseDisputeFalse}>No I don't</Button>
-                                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {hunterDisputeResponse?.(); setOpenDispute(false);}} autoFocus disabled={!hunterDisputeResponse || isHunterDisputeResponseTxLoading}>{isHunterDisputeResponseTxLoading ? 'Responding to dispute...' : 'Yes I want to'}</Button>
-                                </DialogActions>
-                            </Dialog>
-                        </div>  */}
                     </BasicAccordian>
                 );
             // } else if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 3 ) { // Case 5: Waiting for dispute to be resolved
@@ -552,7 +510,7 @@ const MyBounties: NextPage = () => {
                     />
                 );
             // } else if ( ispayoutExpirationSuccess && blockNumber && payoutExpirationData! as unknown as number > blockNumber! && bountyProgressData! as unknown as number === 1) { // Case 6: Creator hasn't payed or disputed work within 2 weeks after work submission; assume that payoutExpirationData is a BigNumber
-            } else if (blockNumber && payoutExpirationTime > blockNumber && progress === 1) {
+            } else if (currentBlocktime && payoutExpirationTime <= currentBlocktime && progress === 1) {
                 creatorNoActionBounties.push(
                     <BasicAccordian key={postId}  
                         company={postData.data.creatorAddress}
