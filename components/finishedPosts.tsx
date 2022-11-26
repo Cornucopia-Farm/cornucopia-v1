@@ -24,8 +24,6 @@ const contractConfig = {
     contractInterface: escrowABI['abi'], // contract abi in json or JS format
 };
 
-// const defaultIdentifier = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ "default", "0x", "0x" ]);
-
 const FinishedPosts: React.FC<Props> = props => {
 
     // Wagmi address/contract info
@@ -38,13 +36,6 @@ const FinishedPosts: React.FC<Props> = props => {
 
     const [finishedBountyPosts, setFinishedBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
-
-    // const [bountyIdentifier, setBountyIdentifier] = React.useState('');
-    // const { data: bountyProgressData, error: bountyProgressError, isLoading: isBountyProgressLoading, isSuccess: isBountyProgressSuccess, refetch: bountyProgress } = useContractRead({...contractConfig, functionName: 'progress', args: [bountyIdentifier], enabled: Boolean(bountyIdentifier) }); // watch causing error not sure why rn
-
-    
-    // const { data, loading, error, startPolling } = useQuery(GETWORKSUBMITTEDPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, pollInterval: 10000, });
-    // startPolling(1000);
 
     const { data, error, isValidating } = useSWR([GETWORKSUBMITTEDPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
 
@@ -78,11 +69,6 @@ const FinishedPosts: React.FC<Props> = props => {
             const postId = postData?.config?.url?.split("https://arweave.net/")[1];
             // postDataArr.push(postData);
             const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, address, postData.data.hunterAddress ]);
-            // setBountyIdentifier(bountyIdentifierInput);
-            // console.log(bountyIdentifier)
-            // bountyProgress?.();
-
-            // console.log("finished postData", postData.data);
 
             const progress = await escrowContract.progress(bountyIdentifierInput);
             // this isn't working need to fix
