@@ -217,7 +217,7 @@ const HunterContractActions: React.FC<Props> = props => {
                         <DialogTitle className={styles.formHeader}>Approve</DialogTitle>
                         <DialogContent className={styles.cardBackground}>
                             <DialogContentText className={styles.dialogBody}>
-                            To respond to a creator's dispute, you must put up a bond of 0.1 WETH. To put up this bond, you must first allow Cornucopia to transfer 
+                            To respond to a creator's dispute, you must put up a bond of 0.1 WETH plus an UMA protocol fee of 0.35 WETH. To put up this bond, you must first allow Cornucopia to transfer 
                             tokens from your wallet to the protocol contract, which are then transferred into the UMA Optimistic Oracle contract.
                             <br />
                             <br />

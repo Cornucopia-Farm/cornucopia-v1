@@ -5,7 +5,7 @@ import { ethers } from 'ethers';
 import NestedAccordian from './nestedAccordion';
 import Application from './application';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
-import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransaction, useContractRead, useBlockNumber, useContract, usePrepareContractWrite, useContractEvent, useSigner, useNetwork } from 'wagmi';
+import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransaction, useContractRead, useBlockNumber, useContract, usePrepareContractWrite, useContractEvent, useSigner, useNetwork, useProvider } from 'wagmi';
 import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
@@ -32,6 +32,7 @@ const InProgressPosts: React.FC<Props> = props => {
     // Wagmi address/contract info
     const { address, isConnected } = useAccount();
     const { data: signer, isError, isLoading } = useSigner();
+    const provider = useProvider();
     const { chain } = useNetwork();
 
     const escrowContract = useContract({...contractConfig, signerOrProvider: signer,});
@@ -81,7 +82,13 @@ const InProgressPosts: React.FC<Props> = props => {
             // Filter events
             const filter = escrowContract.filters.Escrowed(address, postData.data.hunterAddress, postData.data.postId);
             const isEscrowed = await escrowContract.queryFilter(filter);
-            
+
+            // Expiration
+            const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, address, postData.data.hunterAddress ]);
+            const expirationTime = await escrowContract.expiration(bountyIdentifierInput);
+            // todo: get current blocktime and compare it to expirationTime then set creatorRefund
+            const currentBlocktime = await provider.getBlock("latest");
+            const creatorRefund = expirationTime < currentBlocktime ? true : false;
             /*if ( isEscrowed.length > 0 ) { // Case 3: In Progress
                 inProgressBountiesApps.push(
                     <Application key={postId} 
@@ -101,9 +108,12 @@ const InProgressPosts: React.FC<Props> = props => {
                     contactInfo={postData.data.contact}
                     arweaveHash={openBountyId}
                     appLinks={postData.data.appLinks}
+                    postId={postData.data.postId}
+                    tokenAddress={postData.data.tokenAddress}
+                    creatorRefund={creatorRefund}
                 />, 
                 postData
-            ])
+            ]);
         });
 
         if (promises) {

@@ -99,7 +99,11 @@ const SubmittedPosts: React.FC<Props> = props => {
 
             if (postData.data.tokenAddress !== zeroAddress && postData.data.tokenAddress) {
                 const erc20Contract = new ethers.Contract(postData.data.tokenAddress, erc20ABI['abi'], signer!);
-                allowance = await erc20Contract.allowance(address, escrowAddress);
+                try { 
+                    allowance = await erc20Contract.allowance(address, escrowAddress); 
+                } catch (e) {
+                    console.log('allowance fetch error', e);
+                }
             }
 
             const wethAllowance = await wethContract.allowance(address, escrowAddress);
