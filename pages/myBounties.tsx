@@ -13,7 +13,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import BountyCard from '../components/bountyCard';
-import { useQuery, gql } from '@apollo/client';
+// import { useQuery, gql } from '@apollo/client';
 import ClientOnly from '../components/clientOnly';
 import Form from '../components/form';
 import axios from 'axios';
@@ -40,6 +40,9 @@ import Tooltip from '@mui/material/Tooltip';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import MyBountiesInfo from '../components/myBountiesInfo';
 import HunterContractActions from '../components/hunterContractActions';
+import useSWR from 'swr';
+import gqlFetcher from '../swrFetchers';
+import { gql } from 'graphql-request';
 
 // Bounty Stages for Hunter:
 // 1. Applied (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.NoBounty); CHECK PROGRESS MAPPING
@@ -252,17 +255,34 @@ const MyBounties: NextPage = () => {
     };
 
     // Get bounties that this address is a hunter in
-    const { data, loading, error, startPolling } = useQuery(MYBOUNTIES, { variables: { address, chain: chain?.network! }, }); // will repoll every 500 s
-    startPolling(1000);
+    // const { data, loading, error, startPolling } = useQuery(MYBOUNTIES, { variables: { address, chain: chain?.network! }, }); // will repoll every 500 s
+    // startPolling(1000);
+
+    const { data, error } = useSWR([MYBOUNTIES, { address: address, chain: chain?.network! },], gqlFetcher);
+
+    let loading = false;
+    
+    if (!data) {
+        loading = true;
+    }
 
     if (error) {
         console.error(error);
     }
 
     const postIds = data?.transactions.edges.map((edge: any) => edge.node.id);
-    const { data: submittedData, loading: submittedLoading, error: submittedError, startPolling: startPollingSubmitted } = useQuery(MYSUBMITTEDBOUNTIES, { variables: { address, chain: chain?.network! }, });
-    startPollingSubmitted(1000);
-    console.log(data)
+
+    // const { data: submittedData, loading: submittedLoading, error: submittedError, startPolling: startPollingSubmitted } = useQuery(MYSUBMITTEDBOUNTIES, { variables: { address, chain: chain?.network! }, });
+    // startPollingSubmitted(1000);
+    
+    const { data: submittedData, error: submittedError } = useSWR([MYSUBMITTEDBOUNTIES, { address: address, chain: chain?.network! },], gqlFetcher);
+
+    let submittedLoading = false;
+    
+    if (!data) {
+        submittedLoading = true;
+    }
+
     if (submittedError) {
         console.error(submittedError);
     }

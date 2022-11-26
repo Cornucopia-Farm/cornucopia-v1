@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Button from '@mui/material/Button';
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useCallback, useEffect } from 'react';
 import BasicAccordian from '../components/basicAccordion';
 import NestedAccordian from '../components/nestedAccordion';
 import Box from '@mui/material/Box';
@@ -90,6 +90,28 @@ const CreateBounties: NextPage = () => {
     const [disputeRespondedToComponents, setDisputeRespondedToComponents] = React.useState(Array<JSX.Element>);
     const [finishedComponents, setFinishedComponents] = React.useState(Array<JSX.Element>);
 
+    const [appliedHits, setAppliedHits] = React.useState(0); // Count of how many components in getAppliedPosts func attempted to render; should equal 2 * bountyIds.length
+    const [submittedHits, setSubmittedHits] = React.useState(0); // Count of how many components in getSubmittedPosts func attempted to render; should equal 4 * bountyIds.length
+
+    const incrementAppliedHits = () => {
+        setAppliedHits(appliedHits + 1);
+    };
+
+    const incrementSubmittedHits = () => {
+        setSubmittedHits(submittedHits + 1);
+    };
+
+    const [existsApplied, setExistsApplied] = React.useState(new Map<string, boolean>());
+    const [existsSubmitted, setExistsSubmitted] = React.useState(new Map<string, boolean>());
+
+    const setAppliedMap = (postId: string) => {
+        setExistsApplied(new Map(existsApplied.set(postId, true)));
+    };
+
+    const setSubmittedMap = (postId: string) => {
+        setExistsSubmitted(new Map(existsSubmitted.set(postId, true)));
+    };
+
     // const [existsApplied, setExistsApplied] = React.useState(new Map());
     // const [existsSubmitted, setExistsSubmitted] = React.useState(new Map());
 
@@ -97,57 +119,58 @@ const CreateBounties: NextPage = () => {
     // const { data, loading, error, startPolling } = useQuery(GETPOSTS, { variables: { address, chain: chain?.network }, });
     // startPolling(1000);
 
-    const { data, error } = useSWR([GETPOSTS, { address: address, chain: chain?.network },], gqlFetcher);
-
-    let loading = false;
-
-    if (!data) {
-        loading = true;
-    }
+    const { data, error, isValidating } = useSWR([GETPOSTS, { address: address, chain: chain?.network },], gqlFetcher);
 
     if (error) {
         console.error(error);
     }
 
+    // const postIds = data?.transactions.edges.map((edge: any) => edge.node.id);
 
-    const postIds = data?.transactions.edges.map((edge: any) => edge.node.id);
+    const postIds = React.useMemo(() => {
+        return data?.transactions?.edges.map((edge: any) => edge.node.id);
+    }, [data?.transactions?.edges]);
 
-    const getPostedPosts = async (openBountyIds: Array<string>, existsApplied: Promise<Map<string, boolean>>, existsSubmitted: Promise<Map<string, boolean>>) => {
+    console.log(postIds)
+    console.log(appliedHits)
+    console.log(submittedHits)
+
+    const getPostedPosts = useCallback((openBountyIds: Array<string>) => {
         const postedBounties: Array<JSX.Element> = [];
 
-        const promises = openBountyIds?.map( async (openBountyId: string) => {
-            postedBounties.push( 
-                <PostedPosts key={openBountyId}  
-                    postId={openBountyId}
-                    existsApplied={await existsApplied}
-                    existsSubmitted={await existsSubmitted}
-                    loading={loading}
-                />
-            );
+        // const promises = openBountyIds?.map( async (openBountyId: string) => {
+        //     postedBounties.push( 
+        //         <PostedPosts key={openBountyId}  
+        //             postId={openBountyId}
+        //             existsApplied={existsApplied}
+        //             existsSubmitted={existsSubmitted}
+        //             loading={isValidating}
+        //         />
+        //     );
 
-            // const postData = await axios.get(`https://arweave.net/${openBountyId}`);
-            // const postId = postData?.config?.url?.split("https://arweave.net/")[1];
-            // // this isn't checking as these can be null when passed in
-            // if (postId && !existsApplied.has(postId) && !existsSubmitted.has(postId)) { 
-            //     console.log("postid for posted bounty",postId);
-            //     postedBounties.push( 
-            //         // <NestedAccordian key={postId}
-            //         //     postLinks={postData.data.postLinks}
-            //         //     date={postData.data.date}
-            //         //     time={postData.data.time}
-            //         //     description={postData.data.description}
-            //         //     bountyName={postData.data.title}
-            //         //     amount={postData.data.amount}
-            //         // />
-            //         <PostedPosts key={address!}  
-            //             postId={openBountyId}
-            //             existsApplied={existsApplied}
-            //             existsSubmitted={existsSubmitted}
-            //             loading={loading}
-            //         />
-            //     );
-            // }
-        });
+        //     // const postData = await axios.get(`https://arweave.net/${openBountyId}`);
+        //     // const postId = postData?.config?.url?.split("https://arweave.net/")[1];
+        //     // // this isn't checking as these can be null when passed in
+        //     // if (postId && !existsApplied.has(postId) && !existsSubmitted.has(postId)) { 
+        //     //     console.log("postid for posted bounty",postId);
+        //     //     postedBounties.push( 
+        //     //         // <NestedAccordian key={postId}
+        //     //         //     postLinks={postData.data.postLinks}
+        //     //         //     date={postData.data.date}
+        //     //         //     time={postData.data.time}
+        //     //         //     description={postData.data.description}
+        //     //         //     bountyName={postData.data.title}
+        //     //         //     amount={postData.data.amount}
+        //     //         // />
+        //     //         <PostedPosts key={address!}  
+        //     //             postId={openBountyId}
+        //     //             existsApplied={existsApplied}
+        //     //             existsSubmitted={existsSubmitted}
+        //     //             loading={loading}
+        //     //         />
+        //     //     );
+        //     // }
+        // });
         // console.log("in posted posts func")
         // postedBounties.push(
         //     <PostedPosts key={address!}  
@@ -158,29 +181,59 @@ const CreateBounties: NextPage = () => {
         //     />
         // );
         // setPostedBountyPosts(postedBounties);
-        if (promises) {
-            await Promise.all(promises); // Wait for these promises to resolve before setting the state variables
-        }
+
+        openBountyIds?.forEach((openBountyId: string) => {
+            postedBounties.push( 
+                <PostedPosts key={openBountyId}  
+                    postId={openBountyId}
+                    existsApplied={existsApplied}
+                    existsSubmitted={existsSubmitted}
+                    isValidating={isValidating}
+                />
+            );
+        });
+
+        // if (promises) {
+        //     await Promise.all(promises); // Wait for these promises to resolve before setting the state variables
+        // }
 
         setPostedComponents(postedBounties);
-    };
+    }, []);
 
-    const getAppliedPosts = async (openBountyIds: Array<string>, existsSubmitted: Promise<Map<string, boolean>>) => {
-        const existsApplied = new Map();
+    const getAppliedPosts = useCallback(async (openBountyIds: Array<string>) => {
+        // const existsApplied = new Map();
 
-        const setAppliedMap = (postId: string) => {
-            existsApplied.set(postId, true);
-        };
+        // const setAppliedMap = (postId: string) => {
+        //     existsApplied.set(postId, true);
+        // };
 
         const appliedComponentsArr: Array<JSX.Element> = [];
         const inProgressComponentsArr: Array<JSX.Element> = [];
 
-        const promises = openBountyIds?.map( async (postId: string) => {
+        // const promises = openBountyIds?.map( async (postId: string) => {
+        //     appliedComponentsArr.push(
+        //         <AppliedPosts key={postId}
+        //             postId={postId}
+        //             existsSubmitted={existsSubmitted}
+        //             setAppliedMap={setAppliedMap}
+        //         />
+        //     );
+        //     inProgressComponentsArr.push(
+        //         <InProgressPosts key={postId}
+        //             postId={postId}
+        //             existsSubmitted={existsSubmitted}
+        //             setAppliedMap={setAppliedMap}
+        //         />
+        //     );
+        // });
+
+        openBountyIds?.forEach((postId: string) => {
             appliedComponentsArr.push(
                 <AppliedPosts key={postId}
                     postId={postId}
                     existsSubmitted={existsSubmitted}
                     setAppliedMap={setAppliedMap}
+                    incrementAppliedHits={incrementAppliedHits}
                 />
             );
             inProgressComponentsArr.push(
@@ -188,78 +241,144 @@ const CreateBounties: NextPage = () => {
                     postId={postId}
                     existsSubmitted={existsSubmitted}
                     setAppliedMap={setAppliedMap}
+                    incrementAppliedHits={incrementAppliedHits}
                 />
             );
         });
 
-        if (promises) {
-            await Promise.all(promises); // Wait for these promises to resolve before setting the state variables
-        }
+        // if (promises) {
+        //     await Promise.all(promises); // Wait for these promises to resolve before setting the state variables
+        // }
 
         setAppliedComponents(appliedComponentsArr);
         setInProgressComponents(inProgressComponentsArr);
 
-        return existsApplied;
-    };
+        // return existsApplied;
+    }, []); // is there an external dependency here??
 
-    const getSubmittedPosts = async (openBountyIds: Array<string>) => {
-        const existsSubmitted = new Map();
+    const getSubmittedPosts = useCallback((openBountyIds: Array<string>) => {
+        // const existsSubmitted = new Map(); 
 
-        const setSubmittedMap = (postId: string) => {
-            existsSubmitted.set(postId, true);
-        };
+        // const setSubmittedMap = (postId: string) => {
+        //     existsSubmitted.set(postId, true);
+        // };
 
+        // setThatStateVar(() => {
+        //     return openBountyIds.reduce((acc, val) => {
+        //         acc[val] = false
+        //     }, {})
+        // })
+        console.log('submit bounty ids', openBountyIds)
         const submittedComponentsArr: Array<JSX.Element> = [];
         const disputeInitiatedComponentsArr: Array<JSX.Element> = [];
         const disputeRespondedToComponentsArr: Array<JSX.Element> = [];
         const finishedComponentsArr: Array<JSX.Element> = [];
 
-        const promises = openBountyIds?.map( async (postId: string) => {
+        /*
+            const promises = openBountyIds?.map( async (postId: string) => {
+                submittedComponentsArr.push(
+                    <SubmittedPosts key={postId}
+                        postId={postId}
+                        setSubmittedMap={setSubmittedMap}
+                    />
+                );
+                disputeInitiatedComponentsArr.push(
+                    <DisputeInitiatedPosts key={postId}
+                        postId={postId}
+                        setSubmittedMap={setSubmittedMap}
+                    />
+                );
+                disputeRespondedToComponentsArr.push(
+                    <DisputeRespondedToPosts key={postId}
+                        postId={postId}
+                        setSubmittedMap={setSubmittedMap}
+                    />
+                );
+                finishedComponentsArr.push(
+                    <FinishedPosts key={postId}
+                        postId={postId}
+                        setSubmittedMap={setSubmittedMap}
+                    />
+                );
+            });
+        */
+
+        openBountyIds?.forEach((postId: string) => {
             submittedComponentsArr.push(
                 <SubmittedPosts key={postId}
                     postId={postId}
                     setSubmittedMap={setSubmittedMap}
+                    incrementSubmittedHits={incrementSubmittedHits}
                 />
             );
             disputeInitiatedComponentsArr.push(
                 <DisputeInitiatedPosts key={postId}
                     postId={postId}
                     setSubmittedMap={setSubmittedMap}
+                    incrementSubmittedHits={incrementSubmittedHits}
                 />
             );
             disputeRespondedToComponentsArr.push(
                 <DisputeRespondedToPosts key={postId}
                     postId={postId}
                     setSubmittedMap={setSubmittedMap}
+                    incrementSubmittedHits={incrementSubmittedHits}
                 />
             );
             finishedComponentsArr.push(
                 <FinishedPosts key={postId}
                     postId={postId}
                     setSubmittedMap={setSubmittedMap}
+                    incrementSubmittedHits={incrementSubmittedHits}
                 />
             );
         });
 
-        if (promises) {
+        /*if (promises) {
             await Promise.all(promises); // Wait for these promises to resolve before setting the state variables
-        }
+        }*/
 
         setSubmittedComponents(submittedComponentsArr);
         setDisputeInitiatedComponents(disputeInitiatedComponentsArr);
         setDisputeRespondedToComponents(disputeRespondedToComponentsArr);
         setFinishedComponents(finishedComponentsArr);
 
-        return existsSubmitted;
-    };
+        // return existsSubmitted;
+    }, []);
 
     useEffect(() => {
-        if (!loading && postIds?.length > 0) {
-            const existsSubmittedHere = getSubmittedPosts(postIds);
-            const existsAppliedHere = getAppliedPosts(postIds, existsSubmittedHere);
-            getPostedPosts(postIds, existsAppliedHere, existsSubmittedHere);
+        if (!isValidating && postIds?.length > 0) {
+            getSubmittedPosts(postIds);
         }
-    }, [loading]);
+    }, [isValidating, postIds, getSubmittedPosts]);
+
+    useEffect(() => {
+        console.log('submit hits', submittedHits)
+        if (!isValidating && postIds?.length > 0 && submittedHits === postIds?.length * 4) {
+            getAppliedPosts(postIds);
+        }
+    }, [isValidating, postIds, submittedHits, getAppliedPosts]);
+
+    useEffect(() => {
+        if (!isValidating && postIds?.length > 0 && appliedHits === postIds?.length * 2) {
+            getPostedPosts(postIds);
+        }
+    }, [isValidating, postIds, appliedHits, getPostedPosts]);
+
+
+
+    // useEffect(() => {
+    //     if (!isValidating && postIds?.length > 0) {
+    //         const existsSubmittedHere = getSubmittedPosts(postIds);
+    //         const existsAppliedHere = getAppliedPosts(postIds, existsSubmittedHere);
+    //         getPostedPosts(postIds, existsAppliedHere, existsSubmittedHere);
+    //     }
+    // }, [isValidating]);
+
+    // useEffect(() => {
+
+    //     getAppliedPosts()
+    // }, [getAppliedPosts, thatStateVar])
 
     const marks = [
         {
@@ -303,7 +422,7 @@ const CreateBounties: NextPage = () => {
         return (
             <WelcomeCard isConnected={isConnected}/>
         );
-    } else if (!loading) {
+    } else if (!isValidating) {
         return (
             <div>
                 <Head>

@@ -16,8 +16,9 @@ import { gql } from 'graphql-request';
 
 type Props = {
     postId: string;
-    existsSubmitted: Promise<Map<string, boolean>>;
+    existsSubmitted: Map<string, boolean>;
     setAppliedMap: (postId: string) => void;
+    incrementAppliedHits: () => void;
 };
 
 // Escrow Contract Config
@@ -41,25 +42,25 @@ const InProgressPosts: React.FC<Props> = props => {
     // const { data, loading, error, startPolling } = useQuery(GETAPPLIEDTOPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, });
     // startPolling(1000);
 
-    const { data, error } = useSWR([GETAPPLIEDTOPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
-
-    let loading = false;
-    
-    if (!data) {
-        loading = true;
-    }
+    const { data, error, isValidating } = useSWR([GETAPPLIEDTOPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
 
     if (error) {
         console.error(error);
     }
     
-    const bountyIds = data?.transactions.edges.map((edge: any) => edge.node.id);
+    const bountyIds = React.useMemo(() => {
+        return data?.transactions?.edges.map((edge: any) => edge.node.id);
+    }, [data?.transactions?.edges]);
     
-    if (!loading && bountyIds?.length > 0) {
-        props.setAppliedMap(props.postId);
-    }
+   
+    React.useEffect(() => {
+        if (!isValidating && bountyIds?.length > 0) {
+            props.setAppliedMap(props.postId);
+        }
+        props.incrementAppliedHits(); // IS THIS RIGHT PLACE TO DO THIS?
+    }, [isValidating, bountyIds?.length, props.setAppliedMap, props.postId]);
 
-    const getInProgressPosts = async (openBountyIds: Array<string>, existsSubmitted: Promise<Map<string, boolean>>) => {
+    const getInProgressPosts = React.useCallback(async (openBountyIds: Array<string>, existsSubmitted: Map<string, boolean>) => {
 
         let inProgressBountiesApps: Array<JSX.Element> = [];
 
@@ -71,17 +72,17 @@ const InProgressPosts: React.FC<Props> = props => {
         const promises = openBountyIds?.map( async (openBountyId: string) => {
             const postData = await axios.get(`https://arweave.net/${openBountyId}`);
             
-            if ( (await existsSubmitted).has(postData.data.postId) ) {
-                return; // Equivalent ot continue in a forEach loop in ts
+            if ( (existsSubmitted).has(postData.data.postId) ) {
+                return Promise.resolve([]); // Equivalent ot continue in a forEach loop in ts
             }
             const postId = postData?.config?.url?.split("https://arweave.net/")[1];
-            postDataArr.push(postData);
+            //postDataArr.push(postData);
     
             // Filter events
             const filter = escrowContract.filters.Escrowed(address, postData.data.hunterAddress, postData.data.postId);
             const isEscrowed = await escrowContract.queryFilter(filter);
             
-            if ( isEscrowed.length > 0 ) { // Case 3: In Progress
+            /*if ( isEscrowed.length > 0 ) { // Case 3: In Progress
                 inProgressBountiesApps.push(
                     <Application key={postId} 
                         person={postData.data.hunterAddress}
@@ -91,22 +92,41 @@ const InProgressPosts: React.FC<Props> = props => {
                         appLinks={postData.data.appLinks}
                     />
                 );
-            }
+            }*/
+            return Promise.resolve([
+                isEscrowed,  
+                <Application key={postId} 
+                    person={postData.data.hunterAddress}
+                    experience={postData.data.experience}
+                    contactInfo={postData.data.contact}
+                    arweaveHash={openBountyId}
+                    appLinks={postData.data.appLinks}
+                />, 
+                postData
+            ])
         });
 
         if (promises) {
-            await Promise.all(promises); // Wait for these promises to resolve before setting the state variables
-        }
-
-        setInProgressBountyPosts(inProgressBountiesApps);
-        setThisPostData(postDataArr);
-    };
+            await Promise.all(promises).then(results => {
+                results.forEach(result => {
+                    if (result.length) {
+                        if (result[0].length > 0 ) { // Case 3: In Progress
+                            inProgressBountiesApps.push(result[1]);
+                        }
+                        postDataArr.push(result[2]);
+                    }
+                });
+                setInProgressBountyPosts(inProgressBountiesApps);
+                setThisPostData(postDataArr);
+            }); // Wait for these promises to resolve before setting the state variables
+        }  
+    }, []);
 
     React.useEffect(() => {
-        if (!loading && bountyIds?.length > 0) {
+        if (bountyIds && bountyIds.length > 0 && !isValidating) {
             getInProgressPosts(bountyIds, props.existsSubmitted);
         }
-    }, [loading]);
+    }, [bountyIds, isValidating, getInProgressPosts, props.existsSubmitted]);
 
     if (inProgressBountyPosts.length > 0) {
         return (
