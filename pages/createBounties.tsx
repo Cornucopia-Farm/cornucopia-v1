@@ -54,32 +54,8 @@ import { gql } from 'graphql-request';
 
 // Note: not a bug for a bounty to show up under multiple headers as of now if we let multiple people apply to the same bounty!!
 
-type ArData = {
-    creatorAddress: string;
-    hunterAddress: string;
-    postId: string;
-    title: string;
-    description: string;
-    amount: number; 
-    date: string;
-    time: string; 
-    postLinks: Array<string>;
-    appLinks: Array<string>;
-    experience: string;
-    contact: string;
-};
-
-// Escrow Contract Config
-const contractConfig = {
-    addressOrName: process.env.ESCROW_ADDRESS!, // contract address on goerli
-    contractInterface: escrowABI['abi'], // contract abi in json or JS format
-};
-
 const CreateBounties: NextPage = () => {
-
     const { address, isConnected } = useAccount();
-    const { data: ensName } = useEnsName({ address, enabled: false, });
-    const { data: signer, isError, isLoading } = useSigner();
     const { chain } = useNetwork();
 
     const [postedComponents, setPostedComponents] = React.useState(Array<JSX.Element>);
@@ -115,17 +91,11 @@ const CreateBounties: NextPage = () => {
     // const [existsApplied, setExistsApplied] = React.useState(new Map());
     // const [existsSubmitted, setExistsSubmitted] = React.useState(new Map());
 
-    // Query takes in user's address and returns all bounties that they've created 
-    // const { data, loading, error, startPolling } = useQuery(GETPOSTS, { variables: { address, chain: chain?.network }, });
-    // startPolling(1000);
-
     const { data, error, isValidating } = useSWR([GETPOSTS, { address: address, chain: chain?.network },], gqlFetcher);
 
     if (error) {
         console.error(error);
     }
-
-    // const postIds = data?.transactions.edges.map((edge: any) => edge.node.id);
 
     const postIds = React.useMemo(() => {
         return data?.transactions?.edges.map((edge: any) => edge.node.id);

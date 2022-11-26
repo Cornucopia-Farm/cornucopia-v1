@@ -110,13 +110,13 @@ function Icon() {
     return (
         <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="60%"
-      height="60%"
+      width="100%"
+      height="100%"
       display="block"
       version="1.1"
       viewBox="0 0 1332.014 947.007"
       xmlSpace="preserve"
-      style={{ width: "60%", height: "60%", marginTop: "-20%",  }}
+      style={{ width: "100%", height: "100%", marginTop: "-20%", marginBottom: '-10%' }}
       className="cow"
     >
       <g className="s-cow-move-right" ref={cow}>
