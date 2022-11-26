@@ -21,8 +21,6 @@ import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { makeStyles } from '@mui/styles';
 import merge from 'lodash.merge';
 
-
-
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode
 }
@@ -31,55 +29,6 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-// function getLibrary(provider: any): Web3Provider {
-//   const library = new Web3Provider(provider)
-//   library.pollingInterval = 12000
-//   return library
-// };
-
-// export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-//   useEffect(() => {
-//     const jssStyles = document.querySelector('#jss-server-side')
-//     if (jssStyles) {
-//       jssStyles.parentElement!.removeChild(jssStyles)
-//     }
-//   }, []);
-
-//   // Use the layout defined at the page level, if available
-//   const getLayout = Component.getLayout ?? ((page) => page)
-
-//   return getLayout(<Component {...pageProps} />)
-// }
-
-// API key for Ethereum node
-// Two popular services are Infura (infura.io) and Alchemy (alchemy.com)
-// const alchemyId = process.env.ALCHEMY_ID as string
-
-// // Chains for connectors to support
-// const chains = defaultChains
-
-// type ConnectorsConfig = { chainId?: number }
-// // Set up connectors
-// const connectors = ({ chainId }: ConnectorsConfig) => {
-//   const rpcUrl =
-//     chains.find((x) => x.id === chainId)?.rpcUrls?.[0] ??
-//     chain.mainnet.rpcUrls[0]
-//   return [
-//     new InjectedConnector({ chains }),
-//     new WalletConnectConnector({
-//       options: {
-//         infuraId: alchemyId,
-//         qrcode: true,
-//       },
-//     }),
-//     new WalletLinkConnector({
-//       options: {
-//         appName: 'Cornucopia',
-//         jsonRpcUrl: `${rpcUrl}/${alchemyId}`,
-//       },
-//     }),
-//   ]
-// }
 
 const { chains, provider, webSocketProvider  } = configureChains(
   [chain.mainnet, chain.polygon, chain.arbitrum, chain.optimism, chain.goerli], // chain.localhost,
@@ -146,11 +95,9 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     return (
       <WagmiConfig client={wagmiClient}> 
         <RainbowKitProvider theme={myTheme} chains={chains} >
-          {/* <ApolloProvider client={client}>  */}
             <Layout>
               <Component {...pageProps} />
             </Layout>
-          {/* </ApolloProvider> */}
         </RainbowKitProvider>
       </WagmiConfig>
     );

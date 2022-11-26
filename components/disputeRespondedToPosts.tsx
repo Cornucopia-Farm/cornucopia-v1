@@ -42,6 +42,8 @@ const DisputeRespondedToPosts: React.FC<Props> = props => {
 
     const escrowContract = useContract({...contractConfig, signerOrProvider: signer,});
     const umaContract = useContract({...umaContractConfig, signerOrProvider: signer, });
+    const escrowAddress = process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
+    const identifier = "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000";
 
     const [disputeRespondedToBountyPosts, setDisputeRespondedToBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
@@ -86,8 +88,6 @@ const DisputeRespondedToPosts: React.FC<Props> = props => {
             const postId = postData?.config?.url?.split("https://arweave.net/")[1];
             // postDataArr.push(postData);
             const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, address, postData.data.hunterAddress ]);
-            // setBountyIdentifier(bountyIdentifierInput);
-            // bountyProgress();
             const progress = await escrowContract.progress(bountyIdentifierInput);
 
             if (progress != 3) {
@@ -97,6 +97,8 @@ const DisputeRespondedToPosts: React.FC<Props> = props => {
             // Get UMA data
             const umaEventData = await getUMAEventData(umaContract, escrowContract, provider, 'dispute', address!, postData.data.hunterAddress, postData.data.postId);
             
+            // Check status of dispute
+            const disputeStatus = await umaContract.getState(escrowAddress, identifier, umaEventData.timestamp, umaEventData.ancillaryData, umaEventData.request);
             // if (progress === 3) { // Case 6: Waiting for dispute to be resolved
             //     disputeRespondedToPostsBountiesApps.push(
             //         <Application key={postId} 
@@ -131,6 +133,7 @@ const DisputeRespondedToPosts: React.FC<Props> = props => {
                     ancillaryData={umaEventData.ancillaryData}
                     request={umaEventData.request}
                     tokenAddress={postData.data.tokenAddress}
+                    disputeStatus={disputeStatus}
                 />,
                 postData
             ]);
