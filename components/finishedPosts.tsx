@@ -15,6 +15,7 @@ import { gql } from 'graphql-request';
 type Props = {
     postId: string;
     setSubmittedMap: (postId: string) => void;
+    incrementSubmittedHits: () => void;
 };
 
 // Escrow Contract Config
@@ -45,25 +46,24 @@ const FinishedPosts: React.FC<Props> = props => {
     // const { data, loading, error, startPolling } = useQuery(GETWORKSUBMITTEDPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, pollInterval: 10000, });
     // startPolling(1000);
 
-    const { data, error } = useSWR([GETWORKSUBMITTEDPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
-
-    let loading = false;
-    
-    if (!data) {
-        loading = true;
-    }
+    const { data, error, isValidating } = useSWR([GETWORKSUBMITTEDPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
 
     if (error) {
         console.error(error);
     }
     
-    const bountyIds = data?.transactions.edges.map((edge: any) => edge.node.id);
-    
-    if (!loading && bountyIds.length > 0) {
-        props.setSubmittedMap(props.postId);
-    }
+    const bountyIds = React.useMemo(() => {
+        return data?.transactions?.edges.map((edge: any) => edge.node.id);
+    }, [data?.transactions?.edges]);
 
-    const getFinishedPosts = async (openBountyIds: Array<string>) => {
+    React.useEffect(() => {
+        if (!isValidating && bountyIds?.length > 0) {
+            props.setSubmittedMap(props.postId);
+        }
+        props.incrementSubmittedHits(); // IS THIS RIGHT PLACE TO DO THIS?
+    }, [isValidating, bountyIds?.length, props.setSubmittedMap, props.postId]);
+
+    const getFinishedPosts = React.useCallback(async (openBountyIds: Array<string>) => {
 
         let finishedBountiesApps: Array<JSX.Element> = [];
 
@@ -76,7 +76,7 @@ const FinishedPosts: React.FC<Props> = props => {
             const postData = await axios.get(`https://arweave.net/${openBountyId}`);
             
             const postId = postData?.config?.url?.split("https://arweave.net/")[1];
-            postDataArr.push(postData);
+            // postDataArr.push(postData);
             const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, address, postData.data.hunterAddress ]);
             // setBountyIdentifier(bountyIdentifierInput);
             // console.log(bountyIdentifier)
@@ -87,33 +87,52 @@ const FinishedPosts: React.FC<Props> = props => {
             const progress = await escrowContract.progress(bountyIdentifierInput);
             // this isn't working need to fix
             // if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 4 ) { // Case 7: Finished; need to check FundsSent event to see how they were resolved!!
-            if (progress === 4) {
-                finishedBountiesApps.push(
-                    <Application key={postId} 
-                        person={postData.data.hunterAddress}
-                        experience={postData.data.experience}
-                        contactInfo={postData.data.contact}
-                        arweaveHash={openBountyId}
-                        appLinks={postData.data.appLinks}
-                        workLinks={postData.data.workLinks}
-                    />
-                );
-            }
+            // if (progress === 4) {
+            //     finishedBountiesApps.push(
+            //         <Application key={postId} 
+            //             person={postData.data.hunterAddress}
+            //             experience={postData.data.experience}
+            //             contactInfo={postData.data.contact}
+            //             arweaveHash={openBountyId}
+            //             appLinks={postData.data.appLinks}
+            //             workLinks={postData.data.workLinks}
+            //         />
+            //     );
+            // }
+
+            return Promise.resolve([
+                progress,
+                <Application key={postId} 
+                    person={postData.data.hunterAddress}
+                    experience={postData.data.experience}
+                    contactInfo={postData.data.contact}
+                    arweaveHash={openBountyId}
+                    appLinks={postData.data.appLinks}
+                    workLinks={postData.data.workLinks}
+                />,
+                postData
+            ]);
         });
 
         if (promises) {
-            await Promise.all(promises); // Wait for these promises to resolve before setting the state variables
+            await Promise.all(promises).then(results => {
+                results.forEach((result) => {
+                    if (result[0] === 4) {
+                        finishedBountiesApps.push(result[1]) ;
+                    }
+                    postDataArr.push(result[2]);
+                });
+                setFinishedBountyPosts(finishedBountiesApps);
+                setThisPostData(postDataArr);
+            });        
         }
-
-        setFinishedBountyPosts(finishedBountiesApps);
-        setThisPostData(postDataArr);
-    };
+    }, []);
 
     React.useEffect(() => {
-        if (!loading && bountyIds?.length > 0) {
+        if (bountyIds && bountyIds.length > 0 && !isValidating) {
             getFinishedPosts(bountyIds);
         }
-    }, [loading]);
+    }, [bountyIds, isValidating, getFinishedPosts]);
 
     if (finishedBountyPosts.length > 0) {
         return (

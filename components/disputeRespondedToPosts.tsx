@@ -15,6 +15,7 @@ import { gql } from 'graphql-request';
 type Props = {
     postId: string;
     setSubmittedMap: (postId: string) => void;
+    incrementSubmittedHits: () => void;
 };
 
 // Escrow Contract Config
@@ -53,25 +54,24 @@ const DisputeRespondedToPosts: React.FC<Props> = props => {
     // const { data, loading, error, startPolling } = useQuery(GETWORKSUBMITTEDPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, });
     // startPolling(1000);
 
-    const { data, error } = useSWR([GETWORKSUBMITTEDPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
-
-    let loading = false;
-    
-    if (!data) {
-        loading = true;
-    }
+    const { data, error, isValidating } = useSWR([GETWORKSUBMITTEDPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
     
     if (error) {
         console.error(error);
     }
     
-    const bountyIds = data?.transactions.edges.map((edge: any) => edge.node.id);
-    
-    if (!loading && bountyIds.length > 0) {
-        props.setSubmittedMap(props.postId);
-    }
+    const bountyIds = React.useMemo(() => {
+        return data?.transactions?.edges.map((edge: any) => edge.node.id);
+    }, [data?.transactions?.edges]);
 
-    const getDisputeRespondedToPosts = async (openBountyIds: Array<string>) => {
+    React.useEffect(() => {
+        if (!isValidating && bountyIds?.length > 0) {
+            props.setSubmittedMap(props.postId);
+        }
+        props.incrementSubmittedHits(); // IS THIS RIGHT PLACE TO DO THIS?
+    }, [isValidating, bountyIds?.length, props.setSubmittedMap, props.postId]);
+
+    const getDisputeRespondedToPosts = React.useCallback(async (openBountyIds: Array<string>) => {
 
         let disputeRespondedToPostsBountiesApps: Array<JSX.Element> = [];
 
@@ -84,52 +84,77 @@ const DisputeRespondedToPosts: React.FC<Props> = props => {
             const postData = await axios.get(`https://arweave.net/${openBountyId}`);
             
             const postId = postData?.config?.url?.split("https://arweave.net/")[1];
-            postDataArr.push(postData);
+            // postDataArr.push(postData);
             const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, address, postData.data.hunterAddress ]);
             // setBountyIdentifier(bountyIdentifierInput);
             // bountyProgress();
             const progress = await escrowContract.progress(bountyIdentifierInput);
 
             if (progress != 3) {
-                return; // Prevent getUmaEventData from being called if not correct state of bounty
+                return Promise.resolve([]); // Prevent getUmaEventData from being called if not correct state of bounty
             }
 
             // Get UMA data
             const umaEventData = await getUMAEventData(umaContract, escrowContract, provider, 'dispute', address!, postData.data.hunterAddress, postData.data.postId);
-            console.log(umaEventData)
-            if (progress === 3) { // Case 6: Waiting for dispute to be resolved
-                disputeRespondedToPostsBountiesApps.push(
-                    <Application key={postId} 
-                        person={postData.data.hunterAddress}
-                        experience={postData.data.experience}
-                        contactInfo={postData.data.contact}
-                        arweaveHash={openBountyId}
-                        appLinks={postData.data.appLinks}
-                        workLinks={postData.data.workLinks}
-                        appStatus={"settle"}
-                        postId={postData.data.postId}
-                        timestamp={umaEventData.timestamp}
-                        ancillaryData={umaEventData.ancillaryData}
-                        request={umaEventData.request}
-                        tokenAddress={postData.data.tokenAddress}
-                    />
-                );
-            }
+            
+            // if (progress === 3) { // Case 6: Waiting for dispute to be resolved
+            //     disputeRespondedToPostsBountiesApps.push(
+            //         <Application key={postId} 
+            //             person={postData.data.hunterAddress}
+            //             experience={postData.data.experience}
+            //             contactInfo={postData.data.contact}
+            //             arweaveHash={openBountyId}
+            //             appLinks={postData.data.appLinks}
+            //             workLinks={postData.data.workLinks}
+            //             appStatus={"settle"}
+            //             postId={postData.data.postId}
+            //             timestamp={umaEventData.timestamp}
+            //             ancillaryData={umaEventData.ancillaryData}
+            //             request={umaEventData.request}
+            //             tokenAddress={postData.data.tokenAddress}
+            //         />
+            //     );
+            // }
+
+            return Promise.resolve([
+                progress,
+                <Application key={postId} 
+                    person={postData.data.hunterAddress}
+                    experience={postData.data.experience}
+                    contactInfo={postData.data.contact}
+                    arweaveHash={openBountyId}
+                    appLinks={postData.data.appLinks}
+                    workLinks={postData.data.workLinks}
+                    appStatus={"settle"}
+                    postId={postData.data.postId}
+                    timestamp={umaEventData.timestamp}
+                    ancillaryData={umaEventData.ancillaryData}
+                    request={umaEventData.request}
+                    tokenAddress={postData.data.tokenAddress}
+                />,
+                postData
+            ]);
         });
 
         if (promises) {
-            await Promise.all(promises); // Wait for these promises to resolve before setting the state variables
+            await Promise.all(promises).then(results => {
+                results.forEach((result) => {
+                    if (result[0] === 3) {
+                        disputeRespondedToPostsBountiesApps.push(result[1]) ;
+                    }
+                    postDataArr.push(result[2]);
+                });
+                setDisputeRespondedToBountyPosts(disputeRespondedToPostsBountiesApps);
+                setThisPostData(postDataArr);
+            });
         }
-
-        setDisputeRespondedToBountyPosts(disputeRespondedToPostsBountiesApps);
-        setThisPostData(postDataArr);
-    };
+    }, []);
 
     React.useEffect(() => {
-        if (!loading && bountyIds?.length > 0) {
+        if (bountyIds && bountyIds.length > 0 && !isValidating) {
             getDisputeRespondedToPosts(bountyIds);
         }
-    }, [loading]);
+    }, [bountyIds, isValidating, getDisputeRespondedToPosts]);
 
     if (disputeRespondedToBountyPosts.length > 0) {
         return (

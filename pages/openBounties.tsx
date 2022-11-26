@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Button from '@mui/material/Button';
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useCallback, useEffect, useMemo } from 'react';
 // import Table from '../components/table';
 import Box from '@mui/material/Box';
 import Form from '../components/form';
@@ -58,102 +58,99 @@ const OpenBounties: NextPage = () => {
     // startPolling(1000);
     // console.log(data)
 
-    const { data, error } = useSWR([OPENBOUNTIES, { chain: chain?.network! ? chain?.network! : 'ethereum' },], gqlFetcher);
-
-    let loading = false;
-    
-    if (!data) {
-        loading = true;
-    }
+    const { data, error, isValidating } = useSWR([OPENBOUNTIES, { chain: chain?.network! ? chain?.network! : 'ethereum' },], gqlFetcher);
 
     if (error) {
         console.error(error); // add snackbar error msg;
     }
 
-    const postIds = data?.transactions.edges.map((edge: any) => edge.node.id);
+    const postIds = useMemo(() => {
+        return data?.transactions.edges.map((edge: any) => edge.node.id);
+    }, [data?.transactions?.edges]) 
 
-    const getPosts = async (openBountyIds?: Array<string>) => {
+    const getPosts = useCallback(async (openBountyIds?: Array<string>) => {
         let bountyPosts: Array<JSX.Element> = [];
-        console.log('bounty ids',openBountyIds)
+        
         const promises = openBountyIds?.map( async (openBountyId: string) => {
-
-            const postData = await axios.get(`https://arweave.net/${openBountyId}`);
-            const postId = postData?.config?.url?.split("https://arweave.net/")[1]; // This is the postId of the creator's post
-
-            bountyPosts.push(
-                <BasicAccordian key={postId}  
-                    company={postData.data.creatorAddress}
-                    postLinks={postData.data.postLinks}
-                    startDate={postData.data.startDate}
-                    endDate={postData.data.endDate}
-                    description={postData.data.description}
-                    bountyName={postData.data.title}
-                    amount={postData.data.amount}
-                    arweaveHash={openBountyId}
-                    disputes={false} 
-                    tokenSymbol={postData.data.tokenSymbol}
-                >
-                    <Form 
-                        creatorAddress={postData.data.creatorAddress}
-                        hunterAddress={address!}
-                        postId={postId}
-                        postLinks={postData.data.postLinks}
-                        startDate={postData.data.startDate}
-                        endDate={postData.data.endDate}
-                        description={postData.data.description}
-                        title={postData.data.title}
-                        amount={postData.data.amount}
-                        tokenAddress={postData.data.tokenAddress}
-                        tokenSymbol={postData.data.tokenSymbol}
-                        tokenDecimals={postData.data.tokenDecimals}
-                        formName={"Apply"}
-                        summary={"Please fill out this form to apply to this bounty!"}  
-                        formButtons={["Cancel", "Apply"]}
-                        formType={"applyBounty"}
-                        tags={[
-                            {
-                                name: "Content-Type",
-                                value: "application/json"
-                            },
-                            {
-                                name: "App-Name",
-                                value: "Cornucopia-test2"
-                            },
-                            {
-                                name: "Form-Type",
-                                value: "bounty-app"
-                            },
-                            {
-                                name: "Hunter-Address",
-                                value: address!
-                            },
-                            {
-                                name: "Post-ID",
-                                value: postId // postID of the bounty created by the creator
-                            },
-                            {
-                                name: "Chain",
-                                value: chain?.network!
-                            }
-                        ]}
-                    />
-                </BasicAccordian>
-            ); 
+            return await axios.get(`https://arweave.net/${openBountyId}`);    
         });
 
         if (promises) {
-            await Promise.all(promises); // Wait for these promises to resolve before setting the state variables
+            Promise.all(promises).then((results) => {
+                results.forEach((postData) => {
+                    const postId = postData?.config?.url?.split("https://arweave.net/")[1]; // This is the postId of the creator's post
+    
+                    bountyPosts.push(
+                        <BasicAccordian key={postId}  
+                            company={postData.data.creatorAddress}
+                            postLinks={postData.data.postLinks}
+                            startDate={postData.data.startDate}
+                            endDate={postData.data.endDate}
+                            description={postData.data.description}
+                            bountyName={postData.data.title}
+                            amount={postData.data.amount}
+                            arweaveHash={postId!}
+                            disputes={false} 
+                            tokenSymbol={postData.data.tokenSymbol}
+                        >
+                            <Form 
+                                creatorAddress={postData.data.creatorAddress}
+                                hunterAddress={address!}
+                                postId={postId}
+                                postLinks={postData.data.postLinks}
+                                startDate={postData.data.startDate}
+                                endDate={postData.data.endDate}
+                                description={postData.data.description}
+                                title={postData.data.title}
+                                amount={postData.data.amount}
+                                tokenAddress={postData.data.tokenAddress}
+                                tokenSymbol={postData.data.tokenSymbol}
+                                tokenDecimals={postData.data.tokenDecimals}
+                                formName={"Apply"}
+                                summary={"Please fill out this form to apply to this bounty!"}  
+                                formButtons={["Cancel", "Apply"]}
+                                formType={"applyBounty"}
+                                tags={[
+                                    {
+                                        name: "Content-Type",
+                                        value: "application/json"
+                                    },
+                                    {
+                                        name: "App-Name",
+                                        value: "Cornucopia-test2"
+                                    },
+                                    {
+                                        name: "Form-Type",
+                                        value: "bounty-app"
+                                    },
+                                    {
+                                        name: "Hunter-Address",
+                                        value: address!
+                                    },
+                                    {
+                                        name: "Post-ID",
+                                        value: postId // postID of the bounty created by the creator
+                                    },
+                                    {
+                                        name: "Chain",
+                                        value: chain?.network!
+                                    }
+                                ]}
+                            />
+                        </BasicAccordian>
+                    ); 
+                })
+                setOpenBountyPosts(bountyPosts);
+            }); // Wait for these promises to resolve before setting the state variables
         }
-        // change foreach to map which returns an array of promises then await for this array of promises to resolve using promise.all before the code continues
-
-        setOpenBountyPosts(bountyPosts);
-    };
+        // change foreach to map which returns an array of promises then await for this array of promises to resolve using promise.all before the code continues   
+    }, []);
 
     useEffect(() => {
-        if (!loading) {
+        if (postIds && postIds.length > 0 && !isValidating) {
             getPosts(postIds);
         } 
-    }, [loading, postIds.length]);
+    }, [getPosts, postIds, isValidating]);
 
     const [showModal, hideModal] = useSessionModal();
 
@@ -191,7 +188,7 @@ const OpenBounties: NextPage = () => {
         return (
             <WelcomeCard isConnected={isConnected}/>
         );
-    } else if (!loading && openBountyPosts.length > 0) {
+    } else if (!isValidating && openBountyPosts.length > 0) {
         return (
             <div>
                 <Head>

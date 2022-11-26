@@ -21,8 +21,9 @@ import { gql } from 'graphql-request';
 
 type Props = {
     postId: string;
-    existsSubmitted: Promise<Map<string, boolean>>;
+    existsSubmitted: Map<string, boolean>;
     setAppliedMap: (postId: string) => void;
+    incrementAppliedHits: () => void;
 };
 
 // Escrow Contract Config
@@ -48,25 +49,24 @@ const AppliedPosts: React.FC<Props> = props => {
     // const { data, loading, error, startPolling } = useQuery(GETAPPLIEDTOPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, });
     // startPolling(1000);
 
-    const { data, error } = useSWR([GETAPPLIEDTOPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
-
-    let loading = false;
-    
-    if (!data) {
-        loading = true;
-    }
+    const { data, error, isValidating } = useSWR([GETAPPLIEDTOPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
     
     if (error) {
         console.error(error);
     }
     
-    const bountyIds = data?.transactions.edges.map((edge: any) => edge.node.id);
-    
-    if (!loading && bountyIds?.length > 0) {
-        props.setAppliedMap(props.postId);
-    }
+    const bountyIds = React.useMemo(() => {
+        return data?.transactions?.edges.map((edge: any) => edge.node.id);
+    }, [data?.transactions?.edges]);
 
-    const getAppliedPosts = async (openBountyIds: Array<string>, existsSubmitted: Promise<Map<string, boolean>>) => {
+    React.useEffect(() => {
+        if (!isValidating && bountyIds?.length > 0) {
+            props.setAppliedMap(props.postId);
+        } 
+        props.incrementAppliedHits(); // IS THIS RIGHT PLACE TO DO THIS?
+    }, [isValidating, bountyIds?.length, props.setAppliedMap, props.postId]);
+
+    const getAppliedPosts = React.useCallback(async (openBountyIds: Array<string>, existsSubmitted: Map<string, boolean>) => {
 
         let appliedToBountiesApps: Array<JSX.Element> = [];
 
@@ -79,10 +79,10 @@ const AppliedPosts: React.FC<Props> = props => {
             const postData = await axios.get(`https://arweave.net/${openBountyId}`);
             const postId = postData?.config?.url?.split("https://arweave.net/")[1];
             // this might need to be changed back to postData.data.postId
-            if ( (await existsSubmitted).has(postId!) ) { // should be postId b/c same bounty could have multiple hunters apply to it and have multiple applications?
-                return; 
+            if ( (existsSubmitted).has(postId!) ) { // should be postId b/c same bounty could have multiple hunters apply to it and have multiple applications?
+                return Promise.resolve([]);; 
             }
-            postDataArr.push(postData);
+            // postDataArr.push(postData);
             const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, address, postData.data.hunterAddress ]);
             // setBountyIdentifier(bountyIdentifierInput);
             // bountyProgress(); // keep this in props bc multiple functions need to update progress? but with different params hmm simplier to have it per component I think b/c unique combo
@@ -111,37 +111,67 @@ const AppliedPosts: React.FC<Props> = props => {
                         
             // Case 2: Applied To
             // if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 0 && isEscrowed.length === 0 ) {
-            if (progress === 0 && isEscrowed.length === 0) {
-                appliedToBountiesApps.push(
-                    <Application key={postId} 
-                        person={postData.data.hunterAddress}
-                        experience={postData.data.experience}
-                        contactInfo={postData.data.contact}
-                        arweaveHash={openBountyId}
-                        appLinks={postData.data.appLinks}
-                        appStatus={"applied"}
-                        postId={postData.data.postId}
-                        amount={postData.data.amount}
-                        tokenAddress={postData.data.tokenAddress}
-                        tokenDecimals={postData.data.tokenDecimals}
-                        allowance={allowance}
-                        expirationTime={expirationTime}
-                    />
-                );
-            } 
+            // if (progress === 0 && isEscrowed.length === 0) {
+            //     appliedToBountiesApps.push(
+            //         <Application key={postId} 
+            //             person={postData.data.hunterAddress}
+            //             experience={postData.data.experience}
+            //             contactInfo={postData.data.contact}
+            //             arweaveHash={openBountyId}
+            //             appLinks={postData.data.appLinks}
+            //             appStatus={"applied"}
+            //             postId={postData.data.postId}
+            //             amount={postData.data.amount}
+            //             tokenAddress={postData.data.tokenAddress}
+            //             tokenDecimals={postData.data.tokenDecimals}
+            //             allowance={allowance}
+            //             expirationTime={expirationTime}
+            //         />
+            //     );
+            // } 
+
+            return Promise.resolve([
+                progress,
+                isEscrowed,
+                <Application key={postId} 
+                    person={postData.data.hunterAddress}
+                    experience={postData.data.experience}
+                    contactInfo={postData.data.contact}
+                    arweaveHash={openBountyId}
+                    appLinks={postData.data.appLinks}
+                    appStatus={"applied"}
+                    postId={postData.data.postId}
+                    amount={postData.data.amount}
+                    tokenAddress={postData.data.tokenAddress}
+                    tokenDecimals={postData.data.tokenDecimals}
+                    allowance={allowance}
+                    expirationTime={expirationTime}
+                />,
+                postData
+            ]); 
         });
 
-        await Promise.all(promises); // Wait for these promises to resolve before setting the state variables
-
-        setAppliedBountyPosts(appliedToBountiesApps);
-        setThisPostData(postDataArr);
-    };
+        if (promises) {
+            await Promise.all(promises).then(results => {
+                results.forEach(result => {
+                    if (result.length) {
+                        if (result[0] === 0 && result[1].length === 0) {
+                            appliedToBountiesApps.push(result[2]);
+                        }
+                        postDataArr.push(result[3]);
+                    }
+                });
+                setAppliedBountyPosts(appliedToBountiesApps);
+                setThisPostData(postDataArr);
+            });
+        }
+    }, []);
 
     React.useEffect(() => {
-        if (!loading && bountyIds?.length > 0) {
+        if (bountyIds && bountyIds.length > 0 && !isValidating) {
             getAppliedPosts(bountyIds, props.existsSubmitted);
         }
-    }, [loading]);
+    }, [bountyIds, isValidating, getAppliedPosts, props.existsSubmitted]);
 
     if (appliedBountyPosts.length > 0) {
         return (
