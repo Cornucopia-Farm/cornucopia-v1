@@ -48,6 +48,7 @@ type Props = {
     allowance?: BigNumber;
     wethAllowance?: BigNumber;
     expirationTime?: number;
+    creatorRefund?: boolean;
 };
 
 // Escrow Contract Config
@@ -395,6 +396,12 @@ const Application: React.FC<Props> = props => {
         {(isEscrowTxSuccess && escrowTxData?.status === 0) && 
           <SimpleSnackBar severity={'error'} msg={'Escrow transaction failed!'}/>
         }
+        {(props.creatorRefund && (isPayoutTxLoading || (isPayoutTxSuccess && payoutTxData?.status === 1))) && 
+          <SimpleSnackBar severity={'success'} msg={isPayoutTxLoading ? 'Refunding...' : 'Refunded!'}/>
+        }
+        {(props.creatorRefund && isPayoutTxSuccess && payoutTxData?.status === 0) && 
+          <SimpleSnackBar severity={'error'} msg={'Refund transaction failed!'}/>
+        }
         {(isInitiateDisputeTxLoading || (isInitiateDisputeTxSuccess && initiateDisputeTxData?.status === 1)) && 
           <SimpleSnackBar severity={'success'} msg={isInitiateDisputeTxLoading ? 'Initiating dispute...' : 'Dispute initiated!'}/>
         }
@@ -514,6 +521,32 @@ const Application: React.FC<Props> = props => {
                 </Dialog>
               </div>
             }
+            {props.creatorRefund &&
+              <div>
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenPay(); handleClosePayTrue(props.postId!, props.person, props.tokenAddress!);}}>Refund</Button>
+                <Dialog
+                  open={openPay}
+                  onClose={handleClosePayFalse}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                  PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}
+                >
+                  <DialogTitle className={styles.formHeader} id="alert-dialog-title">
+                  {"Are you sure you want to refund your escrowed funds for this bounty?"}
+                  </DialogTitle>
+                  <DialogContent className={styles.cardBackground}>
+                    <DialogContentText className={styles.dialogBody} id="alert-dialog-description">
+                        This will release the funds from escrow and send them back to you. 
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions className={styles.formFooter}>
+                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleClosePayFalse}>No I don't</Button>
+                    {/* <Button onClick={() => handleClosePayTrue(props.postId!, props.person)} autoFocus>Yes I want to</Button> */}
+                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {payout?.(); setOpenPay(false);}} autoFocus disabled={!payout || isPayoutTxLoading}>{isPayoutTxLoading ? 'Refunding...' : 'Yes I want to'}</Button>
+                  </DialogActions>
+                </Dialog>
+              </div>
+            }
             {props.appStatus === "submitted" &&  
               <div>
                 {/* <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(245, 223, 183)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {handleClickOpenContest(); handleCloseContestTrue(props.postId!, props.person, props.workLinks!, props.postLinks!);}}>Contest</Button> */}
@@ -524,8 +557,8 @@ const Application: React.FC<Props> = props => {
                   <DialogTitle className={styles.formHeader}>Approve</DialogTitle>
                   <DialogContent className={styles.cardBackground}>
                       <DialogContentText className={styles.dialogBody}>
-                      To initiate a dispute as a creator or respond to a dispute as a hunter, you must first allow Cornucopia to transfer tokens from your wallet to the
-                      protocol contract to then send these funds to the UMA contract for your dispute bond.  
+                      To initiate a dispute as a creator, you must put up a bond of 0.1 WETH plus an UMA protocol fee of 0.35 WETH. To put up this bond, you must first allow 
+                      Cornucopia to transfer tokens from your wallet to the protocol contract, which are then transferred into the UMA Optimistic Oracle contract.
                       <br />
                       <br />
                       You can choose either to allow Cornucopia to spend an unlimited amount of funds so you won't have to approve Cornucopia 

@@ -139,7 +139,7 @@ const OpenBounties: NextPage = () => {
                             />
                         </BasicAccordian>
                     ); 
-                })
+                });
                 setOpenBountyPosts(bountyPosts);
             }); // Wait for these promises to resolve before setting the state variables
         }
