@@ -58,20 +58,6 @@ import { gql } from 'graphql-request';
 // TODO: Listen for uma contract emitted event to get necessary info for hunterDisputeResponse function!
 // TODO: Test dispute response and forcepayout workflows on the app!
 
-type ArData = {
-    creatorAddress: string;
-    hunterAddress: string;
-    postId: string;
-    title: string;
-    description: string;
-    amount: number; 
-    date: string;
-    time: string; 
-    postLinks: Array<string>;
-    appLinks: Array<string>;
-    experience: string;
-    contact: string;
-};
 
 // Escrow Contract Config
 const contractConfig = {
@@ -92,35 +78,15 @@ const wethContractConfig = {
 };
 
 const MyBounties: NextPage = () => {
-    
     const { address, isConnected } = useAccount();
-    const { data: ensName } = useEnsName({ address, enabled: false, });
     const { data: signer, isError, isLoading } = useSigner();
     const provider = useProvider();
     const { chain } = useNetwork();
-    const zeroAddress = '0x0000000000000000000000000000000000000000';
-    const escrowAddress = process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
 
+    const escrowAddress = process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
     const escrowContract = useContract({...contractConfig, signerOrProvider: signer, });
     const umaContract = useContract({...umaContractConfig, signerOrProvider: signer, });
-
-
-    const [open, setOpen] = React.useState(false);
-    const [openSubmit, setOpenSubmit] = React.useState(false);
-    const [openDispute, setOpenDispute] = React.useState(false);
-    const [openForce, setOpenForce] = React.useState(false);
-    const [allowanceIncreased, setAllowanceIncreased] = React.useState(false);
-    const [bountyAppId, setBountyAppId] = React.useState('');
-    const debouncedBountyAppId = useDebounce(bountyAppId, 10);
-    const [creatorAddress, setCreatorAddress] = React.useState('');
-    const debouncedCreatorAddress = useDebounce(creatorAddress, 10);
-    const [tokenAddressERC20, setTokenAddressERC20] = React.useState('');
-    const debouncedTokenAddressERC20 = useDebounce(tokenAddressERC20, 10);
-    const [umaData, setUmaData] = React.useState({
-        timestamp: 0,
-        ancillaryData: '',
-        request: {} as Request
-    });
+    const wethContract = useContract({...wethContractConfig, signerOrProvider: signer, });
 
     const [appliedBountyPosts, setAppliedBountyPosts] = React.useState(Array<JSX.Element>);
     const [inProgressBountyPosts, setInProgressBountyPosts] = React.useState(Array<JSX.Element>);
@@ -130,164 +96,25 @@ const MyBounties: NextPage = () => {
     const [creatorNoActionBountyPosts, setCreatorNoActionBountyPosts] = React.useState(Array<JSX.Element>);
     const [finishedBountyPosts, setFinishedBountyPosts] = React.useState(Array<JSX.Element>);
 
-    // Escrow Smart Contracts Calls    
-
-    // HunterDisputeResponse Contract Interactions
-    const { config: hunterDisputeResponseConfig } = usePrepareContractWrite({...contractConfig, functionName: 'hunterDisputeResponse', args: [debouncedBountyAppId, debouncedCreatorAddress, umaData.timestamp, umaData.ancillaryData, umaData.request], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedCreatorAddress) && Boolean(umaData.timestamp) && Boolean(allowanceIncreased),});
-    const { data: hunterDisputeResponseData, error: hunterDisputeResponseError, isLoading: isHunterDisputeResponseLoading, isSuccess: isHunterDisputeResponseSuccess, write: hunterDisputeResponse } = useContractWrite(hunterDisputeResponseConfig);
-    const { data: hunterDisputeResponseTxData, isLoading: isHunterDisputeResponseTxLoading, isSuccess: isHunterDisputeResponseTxSuccess, error: hunterDisputeResponseTxError } = useWaitForTransaction({ hash: hunterDisputeResponseData?.hash, enabled: true, });
-
-    // ForceHunterPayout Contract Interactions
-    const { config: forceHunterPayoutConfig } = usePrepareContractWrite({...contractConfig, functionName: 'forceHunterPayout', args: [debouncedBountyAppId, debouncedCreatorAddress, debouncedTokenAddressERC20], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedCreatorAddress) && Boolean(debouncedTokenAddressERC20),});
-    const { data: forceHunterPayoutData, error: forceHunterPayoutError, isLoading: isForceHunterPayoutLoading, isSuccess: isForceHunterPayoutSuccess, write: forceHunterPayout } = useContractWrite(forceHunterPayoutConfig);
-    const { data: forceHunterPayoutTxData, isLoading: isForceHunterPayoutTxLoading, isSuccess: isForceHunterPayoutTxSuccess, error: forceHunterPayoutTxError } = useWaitForTransaction({ hash: forceHunterPayoutData?.hash, enabled: true, });
-
-    // const { data: blockNumber, isError: isBlockNumberError, isLoading: isBlockNumberLoading } = useBlockNumber({ enabled: true,});
-    
-
-    const handleClickOpenDispute = () => {
-        setOpenDispute(true);
-    };
-
-    const handleClickOpenForce = () => {
-        setOpenForce(true);
-    };
-
-    const handleCloseDisputeFalse = () => {
-        setOpenDispute(false);
-    };
-
-    const handleCloseDisputeTrue = (bountyAppId: string, creatorAddress: string) => {
-        // setOpenDispute(false);
-        setBountyAppId(bountyAppId);
-        setCreatorAddress(creatorAddress);
-
-        // Get UMA data
-        // const umaEventData = getUMAEventData(umaContract, escrowContract, provider, 'propose', creatorAddress, address!, bountyAppId);
-        // setUmaData({
-        //     timestamp: umaEventData.timestamp,
-        //     ancillaryData: umaEventData.ancillaryData,
-        //     request: umaEventData.request
-        // });
-        // hunterDisputeResponse?.();
-    };
-
-    const handleCloseForceFalse = () => {
-        setOpenForce(false);
-    };
-
-    const handleCloseForceTrue = (bountyAppId: string, creatorAddress: string) => {
-        // setOpenForce(false);
-        setBountyAppId(bountyAppId);
-        setCreatorAddress(creatorAddress);
-        // forceHunterPayout?.(); 
-    };
-
-    const [openAllowance, setOpenAllowance] = React.useState(false);
-    const [allowanceAmtOnce, setAllowanceAmtOnce] = React.useState('' as unknown as BigNumber);
-    const [allowanceAmtAlways, setAllowanceAmtAlways] = React.useState('' as unknown as BigNumber);
-    const debouncedAllowanceAmtOnce = useDebounce(allowanceAmtOnce, 10);
-    const debouncedAllowanceAmtAlways = useDebounce(allowanceAmtAlways, 10);
-
-    // const erc20ContractConfig = {
-    //     addressOrName: debouncedTokenAddressERC20, // contract address
-    //     contractInterface: erc20ABI['abi'], // contract abi in json or JS format
-    // };
-
-    const bondAmt = ethers.utils.parseUnits("0.1", "ether"); // Hard-coded (for now) bondAmt
-    const finalFee = ethers.utils.parseUnits("0.35", "ether"); // Hard-coded finalFee
-    const hexAlwaysApprove = '0x8000000000000000000000000000000000000000000000000000000000000000';
-    const wethContract = useContract({...wethContractConfig, signerOrProvider: signer, });
-
-    // const { config: increaseAllowanceOnceConfig } = usePrepareContractWrite({...wethContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmtOnce], enabled: Boolean(debouncedAllowanceAmtOnce), });
-    // const { data: increaseAllowanceOnceData, error: increaseAllowanceOnceError, isLoading: isIncreaseAllowanceOnceLoading, isSuccess: isIncreaseAllowanceOnceSuccess, write: increaseAllowanceOnce } = useContractWrite(increaseAllowanceOnceConfig);
-    // const { data: increaseAllowanceOnceTxData, isLoading: isIncreaseAllowanceOnceTxLoading, isSuccess: isIncreaseAllowanceOnceTxSuccess, error: increaseAllowanceOnceTxError } = useWaitForTransaction({ hash: increaseAllowanceOnceData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
-
-    // const { config: increaseAllowanceAlwaysConfig } = usePrepareContractWrite({...wethContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmtAlways], enabled: Boolean(debouncedAllowanceAmtAlways), });
-    // const { data: increaseAllowanceAlwaysData, error: increaseAllowanceAlwaysError, isLoading: isIncreaseAllowanceAlwaysLoading, isSuccess: isIncreaseAllowanceAlwaysSuccess, write: increaseAllowanceAlways } = useContractWrite(increaseAllowanceAlwaysConfig);
-    // const { data: increaseAllowanceAlwaysTxData, isLoading: isIncreaseAllowanceAlwaysTxLoading, isSuccess: isIncreaseAllowanceAlwaysTxSuccess, error: increaseAllowanceAlwaysTxError } = useWaitForTransaction({ hash: increaseAllowanceAlwaysData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
-
-    const { config: approveOnceConfig } = usePrepareContractWrite({...wethContractConfig, functionName: 'approve', args: [escrowAddress, debouncedAllowanceAmtOnce], enabled: Boolean(debouncedAllowanceAmtOnce), });
-    const { data: approveOnceData, error: approveOnceError, isLoading: isApproveOnceLoading, isSuccess: isApproveOnceSuccess, write: approveOnce } = useContractWrite(approveOnceConfig);
-    const { data: approveOnceTxData, isLoading: isApproveOnceTxLoading, isSuccess: isApproveOnceTxSuccess, error: approveOnceTxError } = useWaitForTransaction({ hash: approveOnceData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
-  
-    const { config: approveAlwaysConfig } = usePrepareContractWrite({...wethContractConfig, functionName: 'approve', args: [escrowAddress, debouncedAllowanceAmtAlways], enabled: Boolean(debouncedAllowanceAmtAlways), });
-    const { data: approveAlwaysData, error: approveAlwaysError, isLoading: isApproveAlwaysLoading, isSuccess: isApproveAlwaysSuccess, write: approveAlways } = useContractWrite(approveAlwaysConfig);
-    const { data: approveAlwaysTxData, isLoading: isApproveAlwaysTxLoading, isSuccess: isApproveAlwaysTxSuccess, error: approveAlwaysTxError } = useWaitForTransaction({ hash: approveAlwaysData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
-
-
-    const handleCloseIncreaseAllowanceFalse = () => {
-        setOpenAllowance(false);
-    };
-    
-    const handleCloseIncreaseAllowanceDisputeResponseOnceTrue = (amount: string, decimals: number, allowance: BigNumber, bountyAppId: string, creatorAddress: string, tokenAddress: string) => {
-        // const amountBN = ethers.utils.parseUnits(amount, decimals);
-        const total = bondAmt.add(finalFee);
-    
-        if (total.gt(allowance)) {
-            setAllowanceAmtOnce(total);
-            // setTokenAddressERC20(tokenAddress);
-            setOpenAllowance(true);
-        } else {
-            setAllowanceIncreased(true); // Allowance sufficient for amount
-            handleCloseDisputeTrue(bountyAppId, creatorAddress);
-            handleClickOpenDispute();
-        }
-    };
-    
-    const handleCloseIncreaseAllowanceDisputeResponseAlwaysTrue = (amount: string, decimals: number, allowance: BigNumber, bountyAppId: string, creatorAddress: string, tokenAddress: string) => {
-        // const amountBN = ethers.utils.parseUnits(amount, decimals);
-        const total = bondAmt.add(finalFee);
-
-        if (total.gt(allowance)) {
-            setAllowanceAmtAlways(BigNumber.from(hexAlwaysApprove));
-            // setTokenAddressERC20(tokenAddress);
-            setOpenAllowance(true);
-        } else {
-            setAllowanceIncreased(true); // Allowance sufficient for amount
-            handleCloseDisputeTrue(bountyAppId, creatorAddress);
-            handleClickOpenDispute();
-        }
-    };
-
-    const handleIncreasedAllowance = () => {
-        setAllowanceIncreased(true);
-    };
-
-    // Get bounties that this address is a hunter in
-    // const { data, loading, error, startPolling } = useQuery(MYBOUNTIES, { variables: { address, chain: chain?.network! }, }); // will repoll every 500 s
-    // startPolling(1000);
-
-    const { data, error } = useSWR([MYBOUNTIES, { address: address, chain: chain?.network! },], gqlFetcher);
-
-    let loading = false;
-    
-    if (!data) {
-        loading = true;
-    }
+    const { data, error, isValidating } = useSWR([MYBOUNTIES, { address: address, chain: chain?.network! },], gqlFetcher);
 
     if (error) {
         console.error(error);
     }
 
-    const postIds = data?.transactions.edges.map((edge: any) => edge.node.id);
-
-    // const { data: submittedData, loading: submittedLoading, error: submittedError, startPolling: startPollingSubmitted } = useQuery(MYSUBMITTEDBOUNTIES, { variables: { address, chain: chain?.network! }, });
-    // startPollingSubmitted(1000);
+    const postIds = React.useMemo(() => {
+        return data?.transactions?.edges.map((edge: any) => edge.node.id);
+    }, [data?.transactions?.edges]);
     
-    const { data: submittedData, error: submittedError } = useSWR([MYSUBMITTEDBOUNTIES, { address: address, chain: chain?.network! },], gqlFetcher);
-
-    let submittedLoading = false;
-    
-    if (!data) {
-        submittedLoading = true;
-    }
+    const { data: submittedData, error: submittedError, isValidating: isSubmittedValidating } = useSWR([MYSUBMITTEDBOUNTIES, { address: address, chain: chain?.network! },], gqlFetcher);
 
     if (submittedError) {
         console.error(submittedError);
     }
 
-    const postSubmittedIds = submittedData?.transactions.edges.map((edge: any) => edge.node.id);
+    const postSubmittedIds = React.useMemo(() => {
+        return submittedData?.transactions?.edges.map((edge: any) => edge.node.id);
+    }, [submittedData?.transactions?.edges]);
 
     const getPosts = async (openBountyIds: Array<string>, existsSubmitted?: Promise<Map<string, boolean>>) => {
         let appliedBounties: Array<JSX.Element> = [];
@@ -313,8 +140,6 @@ const MyBounties: NextPage = () => {
             
 
             // Case 1: Applied
-           
-            // if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 0 && isEscrowed.length === 0 ) { // Note: Use numbers to get different Enum options
             if (progress === 0 && isEscrowed.length === 0) {
                 appliedBounties.push(
                     <BasicAccordian key={postId}  
@@ -330,7 +155,7 @@ const MyBounties: NextPage = () => {
                         tokenSymbol={postData.data.tokenSymbol}
                     />
                 );
-            } else if ( isEscrowed.length > 0 ) { // Case 2: In Progress
+            } else if (isEscrowed.length > 0) { // Case 2: In Progress
                 inProgressBounties.push(
                     <BasicAccordian key={postId}  
                         company={postData.data.creatorAddress}
@@ -414,7 +239,6 @@ const MyBounties: NextPage = () => {
         let finishedBounties: Array<JSX.Element> = [];
         
         const promises = openBountyIds?.map( async (openBountyId: string) => {
-
             const postData = await axios.get(`https://arweave.net/${openBountyId}`);
             existsSubmitted.set(postData.data.postId, true); // Log this bounty as submitted
             
@@ -424,29 +248,12 @@ const MyBounties: NextPage = () => {
 
             const progress = await escrowContract.progress(bountyIdentifierInput);
             const payoutExpirationTime = await escrowContract.payoutExpiration(bountyIdentifierInput);
-
             const currentBlocktime = await provider.getBlock("latest");
 
-            // Allowance Data
-            // let allowance = BigNumber.from(0);
+            const wethAllowance = await wethContract.allowance(address, escrowAddress);
+
             
-            // if (postData.data.tokenAddress !== zeroAddress && postData.data.tokenAddress) {
-            //     const wethContract = new ethers.Contract(process.env.NEXT_PUBLIC_WETH_ADDRESS!, erc20ABI['abi'], signer!);
-            //     allowance = await wethContract.allowance(address, escrowAddress);
-            // }
-
-            const allowance = await wethContract.allowance(address, escrowAddress);
-            console.log(allowance)
-            console.log('addres', address)
-
-            // let umaEventData;
-
-            // if (progress === 2) {
-            //     const umaEventData = getUMAEventData(umaContract, escrowContract, provider, 'propose', postData.data.creatorAddress, address!, postData.data.postId);
-            // }
-
-            // if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 1 ) { // Case 3: Submitted
-            if (progress === 1) {
+            if (progress === 1) { // Case 3: Submitted.
                 submittedBounties.push(
                     <BasicAccordian key={postId}  
                         company={postData.data.creatorAddress}
@@ -462,8 +269,8 @@ const MyBounties: NextPage = () => {
                         tokenSymbol={postData.data.tokenSymbol}
                     />
                 );
-            // } else if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 2 ) { // Case 4: Hunter needs to respond to creator dispute; need to send tx associated with this!!
-            } else if (progress === 2) {
+            
+            } else if (progress === 2) { // Case 4: Hunter needs to respond to creator dispute.
                 const umaEventData = await getUMAEventData(umaContract, escrowContract, provider, 'propose', postData.data.creatorAddress, address!, postData.data.postId);
                 console.log('uma data', umaEventData)
                 console.log('ancil data', umaEventData.ancillaryData)
@@ -482,7 +289,7 @@ const MyBounties: NextPage = () => {
                         tokenSymbol={postData.data.tokenSymbol}
                     >
                         <HunterContractActions key={postId}
-                            allowance={allowance}
+                            allowance={wethAllowance}
                             postId={postData.data.postId}
                             creatorAddress={postData.data.creatorAddress}
                             appStatus={"disputeResponse"}
@@ -492,8 +299,7 @@ const MyBounties: NextPage = () => {
                         />
                     </BasicAccordian>
                 );
-            // } else if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 3 ) { // Case 5: Waiting for dispute to be resolved
-            } else if (progress === 3) {
+            } else if (progress === 3) { // Case 5: Waiting for dispute to be resolved.
                 disputeRespondedToBounties.push(
                     <BasicAccordian key={postId}  
                         company={postData.data.creatorAddress}
@@ -509,8 +315,7 @@ const MyBounties: NextPage = () => {
                         tokenSymbol={postData.data.tokenSymbol}
                     />
                 );
-            // } else if ( ispayoutExpirationSuccess && blockNumber && payoutExpirationData! as unknown as number > blockNumber! && bountyProgressData! as unknown as number === 1) { // Case 6: Creator hasn't payed or disputed work within 2 weeks after work submission; assume that payoutExpirationData is a BigNumber
-            } else if (currentBlocktime && payoutExpirationTime <= currentBlocktime && progress === 1) {
+            } else if (currentBlocktime && payoutExpirationTime <= currentBlocktime && progress === 1) {  // Case 6: Creator hasn't payed or disputed work within 2 weeks after work submission.
                 creatorNoActionBounties.push(
                     <BasicAccordian key={postId}  
                         company={postData.data.creatorAddress}
@@ -530,34 +335,9 @@ const MyBounties: NextPage = () => {
                             creatorAddress={postData.data.creatorAddress}
                             appStatus={"forceClaim"}
                         />
-                        {/* <div> 
-                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenForce(); handleCloseForceTrue(postData.data.postId, postData.data.creatorAddress);}}>Force Claim</Button>
-                                <Dialog
-                                    open={openForce}
-                                    onClose={handleCloseForceFalse}
-                                    aria-labelledby="alert-dialog-title"
-                                    aria-describedby="alert-dialog-description"
-                                    PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}
-                                >
-                                    <DialogTitle className={styles.formHeader} id="alert-dialog-title">
-                                    {"Are you sure you want to claim the force-claim the bounty?"}
-                                    </DialogTitle>
-                                    <DialogContent className={styles.cardBackground}>
-                                    <DialogContentText className={styles.dialogBody} id="alert-dialog-description">
-                                        The bounty creator has not responded (payed or disputed) to your work submission within two weeks. To prevent the creator from withholding the funds, 
-                                        you're able to claim the bounty yourself. 
-                                    </DialogContentText>
-                                    </DialogContent>
-                                    <DialogActions className={styles.formFooter}>
-                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseForceFalse}>No I don't</Button> 
-                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {forceHunterPayout?.(); setOpenForce(false);}} autoFocus disabled={!forceHunterPayout || isForceHunterPayoutTxLoading}>{isForceHunterPayoutTxLoading ? 'Forcing payout...' : 'Yes I want to'}</Button>
-                                    </DialogActions>
-                                </Dialog>
-                        </div> */}
                     </BasicAccordian>
                 );
-            // } else if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 4 ) { // Case 7: Finished; need to check FundsSent event to see how they were resolved!!
-            } else if (progress === 4) {
+            } else if (progress === 4) { // Case 7: Finished; need to check FundsSent event to see how they were resolved!!
                 finishedBounties.push(
                     <BasicAccordian key={postId}  
                         company={postData.data.creatorAddress}
@@ -590,13 +370,13 @@ const MyBounties: NextPage = () => {
     };
 
     useEffect(() => {
-        if (!loading && !submittedLoading && postSubmittedIds?.length > 0) {
+        if (!isValidating && !isSubmittedValidating && postSubmittedIds?.length > 0) {
             const existsSubmitted = getSubmittedPosts(postSubmittedIds);
             getPosts(postIds, existsSubmitted);
-        } else if (!loading && !submittedLoading && postIds?.length > 0) {
+        } else if (!isValidating && !isSubmittedValidating && postIds?.length > 0) {
             getPosts(postIds);
         }
-    }, [loading, submittedLoading]);
+    }, [isValidating, isSubmittedValidating]);
 
     const marks = [
         {
@@ -640,7 +420,7 @@ const MyBounties: NextPage = () => {
         return (
             <WelcomeCard isConnected={isConnected}/>
         );
-    } else if (!loading && !submittedLoading) {
+    } else if (!isValidating && !isSubmittedValidating) {
         return (
             <div className={styles.background}>
                 <Head>
@@ -651,24 +431,6 @@ const MyBounties: NextPage = () => {
     
                 <main> 
                     <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '160px', paddingRight: '160px', paddingTop: '24px', color: 'rgba(6, 72, 41, 0.85)', }}> 
-                        {/* {(isHunterDisputeResponseTxLoading || (isHunterDisputeResponseTxSuccess && hunterDisputeResponseTxData?.status === 1)) && 
-                            <SimpleSnackBar severity={'success'} msg={isHunterDisputeResponseTxLoading ? 'Responding to dispute...' : 'Responded to dispute!'}/>
-                        }
-                        {(isHunterDisputeResponseTxSuccess && hunterDisputeResponseTxData?.status === 0) && 
-                            <SimpleSnackBar severity={'error'} msg={'Hunter Dispute Response transaction failed!'}/>
-                        }
-                        {(isForceHunterPayoutTxLoading || (isForceHunterPayoutTxSuccess && forceHunterPayoutTxData?.status === 1)) && 
-                            <SimpleSnackBar severity={'success'} msg={isForceHunterPayoutTxLoading ? 'Forcing payout...' : 'Forced payout!'}/>
-                        }
-                        {(isForceHunterPayoutTxSuccess && forceHunterPayoutTxData?.status === 0) && 
-                            <SimpleSnackBar severity={'error'} msg={'Force Hunter Payout transaction failed!'}/>
-                        }
-                        {(isApproveOnceTxLoading || isApproveOnceTxSuccess) && 
-                            <SimpleSnackBar severity={'success'} msg={isApproveOnceTxLoading ? 'Approving once...' : 'Approved once!'}/>
-                        }
-                        {(isApproveAlwaysTxLoading || isApproveAlwaysTxSuccess) && 
-                            <SimpleSnackBar severity={'success'} msg={isApproveAlwaysTxLoading ? 'Approving always...' : 'Approved always!'}/>
-                        } */}
                         <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center'}}> 
                             <Box sx={{ display: 'flex', flexDirection: 'column', }}>
                                 <Button onClick={() => setStageInfo(true)} sx={{ width: '13px !important', height: '13px !important', position: 'absolute', paddingBottom: '20px', paddingLeft: '68px', }}> 
@@ -716,62 +478,21 @@ const MyBounties: NextPage = () => {
                                 }}
                             />
                         </Box>
-                        {stage === 1 && 
-                            <div> 
-                                <h2 className={styles.h2}>Applied</h2>
-                                <ClientOnly>
-                                    {appliedBountyPosts}
-                                </ClientOnly> 
-                            </div>
-                        } 
-                        {stage === 2 && 
-                            <div> 
-                                <h2 className={styles.h2}>In Progress</h2>
-                                <ClientOnly>
-                                    {inProgressBountyPosts}
-                                </ClientOnly> 
-                            </div>
-                        }
-                        {stage === 3 && 
-                            <div> 
-                                <h2 className={styles.h2}>Submitted</h2>
-                                <ClientOnly>
-                                    {submittedBountyPosts}
-                                </ClientOnly> 
-                            </div>
-                        }
-                        {stage === 4 && 
-                            <div> 
-                                <h2 className={styles.h2}>Dispute Initiated</h2>
-                                <ClientOnly>
-                                    {disputeInitiatedBountyPosts}
-                                </ClientOnly> 
-                            </div>
-                        }
-                        {stage === 5 && 
-                            <div> 
-                                <h2 className={styles.h2}>Dispute Responded To</h2>
-                                <ClientOnly>
-                                    {disputeRespondedToBountyPosts}
-                                </ClientOnly> 
-                            </div>
-                        }
-                        {stage === 6 && 
-                            <div> 
-                                <h2 className={styles.h2}>Force Payout</h2>
-                                <ClientOnly>
-                                    {creatorNoActionBountyPosts}
-                                </ClientOnly> 
-                            </div>
-                        }
-                        {stage === 7 && 
-                            <div> 
-                                <h2 className={styles.h2}>Finished</h2>
-                                <ClientOnly>
-                                    {finishedBountyPosts}
-                                </ClientOnly> 
-                            </div>
-                        }
+                        {stage === 1 && <h2 className={styles.h2}>Applied</h2>}
+                        {stage === 2 && <h2 className={styles.h2}>In Progress</h2>}
+                        {stage === 3 && <h2 className={styles.h2}>Submitted</h2>}
+                        {stage === 4 && <h2 className={styles.h2}>Dispute Initiated</h2>}
+                        {stage === 5 && <h2 className={styles.h2}>Dispute Responded To</h2>}
+                        {stage === 6 && <h2 className={styles.h2}>Force Payout</h2>}
+                        {stage === 7 && <h2 className={styles.h2}>Finished</h2>}
+
+                        {stage === 1 && appliedBountyPosts}
+                        {stage === 2 && inProgressBountyPosts}
+                        {stage === 3 && submittedBountyPosts}
+                        {stage === 4 && disputeInitiatedBountyPosts}
+                        {stage === 5 && disputeRespondedToBountyPosts}
+                        {stage === 6 && creatorNoActionBountyPosts}
+                        {stage === 7 && finishedBountyPosts}
                     </Box>
                 </main>
             </div>

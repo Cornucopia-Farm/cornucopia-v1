@@ -54,10 +54,6 @@ const OpenBounties: NextPage = () => {
 
     const [openBountyPosts, setOpenBountyPosts] = React.useState(Array<JSX.Element>);
 
-    // const { data, loading, error, startPolling } = useQuery(OPENBOUNTIES, { variables: { chain: chain?.network! ? chain?.network! : 'ethereum' }, }); // Set default chain to ethereum if nothing connected
-    // startPolling(1000);
-    // console.log(data)
-
     const { data, error, isValidating } = useSWR([OPENBOUNTIES, { chain: chain?.network! ? chain?.network! : 'ethereum' },], gqlFetcher);
 
     if (error) {
@@ -201,9 +197,7 @@ const OpenBounties: NextPage = () => {
                 <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '160px', paddingRight: '160px', color: 'rgba(6, 72, 41, 0.85)', }}> 
                     <h2 className={styles.h2}>Open Bounties</h2>
                     <Card className={styles.accordionBackground} sx={{backgroundColor: 'rgba(6, 72, 41, 0.05)', borderRadius: '12px', paddingTop: '12px', paddingLeft: '12px', paddingRight: '12px', paddingBottom: '12px' }}> 
-                        {/* <ClientOnly> */}
-                            {openBountyPosts}
-                        {/* </ClientOnly> */}
+                        {openBountyPosts}
                     </Card>
                 </Box>
                 </main>
