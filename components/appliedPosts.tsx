@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useQuery, gql } from '@apollo/client';
+// import { useQuery, gql } from '@apollo/client';
 import axios from 'axios';
 import NestedAccordian from './nestedAccordion';
 import Application from './application';
@@ -15,6 +15,9 @@ import { BigNumber, ethers } from 'ethers';
 import { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
+import useSWR from 'swr';
+import gqlFetcher from '../swrFetchers';
+import { gql } from 'graphql-request';
 
 type Props = {
     postId: string;
@@ -42,8 +45,16 @@ const AppliedPosts: React.FC<Props> = props => {
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
 
     // Fetch Data
-    const { data, loading, error, startPolling } = useQuery(GETAPPLIEDTOPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, });
-    startPolling(1000);
+    // const { data, loading, error, startPolling } = useQuery(GETAPPLIEDTOPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, });
+    // startPolling(1000);
+
+    const { data, error } = useSWR([GETAPPLIEDTOPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
+
+    let loading = false;
+    
+    if (!data) {
+        loading = true;
+    }
     
     if (error) {
         console.error(error);

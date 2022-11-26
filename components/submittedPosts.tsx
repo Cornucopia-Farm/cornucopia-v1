@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useQuery, gql } from '@apollo/client';
+// import { useQuery, gql } from '@apollo/client';
 import axios from 'axios';
 import { BigNumber, ContractInterface, ethers } from 'ethers';
 import NestedAccordian from './nestedAccordion';
@@ -8,6 +8,9 @@ import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // a
 import { useAccount, useContract, useSigner, useNetwork } from 'wagmi';
 import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
 import wethABI from '../WETH9.json';
+import useSWR from 'swr';
+import gqlFetcher from '../swrFetchers';
+import { gql } from 'graphql-request';
 
 type Props = {
     postId: string;
@@ -49,8 +52,16 @@ const SubmittedPosts: React.FC<Props> = props => {
     const [submittedBountyPosts, setSubmittedBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
     
-    const { data, loading, error, startPolling } = useQuery(GETWORKSUBMITTEDPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, });
-    startPolling(1000);
+    // const { data, loading, error, startPolling } = useQuery(GETWORKSUBMITTEDPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, });
+    // startPolling(1000);
+
+    const { data, error } = useSWR([GETWORKSUBMITTEDPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
+
+    let loading = false;
+    
+    if (!data) {
+        loading = true;
+    }
 
     if (error) {
         console.error(error);

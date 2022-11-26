@@ -7,7 +7,7 @@ import BasicAccordian from '../components/basicAccordion';
 import NestedAccordian from '../components/nestedAccordion';
 import Box from '@mui/material/Box';
 import Form from '../components/form';
-import { useQuery, gql } from '@apollo/client';
+// import { useQuery, gql } from '@apollo/client';
 import ClientOnly from '../components/clientOnly';
 import axios from 'axios';
 import Dialog from '@mui/material/Dialog';
@@ -32,6 +32,9 @@ import { makeStyles, propsToClassKey } from '@mui/styles';
 import WelcomeCard from '../components/welcomeCard';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import CreateBountiesInfo from '../components/createBountiesInfo';
+import useSWR from 'swr';
+import gqlFetcher from '../swrFetchers';
+import { gql } from 'graphql-request';
 
 
 // Bounty Stages for Creator:
@@ -91,12 +94,21 @@ const CreateBounties: NextPage = () => {
     // const [existsSubmitted, setExistsSubmitted] = React.useState(new Map());
 
     // Query takes in user's address and returns all bounties that they've created 
-    const { data, loading, error, startPolling } = useQuery(GETPOSTS, { variables: { address, chain: chain?.network }, });
-    startPolling(1000);
-    
+    // const { data, loading, error, startPolling } = useQuery(GETPOSTS, { variables: { address, chain: chain?.network }, });
+    // startPolling(1000);
+
+    const { data, error } = useSWR([GETPOSTS, { address: address, chain: chain?.network },], gqlFetcher);
+
+    let loading = false;
+
+    if (!data) {
+        loading = true;
+    }
+
     if (error) {
         console.error(error);
     }
+
 
     const postIds = data?.transactions.edges.map((edge: any) => edge.node.id);
 
@@ -387,7 +399,7 @@ const CreateBounties: NextPage = () => {
                                 ]}
                             /> 
                         </Box> 
-                        <ClientOnly>
+                        {/* <ClientOnly> */}
                             {stage === 1 && postedComponents}
                             {stage === 2 && appliedComponents}
                             {stage === 3 && inProgressComponents}
@@ -395,7 +407,7 @@ const CreateBounties: NextPage = () => {
                             {stage === 5 && disputeInitiatedComponents}
                             {stage === 6 && disputeRespondedToComponents}
                             {stage === 7 && finishedComponents}
-                        </ClientOnly>
+                        {/* </ClientOnly> */}
                     </Box>
                 </main>
             </div>

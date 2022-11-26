@@ -146,11 +146,11 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     return (
       <WagmiConfig client={wagmiClient}> 
         <RainbowKitProvider theme={myTheme} chains={chains} >
-          <ApolloProvider client={client}> 
+          {/* <ApolloProvider client={client}>  */}
             <Layout>
               <Component {...pageProps} />
             </Layout>
-          </ApolloProvider>
+          {/* </ApolloProvider> */}
         </RainbowKitProvider>
       </WagmiConfig>
     );
