@@ -34,19 +34,6 @@ import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
 
-type ArData = {
-    address: string;
-    title: string;
-    description: string;
-    amount: number; 
-    date: string;
-    time: string; 
-    postLinks: Array<string>;
-    appLinks: Array<string>;
-    experience: string;
-    contact: string;
-};
-
 const OpenBounties: NextPage = () => {
     const { address, isConnected } = useAccount();
     const { data: ensName } = useEnsName({ address, enabled: false, });
