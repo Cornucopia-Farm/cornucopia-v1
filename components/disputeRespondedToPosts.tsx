@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useQuery, gql } from '@apollo/client';
+// import { useQuery, gql } from '@apollo/client';
 import axios from 'axios';
 import { ethers } from 'ethers';
 import NestedAccordian from './nestedAccordion';
@@ -8,6 +8,9 @@ import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // a
 import umaABI from '../cornucopia-contracts/out/SkinnyOptimisticOracle.sol/SkinnyOptimisticOracle.json';
 import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransaction, useContractRead, useBlockNumber, useContract, usePrepareContractWrite, useContractEvent, useSigner, useProvider, ProviderRpcError, useNetwork } from 'wagmi';
 import { Request, getUMAEventData } from '../getUMAEventData';
+import useSWR from 'swr';
+import gqlFetcher from '../swrFetchers';
+import { gql } from 'graphql-request';
 
 type Props = {
     postId: string;
@@ -47,8 +50,16 @@ const DisputeRespondedToPosts: React.FC<Props> = props => {
 
     // const { data: bountyProgressData, error: bountyProgressError, isLoading: isBountyProgressLoading, isSuccess: isBountyProgressSuccess, refetch: bountyProgress } = useContractRead({...contractConfig, functionName: 'progress', args: [bountyIdentifier], enabled: false, }); // watch causing error not sure why rn
 
-    const { data, loading, error, startPolling } = useQuery(GETWORKSUBMITTEDPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, });
-    startPolling(1000);
+    // const { data, loading, error, startPolling } = useQuery(GETWORKSUBMITTEDPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, });
+    // startPolling(1000);
+
+    const { data, error } = useSWR([GETWORKSUBMITTEDPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
+
+    let loading = false;
+    
+    if (!data) {
+        loading = true;
+    }
     
     if (error) {
         console.error(error);

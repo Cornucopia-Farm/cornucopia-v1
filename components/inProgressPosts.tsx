@@ -1,12 +1,14 @@
 import * as React from 'react';
-import { useQuery, gql } from '@apollo/client';
+// import { useQuery, gql } from '@apollo/client';
 import axios from 'axios';
 import { ethers } from 'ethers';
 import NestedAccordian from './nestedAccordion';
 import Application from './application';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
 import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransaction, useContractRead, useBlockNumber, useContract, usePrepareContractWrite, useContractEvent, useSigner, useNetwork } from 'wagmi';
-
+import useSWR from 'swr';
+import gqlFetcher from '../swrFetchers';
+import { gql } from 'graphql-request';
 
 // BUG: TypeError: Cannot read properties of null (reading 'getLogs') when const isEscrowed = await props.escrowContract.queryFilter(filter); likely bc escrowContract hasn't been defined
 // data noot showing up either for applied bounties most of the time hmm
@@ -36,8 +38,16 @@ const InProgressPosts: React.FC<Props> = props => {
     const [inProgressBountyPosts, setInProgressBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
     
-    const { data, loading, error, startPolling } = useQuery(GETAPPLIEDTOPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, });
-    startPolling(1000);
+    // const { data, loading, error, startPolling } = useQuery(GETAPPLIEDTOPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, });
+    // startPolling(1000);
+
+    const { data, error } = useSWR([GETAPPLIEDTOPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
+
+    let loading = false;
+    
+    if (!data) {
+        loading = true;
+    }
 
     if (error) {
         console.error(error);
