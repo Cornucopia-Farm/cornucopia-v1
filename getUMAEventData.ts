@@ -1,4 +1,3 @@
-import { TurnSharpLeft } from '@mui/icons-material';
 import { ethers } from 'ethers';
 
 const escrowContractAddress = process.env.ESCROW_ADDRESS!;

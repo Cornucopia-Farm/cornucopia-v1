@@ -23,6 +23,7 @@ import styles from '../styles/Home.module.css';
 import IncreaseAllowance from './increaseAllowance';
 import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
 import { CollectionsOutlined } from '@mui/icons-material';
+import { BountyOutcome } from '../getEscrowEventData';
 
 // TODO: 
 // Toast popup for increaseAllowance popup!
@@ -50,6 +51,7 @@ type Props = {
     expirationTime?: number;
     creatorRefund?: boolean;
     disputeStatus?: number;
+    finishedStatus?: BountyOutcome;
 };
 
 // Escrow Contract Config
@@ -414,6 +416,7 @@ const Application: React.FC<Props> = props => {
             arweaveHash={props.arweaveHash}
             links={props.appLinks}
             workLinks={props.workLinks} 
+            finishedStatus={props.finishedStatus}
           >
             {props.appStatus === "applied" &&
               <div> 

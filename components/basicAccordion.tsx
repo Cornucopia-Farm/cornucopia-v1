@@ -10,6 +10,7 @@ import Link from '@mui/material/Link';
 import { useEnsName, useNetwork } from 'wagmi';
 import { Dayjs } from 'dayjs';
 import styles from '../styles/Home.module.css';
+import { BountyOutcome } from '../getEscrowEventData';
 
 type Props = { // need to change bounty card to specify which component it is for!
   company: string;
@@ -24,6 +25,7 @@ type Props = { // need to change bounty card to specify which component it is fo
   disputes: boolean;
   children?: React.ReactNode;
   tokenSymbol: string;
+  finishedStatus?: BountyOutcome;
 };
 
 const BasicAccordion: React.FC<Props> = props => {
@@ -84,6 +86,7 @@ const BasicAccordion: React.FC<Props> = props => {
               arweaveHash={props.arweaveHash}
               links={props.postLinks}
               workLinks={props.workLinks}
+              finishedStatus={props.finishedStatus}
             >
             {button()}
             </BountyCard>
