@@ -144,17 +144,14 @@ const Form: React.FC<Props> = props => {
         });
     };
 
-    const handleInputChangeStartDate = (newDate: any) => {
-        console.log(newDate)
-        // console.log(newDate.format('MM-DD-YYYY'))  
+    const handleInputChangeStartDate = (newDate: any) => { 
         setFormValues({
           ...formValues,
           ["startDate"]: newDate,
         });
     };
 
-    const handleInputChangeEndDate = (newDate: any) => {
-        console.log(newDate)  
+    const handleInputChangeEndDate = (newDate: any) => {  
         setFormValues({
           ...formValues,
           ["endDate"]: newDate,
@@ -162,13 +159,7 @@ const Form: React.FC<Props> = props => {
     };
 
     const handleInputChangeToken = (e: any) => {
-        // const { name, value } = e.target;
-        // const tokenAddress = e.target.address;
-        // const tokenSymbol = e.target.symbol;
         const tokenAddress = e.target.value;
-        // console.log(tokenAddress)
-        // console.log(tokenSymbol)
-        // setOpenTokenList(false);
         const tokenObj = ethTokens.filter((obj: any) => {
             return obj.address === tokenAddress;
         }); // Returns Array of matches so we take first one as there will only be one match
@@ -413,14 +404,18 @@ const Form: React.FC<Props> = props => {
                         label="Amount"
                         value={formValues.amount}
                         onChange={handleInputChange}
-                        type="text" // Need to add ERC20
+                        // type="text" // Need to add ERC20
+                        type="number"
                         fullWidth
                         variant="standard"
-                        inputProps={{ autoComplete: 'off'}}
+                        inputProps={{ autoComplete: 'off', inputMode: 'numeric', pattern: '[0-9]*', }}
                         sx={{ 
                             '& .MuiInputBase-input': { 
                                 color: 'rgb(248, 215, 154)', 
-                                fontFamily: 'Space Grotesk'
+                                fontFamily: 'Space Grotesk',
+                                '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+                                    '-webkit-appearance': 'none',
+                                },
                             }, 
                             '& .MuiInputLabel-root': { 
                                 color: 'rgb(233, 233, 198)', 
@@ -438,7 +433,7 @@ const Form: React.FC<Props> = props => {
                             '& .MuiInput-underline': {
                                 '&:hover:before': {
                                     borderBottomColor: 'rgb(248, 215, 154) !important',
-                                }
+                                },
                             },
                         }}
                     />
