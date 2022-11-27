@@ -43,6 +43,7 @@ import HunterContractActions from '../components/hunterContractActions';
 import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
+import { getEscrowEventData } from '../getEscrowEventData';
 
 // Bounty Stages for Hunter:
 // 1. Applied (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.NoBounty); CHECK PROGRESS MAPPING
@@ -338,6 +339,7 @@ const MyBounties: NextPage = () => {
                     </BasicAccordian>
                 );
             } else if (progress === 4) { // Case 7: Finished; need to check FundsSent event to see how they were resolved!!
+                const finishedStatus = await getEscrowEventData(escrowContract, 'finished', postData.data.creatorAddress, address!, postData.data.postId);
                 finishedBounties.push(
                     <BasicAccordian key={postId}  
                         company={postData.data.creatorAddress}
@@ -351,6 +353,7 @@ const MyBounties: NextPage = () => {
                         workLinks={postData.data.workLinks}
                         disputes={false} 
                         tokenSymbol={postData.data.tokenSymbol}
+                        finishedStatus={finishedStatus}
                     />
                 );
             }

@@ -9,6 +9,7 @@ import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransac
 import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
+import { getEscrowEventData } from '../getEscrowEventData';
 
 // TODO: add logic too look at event for finished post to determine who won dispute (if this was an issue), or non dispute 
 
@@ -71,6 +72,9 @@ const FinishedPosts: React.FC<Props> = props => {
             const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, address, postData.data.hunterAddress ]);
 
             const progress = await escrowContract.progress(bountyIdentifierInput);
+
+            const finishedStatus = await getEscrowEventData(escrowContract, 'finished', address!, postData.data.hunterAddress, postData.data.postId);
+
             // this isn't working need to fix
             // if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 4 ) { // Case 7: Finished; need to check FundsSent event to see how they were resolved!!
             // if (progress === 4) {
@@ -95,6 +99,7 @@ const FinishedPosts: React.FC<Props> = props => {
                     arweaveHash={openBountyId}
                     appLinks={postData.data.appLinks}
                     workLinks={postData.data.workLinks}
+                    finishedStatus={finishedStatus}
                 />,
                 postData
             ]);
