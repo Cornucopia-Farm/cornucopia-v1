@@ -16,6 +16,7 @@ type Props = {
     postId: string;
     setSubmittedMap: (postId: string) => void;
     incrementSubmittedHits: () => void;
+    stage: number;
 };
 
 // Escrow Contract Config
@@ -62,6 +63,8 @@ const SubmittedPosts: React.FC<Props> = props => {
         console.error(error);
     }
 
+    const loaded = React.useRef(false); 
+
     const bountyIds = React.useMemo(() => {
         return data?.transactions?.edges.map((edge: any) => edge.node.id);
     }, [data?.transactions?.edges]);
@@ -71,8 +74,15 @@ const SubmittedPosts: React.FC<Props> = props => {
             props.setSubmittedMap(props.postId);
         }
         console.log('hit submitted')
-        props.incrementSubmittedHits(); // IS THIS RIGHT PLACE TO DO THIS?
     }, [isValidating, bountyIds?.length, props.setSubmittedMap, props.postId]);
+
+    React.useEffect(() => {
+        if (!isValidating && !loaded.current) {
+            loaded.current = true;
+            console.log(' increment applied hits!! ')
+            props.incrementSubmittedHits();
+        }
+    }, [isValidating, props.incrementSubmittedHits]);
 
     const getSubmittedPosts = React.useCallback(async (openBountyIds: Array<string>) => {
 
@@ -164,13 +174,17 @@ const SubmittedPosts: React.FC<Props> = props => {
                 setThisPostData(postDataArr);
             }); // Wait for these promises to resolve before setting the state variables
         }
-    }, []);
+    }, [address, signer, wethContract, escrowContract]);
 
     React.useEffect(() => {
         if (bountyIds && bountyIds.length > 0 && !isValidating) {
             getSubmittedPosts(bountyIds);
         }
     }, [bountyIds, isValidating, getSubmittedPosts]);
+
+    if (props.stage !== 4) {
+        return <></>;
+    }
 
     if (submittedBountyPosts.length > 0) {
         return (
