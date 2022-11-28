@@ -17,6 +17,7 @@ type Props = {
     postId: string;
     setSubmittedMap: (postId: string) => void;
     incrementSubmittedHits: () => void;
+    stage: number;
 };
 
 // Escrow Contract Config
@@ -43,6 +44,8 @@ const FinishedPosts: React.FC<Props> = props => {
     if (error) {
         console.error(error);
     }
+
+    const loaded = React.useRef(false);
     
     const bountyIds = React.useMemo(() => {
         return data?.transactions?.edges.map((edge: any) => edge.node.id);
@@ -52,8 +55,14 @@ const FinishedPosts: React.FC<Props> = props => {
         if (!isValidating && bountyIds?.length > 0) {
             props.setSubmittedMap(props.postId);
         }
-        props.incrementSubmittedHits(); // IS THIS RIGHT PLACE TO DO THIS?
     }, [isValidating, bountyIds?.length, props.setSubmittedMap, props.postId]);
+
+    React.useEffect(() => {
+        if (!isValidating && !loaded.current) {
+            loaded.current = true;
+            props.incrementSubmittedHits();
+        }
+    }, [isValidating, props.incrementSubmittedHits]);
 
     const getFinishedPosts = React.useCallback(async (openBountyIds: Array<string>) => {
 
@@ -117,13 +126,17 @@ const FinishedPosts: React.FC<Props> = props => {
                 setThisPostData(postDataArr);
             });        
         }
-    }, []);
+    }, [address, escrowContract]);
 
     React.useEffect(() => {
         if (bountyIds && bountyIds.length > 0 && !isValidating) {
             getFinishedPosts(bountyIds);
         }
     }, [bountyIds, isValidating, getFinishedPosts]);
+
+    if (props.stage !== 7) {
+        return <></>;
+    }
 
     if (finishedBountyPosts.length > 0) {
         return (

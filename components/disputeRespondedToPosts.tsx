@@ -16,6 +16,7 @@ type Props = {
     postId: string;
     setSubmittedMap: (postId: string) => void;
     incrementSubmittedHits: () => void;
+    stage: number;
 };
 
 // Escrow Contract Config
@@ -29,8 +30,6 @@ const umaContractConfig = {
     addressOrName: process.env.NEXT_PUBLIC_OO_ADDRESS!, // contract address for OO not skinny OO so need to change
     contractInterface: umaABI['abi'],
 };
-
-const defaultIdentifier = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ "default", "0x", "0x" ]);
 
 const DisputeRespondedToPosts: React.FC<Props> = props => {
 
@@ -48,19 +47,13 @@ const DisputeRespondedToPosts: React.FC<Props> = props => {
     const [disputeRespondedToBountyPosts, setDisputeRespondedToBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
 
-    // const [bountyIdentifier, setBountyIdentifier] = React.useState(defaultIdentifier);
-
-
-    // const { data: bountyProgressData, error: bountyProgressError, isLoading: isBountyProgressLoading, isSuccess: isBountyProgressSuccess, refetch: bountyProgress } = useContractRead({...contractConfig, functionName: 'progress', args: [bountyIdentifier], enabled: false, }); // watch causing error not sure why rn
-
-    // const { data, loading, error, startPolling } = useQuery(GETWORKSUBMITTEDPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, });
-    // startPolling(1000);
-
     const { data, error, isValidating } = useSWR([GETWORKSUBMITTEDPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
     
     if (error) {
         console.error(error);
     }
+
+    const loaded = React.useRef(false); 
     
     const bountyIds = React.useMemo(() => {
         return data?.transactions?.edges.map((edge: any) => edge.node.id);
@@ -70,8 +63,14 @@ const DisputeRespondedToPosts: React.FC<Props> = props => {
         if (!isValidating && bountyIds?.length > 0) {
             props.setSubmittedMap(props.postId);
         }
-        props.incrementSubmittedHits(); // IS THIS RIGHT PLACE TO DO THIS?
     }, [isValidating, bountyIds?.length, props.setSubmittedMap, props.postId]);
+
+    React.useEffect(() => {
+        if (!isValidating && !loaded.current) {
+            loaded.current = true;
+            props.incrementSubmittedHits();
+        }
+    }, [isValidating, props.incrementSubmittedHits]);
 
     const getDisputeRespondedToPosts = React.useCallback(async (openBountyIds: Array<string>) => {
 
@@ -151,13 +150,17 @@ const DisputeRespondedToPosts: React.FC<Props> = props => {
                 setThisPostData(postDataArr);
             });
         }
-    }, []);
+    }, [address, provider, escrowContract, umaContract]);
 
     React.useEffect(() => {
         if (bountyIds && bountyIds.length > 0 && !isValidating) {
             getDisputeRespondedToPosts(bountyIds);
         }
     }, [bountyIds, isValidating, getDisputeRespondedToPosts]);
+
+    if (props.stage !== 6) {
+        return <></>;
+    }
 
     if (disputeRespondedToBountyPosts.length > 0) {
         return (

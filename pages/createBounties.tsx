@@ -36,7 +36,6 @@ import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
 
-
 // Bounty Stages for Creator:
 // 1. Posted (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.NoBounty); CHECK PROGRESS MAPPING
 // 2. Applied To GETAPPLIEDTOPOSTS returns info on hunter for the post;(progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.NoBounty); CHECK GETAPPLIEDPOSTS DATA OUTPUT, PROGRESS MAPPING 
@@ -45,12 +44,6 @@ import { gql } from 'graphql-request';
 // 5. (Sometimes) Disputed: Hunter Needs to Respond to Creator Dispute (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.DisputeInitiated); CHECK PROGRESS MAPPING
 // 6. (Sometimes) Waiting for Dispute To Be Resolved (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.DisputeRespondedTo); CHECK PROGRESS MAPPING
 // 7. Finished (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.Resolved); look at FundsSent event to figure out how they were resolved; CHECK PROGRESS MAPPING, FUNDSSENT EVENT
-
-// TODO: Need to deal with different payout cases!!: deduce who won by listening to emmitted event from payout fn
-// How do we show the above in the UI??
-
-// TODO: should we be passing in the promise or the resolved data into the sub components for each page?
-// for posted posts we pass in the resolved data as otherwise existsApplied or existsSubmitted might still be being calculated 
 
 // Note: not a bug for a bounty to show up under multiple headers as of now if we let multiple people apply to the same bounty!!
 
@@ -69,13 +62,11 @@ const CreateBounties: NextPage = () => {
     const [appliedHits, setAppliedHits] = React.useState(0); // Count of how many components in getAppliedPosts func attempted to render; should equal 2 * bountyIds.length
     const [submittedHits, setSubmittedHits] = React.useState(0); // Count of how many components in getSubmittedPosts func attempted to render; should equal 4 * bountyIds.length
 
-    const incrementAppliedHits = React.useCallback((postId: any, type: any) => {
-        console.log('post id >>>', postId, type)
+    const incrementAppliedHits = React.useCallback(() => {
         setAppliedHits(state => state + 1);
     }, []);
 
     const incrementSubmittedHits = React.useCallback(() => {
-        // setSubmittedHits(submittedHits + 1)
         setSubmittedHits(state => state + 1);
     }, []);
 
@@ -93,8 +84,6 @@ const CreateBounties: NextPage = () => {
     const [stage, setStage] = React.useState(1);
     const [stageInfo, setStageInfo] = React.useState(false);
 
-    // const [existsApplied, setExistsApplied] = React.useState(new Map());
-    // const [existsSubmitted, setExistsSubmitted] = React.useState(new Map());
 
     const { data, error, isValidating } = useSWR([GETPOSTS, { address: address, chain: chain?.network },], gqlFetcher);
 
@@ -106,56 +95,8 @@ const CreateBounties: NextPage = () => {
         return data?.transactions?.edges.map((edge: any) => edge.node.id);
     }, [data?.transactions?.edges]);
 
-    // console.log(postIds)
-    // console.log(appliedHits)
-    // console.log(submittedHits)
-
     const getPostedPosts = useCallback((openBountyIds: Array<string>) => {
         const postedBounties: Array<JSX.Element> = [];
-
-        // const promises = openBountyIds?.map( async (openBountyId: string) => {
-        //     postedBounties.push( 
-        //         <PostedPosts key={openBountyId}  
-        //             postId={openBountyId}
-        //             existsApplied={existsApplied}
-        //             existsSubmitted={existsSubmitted}
-        //             loading={isValidating}
-        //         />
-        //     );
-
-        //     // const postData = await axios.get(`https://arweave.net/${openBountyId}`);
-        //     // const postId = postData?.config?.url?.split("https://arweave.net/")[1];
-        //     // // this isn't checking as these can be null when passed in
-        //     // if (postId && !existsApplied.has(postId) && !existsSubmitted.has(postId)) { 
-        //     //     console.log("postid for posted bounty",postId);
-        //     //     postedBounties.push( 
-        //     //         // <NestedAccordian key={postId}
-        //     //         //     postLinks={postData.data.postLinks}
-        //     //         //     date={postData.data.date}
-        //     //         //     time={postData.data.time}
-        //     //         //     description={postData.data.description}
-        //     //         //     bountyName={postData.data.title}
-        //     //         //     amount={postData.data.amount}
-        //     //         // />
-        //     //         <PostedPosts key={address!}  
-        //     //             postId={openBountyId}
-        //     //             existsApplied={existsApplied}
-        //     //             existsSubmitted={existsSubmitted}
-        //     //             loading={loading}
-        //     //         />
-        //     //     );
-        //     // }
-        // });
-        // console.log("in posted posts func")
-        // postedBounties.push(
-        //     <PostedPosts key={address!}  
-        //         postIds={openBountyIds}
-        //         existsApplied={existsApplied}
-        //         existsSubmitted={existsSubmitted}
-        //         loading={loading}
-        //     />
-        // );
-        // setPostedBountyPosts(postedBounties);
 
         openBountyIds?.forEach((openBountyId: string) => {
             postedBounties.push( 
@@ -169,39 +110,12 @@ const CreateBounties: NextPage = () => {
             );
         });
 
-        // if (promises) {
-        //     await Promise.all(promises); // Wait for these promises to resolve before setting the state variables
-        // }
-
         setPostedComponents(postedBounties);
     }, [stage, existsApplied, existsSubmitted, isValidating]);
 
     const getAppliedPosts = useCallback(async (openBountyIds: Array<string>) => {
-        // const existsApplied = new Map();
-
-        // const setAppliedMap = (postId: string) => {
-        //     existsApplied.set(postId, true);
-        // };
-
         const appliedComponentsArr: Array<JSX.Element> = [];
         const inProgressComponentsArr: Array<JSX.Element> = [];
-
-        // const promises = openBountyIds?.map( async (postId: string) => {
-        //     appliedComponentsArr.push(
-        //         <AppliedPosts key={postId}
-        //             postId={postId}
-        //             existsSubmitted={existsSubmitted}
-        //             setAppliedMap={setAppliedMap}
-        //         />
-        //     );
-        //     inProgressComponentsArr.push(
-        //         <InProgressPosts key={postId}
-        //             postId={postId}
-        //             existsSubmitted={existsSubmitted}
-        //             setAppliedMap={setAppliedMap}
-        //         />
-        //     );
-        // });
 
         openBountyIds?.forEach((postId: string) => {
             appliedComponentsArr.push(
@@ -224,62 +138,16 @@ const CreateBounties: NextPage = () => {
             );
         });
 
-        // if (promises) {
-        //     await Promise.all(promises); // Wait for these promises to resolve before setting the state variables
-        // }
-
         setAppliedComponents(appliedComponentsArr);
         setInProgressComponents(inProgressComponentsArr);
 
-        // return existsApplied;
     }, [stage, incrementAppliedHits, setAppliedMap, existsSubmitted]); // is there an external dependency here??
 
     const getSubmittedPosts = useCallback((openBountyIds: Array<string>) => {
-        // const existsSubmitted = new Map(); 
-
-        // const setSubmittedMap = (postId: string) => {
-        //     existsSubmitted.set(postId, true);
-        // };
-
-        // setThatStateVar(() => {
-        //     return openBountyIds.reduce((acc, val) => {
-        //         acc[val] = false
-        //     }, {})
-        // })
-        console.log('submit bounty ids', openBountyIds)
         const submittedComponentsArr: Array<JSX.Element> = [];
         const disputeInitiatedComponentsArr: Array<JSX.Element> = [];
         const disputeRespondedToComponentsArr: Array<JSX.Element> = [];
         const finishedComponentsArr: Array<JSX.Element> = [];
-
-        /*
-            const promises = openBountyIds?.map( async (postId: string) => {
-                submittedComponentsArr.push(
-                    <SubmittedPosts key={postId}
-                        postId={postId}
-                        setSubmittedMap={setSubmittedMap}
-                    />
-                );
-                disputeInitiatedComponentsArr.push(
-                    <DisputeInitiatedPosts key={postId}
-                        postId={postId}
-                        setSubmittedMap={setSubmittedMap}
-                    />
-                );
-                disputeRespondedToComponentsArr.push(
-                    <DisputeRespondedToPosts key={postId}
-                        postId={postId}
-                        setSubmittedMap={setSubmittedMap}
-                    />
-                );
-                finishedComponentsArr.push(
-                    <FinishedPosts key={postId}
-                        postId={postId}
-                        setSubmittedMap={setSubmittedMap}
-                    />
-                );
-            });
-        */
 
         openBountyIds?.forEach((postId: string) => {
             submittedComponentsArr.push(
@@ -295,6 +163,7 @@ const CreateBounties: NextPage = () => {
                     postId={postId}
                     setSubmittedMap={setSubmittedMap}
                     incrementSubmittedHits={incrementSubmittedHits}
+                    stage={stage}
                 />
             );
             disputeRespondedToComponentsArr.push(
@@ -302,6 +171,7 @@ const CreateBounties: NextPage = () => {
                     postId={postId}
                     setSubmittedMap={setSubmittedMap}
                     incrementSubmittedHits={incrementSubmittedHits}
+                    stage={stage}
                 />
             );
             finishedComponentsArr.push(
@@ -309,20 +179,16 @@ const CreateBounties: NextPage = () => {
                     postId={postId}
                     setSubmittedMap={setSubmittedMap}
                     incrementSubmittedHits={incrementSubmittedHits}
+                    stage={stage}
                 />
             );
         });
-
-        /*if (promises) {
-            await Promise.all(promises); // Wait for these promises to resolve before setting the state variables
-        }*/
 
         setSubmittedComponents(submittedComponentsArr);
         setDisputeInitiatedComponents(disputeInitiatedComponentsArr);
         setDisputeRespondedToComponents(disputeRespondedToComponentsArr);
         setFinishedComponents(finishedComponentsArr);
 
-        // return existsSubmitted;
     }, [stage, setSubmittedMap, incrementSubmittedHits]);
 
     useEffect(() => {
@@ -332,35 +198,16 @@ const CreateBounties: NextPage = () => {
     }, [isValidating, postIds, getSubmittedPosts]);
 
     useEffect(() => {
-        // fix this when everyhting is uncommented for the rest of the submitted work
-        if (!isValidating && postIds?.length > 0 && submittedHits === postIds.length * 1) {
-            console.log('applied post run')
+        if (!isValidating && postIds?.length > 0 && submittedHits === postIds.length * 4) {
             getAppliedPosts(postIds);
         }
     }, [isValidating, postIds, getAppliedPosts, submittedHits]);
 
     useEffect(() => {
         if (!isValidating && postIds?.length > 0 && appliedHits === postIds.length * 2) {
-            console.log('applied hits', appliedHits)
-            console.log(postIds?.length)
             getPostedPosts(postIds);
         }
     }, [isValidating, postIds, getPostedPosts, appliedHits]);
-
-
-
-    // useEffect(() => {
-    //     if (!isValidating && postIds?.length > 0) {
-    //         const existsSubmittedHere = getSubmittedPosts(postIds);
-    //         const existsAppliedHere = getAppliedPosts(postIds, existsSubmittedHere);
-    //         getPostedPosts(postIds, existsAppliedHere, existsSubmittedHere);
-    //     }
-    // }, [isValidating]);
-
-    // useEffect(() => {
-
-    //     getAppliedPosts()
-    // }, [getAppliedPosts, thatStateVar])
 
     const marks = [
         {
@@ -396,7 +243,6 @@ const CreateBounties: NextPage = () => {
     function valuetext(value: number) {
         return marks[marks.findIndex((mark) => mark.value === value)].label
     }
-      
 
     if (!isConnected) {
         return (
@@ -410,10 +256,9 @@ const CreateBounties: NextPage = () => {
                     <meta name="description" content="First Farm" />
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
-    
                 <main className={styles.background}>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '160px', paddingRight: '160px', paddingTop: '24px', color: 'rgba(6, 72, 41, 0.85)' }}>
-                        <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center'}}> 
+                    <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '160px', paddingRight: '160px', paddingTop: '24px', color: 'rgba(6, 72, 41, 0.85)', }}>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', }}> 
                             <Box sx={{ display: 'flex', flexDirection: 'column', }}>
                                 <Button onClick={() => setStageInfo(true)} sx={{ width: '13px !important', height: '13px !important', position: 'absolute', paddingBottom: '20px', paddingLeft: '68px', }}> 
                                     <InfoOutlinedIcon sx={{ color: 'rgb(233, 233, 198)', fontSize: '12px', }}/>
@@ -498,15 +343,13 @@ const CreateBounties: NextPage = () => {
                                 ]}
                             /> 
                         </Box> 
-                        {/* <ClientOnly> */}
                             {postedComponents}
                             {appliedComponents}
                             {inProgressComponents}
                             {submittedComponents}
-                            {/* {disputeInitiatedComponents}
+                            {disputeInitiatedComponents}
                             {disputeRespondedToComponents}
-                            {finishedComponents} */}
-                        {/* </ClientOnly> */}
+                            {finishedComponents}
                     </Box>
                 </main>
             </div>

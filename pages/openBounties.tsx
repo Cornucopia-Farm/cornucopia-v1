@@ -127,7 +127,7 @@ const OpenBounties: NextPage = () => {
             }); // Wait for these promises to resolve before setting the state variables
         }
         // change foreach to map which returns an array of promises then await for this array of promises to resolve using promise.all before the code continues   
-    }, []);
+    }, [address, chain]);
 
     useEffect(() => {
         if (postIds && postIds.length > 0 && !isValidating) {
