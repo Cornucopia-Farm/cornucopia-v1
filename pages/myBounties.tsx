@@ -97,7 +97,12 @@ const MyBounties: NextPage = () => {
     const [creatorNoActionBountyPosts, setCreatorNoActionBountyPosts] = React.useState(Array<JSX.Element>);
     const [finishedBountyPosts, setFinishedBountyPosts] = React.useState(Array<JSX.Element>);
 
-    const [submittedHits, setSubmittedHits] = React.useState(0); // Count of how many components in getSubmittedPosts func attempted to render; should equal 4 * bountyIds.length
+    const [submittedHits, setSubmittedHits] = React.useState(0); // Count of how many components in getSubmittedPosts func attempted to render; 
+
+    const incrementSubmittedHits = React.useCallback(() => {
+        // setSubmittedHits(submittedHits + 1)
+        setSubmittedHits(state => state + 1);
+    }, []);
 
     const [existsSubmitted, setExistsSubmitted] = React.useState(new Map<string, boolean>());
 
@@ -126,7 +131,7 @@ const MyBounties: NextPage = () => {
         return submittedData?.transactions?.edges.map((edge: any) => edge.node.id);
     }, [submittedData?.transactions?.edges]);
 
-    const getPosts = React.useCallback(async (openBountyIds: Array<string>, existsSubmitted?: Promise<Map<string, boolean>>) => {
+    const getPosts = React.useCallback(async (openBountyIds: Array<string>) => {
         let appliedBounties: Array<JSX.Element> = [];
         let inProgressBounties: Array<JSX.Element> = []; 
         
@@ -134,7 +139,7 @@ const MyBounties: NextPage = () => {
             const postData = await axios.get(`https://arweave.net/${openBountyId}`);
 
             // If hunter has submitted work for this bounty then continue as bounties with work submitted are rendered below
-            if (existsSubmitted && (await existsSubmitted).has(postData.data.postId)) {
+            if (existsSubmitted && existsSubmitted.has(postData.data.postId)) {
                 return Promise.resolve([]);;
             }
 
@@ -249,16 +254,15 @@ const MyBounties: NextPage = () => {
                         }
 
                     }
-                })
+                });
+                setAppliedBountyPosts(appliedBounties);
+                setInProgressBountyPosts(inProgressBounties);
             }); // Wait for these promises to resolve before setting the state variables
         }
-
-        setAppliedBountyPosts(appliedBounties);
-        setInProgressBountyPosts(inProgressBounties);
-    }, [address, escrowContract, chain]);
+    }, [address, escrowContract, chain, existsSubmitted]);
 
     const getSubmittedPosts = React.useCallback(async (openBountyIds: Array<string>) => {
-        const existsSubmitted = new Map();
+        // const existsSubmitted = new Map();
 
         let submittedBounties: Array<JSX.Element> = [];
         let disputeInitiatedBounties: Array<JSX.Element> = [];
@@ -268,8 +272,9 @@ const MyBounties: NextPage = () => {
         
         const promises = openBountyIds?.map( async (openBountyId: string) => {
             const postData = await axios.get(`https://arweave.net/${openBountyId}`);
-            existsSubmitted.set(postData.data.postId, true); // Log this bounty as submitted
-            
+            // existsSubmitted.set(postData.data.postId, true); // Log this bounty as submitted
+            setSubmittedMap(postData.data.postId); // Log this bounty as submitted
+            incrementSubmittedHits();
             const postId = postData?.config?.url?.split("https://arweave.net/")[1];
 
             const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, postData.data.creatorAddress, address ]);
@@ -426,8 +431,7 @@ const MyBounties: NextPage = () => {
             }); // Wait for these promises to resolve before setting the state variables
         }
         
-        return existsSubmitted;
-    }, [address, provider, escrowContract, wethContract, umaContract]);
+    }, [address, provider, escrowContract, wethContract, umaContract, setSubmittedMap, incrementSubmittedHits]);
 
     useEffect(() => {
         if (!isValidating && !isSubmittedValidating && postSubmittedIds?.length > 0) {
@@ -437,6 +441,12 @@ const MyBounties: NextPage = () => {
             getPosts(postIds);
         }
     }, [isValidating, isSubmittedValidating]);
+
+    useEffect(() => { // Fix use effect for getSubmittedPosts
+        if (!isValidating && postIds?.length > 0 && submittedHits === postSubmittedIds.length) {
+            getPosts(postIds);
+        }
+    }, [isValidating, postIds, getPosts, submittedHits, postSubmittedIds.length]);
 
     const marks = [
         {

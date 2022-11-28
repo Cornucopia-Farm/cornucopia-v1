@@ -340,7 +340,6 @@ const CreateBounties: NextPage = () => {
     }, [isValidating, postIds, getAppliedPosts, submittedHits]);
 
     useEffect(() => {
-        
         if (!isValidating && postIds?.length > 0 && appliedHits === postIds.length * 2) {
             console.log('applied hits', appliedHits)
             console.log(postIds?.length)
