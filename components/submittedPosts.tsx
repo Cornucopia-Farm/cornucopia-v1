@@ -73,13 +73,11 @@ const SubmittedPosts: React.FC<Props> = props => {
         if (!isValidating && bountyIds?.length > 0) {
             props.setSubmittedMap(props.postId);
         }
-        console.log('hit submitted')
     }, [isValidating, bountyIds?.length, props.setSubmittedMap, props.postId]);
 
     React.useEffect(() => {
         if (!isValidating && !loaded.current) {
             loaded.current = true;
-            console.log(' increment applied hits!! ')
             props.incrementSubmittedHits();
         }
     }, [isValidating, props.incrementSubmittedHits]);
@@ -159,7 +157,7 @@ const SubmittedPosts: React.FC<Props> = props => {
                     wethAllowance={wethAllowance}
                 />,
                 postData
-            ])
+            ]);
         });
 
         if (promises) {

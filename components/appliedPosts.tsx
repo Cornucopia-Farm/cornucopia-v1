@@ -23,8 +23,7 @@ type Props = {
     postId: string;
     existsSubmitted: Map<string, boolean>;
     setAppliedMap: (postId: string) => void;
-    // incrementAppliedHits: () => void;
-    incrementAppliedHits: (postId: any, type: any) => void;
+    incrementAppliedHits: () => void;
     stage: number;
 };
 
@@ -47,10 +46,6 @@ const AppliedPosts: React.FC<Props> = props => {
     const [appliedBountyPosts, setAppliedBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
 
-    // Fetch Data
-    // const { data, loading, error, startPolling } = useQuery(GETAPPLIEDTOPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, });
-    // startPolling(1000);
-
     const { data, error, isValidating } = useSWR([GETAPPLIEDTOPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
     
     const loaded = React.useRef(false); 
@@ -72,9 +67,7 @@ const AppliedPosts: React.FC<Props> = props => {
     React.useEffect(() => {
         if (!isValidating && !loaded.current) {
             loaded.current = true;
-            //console.log(' increment applied hits!! ')
-            //console.log('postid', props.postId)
-            props.incrementAppliedHits(props.postId, 'applied post');
+            props.incrementAppliedHits();
         }
     }, [isValidating, props.incrementAppliedHits]);
 

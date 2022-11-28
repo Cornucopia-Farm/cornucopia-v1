@@ -433,14 +433,20 @@ const MyBounties: NextPage = () => {
         
     }, [address, provider, escrowContract, wethContract, umaContract, setSubmittedMap, incrementSubmittedHits]);
 
-    useEffect(() => {
-        if (!isValidating && !isSubmittedValidating && postSubmittedIds?.length > 0) {
-            const existsSubmitted = getSubmittedPosts(postSubmittedIds);
-            getPosts(postIds, existsSubmitted);
-        } else if (!isValidating && !isSubmittedValidating && postIds?.length > 0) {
-            getPosts(postIds);
+    // useEffect(() => {
+    //     if (!isValidating && !isSubmittedValidating && postSubmittedIds?.length > 0) {
+    //         const existsSubmitted = getSubmittedPosts(postSubmittedIds);
+    //         getPosts(postIds, existsSubmitted);
+    //     } else if (!isValidating && !isSubmittedValidating && postIds?.length > 0) {
+    //         getPosts(postIds);
+    //     }
+    // }, [isValidating, isSubmittedValidating]);
+
+    useEffect(() => { // Fix use effect for getSubmittedPosts
+        if (!isSubmittedValidating && postSubmittedIds?.length > 0) {
+            getSubmittedPosts(postSubmittedIds);
         }
-    }, [isValidating, isSubmittedValidating]);
+    }, [isSubmittedValidating, postSubmittedIds, getSubmittedPosts]);
 
     useEffect(() => { // Fix use effect for getSubmittedPosts
         if (!isValidating && postIds?.length > 0 && submittedHits === postSubmittedIds.length) {
@@ -486,6 +492,7 @@ const MyBounties: NextPage = () => {
     const [stage, setStage] = React.useState(1);
     const [stageInfo, setStageInfo] = React.useState(false);
 
+    // NOTE: Do we need to include stage here even and render everything in bacgrond like for createBounties??
     if (!isConnected) {
         return (
             <WelcomeCard isConnected={isConnected}/>
