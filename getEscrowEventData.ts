@@ -11,16 +11,16 @@ export type BountyOutcome = {
 export const getEscrowEventData = async (escrowContract: any, eventName: string, creatorAddress: string, hunterAddress: string, bountyAppId: string) => {
     const bountyOutcome = {} as BountyOutcome;
     if (eventName === 'finished') {
-        const filterDisputeRespondedTo = escrowContract.filters.DisputedRespondedTo(creatorAddress, hunterAddress, bountyAppId);
+        const filterDisputeRespondedTo = escrowContract.filters.DisputeRespondedTo(creatorAddress, hunterAddress, bountyAppId);
         const logsDisputeRespondedTo = await escrowContract.queryFilter(filterDisputeRespondedTo);
 
-        const filterFundsForceSentToHunter = escrowContract.filter.FundsForceSentToHunter(creatorAddress, hunterAddress, bountyAppId);
+        const filterFundsForceSentToHunter = escrowContract.filters.FundsForceSentToHunter(creatorAddress, hunterAddress, bountyAppId);
         const logsFundsForceSentToHunter = await escrowContract.queryFilter(filterFundsForceSentToHunter); 
 
-        const filterFundsWithdrawnToCreator = escrowContract.filter.FundsWithdrawnToCreator(creatorAddress, hunterAddress, bountyAppId);
+        const filterFundsWithdrawnToCreator = escrowContract.filters.FundsWithdrawnToCreator(creatorAddress, hunterAddress, bountyAppId);
         const logsFundsWithdrawnToCreator = await escrowContract.queryFilter(filterFundsWithdrawnToCreator);
 
-        const filterFundsSent = escrowContract.filter.FundsSent(creatorAddress, hunterAddress, bountyAppId);
+        const filterFundsSent = escrowContract.filters.FundsSent(creatorAddress, hunterAddress, bountyAppId);
         const logsFundsSent = escrowContract.queryFilter(filterFundsSent);
 
         await Promise.resolve([logsDisputeRespondedTo, logsFundsForceSentToHunter, logsFundsWithdrawnToCreator, logsFundsSent]);

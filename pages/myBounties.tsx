@@ -144,14 +144,15 @@ const MyBounties: NextPage = () => {
             }
 
             const postId = postData?.config?.url?.split("https://arweave.net/")[1];
-            
+            console.log('get posts',address)
+            console.log('get posts data',postData.data)
             const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, postData.data.creatorAddress, address ]);
 
             // Filter events
             const filter = escrowContract?.filters.Escrowed(postData.data.creatorAddress, address, postData.data.postId);
             const isEscrowed = await escrowContract?.queryFilter(filter);
             
-            const progress = await escrowContract.progress(bountyIdentifierInput);
+            const progress = await escrowContract?.progress(bountyIdentifierInput);
 
             return Promise.resolve([
                 progress,
@@ -276,7 +277,8 @@ const MyBounties: NextPage = () => {
             setSubmittedMap(postData.data.postId); // Log this bounty as submitted
             incrementSubmittedHits();
             const postId = postData?.config?.url?.split("https://arweave.net/")[1];
-
+            console.log('get submittedd posts',address)
+            console.log('get submitted posts data',postData.data)
             const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, postData.data.creatorAddress, address ]);
 
             const progress = await escrowContract.progress(bountyIdentifierInput);
@@ -444,15 +446,19 @@ const MyBounties: NextPage = () => {
 
     useEffect(() => { // Fix use effect for getSubmittedPosts
         if (!isSubmittedValidating && postSubmittedIds?.length > 0) {
+            console.log('get submitted posts called')
             getSubmittedPosts(postSubmittedIds);
         }
     }, [isSubmittedValidating, postSubmittedIds, getSubmittedPosts]);
 
     useEffect(() => { // Fix use effect for getSubmittedPosts
-        if (!isValidating && postIds?.length > 0 && submittedHits === postSubmittedIds.length) {
+        if (!isValidating && postIds?.length > 0 && (submittedHits === postSubmittedIds.length)) {
+            console.log('get posts called')
+            console.log('hits', submittedHits)
+            console.log(postIds)
             getPosts(postIds);
         }
-    }, [isValidating, postIds, getPosts, submittedHits, postSubmittedIds.length]);
+    }, [isValidating, postIds, getPosts, submittedHits, postSubmittedIds?.length]);
 
     const marks = [
         {
@@ -495,7 +501,9 @@ const MyBounties: NextPage = () => {
     // NOTE: Do we need to include stage here even and render everything in bacgrond like for createBounties??
     if (!isConnected) {
         return (
-            <WelcomeCard isConnected={isConnected}/>
+            <div className={styles.background}> 
+                <WelcomeCard isConnected={isConnected}/>
+            </div>
         );
     } else if (!isValidating && !isSubmittedValidating) {
         return (

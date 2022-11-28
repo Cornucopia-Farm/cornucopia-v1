@@ -116,27 +116,6 @@ const AppliedPosts: React.FC<Props> = props => {
             const startDate = dayjs(postData.data.startDate);
             const endDate = dayjs(postData.data.endDate);
             const expirationTime = endDate.diff(startDate, 'second');
-                        
-            // Case 2: Applied To
-            // if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 0 && isEscrowed.length === 0 ) {
-            // if (progress === 0 && isEscrowed.length === 0) {
-            //     appliedToBountiesApps.push(
-            //         <Application key={postId} 
-            //             person={postData.data.hunterAddress}
-            //             experience={postData.data.experience}
-            //             contactInfo={postData.data.contact}
-            //             arweaveHash={openBountyId}
-            //             appLinks={postData.data.appLinks}
-            //             appStatus={"applied"}
-            //             postId={postData.data.postId}
-            //             amount={postData.data.amount}
-            //             tokenAddress={postData.data.tokenAddress}
-            //             tokenDecimals={postData.data.tokenDecimals}
-            //             allowance={allowance}
-            //             expirationTime={expirationTime}
-            //         />
-            //     );
-            // } 
 
             return Promise.resolve([
                 progress,
@@ -184,8 +163,6 @@ const AppliedPosts: React.FC<Props> = props => {
     if (props.stage !== 2) {
         return <></>;
     }
-
-    console.log('stage', props.stage, data)
 
     if (appliedBountyPosts.length > 0) {
         return (
