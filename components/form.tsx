@@ -6,13 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
 import axios from 'axios';
-import ClientOnly from '../components/clientOnly';
-import Bundlr from "@bundlr-network/client";
-import privateKey from '../arweave-key-UxP5TeAmfwJXIbZY9rJE1uw4z1FHs-QuV-UlfC28cOI.json';
-import { NextApiResponse } from 'next';
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
 import useDebounce from './useDebounce';
@@ -21,12 +15,8 @@ import styles from '../styles/Home.module.css';
 import MenuItem from '@mui/material/MenuItem';
 import EthTokenList from '../ethTokenList.json';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import MenuList from '@mui/material/MenuList';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import Paper from '@mui/material/Paper';
-import Menu from '@mui/material/Menu';
 import { Dayjs } from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -46,7 +36,6 @@ type Props = {
     summary: string;
     formButtons: Array<string>;
     formType: string;
-    // handleCloseSubmitTrue?: (bountyAppId: string, creatorAddress: string) => void;
     tags: Array<any>;
     experience?: string;
     contact?: string;
@@ -54,7 +43,6 @@ type Props = {
     tokenAddress?: string;
     tokenSymbol?: string;
     tokenDecimals?: number;
-    // refetch?: () => any;
 };
 
 type ArweaveData = {
@@ -130,8 +118,6 @@ const Form: React.FC<Props> = props => {
     const handleCloseSubmitTrue = (bountyAppId: string, creatorAddress: string) => {
         setBountyAppId(bountyAppId);
         setCreatorAddress(creatorAddress);
-        // submit?.();
-        // handleCloseSubmit();
     };
 
 
@@ -204,7 +190,6 @@ const Form: React.FC<Props> = props => {
         setArweaveTrigger(!arweaveTrigger); // Trigger useeffect to call arweave upload api
         setOpen(false);
         setOpenSubmitCheck(false);
-        // props.refetch?.(); // Refetch data in createBounties after posting a bounty to show new bounty immediately
     };
 
     React.useEffect(() => {

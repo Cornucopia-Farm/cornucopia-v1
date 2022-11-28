@@ -1,27 +1,15 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 import Button from '@mui/material/Button';
 import React, { ReactElement, useCallback, useEffect, useMemo } from 'react';
-// import Table from '../components/table';
 import Box from '@mui/material/Box';
 import Form from '../components/form';
 import BasicAccordian from '../components/basicAccordion';
 import Card from '@mui/material/Card';
-// import { useQuery, gql } from '@apollo/client';
-import ClientOnly from '../components/clientOnly';
 import axios from 'axios';
 import { useAccount, useEnsName, useProvider, useSigner, useNetwork } from 'wagmi';
-import { CompressOutlined } from '@mui/icons-material';
 import { TailSpin } from 'react-loader-spinner';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
-import { publicProvider } from 'wagmi/providers/public';
 import styles from '../styles/Home.module.css';
-import { gsap } from "gsap";
-import cloud from '../images/cloud.jpg';
-import farm from '../images/farm.svg';
-import cows from '../images/cows.svg';
-import clouds from '../images/clouds.svg';
 import useSessionModal from '../components/useSessionModal';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -126,7 +114,6 @@ const OpenBounties: NextPage = () => {
                 setOpenBountyPosts(bountyPosts);
             }); // Wait for these promises to resolve before setting the state variables
         }
-        // change foreach to map which returns an array of promises then await for this array of promises to resolve using promise.all before the code continues   
     }, [address, chain]);
 
     useEffect(() => {
@@ -183,7 +170,7 @@ const OpenBounties: NextPage = () => {
                 <main>
                 <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '160px', paddingRight: '160px', color: 'rgba(6, 72, 41, 0.85)', }}> 
                     <h2 className={styles.h2}>Open Bounties</h2>
-                    <Card className={styles.accordionBackground} sx={{backgroundColor: 'rgba(6, 72, 41, 0.05)', borderRadius: '12px', paddingTop: '12px', paddingLeft: '12px', paddingRight: '12px', paddingBottom: '12px' }}> 
+                    <Card className={styles.accordionBackground} sx={{ backgroundColor: 'rgba(6, 72, 41, 0.05)', borderRadius: '12px', paddingTop: '12px', paddingLeft: '12px', paddingRight: '12px', paddingBottom: '12px', }}> 
                         {openBountyPosts}
                     </Card>
                 </Box>
@@ -192,7 +179,7 @@ const OpenBounties: NextPage = () => {
         );
     }
     return (
-        <Box sx={{ marginLeft: 'auto', marginRight: 'auto' }}> 
+        <Box sx={{ marginLeft: 'auto', marginRight: 'auto', }}> 
             <TailSpin color={"rgb(151, 208, 252)"}/>
         </Box>
     );

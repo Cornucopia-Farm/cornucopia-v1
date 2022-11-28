@@ -14,7 +14,6 @@ type Props = {
 };
 
 const CreateBountiesInfo: React.FC<Props> = props => {
-    
     return (
         <Dialog open={props.open} onClose={() => props.setOpen(false)} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
             <DialogTitle className={styles.formHeader}>Bounty Stages</DialogTitle>
