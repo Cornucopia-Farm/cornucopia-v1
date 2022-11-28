@@ -10,7 +10,7 @@ import CowAnimation3 from '../components/cowAnimation3';
 // img size is 1080 x 703
 export default function Footer() {
     return ( 
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px', position: 'absolute', bottom: 0, width: '100%', }}> 
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px', position: 'relative', bottom: 0, width: '100%', marginTop: 'auto', }}> 
         {/* <Box>  */}
           {/* <CowAnimation /> */}
           {/* <CowAnimation2 /> */}

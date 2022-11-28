@@ -23,7 +23,9 @@ type Props = {
     postId: string;
     existsSubmitted: Map<string, boolean>;
     setAppliedMap: (postId: string) => void;
-    incrementAppliedHits: () => void;
+    // incrementAppliedHits: () => void;
+    incrementAppliedHits: (postId: any, type: any) => void;
+    stage: number;
 };
 
 // Escrow Contract Config
@@ -51,6 +53,8 @@ const AppliedPosts: React.FC<Props> = props => {
 
     const { data, error, isValidating } = useSWR([GETAPPLIEDTOPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
     
+    const loaded = React.useRef(false); 
+
     if (error) {
         console.error(error);
     }
@@ -63,8 +67,16 @@ const AppliedPosts: React.FC<Props> = props => {
         if (!isValidating && bountyIds?.length > 0) {
             props.setAppliedMap(props.postId);
         } 
-        props.incrementAppliedHits(); // IS THIS RIGHT PLACE TO DO THIS?
     }, [isValidating, bountyIds?.length, props.setAppliedMap, props.postId]);
+
+    React.useEffect(() => {
+        if (!isValidating && !loaded.current) {
+            loaded.current = true;
+            //console.log(' increment applied hits!! ')
+            //console.log('postid', props.postId)
+            props.incrementAppliedHits(props.postId, 'applied post');
+        }
+    }, [isValidating, props.incrementAppliedHits]);
 
     const getAppliedPosts = React.useCallback(async (openBountyIds: Array<string>, existsSubmitted: Map<string, boolean>) => {
 
@@ -78,6 +90,9 @@ const AppliedPosts: React.FC<Props> = props => {
         const promises = openBountyIds?.map( async (openBountyId: string) => {
             const postData = await axios.get(`https://arweave.net/${openBountyId}`);
             const postId = postData?.config?.url?.split("https://arweave.net/")[1];
+            console.log('post data applied', postData)
+            console.log('address', address)
+            console.log(postData.data.hunterAddress)
             // this might need to be changed back to postData.data.postId
             if ( (existsSubmitted).has(postId!) ) { // should be postId b/c same bounty could have multiple hunters apply to it and have multiple applications?
                 return Promise.resolve([]);; 
@@ -165,13 +180,19 @@ const AppliedPosts: React.FC<Props> = props => {
                 setThisPostData(postDataArr);
             });
         }
-    }, []);
+    }, [address, signer, escrowContract]);
 
     React.useEffect(() => {
         if (bountyIds && bountyIds.length > 0 && !isValidating) {
             getAppliedPosts(bountyIds, props.existsSubmitted);
         }
     }, [bountyIds, isValidating, getAppliedPosts, props.existsSubmitted]);
+
+    if (props.stage !== 2) {
+        return <></>;
+    }
+
+    console.log('stage', props.stage, data)
 
     if (appliedBountyPosts.length > 0) {
         return (

@@ -97,6 +97,15 @@ const MyBounties: NextPage = () => {
     const [creatorNoActionBountyPosts, setCreatorNoActionBountyPosts] = React.useState(Array<JSX.Element>);
     const [finishedBountyPosts, setFinishedBountyPosts] = React.useState(Array<JSX.Element>);
 
+    const [submittedHits, setSubmittedHits] = React.useState(0); // Count of how many components in getSubmittedPosts func attempted to render; should equal 4 * bountyIds.length
+
+    const [existsSubmitted, setExistsSubmitted] = React.useState(new Map<string, boolean>());
+
+    const setSubmittedMap = React.useCallback((postId: string) => {
+        setExistsSubmitted(new Map(existsSubmitted.set(postId, true)));
+    }, []);
+
+
     const { data, error, isValidating } = useSWR([MYBOUNTIES, { address: address, chain: chain?.network! },], gqlFetcher);
 
     if (error) {
@@ -117,7 +126,7 @@ const MyBounties: NextPage = () => {
         return submittedData?.transactions?.edges.map((edge: any) => edge.node.id);
     }, [submittedData?.transactions?.edges]);
 
-    const getPosts = async (openBountyIds: Array<string>, existsSubmitted?: Promise<Map<string, boolean>>) => {
+    const getPosts = React.useCallback(async (openBountyIds: Array<string>, existsSubmitted?: Promise<Map<string, boolean>>) => {
         let appliedBounties: Array<JSX.Element> = [];
         let inProgressBounties: Array<JSX.Element> = []; 
         
@@ -126,7 +135,7 @@ const MyBounties: NextPage = () => {
 
             // If hunter has submitted work for this bounty then continue as bounties with work submitted are rendered below
             if (existsSubmitted && (await existsSubmitted).has(postData.data.postId)) {
-                return;
+                return Promise.resolve([]);;
             }
 
             const postId = postData?.config?.url?.split("https://arweave.net/")[1];
@@ -138,99 +147,117 @@ const MyBounties: NextPage = () => {
             const isEscrowed = await escrowContract?.queryFilter(filter);
             
             const progress = await escrowContract.progress(bountyIdentifierInput);
-            
 
-            // Case 1: Applied
-            if (progress === 0 && isEscrowed.length === 0) {
-                appliedBounties.push(
-                    <BasicAccordian key={postId}  
-                        company={postData.data.creatorAddress}
-                        postLinks={postData.data.postLinks}
-                        startDate={postData.data.startDate}
-                        endDate={postData.data.endDate}
-                        description={postData.data.description}
-                        bountyName={postData.data.title}
-                        amount={postData.data.amount}
-                        arweaveHash={openBountyId}
-                        disputes={false} 
-                        tokenSymbol={postData.data.tokenSymbol}
-                    />
-                );
-            } else if (isEscrowed.length > 0) { // Case 2: In Progress
-                inProgressBounties.push(
-                    <BasicAccordian key={postId}  
-                        company={postData.data.creatorAddress}
-                        postLinks={postData.data.postLinks}
-                        startDate={postData.data.startDate}
-                        endDate={postData.data.endDate}
-                        description={postData.data.description}
-                        bountyName={postData.data.title}
-                        amount={postData.data.amount}
-                        arweaveHash={openBountyId}
-                        disputes={false} 
-                        tokenSymbol={postData.data.tokenSymbol}
-                    >
-                        <Form  
-                            creatorAddress={postData.data.creatorAddress}
-                            hunterAddress={address!}
-                            postId={postData.data.postId}
-                            postLinks={postData.data.postLinks}
-                            startDate={postData.data.startDate}
-                            endDate={postData.data.endDate}
-                            description={postData.data.description}
-                            title={postData.data.title}
-                            amount={postData.data.amount}
-                            experience={postData.data.experience}
-                            contact={postData.data.contact}
-                            appLinks={postData.data.appLinks}
-                            tokenAddress={postData.data.tokenAddress}
-                            tokenSymbol={postData.data.tokenSymbol}
-                            tokenDecimals={postData.data.tokenDecimals}
-                            formName={"Submit"}
-                            summary={"Please fill out this form to submit your work for this bounty!"}  
-                            formButtons={["Cancel", "Submit"]}
-                            formType={"submitBounty"}
-                            tags={[
-                                {
-                                    name: "Content-Type",
-                                    value: "application/json"
-                                },
-                                {
-                                    name: "App-Name",
-                                    value: "Cornucopia-test2"
-                                },
-                                {
-                                    name: "Form-Type",
-                                    value: "bounty-app-submit"
-                                },
-                                {
-                                    name: "Hunter-Address",
-                                    value: address!
-                                },
-                                {
-                                    name: "Post-ID",
-                                    value: postData.data.postId // postID of the bounty created by the creator
-                                },
-                                {
-                                    name: "Chain",
-                                    value: chain?.network!
-                                }
-                            ]}
-                        />
-                    </BasicAccordian>
-                );   
-            } 
+            return Promise.resolve([
+                progress,
+                isEscrowed,
+                postId,
+                postData,
+                openBountyId
+            ]); 
         });
 
         if (promises) {
-            await Promise.all(promises); // Wait for these promises to resolve before setting the state variables
+            await Promise.all(promises).then(results => {
+                results.forEach(result => {
+                    if (result.length) {
+                        const progress = result[0];
+                        const isEscrowed = result[1];
+                        const postId = result[2];
+                        const postData = result[3];
+                        const openBountyId = result[4];
+
+                        // Case 1: Applied
+                        if (progress === 0 && isEscrowed.length === 0) {
+                            appliedBounties.push(
+                                <BasicAccordian key={postId}  
+                                    company={postData.data.creatorAddress}
+                                    postLinks={postData.data.postLinks}
+                                    startDate={postData.data.startDate}
+                                    endDate={postData.data.endDate}
+                                    description={postData.data.description}
+                                    bountyName={postData.data.title}
+                                    amount={postData.data.amount}
+                                    arweaveHash={openBountyId}
+                                    disputes={false} 
+                                    tokenSymbol={postData.data.tokenSymbol}
+                                />
+                            );
+                        } else if (isEscrowed.length > 0) { // Case 2: In Progress
+                            inProgressBounties.push(
+                                <BasicAccordian key={postId}  
+                                    company={postData.data.creatorAddress}
+                                    postLinks={postData.data.postLinks}
+                                    startDate={postData.data.startDate}
+                                    endDate={postData.data.endDate}
+                                    description={postData.data.description}
+                                    bountyName={postData.data.title}
+                                    amount={postData.data.amount}
+                                    arweaveHash={openBountyId}
+                                    disputes={false} 
+                                    tokenSymbol={postData.data.tokenSymbol}
+                                >
+                                    <Form  
+                                        creatorAddress={postData.data.creatorAddress}
+                                        hunterAddress={address!}
+                                        postId={postData.data.postId}
+                                        postLinks={postData.data.postLinks}
+                                        startDate={postData.data.startDate}
+                                        endDate={postData.data.endDate}
+                                        description={postData.data.description}
+                                        title={postData.data.title}
+                                        amount={postData.data.amount}
+                                        experience={postData.data.experience}
+                                        contact={postData.data.contact}
+                                        appLinks={postData.data.appLinks}
+                                        tokenAddress={postData.data.tokenAddress}
+                                        tokenSymbol={postData.data.tokenSymbol}
+                                        tokenDecimals={postData.data.tokenDecimals}
+                                        formName={"Submit"}
+                                        summary={"Please fill out this form to submit your work for this bounty!"}  
+                                        formButtons={["Cancel", "Submit"]}
+                                        formType={"submitBounty"}
+                                        tags={[
+                                            {
+                                                name: "Content-Type",
+                                                value: "application/json"
+                                            },
+                                            {
+                                                name: "App-Name",
+                                                value: "Cornucopia-test2"
+                                            },
+                                            {
+                                                name: "Form-Type",
+                                                value: "bounty-app-submit"
+                                            },
+                                            {
+                                                name: "Hunter-Address",
+                                                value: address!
+                                            },
+                                            {
+                                                name: "Post-ID",
+                                                value: postData.data.postId // postID of the bounty created by the creator
+                                            },
+                                            {
+                                                name: "Chain",
+                                                value: chain?.network!
+                                            }
+                                        ]}
+                                    />
+                                </BasicAccordian>
+                            );   
+                        }
+
+                    }
+                })
+            }); // Wait for these promises to resolve before setting the state variables
         }
 
         setAppliedBountyPosts(appliedBounties);
         setInProgressBountyPosts(inProgressBounties);
-    };
+    }, [address, escrowContract, chain]);
 
-    const getSubmittedPosts = async (openBountyIds: Array<string>) => {
+    const getSubmittedPosts = React.useCallback(async (openBountyIds: Array<string>) => {
         const existsSubmitted = new Map();
 
         let submittedBounties: Array<JSX.Element> = [];
@@ -253,124 +280,154 @@ const MyBounties: NextPage = () => {
 
             const wethAllowance = await wethContract.allowance(address, escrowAddress);
 
-            
-            if (progress === 1) { // Case 3: Submitted.
-                submittedBounties.push(
-                    <BasicAccordian key={postId}  
-                        company={postData.data.creatorAddress}
-                        postLinks={postData.data.postLinks}
-                        startDate={postData.data.startDate}
-                        endDate={postData.data.endDate}
-                        description={postData.data.description}
-                        bountyName={postData.data.title}
-                        amount={postData.data.amount}
-                        arweaveHash={openBountyId}
-                        workLinks={postData.data.workLinks}
-                        disputes={false} 
-                        tokenSymbol={postData.data.tokenSymbol}
-                    />
-                );
-            
-            } else if (progress === 2) { // Case 4: Hunter needs to respond to creator dispute.
-                const umaEventData = await getUMAEventData(umaContract, escrowContract, provider, 'propose', postData.data.creatorAddress, address!, postData.data.postId);
-                console.log('uma data', umaEventData)
-                console.log('ancil data', umaEventData.ancillaryData)
-                disputeInitiatedBounties.push(
-                    <BasicAccordian key={postId}  
-                        company={postData.data.creatorAddress}
-                        postLinks={postData.data.postLinks}
-                        startDate={postData.data.startDate}
-                        endDate={postData.data.endDate}
-                        description={postData.data.description}
-                        bountyName={postData.data.title}
-                        amount={postData.data.amount}
-                        arweaveHash={openBountyId}
-                        workLinks={postData.data.workLinks}
-                        disputes={false} 
-                        tokenSymbol={postData.data.tokenSymbol}
-                    >
-                        <HunterContractActions key={postId}
-                            allowance={wethAllowance}
-                            postId={postData.data.postId}
-                            creatorAddress={postData.data.creatorAddress}
-                            appStatus={"disputeResponse"}
-                            timestamp={umaEventData.timestamp}
-                            ancillaryData={umaEventData.ancillaryData}
-                            request={umaEventData.request}
-                        />
-                    </BasicAccordian>
-                );
-            } else if (progress === 3) { // Case 5: Waiting for dispute to be resolved.
-                disputeRespondedToBounties.push(
-                    <BasicAccordian key={postId}  
-                        company={postData.data.creatorAddress}
-                        postLinks={postData.data.postLinks}
-                        startDate={postData.data.startDate}
-                        endDate={postData.data.endDate}
-                        description={postData.data.description}
-                        bountyName={postData.data.title}
-                        amount={postData.data.amount}
-                        arweaveHash={openBountyId}
-                        workLinks={postData.data.workLinks}
-                        disputes={false} 
-                        tokenSymbol={postData.data.tokenSymbol}
-                    />
-                );
-            } else if (currentBlocktime && payoutExpirationTime <= currentBlocktime && progress === 1) {  // Case 6: Creator hasn't payed or disputed work within 2 weeks after work submission.
-                creatorNoActionBounties.push(
-                    <BasicAccordian key={postId}  
-                        company={postData.data.creatorAddress}
-                        postLinks={postData.data.postLinks}
-                        startDate={postData.data.startDate}
-                        endDate={postData.data.endDate}
-                        description={postData.data.description}
-                        bountyName={postData.data.title}
-                        amount={postData.data.amount}
-                        arweaveHash={openBountyId}
-                        workLinks={postData.data.workLinks}
-                        disputes={false} 
-                        tokenSymbol={postData.data.tokenSymbol}
-                    >
-                        <HunterContractActions key={postId}
-                            postId={postData.data.postId}
-                            creatorAddress={postData.data.creatorAddress}
-                            appStatus={"forceClaim"}
-                        />
-                    </BasicAccordian>
-                );
-            } else if (progress === 4) { // Case 7: Finished; need to check FundsSent event to see how they were resolved!!
-                const finishedStatus = await getEscrowEventData(escrowContract, 'finished', postData.data.creatorAddress, address!, postData.data.postId);
-                finishedBounties.push(
-                    <BasicAccordian key={postId}  
-                        company={postData.data.creatorAddress}
-                        postLinks={postData.data.postLinks}
-                        startDate={postData.data.startDate}
-                        endDate={postData.data.endDate}
-                        description={postData.data.description}
-                        bountyName={postData.data.title}
-                        amount={postData.data.amount}
-                        arweaveHash={openBountyId}
-                        workLinks={postData.data.workLinks}
-                        disputes={false} 
-                        tokenSymbol={postData.data.tokenSymbol}
-                        finishedStatus={finishedStatus}
-                    />
-                );
+            let umaEventData;
+            if (progress === 2) {
+                umaEventData = await getUMAEventData(umaContract, escrowContract, provider, 'propose', postData.data.creatorAddress, address!, postData.data.postId);
+
             }
+            let finishedStatus;
+            if (progress === 4) {
+                finishedStatus = await getEscrowEventData(escrowContract, 'finished', postData.data.creatorAddress, address!, postData.data.postId);
+            }
+
+            return Promise.resolve([
+                progress,
+                postId,
+                postData,
+                openBountyId,
+                umaEventData,
+                finishedStatus,
+                currentBlocktime,
+                payoutExpirationTime,
+                wethAllowance
+            ]);
         });
 
         if (promises) {
-            await Promise.all(promises); // Wait for these promises to resolve before setting the state variables
-        }
+            await Promise.all(promises).then(results => {
+                results.forEach(result => {
+                    if (result.length) {
+                        const progress = result[0];
+                        const postId = result[1];
+                        const postData = result[2];
+                        const openBountyId = result[3];
+                        const umaEventData = result[4];
+                        const finishedStatus = result[5];
+                        const currentBlocktime = result[6];
+                        const payoutExpirationTime = result[7];
+                        const wethAllowance = result[8];
 
-        setSubmittedBountyPosts(submittedBounties);
-        setDisputeInitiatedBountyPosts(disputeInitiatedBounties);
-        setDisputeRespondedToBountyPosts(disputeRespondedToBounties);
-        setCreatorNoActionBountyPosts(creatorNoActionBounties);
-        setFinishedBountyPosts(finishedBounties);
+                        if (progress === 1) { // Case 3: Submitted.
+                            submittedBounties.push(
+                                <BasicAccordian key={postId}  
+                                    company={postData.data.creatorAddress}
+                                    postLinks={postData.data.postLinks}
+                                    startDate={postData.data.startDate}
+                                    endDate={postData.data.endDate}
+                                    description={postData.data.description}
+                                    bountyName={postData.data.title}
+                                    amount={postData.data.amount}
+                                    arweaveHash={openBountyId}
+                                    workLinks={postData.data.workLinks}
+                                    disputes={false} 
+                                    tokenSymbol={postData.data.tokenSymbol}
+                                />
+                            );
+                        
+                        } else if (progress === 2) { // Case 4: Hunter needs to respond to creator dispute.
+                            disputeInitiatedBounties.push(
+                                <BasicAccordian key={postId}  
+                                    company={postData.data.creatorAddress}
+                                    postLinks={postData.data.postLinks}
+                                    startDate={postData.data.startDate}
+                                    endDate={postData.data.endDate}
+                                    description={postData.data.description}
+                                    bountyName={postData.data.title}
+                                    amount={postData.data.amount}
+                                    arweaveHash={openBountyId}
+                                    workLinks={postData.data.workLinks}
+                                    disputes={false} 
+                                    tokenSymbol={postData.data.tokenSymbol}
+                                >
+                                    <HunterContractActions key={postId}
+                                        allowance={wethAllowance}
+                                        postId={postData.data.postId}
+                                        creatorAddress={postData.data.creatorAddress}
+                                        appStatus={"disputeResponse"}
+                                        timestamp={umaEventData.timestamp}
+                                        ancillaryData={umaEventData.ancillaryData}
+                                        request={umaEventData.request}
+                                    />
+                                </BasicAccordian>
+                            );
+                        } else if (progress === 3) { // Case 5: Waiting for dispute to be resolved.
+                            disputeRespondedToBounties.push(
+                                <BasicAccordian key={postId}  
+                                    company={postData.data.creatorAddress}
+                                    postLinks={postData.data.postLinks}
+                                    startDate={postData.data.startDate}
+                                    endDate={postData.data.endDate}
+                                    description={postData.data.description}
+                                    bountyName={postData.data.title}
+                                    amount={postData.data.amount}
+                                    arweaveHash={openBountyId}
+                                    workLinks={postData.data.workLinks}
+                                    disputes={false} 
+                                    tokenSymbol={postData.data.tokenSymbol}
+                                />
+                            );
+                        } else if (currentBlocktime && payoutExpirationTime <= currentBlocktime && progress === 1) {  // Case 6: Creator hasn't payed or disputed work within 2 weeks after work submission.
+                            creatorNoActionBounties.push(
+                                <BasicAccordian key={postId}  
+                                    company={postData.data.creatorAddress}
+                                    postLinks={postData.data.postLinks}
+                                    startDate={postData.data.startDate}
+                                    endDate={postData.data.endDate}
+                                    description={postData.data.description}
+                                    bountyName={postData.data.title}
+                                    amount={postData.data.amount}
+                                    arweaveHash={openBountyId}
+                                    workLinks={postData.data.workLinks}
+                                    disputes={false} 
+                                    tokenSymbol={postData.data.tokenSymbol}
+                                >
+                                    <HunterContractActions key={postId}
+                                        postId={postData.data.postId}
+                                        creatorAddress={postData.data.creatorAddress}
+                                        appStatus={"forceClaim"}
+                                    />
+                                </BasicAccordian>
+                            );
+                        } else if (progress === 4) { // Case 7: Finished; need to check FundsSent event to see how they were resolved!!
+                            finishedBounties.push(
+                                <BasicAccordian key={postId}  
+                                    company={postData.data.creatorAddress}
+                                    postLinks={postData.data.postLinks}
+                                    startDate={postData.data.startDate}
+                                    endDate={postData.data.endDate}
+                                    description={postData.data.description}
+                                    bountyName={postData.data.title}
+                                    amount={postData.data.amount}
+                                    arweaveHash={openBountyId}
+                                    workLinks={postData.data.workLinks}
+                                    disputes={false} 
+                                    tokenSymbol={postData.data.tokenSymbol}
+                                    finishedStatus={finishedStatus}
+                                />
+                            );
+                        }
+                    }
+                });
+                setSubmittedBountyPosts(submittedBounties);
+                setDisputeInitiatedBountyPosts(disputeInitiatedBounties);
+                setDisputeRespondedToBountyPosts(disputeRespondedToBounties);
+                setCreatorNoActionBountyPosts(creatorNoActionBounties);
+                setFinishedBountyPosts(finishedBounties);
+            }); // Wait for these promises to resolve before setting the state variables
+        }
         
         return existsSubmitted;
-    };
+    }, [address, provider, escrowContract, wethContract, umaContract]);
 
     useEffect(() => {
         if (!isValidating && !isSubmittedValidating && postSubmittedIds?.length > 0) {

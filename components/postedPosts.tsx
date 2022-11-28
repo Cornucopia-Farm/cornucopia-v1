@@ -8,6 +8,7 @@ type Props = {
     existsApplied: Map<string, boolean>;
     existsSubmitted: Map<string, boolean>;
     isValidating: boolean;
+    stage: number;
 };
 
 const PostedPosts: React.FC<Props> = props => {
@@ -54,8 +55,8 @@ const PostedPosts: React.FC<Props> = props => {
             return Promise.resolve([]); // Equivalent ot continue in a forEach loop in ts
         }
 
-        const promise = Promise.resolve(
-            <NestedAccordian key={postId}
+        //const promise = Promise.resolve(
+           const result = <NestedAccordian key={postId}
                 postLinks={postData.data.postLinks}
                 startDate={postData.data.startDate}
                 endDate={postData.data.endDate}
@@ -65,14 +66,14 @@ const PostedPosts: React.FC<Props> = props => {
                 arweaveHash={openBountyId}
                 tokenSymbol={postData.data.tokenSymbol}
             />
-        );
+        //);
 
-        if (promise) {
-            promise.then(result => {
+        //if (promise) {
+          //  promise.then(result => {
                 postedBounties.push(result);
                 setPostedPosts(postedBounties);
-            });
-        }
+            //});
+        //}
         // setPostedPosts(postedBounties);
 
         // console.log("applied map", existsApplied)
@@ -109,6 +110,10 @@ const PostedPosts: React.FC<Props> = props => {
             getPostedPosts(props.postId, props.existsApplied, props.existsSubmitted);
         }
     }, [props.isValidating, props.postId, getPostedPosts, props.existsApplied, props.existsSubmitted]);
+
+    if (props.stage !== 1) {
+        return <></>;
+    }
 
     if (postedPosts.length > 0) {
         return (

@@ -69,24 +69,29 @@ const CreateBounties: NextPage = () => {
     const [appliedHits, setAppliedHits] = React.useState(0); // Count of how many components in getAppliedPosts func attempted to render; should equal 2 * bountyIds.length
     const [submittedHits, setSubmittedHits] = React.useState(0); // Count of how many components in getSubmittedPosts func attempted to render; should equal 4 * bountyIds.length
 
-    const incrementAppliedHits = () => {
-        setAppliedHits(appliedHits + 1);
-    };
+    const incrementAppliedHits = React.useCallback((postId: any, type: any) => {
+        console.log('post id >>>', postId, type)
+        setAppliedHits(state => state + 1);
+    }, []);
 
-    const incrementSubmittedHits = () => {
-        setSubmittedHits(submittedHits + 1);
-    };
+    const incrementSubmittedHits = React.useCallback(() => {
+        // setSubmittedHits(submittedHits + 1)
+        setSubmittedHits(state => state + 1);
+    }, []);
 
     const [existsApplied, setExistsApplied] = React.useState(new Map<string, boolean>());
     const [existsSubmitted, setExistsSubmitted] = React.useState(new Map<string, boolean>());
 
-    const setAppliedMap = (postId: string) => {
+    const setAppliedMap = React.useCallback((postId: string) => {
         setExistsApplied(new Map(existsApplied.set(postId, true)));
-    };
+    }, []);
 
-    const setSubmittedMap = (postId: string) => {
+    const setSubmittedMap = React.useCallback((postId: string) => {
         setExistsSubmitted(new Map(existsSubmitted.set(postId, true)));
-    };
+    }, []);
+
+    const [stage, setStage] = React.useState(1);
+    const [stageInfo, setStageInfo] = React.useState(false);
 
     // const [existsApplied, setExistsApplied] = React.useState(new Map());
     // const [existsSubmitted, setExistsSubmitted] = React.useState(new Map());
@@ -101,9 +106,9 @@ const CreateBounties: NextPage = () => {
         return data?.transactions?.edges.map((edge: any) => edge.node.id);
     }, [data?.transactions?.edges]);
 
-    console.log(postIds)
-    console.log(appliedHits)
-    console.log(submittedHits)
+    // console.log(postIds)
+    // console.log(appliedHits)
+    // console.log(submittedHits)
 
     const getPostedPosts = useCallback((openBountyIds: Array<string>) => {
         const postedBounties: Array<JSX.Element> = [];
@@ -159,6 +164,7 @@ const CreateBounties: NextPage = () => {
                     existsApplied={existsApplied}
                     existsSubmitted={existsSubmitted}
                     isValidating={isValidating}
+                    stage={stage}
                 />
             );
         });
@@ -168,7 +174,7 @@ const CreateBounties: NextPage = () => {
         // }
 
         setPostedComponents(postedBounties);
-    }, []);
+    }, [stage, existsApplied, existsSubmitted, isValidating]);
 
     const getAppliedPosts = useCallback(async (openBountyIds: Array<string>) => {
         // const existsApplied = new Map();
@@ -204,6 +210,7 @@ const CreateBounties: NextPage = () => {
                     existsSubmitted={existsSubmitted}
                     setAppliedMap={setAppliedMap}
                     incrementAppliedHits={incrementAppliedHits}
+                    stage={stage}
                 />
             );
             inProgressComponentsArr.push(
@@ -212,6 +219,7 @@ const CreateBounties: NextPage = () => {
                     existsSubmitted={existsSubmitted}
                     setAppliedMap={setAppliedMap}
                     incrementAppliedHits={incrementAppliedHits}
+                    stage={stage}
                 />
             );
         });
@@ -224,7 +232,7 @@ const CreateBounties: NextPage = () => {
         setInProgressComponents(inProgressComponentsArr);
 
         // return existsApplied;
-    }, []); // is there an external dependency here??
+    }, [stage, incrementAppliedHits, setAppliedMap, existsSubmitted]); // is there an external dependency here??
 
     const getSubmittedPosts = useCallback((openBountyIds: Array<string>) => {
         // const existsSubmitted = new Map(); 
@@ -279,6 +287,7 @@ const CreateBounties: NextPage = () => {
                     postId={postId}
                     setSubmittedMap={setSubmittedMap}
                     incrementSubmittedHits={incrementSubmittedHits}
+                    stage={stage}
                 />
             );
             disputeInitiatedComponentsArr.push(
@@ -314,7 +323,7 @@ const CreateBounties: NextPage = () => {
         setFinishedComponents(finishedComponentsArr);
 
         // return existsSubmitted;
-    }, []);
+    }, [stage, setSubmittedMap, incrementSubmittedHits]);
 
     useEffect(() => {
         if (!isValidating && postIds?.length > 0) {
@@ -323,17 +332,21 @@ const CreateBounties: NextPage = () => {
     }, [isValidating, postIds, getSubmittedPosts]);
 
     useEffect(() => {
-        console.log('submit hits', submittedHits)
-        if (!isValidating && postIds?.length > 0 && submittedHits === postIds?.length * 4) {
+        // fix this when everyhting is uncommented for the rest of the submitted work
+        if (!isValidating && postIds?.length > 0 && submittedHits === postIds.length * 1) {
+            console.log('applied post run')
             getAppliedPosts(postIds);
         }
-    }, [isValidating, postIds, submittedHits, getAppliedPosts]);
+    }, [isValidating, postIds, getAppliedPosts, submittedHits]);
 
     useEffect(() => {
-        if (!isValidating && postIds?.length > 0 && appliedHits === postIds?.length * 2) {
+        
+        if (!isValidating && postIds?.length > 0 && appliedHits === postIds.length * 2) {
+            console.log('applied hits', appliedHits)
+            console.log(postIds?.length)
             getPostedPosts(postIds);
         }
-    }, [isValidating, postIds, appliedHits, getPostedPosts]);
+    }, [isValidating, postIds, getPostedPosts, appliedHits]);
 
 
 
@@ -385,8 +398,6 @@ const CreateBounties: NextPage = () => {
         return marks[marks.findIndex((mark) => mark.value === value)].label
     }
       
-    const [stage, setStage] = React.useState(1);
-    const [stageInfo, setStageInfo] = React.useState(false);
 
     if (!isConnected) {
         return (
@@ -489,13 +500,13 @@ const CreateBounties: NextPage = () => {
                             /> 
                         </Box> 
                         {/* <ClientOnly> */}
-                            {stage === 1 && postedComponents}
-                            {stage === 2 && appliedComponents}
-                            {stage === 3 && inProgressComponents}
-                            {stage === 4 && submittedComponents}
-                            {stage === 5 && disputeInitiatedComponents}
-                            {stage === 6 && disputeRespondedToComponents}
-                            {stage === 7 && finishedComponents}
+                            {postedComponents}
+                            {appliedComponents}
+                            {inProgressComponents}
+                            {submittedComponents}
+                            {/* {disputeInitiatedComponents}
+                            {disputeRespondedToComponents}
+                            {finishedComponents} */}
                         {/* </ClientOnly> */}
                     </Box>
                 </main>

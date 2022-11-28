@@ -9,6 +9,7 @@ import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransac
 import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
+import { LocalConvenienceStoreOutlined } from '@mui/icons-material';
 
 // BUG: TypeError: Cannot read properties of null (reading 'getLogs') when const isEscrowed = await props.escrowContract.queryFilter(filter); likely bc escrowContract hasn't been defined
 // data noot showing up either for applied bounties most of the time hmm
@@ -18,7 +19,9 @@ type Props = {
     postId: string;
     existsSubmitted: Map<string, boolean>;
     setAppliedMap: (postId: string) => void;
-    incrementAppliedHits: () => void;
+    // incrementAppliedHits: () => void;
+    incrementAppliedHits: (postId: any, type: any) => void;
+    stage: number;
 };
 
 // Escrow Contract Config
@@ -48,6 +51,8 @@ const InProgressPosts: React.FC<Props> = props => {
     if (error) {
         console.error(error);
     }
+
+    const loaded = React.useRef(false); 
     
     const bountyIds = React.useMemo(() => {
         return data?.transactions?.edges.map((edge: any) => edge.node.id);
@@ -58,8 +63,15 @@ const InProgressPosts: React.FC<Props> = props => {
         if (!isValidating && bountyIds?.length > 0) {
             props.setAppliedMap(props.postId);
         }
-        props.incrementAppliedHits(); // IS THIS RIGHT PLACE TO DO THIS?
     }, [isValidating, bountyIds?.length, props.setAppliedMap, props.postId]);
+
+    React.useEffect(() => {
+        if (!isValidating && !loaded.current) {
+            loaded.current = true;
+            console.log(' increment applied hits!! ')
+            props.incrementAppliedHits(props.postId, 'in progress');
+        }
+    }, [isValidating, props.incrementAppliedHits]);
 
     const getInProgressPosts = React.useCallback(async (openBountyIds: Array<string>, existsSubmitted: Map<string, boolean>) => {
 
@@ -72,7 +84,7 @@ const InProgressPosts: React.FC<Props> = props => {
         
         const promises = openBountyIds?.map( async (openBountyId: string) => {
             const postData = await axios.get(`https://arweave.net/${openBountyId}`);
-            
+            console.log('in progress data', postData)
             if ( (existsSubmitted).has(postData.data.postId) ) {
                 return Promise.resolve([]); // Equivalent ot continue in a forEach loop in ts
             }
@@ -120,7 +132,8 @@ const InProgressPosts: React.FC<Props> = props => {
             await Promise.all(promises).then(results => {
                 results.forEach(result => {
                     if (result.length) {
-                        if (result[0].length > 0 ) { // Case 3: In Progress
+                        if (result[0].length > 0) { // Case 3: In Progress
+                            console.log('in progress true')
                             inProgressBountiesApps.push(result[1]);
                         }
                         postDataArr.push(result[2]);
@@ -130,13 +143,17 @@ const InProgressPosts: React.FC<Props> = props => {
                 setThisPostData(postDataArr);
             }); // Wait for these promises to resolve before setting the state variables
         }  
-    }, []);
+    }, [address, escrowContract, provider]);
 
     React.useEffect(() => {
         if (bountyIds && bountyIds.length > 0 && !isValidating) {
             getInProgressPosts(bountyIds, props.existsSubmitted);
         }
     }, [bountyIds, isValidating, getInProgressPosts, props.existsSubmitted]);
+
+    if (props.stage !== 3) {
+        return <></>;
+    }
 
     if (inProgressBountyPosts.length > 0) {
         return (
