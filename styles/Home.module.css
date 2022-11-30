@@ -1,29 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&family=Roboto+Flex:opsz,wght@8..144,100;8..144,200&family=Rokkitt:wght@100&family=Space+Grotesk:wght@300&family=Zen+Kaku+Gothic+New:wght@300;400&display=swap');
 
 .subHeadings {
-  padding-left: 400px;
-  color: #D77D13;
+  padding-left: 400px !important;;
+  color: #D77D13 !important;;
 }
 
 .container {
-  min-height: 100vh;
-  padding: 0 0.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  min-height: 100vh !important;;
+  padding: 0 0.5rem !important;;
+  display: flex !important;;
+  flex-direction: column !important;;
+  justify-content: center !important;;
+  align-items: center !important;;
+  height: 100vh !important;;
 }
 
 .main {
-  padding: 5rem 0;
+  padding: 5rem 0 !important;
   /* height: 108px + 1vh; */
   /* height: 108vh !important; */
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 .header {
@@ -32,7 +32,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around; */
-  background: rgb(15, 14, 13);
+  background: rgb(15, 14, 13) !important;
   /* background: linear-gradient(to bottom, rgb(52, 117, 229), rgb(77, 137, 216)) !important; */
 }
 
@@ -90,38 +90,38 @@
 
 .h2 {
   font-family: 'Space Grotesk' !important;
-  font-weight: 300;
-  text-transform: capitalize;
-  color: rgb(233, 233, 198);
+  font-weight: 300 !important;
+  text-transform: capitalize !important;
+  color: rgb(233, 233, 198) !important;
 }
 
 .cardTag {
   font-family: 'Space Grotesk' !important;
-  font-weight: 300;
-  font-size: 15px;
-  font-style: italic;
-  color: rgb(233, 233, 198);
-  display: flex;
-  text-align: left;
+  font-weight: 300 !important;
+  font-size: 15px !important;
+  font-style: italic !important;
+  color: rgb(233, 233, 198) !important;
+  display: flex !important;
+  text-align: left !important;
 }
 
 .cardInfo {
   font-family: 'Space Grotesk' !important;
-  font-weight: 300;
-  font-size: 'calc(2000px-1vh)';
+  font-weight: 300 !important;
+  font-size: 'calc(2000px-1vh)' !important;
   /* text-transform: capitalize; */
-  color: rgb(233, 233, 198);
-  display: flex;
-  text-align: left;
+  color: rgb(233, 233, 198) !important;
+  display: flex !important;
+  text-align: left !important;
 }
 
 .arweaveHash {
   font-family: 'Space Grotesk' !important;
-  font-weight: 300;
-  font-size: 18px + 1vw;
-  text-transform: capitalize;
+  font-weight: 300 !important;
+  font-size: 18px + 1vw !important;
+  text-transform: capitalize !important;
   color: rgb(233, 233, 198) !important;
-  display: flex;
+  display: flex !important;
 }
 
 .dialogBody {
@@ -130,47 +130,47 @@
 }
 
 .grid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  max-width: 800px;
-  margin-top: 3rem;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  max-width: 800px !important;
+  margin-top: 3rem !important;
 }
 
 .card {
-  margin: 1rem;
-  padding: 1.5rem;
-  text-align: left;
-  color: inherit;
-  text-decoration: none;
-  border: 1px solid #eaeaea;
-  border-radius: 10px;
-  transition: color 0.15s ease, border-color 0.15s ease;
-  width: 45%;
+  margin: 1rem !important;
+  padding: 1.5rem !important;
+  text-align: left !important;
+  color: inherit !important;
+  text-decoration: none !important;
+  border: 1px solid #eaeaea !important;
+  border-radius: 10px !important;
+  transition: color 0.15s ease, border-color 0.15s ease !important;
+  width: 45% !important;
 }
 
 .card:hover,
 .card:focus,
 .card:active {
-  color: #0070f3;
-  border-color: #0070f3;
+  color: #0070f3 !important;
+  border-color: #0070f3 !important;
 }
 
 .card h2 {
-  margin: 0 0 1rem 0;
-  font-size: 1.5rem;
+  margin: 0 0 1rem 0 !important;
+  font-size: 1.5rem !important;
 }
 
 .card p {
-  margin: 0;
-  font-size: 1.25rem;
-  line-height: 1.5;
+  margin: 0 !important;
+  font-size: 1.25rem !important;
+  line-height: 1.5 !important;
 }
 
 .logo {
-  height: 1em;
-  margin-left: 0.5rem;
+  height: 1em !important;
+  margin-left: 0.5rem !important;
 }
 
 @media (max-width: 600px) {
@@ -182,9 +182,9 @@
 
 .background {
   /* height: 108vh !important; */
-  z-index: -1;
-  min-height: 100vh;
-  padding-bottom: 12px;
+  z-index: -1 !important;
+  min-height: 100vh !important;
+  padding-bottom: 12px !important;
   /* flex-grow:1; */
   /* padding-bottom: 12px !important; */
   /* position: 'relative'; */
@@ -194,55 +194,55 @@
 }
 
 .sunGlow {
-  background-color: rgb(252, 239, 192);
-  border-radius: 20px;
+  background-color: rgb(252, 239, 192) !important;
+  border-radius: 20px !important;
   box-shadow:
     0 0 60px 20px #fff,  /* inner white */
     0 0 100px 60px rgb(251, 185, 64), /* middle magenta */
-    0 0 40px 70px rgb(230, 238, 165); /* outer cyan */
+    0 0 40px 70px rgb(230, 238, 165) !important; /* outer cyan */
 }
 
 .headerFont {
-  font-family: 'Space Grotesk';
-  font-weight: 300;
-  text-transform: capitalize;
+  font-family: 'Space Grotesk' !important;
+  font-weight: 300 !important;
+  text-transform: capitalize !important;
   color:rgb(248, 215, 154) !important;
 }
 
 .accordionBackground {
-  background-color: rgb(11, 11, 9);
+  background-color: rgb(11, 11, 9) !important;
 }
 
 .cardBackground {
-  background-color: rgb(23, 21, 20);
+  background-color: rgb(23, 21, 20) !important;
 }
 
 .formHeader {
   font-family: 'Space Grotesk' !important;
-  font-weight: 300;
-  text-transform: capitalize;
-  color: rgb(233, 233, 198);
-  background-color: rgb(23, 21, 20);
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+  font-weight: 300 !important;
+  text-transform: capitalize !important;
+  color: rgb(233, 233, 198) !important;
+  background-color: rgb(23, 21, 20) !important;
+  border-top-left-radius: 12px !important;
+  border-top-right-radius: 12px !important;
 }
 
 .formFooter {
   font-family: 'Space Grotesk' !important;
-  font-weight: 300;
-  text-transform: capitalize;
-  color: rgb(233, 233, 198);
-  background-color: rgb(23, 21, 20);
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
+  font-weight: 300 !important;
+  text-transform: capitalize !important;
+  color: rgb(233, 233, 198) !important;
+  background-color: rgb(23, 21, 20) !important;
+  border-bottom-left-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
 }
 
 .grass {
-  background-color: #ADD37F;
+  background-color: #ADD37F !important;
 }
 
 .sky {
-  background-color: #8FC9F7;
+  background-color: #8FC9F7 !important;
 }
 
 .backgroundWrap {
@@ -252,14 +252,14 @@
   position: fixed;
   right: 0;
   */
-  padding-top: 50px;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  position: fixed;
+  padding-top: 50px !important;
+  top: 0 !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  position: fixed !important;
 }
 
-/* KEYFRAMES */
+/* KEYFRAMES
 
 @-webkit-keyframes animateCloud {
   0% {
@@ -290,7 +290,7 @@
 
 /* ANIMATIONS */
 
-.x1 {
+/* .x1 {
   -webkit-animation: animateCloud 35s linear infinite;
   -moz-animation: animateCloud 35s linear infinite;
   animation: animateCloud 35s linear infinite;
@@ -338,11 +338,11 @@
   -webkit-transform: scale(0.55);
   -moz-transform: scale(0.55);
   transform: scale(0.55);
-}
+} */
 
 /* OBJECTS */
 
-.cloud {
+/* .cloud {
   background: #fff;
   background: -moz-linear-gradient(to bottom,  #fff 5%, #f1f1f1 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(5%,#fff), color-stop(100%,#f1f1f1));
@@ -392,4 +392,4 @@
   height: 180px;
   right: 50px;
   top: -90px;
-}
+} */
