@@ -100,7 +100,6 @@ const contractConfig = {
 };
 
 const Form: React.FC<Props> = props => {
-    
     const [open, setOpen] = React.useState(false);
     const [openSubmitCheck, setOpenSubmitCheck] = React.useState(false);
     const [formValues, setFormValues] = React.useState(defaultValues);
