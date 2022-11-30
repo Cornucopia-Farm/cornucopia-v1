@@ -26,7 +26,7 @@ const contractConfig = {
     contractInterface: escrowABI['abi'], // contract abi in json or JS format
 };
 
-const FinishedPosts: React.FC<Props> = props => {
+const FinishedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSubmittedHits, stage, }) => {
 
     // Wagmi address/contract info
     const { address, isConnected } = useAccount();
@@ -39,7 +39,7 @@ const FinishedPosts: React.FC<Props> = props => {
     const [finishedBountyPosts, setFinishedBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
 
-    const { data, error, isValidating } = useSWR([GETWORKSUBMITTEDPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
+    const { data, error, isValidating } = useSWR([GETWORKSUBMITTEDPOSTS, { postId: postId, chain: chain?.network! },], gqlFetcher);
 
     if (error) {
         console.error(error);
@@ -53,16 +53,16 @@ const FinishedPosts: React.FC<Props> = props => {
 
     React.useEffect(() => {
         if (!isValidating && bountyIds?.length > 0) {
-            props.setSubmittedMap(props.postId);
+            setSubmittedMap(postId);
         }
-    }, [isValidating, bountyIds?.length, props.setSubmittedMap, props.postId]);
+    }, [isValidating, bountyIds?.length, setSubmittedMap, postId]);
 
     React.useEffect(() => {
         if (!isValidating && !loaded.current) {
             loaded.current = true;
-            props.incrementSubmittedHits();
+            incrementSubmittedHits();
         }
-    }, [isValidating, props.incrementSubmittedHits]);
+    }, [isValidating, incrementSubmittedHits]);
 
     const getFinishedPosts = React.useCallback(async (openBountyIds: Array<string>) => {
 
@@ -134,13 +134,13 @@ const FinishedPosts: React.FC<Props> = props => {
         }
     }, [bountyIds, isValidating, getFinishedPosts]);
 
-    if (props.stage !== 7) {
+    if (stage !== 7) {
         return <></>;
     }
 
     if (finishedBountyPosts.length > 0) {
         return (
-            <NestedAccordian key={props.postId} 
+            <NestedAccordian key={postId} 
                 postLinks={thisPostData[0].data.postLinks}
                 startDate={thisPostData[0].data.startDate}
                 endDate={thisPostData[0].data.endDate}
@@ -169,7 +169,7 @@ const GETWORKSUBMITTEDPOSTS = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test2"]
+                    values: ["Cornucopia-test4"]
                 },
                 {
                     name: "Form-Type",

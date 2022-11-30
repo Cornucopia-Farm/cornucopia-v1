@@ -112,7 +112,7 @@
   /* text-transform: capitalize; */
   color: rgb(233, 233, 198);
   display: flex;
-  text-align: center;
+  text-align: left;
 }
 
 .arweaveHash {

@@ -1,5 +1,5 @@
-import React from "react";
-import { gsap } from "gsap";
+import React from 'react';
+import { gsap } from 'gsap';
 import Cow from '../images/cow.svg';
 
 function Icon() {
@@ -10,30 +10,19 @@ function Icon() {
     const legUpper2 = React.useRef();
     const tail = React.useRef();
 
-    React.useLayoutEffect(() => {
+    React.useEffect(() => {
 
         gsap.fromTo(cow.current, {
             paused: true,
-            x: -300,
+            x: -50,
             repeat: -1,
             ease:"linear.out"
           },{
             x: 1500,
             repeat: -1,
             ease:"linear.out",
-            duration: 30
+            duration: 100
           });
-
-        // gsap.fromTo(cow.current, {
-        //     duration: 1,
-        //     x: -300,
-        //     repeat: 0,
-        //     ease:"linear.out"
-        //   },{
-        //     x: 1500,
-        //     repeat: 0,
-        //     ease:"linear.out"
-        //   });
           gsap.fromTo(legUpper1.current, {
             transformOrigin: "top top",
             rotation: -15,

@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import { useQuery, gql } from '@apollo/client';
 import axios from 'axios';
 import { BigNumber, ContractInterface, ethers } from 'ethers';
 import NestedAccordian from './nestedAccordion';
@@ -31,15 +30,7 @@ const wethContractConfig = {
     contractInterface: wethABI as ContractInterface, // contract abi in json or JS format
 };
 
-// // WETH Contract ERC-20 Config
-// const wethERC20ContractConfig = {
-//     addressOrName: process.env.NEXT_PUBLIC_WETH_ADDRESS!, // contract address
-//     contractInterface: erc20ABI['abi'], // contract abi in json or JS format
-// };
-
-const SubmittedPosts: React.FC<Props> = props => {
-
-    // Wagmi address/contract info
+const SubmittedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSubmittedHits, stage, })  => {
     const { address, isConnected } = useAccount();
 
     const { data: signer, isError, isLoading } = useSigner();
@@ -49,15 +40,12 @@ const SubmittedPosts: React.FC<Props> = props => {
 
     const escrowContract = useContract({...contractConfig, signerOrProvider: signer, });
     const wethContract = useContract({...wethContractConfig, signerOrProvider: signer, });
-    // const wethContract20 = useContract({...wethERC20ContractConfig, signerOrProvider: signer, });
 
     const [submittedBountyPosts, setSubmittedBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
     
-    // const { data, loading, error, startPolling } = useQuery(GETWORKSUBMITTEDPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, });
-    // startPolling(1000);
 
-    const { data, error, isValidating } = useSWR([GETWORKSUBMITTEDPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
+    const { data, error, isValidating } = useSWR([GETWORKSUBMITTEDPOSTS, { postId: postId, chain: chain?.network! },], gqlFetcher);
 
     if (error) {
         console.error(error);
@@ -71,16 +59,16 @@ const SubmittedPosts: React.FC<Props> = props => {
 
     React.useEffect(() => {
         if (!isValidating && bountyIds?.length > 0) {
-            props.setSubmittedMap(props.postId);
+            setSubmittedMap(postId);
         }
-    }, [isValidating, bountyIds?.length, props.setSubmittedMap, props.postId]);
+    }, [isValidating, bountyIds?.length, setSubmittedMap, postId]);
 
     React.useEffect(() => {
         if (!isValidating && !loaded.current) {
             loaded.current = true;
-            props.incrementSubmittedHits();
+            incrementSubmittedHits();
         }
-    }, [isValidating, props.incrementSubmittedHits]);
+    }, [isValidating, incrementSubmittedHits]);
 
     const getSubmittedPosts = React.useCallback(async (openBountyIds: Array<string>) => {
 
@@ -95,10 +83,7 @@ const SubmittedPosts: React.FC<Props> = props => {
             const postData = await axios.get(`https://arweave.net/${openBountyId}`);
             
             const postId = postData?.config?.url?.split("https://arweave.net/")[1];
-            // postDataArr.push(postData);
             const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, address, postData.data.hunterAddress ]);
-            // setBountyIdentifier(bountyIdentifierInput);
-            // bountyProgress();
 
             const progress = await escrowContract.progress(bountyIdentifierInput);
 
@@ -115,28 +100,6 @@ const SubmittedPosts: React.FC<Props> = props => {
             }
 
             const wethAllowance = await wethContract.allowance(address, escrowAddress);
-
-            // if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 1 ) { // Case 4: Submitted
-            /*if (progress === 1) {
-                submittedBountiesApps.push(
-                    <Application key={postId} 
-                        person={postData.data.hunterAddress}
-                        experience={postData.data.experience}
-                        contactInfo={postData.data.contact}
-                        arweaveHash={openBountyId}
-                        appLinks={postData.data.appLinks}
-                        appStatus={"submitted"}
-                        postId={postData.data.postId}
-                        workLinks={postData.data.workLinks}
-                        postLinks={postData.data.postLinks}
-                        tokenAddress={postData.data.tokenAddress}
-                        amount={postData.data.amount}
-                        tokenDecimals={postData.data.tokenDecimals}
-                        allowance={allowance}
-                        wethAllowance={wethAllowance}
-                    />
-                );
-            }*/
 
             return Promise.resolve([
                 progress,
@@ -170,9 +133,9 @@ const SubmittedPosts: React.FC<Props> = props => {
                 });
                 setSubmittedBountyPosts(submittedBountiesApps);
                 setThisPostData(postDataArr);
-            }); // Wait for these promises to resolve before setting the state variables
+            });
         }
-    }, [address, signer, wethContract, escrowContract]);
+    }, [address, signer, wethContract, escrowContract, escrowAddress]);
 
     React.useEffect(() => {
         if (bountyIds && bountyIds.length > 0 && !isValidating) {
@@ -180,13 +143,13 @@ const SubmittedPosts: React.FC<Props> = props => {
         }
     }, [bountyIds, isValidating, getSubmittedPosts]);
 
-    if (props.stage !== 4) {
+    if (stage !== 4) {
         return <></>;
     }
 
     if (submittedBountyPosts.length > 0) {
         return (
-            <NestedAccordian key={props.postId} 
+            <NestedAccordian key={postId} 
                 postLinks={thisPostData[0].data.postLinks}
                 startDate={thisPostData[0].data.startDate}
                 endDate={thisPostData[0].data.endDate}
@@ -215,7 +178,7 @@ const GETWORKSUBMITTEDPOSTS = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test2"]
+                    values: ["Cornucopia-test4"]
                 },
                 {
                     name: "Form-Type",

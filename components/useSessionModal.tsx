@@ -13,7 +13,7 @@ const useSessionModal = (): [boolean, () => void] => {
       const modalKey = "modalSession";
       const modalSession = localStorage.getItem(modalKey);
       setShowModal(modalSession !== session);
-    });
+    }, []);
 
     return [showModal, hideModal];
 };

@@ -12,8 +12,6 @@ import { gql } from 'graphql-request';
 import { LocalConvenienceStoreOutlined } from '@mui/icons-material';
 
 // BUG: TypeError: Cannot read properties of null (reading 'getLogs') when const isEscrowed = await props.escrowContract.queryFilter(filter); likely bc escrowContract hasn't been defined
-// data noot showing up either for applied bounties most of the time hmm
-
 
 type Props = {
     postId: string;
@@ -29,7 +27,7 @@ const contractConfig = {
     contractInterface: escrowABI['abi'], // contract abi in json or JS format
 };
 
-const InProgressPosts: React.FC<Props> = props => {
+const InProgressPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedMap, incrementAppliedHits, stage, }) => {
 
     // Wagmi address/contract info
     const { address, isConnected } = useAccount();
@@ -43,7 +41,7 @@ const InProgressPosts: React.FC<Props> = props => {
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
     
 
-    const { data, error, isValidating } = useSWR([GETAPPLIEDTOPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
+    const { data, error, isValidating } = useSWR([GETAPPLIEDTOPOSTS, { postId: postId, chain: chain?.network! },], gqlFetcher);
 
     if (error) {
         console.error(error);
@@ -58,16 +56,16 @@ const InProgressPosts: React.FC<Props> = props => {
    
     React.useEffect(() => {
         if (!isValidating && bountyIds?.length > 0) {
-            props.setAppliedMap(props.postId);
+            setAppliedMap(postId);
         }
-    }, [isValidating, bountyIds?.length, props.setAppliedMap, props.postId]);
+    }, [isValidating, bountyIds?.length, setAppliedMap, postId]);
 
     React.useEffect(() => {
         if (!isValidating && !loaded.current) {
             loaded.current = true;
-            props.incrementAppliedHits();
+            incrementAppliedHits();
         }
-    }, [isValidating, props.incrementAppliedHits]);
+    }, [isValidating, incrementAppliedHits]);
 
     const getInProgressPosts = React.useCallback(async (openBountyIds: Array<string>, existsSubmitted: Map<string, boolean>) => {
 
@@ -143,17 +141,17 @@ const InProgressPosts: React.FC<Props> = props => {
 
     React.useEffect(() => {
         if (bountyIds && bountyIds.length > 0 && !isValidating) {
-            getInProgressPosts(bountyIds, props.existsSubmitted);
+            getInProgressPosts(bountyIds, existsSubmitted);
         }
-    }, [bountyIds, isValidating, getInProgressPosts, props.existsSubmitted]);
+    }, [bountyIds, isValidating, getInProgressPosts, existsSubmitted]);
 
-    if (props.stage !== 3) {
+    if (stage !== 3) {
         return <></>;
     }
 
     if (inProgressBountyPosts.length > 0) {
         return (
-            <NestedAccordian key={props.postId} 
+            <NestedAccordian key={postId} 
                 postLinks={thisPostData[0].data.postLinks}
                 startDate={thisPostData[0].data.startDate}
                 endDate={thisPostData[0].data.endDate}
@@ -181,7 +179,7 @@ const GETAPPLIEDTOPOSTS = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test2"]
+                    values: ["Cornucopia-test4"]
                 },
                 {
                     name: "Form-Type",

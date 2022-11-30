@@ -1,42 +1,22 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 import Button from '@mui/material/Button';
 import React, { ReactElement, useEffect } from 'react';
 import BasicAccordian from '../components/basicAccordion';
 import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
 import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import BountyCard from '../components/bountyCard';
-// import { useQuery, gql } from '@apollo/client';
-import ClientOnly from '../components/clientOnly';
 import Form from '../components/form';
 import axios from 'axios';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import { TailSpin } from 'react-loader-spinner';
-import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransaction, useContractRead, useBlockNumber, useContract, usePrepareContractWrite, useContractEvent, useNetwork, useProvider, useSigner } from 'wagmi';
-import { ethers, BigNumber, ContractInterface } from 'ethers';
+import { useAccount, useContract, useNetwork, useProvider, useSigner } from 'wagmi';
+import { ethers, ContractInterface } from 'ethers';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
 import umaABI from '../cornucopia-contracts/out/SkinnyOptimisticOracle.sol/SkinnyOptimisticOracle.json';
 import wethABI from '../WETH9.json';
-import useDebounce from '../components/useDebounce';
-import SimpleSnackBar from '../components/simpleSnackBar';
-import { Request, getUMAEventData } from '../getUMAEventData';
+import { getUMAEventData } from '../getUMAEventData';
 import styles from '../styles/Home.module.css';
 import Slider from '@mui/material/Slider';
-import Link from 'next/link';
 import WelcomeCard from '../components/welcomeCard';
-import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
-import Tooltip from '@mui/material/Tooltip';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import MyBountiesInfo from '../components/myBountiesInfo';
 import HunterContractActions from '../components/hunterContractActions';
@@ -53,12 +33,6 @@ import { getEscrowEventData } from '../getEscrowEventData';
 // 5. (Sometimes) Waiting for Dispute To Be Resolved (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.DisputeRespondedTo); CHECK PROGRESS MAPPING
 // 6. (Sometimes) Bounty creator hasn't payed or disputed within 2 weeks after work submission (payoutExpiration[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] > block.timestamp); CHECK PAYOUTEXPIRATION MAPPING, CURRENT BLOCKTIME
 // 7. Finished (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.Resolved); look at FundsSent event to figure out how they were resolved; CHECK PROGRESS MAPPING, FUNDSSENT EVENT
-
-// TODO: FIX: Data renders only after clicking on page twice or more, but shows up after one click once it's cached hm;
-// TODO: Take care of different payout cases: deduce who won by listening to emmitted event from payout fn
-// TODO: Listen for uma contract emitted event to get necessary info for hunterDisputeResponse function!
-// TODO: Test dispute response and forcepayout workflows on the app!
-
 
 // Escrow Contract Config
 const contractConfig = {
@@ -100,7 +74,6 @@ const MyBounties: NextPage = () => {
     const [submittedHits, setSubmittedHits] = React.useState(0); // Count of how many components in getSubmittedPosts func attempted to render; 
 
     const incrementSubmittedHits = React.useCallback(() => {
-        // setSubmittedHits(submittedHits + 1)
         setSubmittedHits(state => state + 1);
     }, []);
 
@@ -108,6 +81,7 @@ const MyBounties: NextPage = () => {
 
     const setSubmittedMap = React.useCallback((postId: string) => {
         setExistsSubmitted(new Map(existsSubmitted.set(postId, true)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
@@ -144,8 +118,7 @@ const MyBounties: NextPage = () => {
             }
 
             const postId = postData?.config?.url?.split("https://arweave.net/")[1];
-            console.log('get posts',address)
-            console.log('get posts data',postData.data)
+
             const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, postData.data.creatorAddress, address ]);
 
             // Filter events
@@ -173,8 +146,7 @@ const MyBounties: NextPage = () => {
                         const postData = result[3];
                         const openBountyId = result[4];
 
-                        // Case 1: Applied
-                        if (progress === 0 && isEscrowed.length === 0) {
+                        if (progress === 0 && isEscrowed.length === 0) { // Case 1: Applied
                             appliedBounties.push(
                                 <BasicAccordian key={postId}  
                                     company={postData.data.creatorAddress}
@@ -230,7 +202,7 @@ const MyBounties: NextPage = () => {
                                             },
                                             {
                                                 name: "App-Name",
-                                                value: "Cornucopia-test2"
+                                                value: "Cornucopia-test4"
                                             },
                                             {
                                                 name: "Form-Type",
@@ -258,13 +230,11 @@ const MyBounties: NextPage = () => {
                 });
                 setAppliedBountyPosts(appliedBounties);
                 setInProgressBountyPosts(inProgressBounties);
-            }); // Wait for these promises to resolve before setting the state variables
+            }); 
         }
     }, [address, escrowContract, chain, existsSubmitted]);
 
     const getSubmittedPosts = React.useCallback(async (openBountyIds: Array<string>) => {
-        // const existsSubmitted = new Map();
-
         let submittedBounties: Array<JSX.Element> = [];
         let disputeInitiatedBounties: Array<JSX.Element> = [];
         let disputeRespondedToBounties: Array<JSX.Element> = [];
@@ -273,12 +243,12 @@ const MyBounties: NextPage = () => {
         
         const promises = openBountyIds?.map( async (openBountyId: string) => {
             const postData = await axios.get(`https://arweave.net/${openBountyId}`);
-            // existsSubmitted.set(postData.data.postId, true); // Log this bounty as submitted
+
             setSubmittedMap(postData.data.postId); // Log this bounty as submitted
             incrementSubmittedHits();
+
             const postId = postData?.config?.url?.split("https://arweave.net/")[1];
-            console.log('get submittedd posts',address)
-            console.log('get submitted posts data',postData.data)
+           
             const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, postData.data.creatorAddress, address ]);
 
             const progress = await escrowContract.progress(bountyIdentifierInput);
@@ -430,32 +400,19 @@ const MyBounties: NextPage = () => {
                 setDisputeRespondedToBountyPosts(disputeRespondedToBounties);
                 setCreatorNoActionBountyPosts(creatorNoActionBounties);
                 setFinishedBountyPosts(finishedBounties);
-            }); // Wait for these promises to resolve before setting the state variables
+            }); 
         }
-        
-    }, [address, provider, escrowContract, wethContract, umaContract, setSubmittedMap, incrementSubmittedHits]);
+    }, [address, provider, escrowContract, wethContract, umaContract, escrowAddress, setSubmittedMap, incrementSubmittedHits]);
 
-    // useEffect(() => {
-    //     if (!isValidating && !isSubmittedValidating && postSubmittedIds?.length > 0) {
-    //         const existsSubmitted = getSubmittedPosts(postSubmittedIds);
-    //         getPosts(postIds, existsSubmitted);
-    //     } else if (!isValidating && !isSubmittedValidating && postIds?.length > 0) {
-    //         getPosts(postIds);
-    //     }
-    // }, [isValidating, isSubmittedValidating]);
-
-    useEffect(() => { // Fix use effect for getSubmittedPosts
+    useEffect(() => { 
         if (!isSubmittedValidating && postSubmittedIds?.length > 0) {
-            console.log('get submitted posts called')
+            console.log("get submitted called")
             getSubmittedPosts(postSubmittedIds);
         }
     }, [isSubmittedValidating, postSubmittedIds, getSubmittedPosts]);
 
-    useEffect(() => { // Fix use effect for getSubmittedPosts
-        if (!isValidating && postIds?.length > 0 && (submittedHits === postSubmittedIds.length)) {
-            console.log('get posts called')
-            console.log('hits', submittedHits)
-            console.log(postIds)
+    useEffect(() => {
+        if (!isValidating && postIds?.length > 0 && (submittedHits === postSubmittedIds?.length)) {
             getPosts(postIds);
         }
     }, [isValidating, postIds, getPosts, submittedHits, postSubmittedIds?.length]);
@@ -498,7 +455,6 @@ const MyBounties: NextPage = () => {
     const [stage, setStage] = React.useState(1);
     const [stageInfo, setStageInfo] = React.useState(false);
 
-    // NOTE: Do we need to include stage here even and render everything in bacgrond like for createBounties??
     if (!isConnected) {
         return (
             <div className={styles.background}> 
@@ -585,9 +541,11 @@ const MyBounties: NextPage = () => {
     }
     
     return (
-        <Box sx={{ marginLeft: 'auto', marginRight: 'auto' }}> 
-            <TailSpin color={"rgb(151, 208, 252)"}/>
-        </Box>
+        <div className={styles.background}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', }}> 
+                <TailSpin color={"rgb(233, 233, 198)"}/>
+            </Box>     
+        </div>
     );
 };
 
@@ -604,7 +562,7 @@ const MYBOUNTIES = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test2"]
+                    values: ["Cornucopia-test4"]
                 },
                 {
                     name: "Form-Type",
@@ -640,7 +598,7 @@ const MYSUBMITTEDBOUNTIES = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test2"]
+                    values: ["Cornucopia-test4"]
                 },
                 {
                     name: "Form-Type",

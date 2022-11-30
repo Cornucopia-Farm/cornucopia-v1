@@ -19,10 +19,10 @@ const CreateBountiesInfo: React.FC<Props> = props => {
             <DialogTitle className={styles.formHeader}>Bounty Stages</DialogTitle>
             <DialogContent className={styles.cardBackground}>
                 <DialogContentText className={styles.dialogBody}>
-                Posted: View all the bounties that you've posted but bounty hunters haven't yet applied to.
+                Posted: View all the bounties that you&apos;ve posted but bounty hunters haven&apos;t yet applied to.
                 <br />
                 <br />
-                Applied To: View all the bounties that bounty hunters have applied to. Under each bounty name you can find the hunters' applications.
+                Applied To: View all the bounties that bounty hunters have applied to. Under each bounty name you can find the hunters&apos; applications.
                 To accept their application, click Escrow to escrow the bounty amount into the Cornucopia contract. 
                 <br />
                 <br />
@@ -30,14 +30,14 @@ const CreateBountiesInfo: React.FC<Props> = props => {
                 will move to the Submitted stage. 
                 <br />
                 <br />
-                Submitted: View all bounties bounty hunters have submitted. If you're satisfied with their work, then you can 
-                click Pay to payout the bounty amount. Otherwise, click Dispute to start a dispute by putting up a bond in UMA's 
-                dispute resolution system. The bounty hunter has 1 week to respond to your dispute. If they don't respond then you get your escrowed funds back, otherwise the dispute gets 
+                Submitted: View all bounties bounty hunters have submitted. If you&apos;re satisfied with their work, then you can 
+                click Pay to payout the bounty amount. Otherwise, click Dispute to start a dispute by putting up a bond in UMA&apos;s 
+                dispute resolution system. The bounty hunter has 1 week to respond to your dispute. If they don&apos;t respond then you get your escrowed funds back, otherwise the dispute gets 
                 escalated to UMA token holders (using <Link target="_blank" rel="noopener" href="https://umaproject.org/products/optimistic-oracle">UMAs Optimistic Oracle</Link>) 
-                who will then vote on whether they did the work, didn't do the work, or if it's unclear if the hunter did the work according to your spec. 
+                who will then vote on whether they did the work, didn&apos;t do the work, or if it&apos;s unclear if the hunter did the work according to your spec. 
                 <br />
                 <br />
-                Dispute Initiated: View all bounties where you have disputedd the bounty hunter's submitted work but they have not yet
+                Dispute Initiated: View all bounties where you have disputedd the bounty hunter&apos;s submitted work but they have not yet
                 responded.
                 <br />
                 <br />
