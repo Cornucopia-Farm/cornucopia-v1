@@ -21,13 +21,13 @@ type Props = {
 
 // Escrow Contract Config
 const contractConfig = {
-    addressOrName: process.env.NEXT_PUBLIC_ESCROW_ADDRESS!, // contract address
+    addressOrName: '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', // process.env.NEXT_PUBLIC_ESCROW_ADDRESS!, // contract address
     contractInterface: escrowABI['abi'], // contract abi in json or JS format
 };
 
 // UMA Skinny OO Contract Config
 const umaContractConfig = {
-    addressOrName: process.env.NEXT_PUBLIC_OO_ADDRESS!, // contract address for OO not skinny OO so need to change
+    addressOrName: '0xeDc52A961B5Ca2AC7B2e0bc36714dB60E5a115Ab', // process.env.NEXT_PUBLIC_OO_ADDRESS!, // contract address for OO not skinny OO so need to change
     contractInterface: umaABI['abi'],
 };
 
@@ -41,7 +41,7 @@ const DisputeRespondedToPosts: React.FC<Props> = ({ postId, setSubmittedMap, inc
 
     const escrowContract = useContract({...contractConfig, signerOrProvider: signer,});
     const umaContract = useContract({...umaContractConfig, signerOrProvider: signer, });
-    const escrowAddress = process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
+    const escrowAddress = '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4'; // process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
     const identifier = "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000";
 
     const [disputeRespondedToBountyPosts, setDisputeRespondedToBountyPosts] = React.useState(Array<JSX.Element>);

@@ -28,7 +28,7 @@ type Props = {
 
 // Escrow Contract Config
 const contractConfig = {
-    addressOrName: process.env.NEXT_PUBLIC_ESCROW_ADDRESS!, // contract address
+    addressOrName: '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', // process.env.NEXT_PUBLIC_ESCROW_ADDRESS!, // contract address
     contractInterface: escrowABI['abi'], // contract abi in json or JS format
 };
 
@@ -40,7 +40,7 @@ const umaContractConfig = {
 
 // WETH Contract Config (For UMA Bonds)
 const wethContractConfig = {
-    addressOrName: process.env.NEXT_PUBLIC_WETH_ADDRESS!, // contract address
+    addressOrName: '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6', // process.env.NEXT_PUBLIC_WETH_ADDRESS!, // contract address
     contractInterface: wethABI as ContractInterface, // contract abi in json or JS format
 };
 
@@ -52,7 +52,7 @@ const HunterContractActions: React.FC<Props> = props => {
     const provider = useProvider();
     const { chain } = useNetwork();
 
-    const escrowAddress = process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
+    const escrowAddress = '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4'; // process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
 
     // const escrowContract = useContract({...contractConfig, signerOrProvider: signer, });
     // const umaContract = useContract({...umaContractConfig, signerOrProvider: signer, });

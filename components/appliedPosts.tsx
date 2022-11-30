@@ -21,7 +21,7 @@ type Props = {
 
 // Escrow Contract Config
 const contractConfig = {
-    addressOrName: process.env.NEXT_PUBLIC_ESCROW_ADDRESS!, // contract address
+    addressOrName: '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', // process.env.NEXT_PUBLIC_ESCROW_ADDRESS!, // contract address
     contractInterface: escrowABI['abi'], // contract abi in json or JS format
 };
 
@@ -31,7 +31,7 @@ const AppliedPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedMap,
     const { data: signer, isError, isLoading } = useSigner();
     const { chain } = useNetwork();
     const zeroAddress = '0x0000000000000000000000000000000000000000';
-    const escrowAddress = process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
+    const escrowAddress = '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4'; //process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
 
     const escrowContract = useContract({...contractConfig, signerOrProvider: signer,});
 

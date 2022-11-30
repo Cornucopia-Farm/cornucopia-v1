@@ -49,13 +49,13 @@ type Props = {
 
 // Escrow Contract Config
 const contractConfig = {
-  addressOrName: process.env.NEXT_PUBLIC_ESCROW_ADDRESS!, // contract address
+  addressOrName: '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', // process.env.NEXT_PUBLIC_ESCROW_ADDRESS!, // contract address
   contractInterface: escrowABI['abi'], // contract abi in json or JS format
 };
 
 // WETH Contract Config
 const wethContractConfig = {
-  addressOrName: process.env.NEXT_PUBLIC_WETH_ADDRESS!, // contract address
+  addressOrName: '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6', // process.env.NEXT_PUBLIC_WETH_ADDRESS!, // contract address
   contractInterface: wethABI as ContractInterface, // contract abi in json or JS format
 };
 
@@ -99,7 +99,7 @@ const Application: React.FC<Props> = props => {
 
   const bondAmt = ethers.utils.parseUnits("0.1", "ether"); // Hard-coded (for now) bondAmt
   const finalFee = ethers.utils.parseUnits("0.35", "ether"); // Hard-coded finalFee (Set by UMA)
-  const oracleAddress = process.env.NEXT_PUBLIC_OO_ADDRESS!; // Goerli OO
+  const oracleAddress = '0xeDc52A961B5Ca2AC7B2e0bc36714dB60E5a115Ab'; // process.env.NEXT_PUBLIC_OO_ADDRESS!; // Goerli OO
   const wethContract = useContract({...wethContractConfig});
   const zeroAddress = '0x0000000000000000000000000000000000000000';
 
@@ -216,7 +216,7 @@ const Application: React.FC<Props> = props => {
     contractInterface: erc20ABI['abi'], // contract abi in json or JS format
   };
 
-  const escrowAddress = process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
+  const escrowAddress = '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4'; //process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
   const hexAlwaysApprove = '0x8000000000000000000000000000000000000000000000000000000000000000';
 
   const { config: increaseAllowanceOnceConfig } = usePrepareContractWrite({...erc20ContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmtOnce], enabled: Boolean(debouncedAllowanceAmtOnce), });
