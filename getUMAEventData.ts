@@ -24,28 +24,12 @@ export const getUMAEventData = async (umaContract: any, escrowContract: any, pro
     let ancillaryData = '';
     const request = {} as Request; // should make this its own struct
 
-    const disputeInitiatedAbi = [
-        "event Disputed(address indexed creator, address indexed hunter, string indexed bountyAppId, uint32 timestamp, string message)"
-    ];
-
-    const proposeAbi = [
-        "event ProposePrice(address indexed requester, bytes32 indexed identifier, uint32 timestamp, bytes ancillaryData, tuple(address proposer, address disputer, IERC20 currency, bool settled, bool refundOnDispute, int256 proposedPrice, int256 resolvedPrice, uint256 expirationTime, uint256 reward, uint256 finalFee, uint256 bond, uint256 customLiveness) request)"
-    ];
-
-    const disputeAbi = [
-        "event DisputePrice(address indexed requester, bytes32 indexed identifier, uint32 timestamp, bytes ancillaryData, tuple(address proposer, address disputer, IERC20 currency, bool settled, bool refundOnDispute, int256 proposedPrice, int256 resolvedPrice, uint256 expirationTime, uint256 reward, uint256 finalFee, uint256 bond, uint256 customLiveness) request)"
-    ];
-    
-    const ifaceDisputeInitiated = new ethers.utils.Interface(disputeInitiatedAbi);
-    const ifacePropose = new ethers.utils.Interface(proposeAbi);
-    const ifaceDispute = new ethers.utils.Interface(disputeAbi);
-
     if (eventName === 'propose') {
         const filter = umaContract.filters.ProposePrice(escrowContract.address, identifier);
         const parsedLogs = await umaContract.queryFilter(filter);
 
         const filterDisputeInitiated = escrowContract.filters.Disputed(creatorAddress, hunterAddress, bountyAppId);
-        const logsDisputeInitiated = await escrowContract.queryFilter(filterDisputeInitiated); // We know that only 1 log for this creator, hunter, bountyAppId triple
+        const logsDisputeInitiated = await escrowContract.queryFilter(filterDisputeInitiated); 
         
         await Promise.all([parsedLogs, logsDisputeInitiated]);
 
@@ -64,8 +48,6 @@ export const getUMAEventData = async (umaContract: any, escrowContract: any, pro
                 request.disputer = parsedLog.args.request.disputer
                 request.settled = parsedLog.args.request.settled;
                 request.resolvedPrice = parsedLog.args.request.resolvedPrice;
-                
-                // Hunter hasn't responded to dispute yet so no disputer set in UMA request struct
                 return; // Break out of forEach loop b/c we have the data that we need
             }  
         });  
@@ -74,7 +56,7 @@ export const getUMAEventData = async (umaContract: any, escrowContract: any, pro
         const parsedLogs = await umaContract.queryFilter(filter);
 
         const filterDisputeInitiated = escrowContract.filters.Disputed(creatorAddress, hunterAddress, bountyAppId);
-        const logsDisputeInitiated = await escrowContract.queryFilter(filterDisputeInitiated);// We know that only 1 log for this creator, hunter, bountyAppId triple
+        const logsDisputeInitiated = await escrowContract.queryFilter(filterDisputeInitiated);
        
         parsedLogs.forEach( (parsedLog: any) => {
             if (parsedLog.args.request.proposer === creatorAddress && parsedLog.args.request.disputer === hunterAddress && parsedLog.args.timestamp === logsDisputeInitiated[0].args.timestamp) { // Know we have the right UMA log if proposer is the creator, disputer is hunter, and timestamp is the same as the one emmitted from disputeInitiated call which specified the timestamp in the request struct

@@ -1,18 +1,10 @@
 import * as React from 'react';
-// import { useQuery, gql } from '@apollo/client';
 import axios from 'axios';
 import NestedAccordian from './nestedAccordion';
 import Application from './application';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
-import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransaction, useContractRead, useBlockNumber, useContract, usePrepareContractWrite, useContractEvent, useSigner, useNetwork } from 'wagmi';
+import { useAccount, useContract, useSigner, useNetwork } from 'wagmi';
 import { BigNumber, ethers } from 'ethers';
-import { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
 import useSWR from 'swr';
@@ -33,7 +25,7 @@ const contractConfig = {
     contractInterface: escrowABI['abi'], // contract abi in json or JS format
 };
 
-const AppliedPosts: React.FC<Props> = props => {
+const AppliedPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedMap, incrementAppliedHits, stage, }) => {
  
     const { address, isConnected } = useAccount();
     const { data: signer, isError, isLoading } = useSigner();
@@ -46,7 +38,7 @@ const AppliedPosts: React.FC<Props> = props => {
     const [appliedBountyPosts, setAppliedBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
 
-    const { data, error, isValidating } = useSWR([GETAPPLIEDTOPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
+    const { data, error, isValidating } = useSWR([GETAPPLIEDTOPOSTS, { postId: postId, chain: chain?.network! },], gqlFetcher);
     
     const loaded = React.useRef(false); 
 
@@ -60,16 +52,16 @@ const AppliedPosts: React.FC<Props> = props => {
 
     React.useEffect(() => {
         if (!isValidating && bountyIds?.length > 0) {
-            props.setAppliedMap(props.postId);
+            setAppliedMap(postId);
         } 
-    }, [isValidating, bountyIds?.length, props.setAppliedMap, props.postId]);
+    }, [isValidating, bountyIds?.length, setAppliedMap, postId]);
 
     React.useEffect(() => {
         if (!isValidating && !loaded.current) {
             loaded.current = true;
-            props.incrementAppliedHits();
+            incrementAppliedHits();
         }
-    }, [isValidating, props.incrementAppliedHits]);
+    }, [isValidating, incrementAppliedHits]);
 
     const getAppliedPosts = React.useCallback(async (openBountyIds: Array<string>, existsSubmitted: Map<string, boolean>) => {
 
@@ -83,9 +75,6 @@ const AppliedPosts: React.FC<Props> = props => {
         const promises = openBountyIds?.map( async (openBountyId: string) => {
             const postData = await axios.get(`https://arweave.net/${openBountyId}`);
             const postId = postData?.config?.url?.split("https://arweave.net/")[1];
-            console.log('post data applied', postData)
-            console.log('address', address)
-            console.log(postData.data.hunterAddress)
             // this might need to be changed back to postData.data.postId
             if ( (existsSubmitted).has(postId!) ) { // should be postId b/c same bounty could have multiple hunters apply to it and have multiple applications?
                 return Promise.resolve([]);; 
@@ -152,21 +141,21 @@ const AppliedPosts: React.FC<Props> = props => {
                 setThisPostData(postDataArr);
             });
         }
-    }, [address, signer, escrowContract]);
+    }, [address, signer, escrowContract, escrowAddress]);
 
     React.useEffect(() => {
         if (bountyIds && bountyIds.length > 0 && !isValidating) {
-            getAppliedPosts(bountyIds, props.existsSubmitted);
+            getAppliedPosts(bountyIds, existsSubmitted);
         }
-    }, [bountyIds, isValidating, getAppliedPosts, props.existsSubmitted]);
+    }, [bountyIds, isValidating, getAppliedPosts, existsSubmitted]);
 
-    if (props.stage !== 2) {
+    if (stage !== 2) {
         return <></>;
     }
 
     if (appliedBountyPosts.length > 0) {
         return (
-            <NestedAccordian key={props.postId} 
+            <NestedAccordian key={postId} 
                 postLinks={thisPostData[0].data.postLinks}
                 startDate={thisPostData[0].data.startDate}
                 endDate={thisPostData[0].data.endDate}
@@ -194,7 +183,7 @@ const GETAPPLIEDTOPOSTS = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test2"]
+                    values: ["Cornucopia-test4"]
                 },
                 {
                     name: "Form-Type",

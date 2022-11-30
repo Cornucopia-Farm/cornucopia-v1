@@ -1,22 +1,10 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 import Button from '@mui/material/Button';
 import React, { ReactElement, useCallback, useEffect } from 'react';
-import BasicAccordian from '../components/basicAccordion';
-import NestedAccordian from '../components/nestedAccordion';
 import Box from '@mui/material/Box';
 import Form from '../components/form';
-// import { useQuery, gql } from '@apollo/client';
-import ClientOnly from '../components/clientOnly';
-import axios from 'axios';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import { useAccount, useEnsName, useNetwork, useSigner } from 'wagmi';
-import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
 import { TailSpin } from 'react-loader-spinner';
 import PostedPosts from '../components/postedPosts';
 import AppliedPosts from '../components/appliedPosts';
@@ -28,7 +16,6 @@ import FinishedPosts from '../components/finishedPosts';
 import styles from '../styles/Home.module.css';
 import Slider from '@mui/material/Slider';
 import { Typography } from '@mui/material';
-import { makeStyles, propsToClassKey } from '@mui/styles';
 import WelcomeCard from '../components/welcomeCard';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import CreateBountiesInfo from '../components/createBountiesInfo';
@@ -75,10 +62,12 @@ const CreateBounties: NextPage = () => {
 
     const setAppliedMap = React.useCallback((postId: string) => {
         setExistsApplied(new Map(existsApplied.set(postId, true)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const setSubmittedMap = React.useCallback((postId: string) => {
         setExistsSubmitted(new Map(existsSubmitted.set(postId, true)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const [stage, setStage] = React.useState(1);
@@ -246,7 +235,9 @@ const CreateBounties: NextPage = () => {
 
     if (!isConnected) {
         return (
-            <WelcomeCard isConnected={isConnected}/>
+            <div className={styles.background}>
+                <WelcomeCard isConnected={isConnected}/>
+            </div>
         );
     } else if (!isValidating) {
         return (
@@ -326,7 +317,7 @@ const CreateBounties: NextPage = () => {
                                     },
                                     {
                                         name: "App-Name",
-                                        value: "Cornucopia-test2"
+                                        value: "Cornucopia-test4"
                                     },
                                     {
                                         name: "Form-Type",
@@ -356,9 +347,11 @@ const CreateBounties: NextPage = () => {
         );
     }
     return (
-        <Box sx={{ marginLeft: 'auto', marginRight: 'auto' }}> 
-            <TailSpin color={"rgb(151, 208, 252)"}/>
-        </Box>
+        <div className={styles.background}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', }}> 
+                <TailSpin color={"rgb(233, 233, 198)"}/>
+            </Box>     
+        </div>
     );
 }
 
@@ -373,7 +366,7 @@ const GETPOSTS = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test2"]
+                    values: ["Cornucopia-test4"]
                 },
                 {
                     name: "Form-Type",

@@ -217,11 +217,11 @@ const HunterContractActions: React.FC<Props> = props => {
                         <DialogTitle className={styles.formHeader}>Approve</DialogTitle>
                         <DialogContent className={styles.cardBackground}>
                             <DialogContentText className={styles.dialogBody}>
-                            To respond to a creator's dispute, you must put up a bond of 0.1 WETH plus an UMA protocol fee of 0.35 WETH. To put up this bond, you must first allow Cornucopia to transfer 
+                            To respond to a creator&apos;s dispute, you must put up a bond of 0.1 WETH plus an UMA protocol fee of 0.35 WETH. To put up this bond, you must first allow Cornucopia to transfer 
                             tokens from your wallet to the protocol contract, which are then transferred into the UMA Optimistic Oracle contract.
                             <br />
                             <br />
-                            You can choose either to allow Cornucopia to spend an unlimited amount of funds so you won't have to approve Cornucopia 
+                            You can choose either to allow Cornucopia to spend an unlimited amount of funds so you won&apos;t have to approve Cornucopia 
                             everytime you respond to a dispute or you can choose to just allow Cornucopia to spend the funds you need to dispute. While the 
                             former is potentially more cost effective, the latter protects you incase of any future smart contract vulnerabilities.   
                             </DialogContentText>    
@@ -243,14 +243,14 @@ const HunterContractActions: React.FC<Props> = props => {
                         </DialogTitle>
                         <DialogContent className={styles.cardBackground}>
                         <DialogContentText className={styles.dialogBody} id="alert-dialog-description">
-                            Responding to the creator's dispute within the 7 day challenger period, escalates this dispute to the UMA token holders and decided
+                            Responding to the creator&apos;s dispute within the 7 day challenger period, escalates this dispute to the UMA token holders and decided
                             within that week. Once the decision is made (please see the docs for more details on this process), the escrowed funds will either be fully 
-                            paid out to you, half payed out to you, or fully given back to the creator. If you don't challenge the creator's dispute, then the full bounty amount  
+                            paid out to you, half payed out to you, or fully given back to the creator. If you don&apos;t challenge the creator&apos;s dispute, then the full bounty amount  
                             will be returned to the creator once these 7 days are up. 
                         </DialogContentText>
                         </DialogContent>
                         <DialogActions className={styles.formFooter}>
-                        <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseDisputeFalse}>No I don't</Button>
+                        <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseDisputeFalse}>No I don&apos;t</Button>
                         {/* <Button onClick={() => handleCloseDisputeTrue(postData.data.postId, postData.data.creatorAddress)} autoFocus>Yes I want to</Button> */}
                         <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {hunterDisputeResponse?.(); setOpenDispute(false);}} autoFocus disabled={!hunterDisputeResponse || isHunterDisputeResponseTxLoading}>{isHunterDisputeResponseTxLoading ? 'Responding to dispute...' : 'Yes I want to'}</Button>
                         </DialogActions>
@@ -273,11 +273,11 @@ const HunterContractActions: React.FC<Props> = props => {
                         <DialogContent className={styles.cardBackground}>
                         <DialogContentText className={styles.dialogBody} id="alert-dialog-description">
                             The bounty creator has not responded (payed or disputed) to your work submission within two weeks. To prevent the creator from withholding the funds, 
-                            you're able to claim the bounty yourself. 
+                            you&apos;re able to claim the bounty yourself. 
                         </DialogContentText>
                         </DialogContent>
                         <DialogActions className={styles.formFooter}>
-                        <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseForceFalse}>No I don't</Button> 
+                        <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseForceFalse}>No I don&apos;t</Button> 
                         {/* <Button onClick={() => handleCloseForceTrue(postData.data.postId, postData.data.creatorAddress)} autoFocus>Yes I want to</Button> */}
                         <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {forceHunterPayout?.(); setOpenForce(false);}} autoFocus disabled={!forceHunterPayout || isForceHunterPayoutTxLoading}>{isForceHunterPayoutTxLoading ? 'Forcing payout...' : 'Yes I want to'}</Button>
                         </DialogActions>

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Image from 'next/image';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -209,6 +210,7 @@ const Form: React.FC<Props> = props => {
             console.log("Form Values", formValues);
             uploadToArweave(formValues, props.tags);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [arweaveTrigger]);
 
     const ButtonType = () => {
@@ -374,7 +376,7 @@ const Form: React.FC<Props> = props => {
                             <MenuItem key={token.address} value={token.address}>
                                 <Box sx={{ display: 'flex', gap: '12px' }}> 
                                     <ListItemIcon sx={{ minWidth: '25px !important'}} >
-                                        <img width="25px" height="25px" src={token.logoURI} />
+                                        <img alt="" width="25px" height="25px" src={token.logoURI} />
                                     </ListItemIcon>
                                     <Typography sx={{color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk'}}>{token.symbol}</Typography>
                                 </Box>
@@ -919,7 +921,7 @@ const Form: React.FC<Props> = props => {
                                     </DialogContentText>
                                 </DialogContent>
                                 <DialogActions className={styles.formFooter}>
-                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleClose}>No I don't</Button>
+                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleClose}>No I don&apos;t</Button>
                                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {submit?.(); handleCloseSubmit();}} autoFocus disabled={!submit || isSubmitTxLoading}>{isSubmitTxLoading ? 'Submitting work...' : 'Yes I want to'}</Button>
                                 </DialogActions>
                             </Dialog>

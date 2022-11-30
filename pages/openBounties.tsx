@@ -1,22 +1,14 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Button from '@mui/material/Button';
-import React, { ReactElement, useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import Box from '@mui/material/Box';
 import Form from '../components/form';
 import BasicAccordian from '../components/basicAccordion';
 import Card from '@mui/material/Card';
 import axios from 'axios';
-import { useAccount, useEnsName, useProvider, useSigner, useNetwork } from 'wagmi';
+import { useAccount, useNetwork } from 'wagmi';
 import { TailSpin } from 'react-loader-spinner';
 import styles from '../styles/Home.module.css';
-import useSessionModal from '../components/useSessionModal';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Link from '@mui/material/Link';
 import WelcomeCard from '../components/welcomeCard';
 import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
@@ -24,7 +16,6 @@ import { gql } from 'graphql-request';
 
 const OpenBounties: NextPage = () => {
     const { address, isConnected } = useAccount();
-    const { data: ensName } = useEnsName({ address, enabled: false, });
     const { chain } = useNetwork();
 
     const [openBountyPosts, setOpenBountyPosts] = React.useState(Array<JSX.Element>);
@@ -32,7 +23,7 @@ const OpenBounties: NextPage = () => {
     const { data, error, isValidating } = useSWR([OPENBOUNTIES, { chain: chain?.network! ? chain?.network! : 'ethereum' },], gqlFetcher);
 
     if (error) {
-        console.error(error); // add snackbar error msg;
+        console.error(error); 
     }
 
     const postIds = useMemo(() => {
@@ -88,7 +79,7 @@ const OpenBounties: NextPage = () => {
                                     },
                                     {
                                         name: "App-Name",
-                                        value: "Cornucopia-test2"
+                                        value: "Cornucopia-test4"
                                     },
                                     {
                                         name: "Form-Type",
@@ -121,52 +112,21 @@ const OpenBounties: NextPage = () => {
             getPosts(postIds);
         } 
     }, [getPosts, postIds, isValidating]);
-
-    const [showModal, hideModal] = useSessionModal();
-
-    if (showModal) {
-        return (
-            <Dialog open={showModal} onClose={hideModal} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
-                <DialogTitle className={styles.formHeader}>Welcome to Cornucopia!</DialogTitle>
-                <DialogContent className={styles.cardBackground}>
-                    <DialogContentText className={styles.dialogBody}>
-                    Cornucopia is a permissionless bounty protocol where projects/DAOs can post bounties for freelancers to apply to. Once the bounty creator 
-                    accepts the application, the bounty amount will be escrowed in the Cornucopia smart contract. After a freelancer submits their work, the 
-                    creator can then choose to pay freelancer, sending the escrowed funds to the freelancer, or dispute the bounty. A creator might dispute the bounty
-                    if they think that the freelancer's submitted work doesn't match the bounty description. 
-                    <br />
-                    <br />
-                    The freelancer then has 1 week to respond to the dispute: they can 
-                    either dispute the creator's dispute or leave it and loose any chance of recuperating some of the bounty amount. If they choose to dispute, then the dispute 
-                    is escalated to UMA token holders (using <Link target="_blank" rel="noopener" href="https://umaproject.org/products/optimistic-oracle">UMAs Optimistic Oracle</Link>) who then vote whether they think the freelancer did the work, did not do the work, or unclear whether the freelancer did the work.
-                    In the first case, the freelancer gets paid the bounty amount plus half the bond the creator put up to dispute the work. In the second case, the creator gets their 
-                    escrowed funds back plus half the bond the freelancer put up to dispute the creator's dispute. In the third case, the freelancer gets paid half the bounty amount and 
-                    half the bond the creator put up to dispute the work while the creator gets half the bount amount back. 
-                    <br />
-                    <br />
-                    Connect your wallet and select your chain of choice to view and apply for open bounties and create bounties of your own!  
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions className={styles.formFooter}>
-                        <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={hideModal}>Got it!</Button>
-                </DialogActions>
-            </Dialog>
-        );
-    }
     
     if (!isConnected) {
         return (
-            <WelcomeCard isConnected={isConnected}/>
+            <div className={styles.background}> 
+                <WelcomeCard isConnected={isConnected}/>
+            </div>
         );
-    } else if (!isValidating && openBountyPosts.length > 0) {
+    } else if (!isValidating) {
         return (
-            <div>
+            <div className={styles.background}>
                 <Head>
                     <title>Open Bounties</title>
                     <meta name="description" content="Cornucopia is a permissionless freelancing protocol where projects/DAOs can create bounties for freelancers to complete." />
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
-
                 <main>
                 <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '160px', paddingRight: '160px', color: 'rgba(6, 72, 41, 0.85)', }}> 
                     <h2 className={styles.h2}>Open Bounties</h2>
@@ -179,9 +139,11 @@ const OpenBounties: NextPage = () => {
         );
     }
     return (
-        <Box sx={{ marginLeft: 'auto', marginRight: 'auto', }}> 
-            <TailSpin color={"rgb(151, 208, 252)"}/>
-        </Box>
+        <div className={styles.background}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', }}> 
+                <TailSpin color={"rgb(233, 233, 198)"}/>
+            </Box>     
+        </div>
     );
 };
 
@@ -195,7 +157,7 @@ const OPENBOUNTIES = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test2"]
+                    values: ["Cornucopia-test4"]
                 },
                 {
                     name: "Form-Type",

@@ -25,8 +25,8 @@ const BasicCard: React.FC<Props> = props => {
   return (
     <Card className={styles.cardBackground} sx={{ minWidth: '275', borderRadius: '12px',  }}>
       <CardContent>
-        <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '1px', paddingRight: '1px', paddingTop: '1px' }}>
-          <Box sx={{ display: 'flex', paddingLeft: 0}}> 
+        <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '1px', paddingRight: '1px', paddingTop: '1px', }}>
+          <Box sx={{ display: 'flex', paddingLeft: 0, paddingBottom: 1}}> 
             <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Description </Typography>
             <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%'}}>{props.description}</Typography>
           </Box>

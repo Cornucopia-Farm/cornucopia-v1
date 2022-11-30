@@ -1,11 +1,10 @@
 import * as React from 'react';
-// import { useQuery, gql } from '@apollo/client';
 import axios from 'axios';
 import { ethers } from 'ethers';
 import NestedAccordian from './nestedAccordion';
 import Application from './application';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
-import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransaction, useContractRead, useBlockNumber, useContract, usePrepareContractWrite, useContractEvent, useSigner, useNetwork } from 'wagmi';
+import { useAccount, useContract, useSigner, useNetwork } from 'wagmi';
 import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
@@ -23,7 +22,7 @@ const contractConfig = {
     contractInterface: escrowABI['abi'], // contract abi in json or JS format
 };
 
-const DisputeInitiatedPosts: React.FC<Props> = props => {
+const DisputeInitiatedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSubmittedHits, stage, }) => {
 
     // Wagmi address/contract info
     const { address, isConnected } = useAccount();
@@ -35,7 +34,7 @@ const DisputeInitiatedPosts: React.FC<Props> = props => {
     const [disputeInitiatedBountyPosts, setDisputeInitiatedBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
 
-    const { data, error, isValidating } = useSWR([GETWORKSUBMITTEDPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
+    const { data, error, isValidating } = useSWR([GETWORKSUBMITTEDPOSTS, { postId: postId, chain: chain?.network! },], gqlFetcher);
 
     if (error) {
         console.error(error);
@@ -49,16 +48,16 @@ const DisputeInitiatedPosts: React.FC<Props> = props => {
 
     React.useEffect(() => {
         if (!isValidating && bountyIds?.length > 0) {
-            props.setSubmittedMap(props.postId);
+            setSubmittedMap(postId);
         }
-    }, [isValidating, bountyIds?.length, props.setSubmittedMap, props.postId]);
+    }, [isValidating, bountyIds?.length, setSubmittedMap, postId]);
 
     React.useEffect(() => {
         if (!isValidating && !loaded.current) {
             loaded.current = true;
-            props.incrementSubmittedHits();
+            incrementSubmittedHits();
         }
-    }, [isValidating, props.incrementSubmittedHits]);
+    }, [isValidating, incrementSubmittedHits]);
 
     const getDisputeInitiatedPosts = React.useCallback(async (openBountyIds: Array<string>) => {
 
@@ -126,13 +125,13 @@ const DisputeInitiatedPosts: React.FC<Props> = props => {
         }
     }, [bountyIds, isValidating, getDisputeInitiatedPosts]);
 
-    if (props.stage !== 5) {
+    if (stage !== 5) {
         return <></>;
     }
 
     if (disputeInitiatedBountyPosts.length > 0) {
         return (
-            <NestedAccordian key={props.postId} 
+            <NestedAccordian key={postId} 
                 postLinks={thisPostData[0].data.postLinks}
                 startDate={thisPostData[0].data.startDate}
                 endDate={thisPostData[0].data.endDate}
@@ -161,7 +160,7 @@ const GETWORKSUBMITTEDPOSTS = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test2"]
+                    values: ["Cornucopia-test4"]
                 },
                 {
                     name: "Form-Type",

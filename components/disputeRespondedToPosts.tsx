@@ -31,7 +31,7 @@ const umaContractConfig = {
     contractInterface: umaABI['abi'],
 };
 
-const DisputeRespondedToPosts: React.FC<Props> = props => {
+const DisputeRespondedToPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSubmittedHits, stage, }) => {
 
     // Wagmi address/contract info
     const { address, isConnected } = useAccount();
@@ -47,7 +47,7 @@ const DisputeRespondedToPosts: React.FC<Props> = props => {
     const [disputeRespondedToBountyPosts, setDisputeRespondedToBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
 
-    const { data, error, isValidating } = useSWR([GETWORKSUBMITTEDPOSTS, { postId: props.postId, chain: chain?.network! },], gqlFetcher);
+    const { data, error, isValidating } = useSWR([GETWORKSUBMITTEDPOSTS, { postId: postId, chain: chain?.network! },], gqlFetcher);
     
     if (error) {
         console.error(error);
@@ -61,16 +61,16 @@ const DisputeRespondedToPosts: React.FC<Props> = props => {
 
     React.useEffect(() => {
         if (!isValidating && bountyIds?.length > 0) {
-            props.setSubmittedMap(props.postId);
+            setSubmittedMap(postId);
         }
-    }, [isValidating, bountyIds?.length, props.setSubmittedMap, props.postId]);
+    }, [isValidating, bountyIds?.length, setSubmittedMap, postId]);
 
     React.useEffect(() => {
         if (!isValidating && !loaded.current) {
             loaded.current = true;
-            props.incrementSubmittedHits();
+            incrementSubmittedHits();
         }
-    }, [isValidating, props.incrementSubmittedHits]);
+    }, [isValidating, incrementSubmittedHits]);
 
     const getDisputeRespondedToPosts = React.useCallback(async (openBountyIds: Array<string>) => {
 
@@ -150,7 +150,7 @@ const DisputeRespondedToPosts: React.FC<Props> = props => {
                 setThisPostData(postDataArr);
             });
         }
-    }, [address, provider, escrowContract, umaContract]);
+    }, [address, provider, escrowContract, umaContract, escrowAddress]);
 
     React.useEffect(() => {
         if (bountyIds && bountyIds.length > 0 && !isValidating) {
@@ -158,13 +158,13 @@ const DisputeRespondedToPosts: React.FC<Props> = props => {
         }
     }, [bountyIds, isValidating, getDisputeRespondedToPosts]);
 
-    if (props.stage !== 6) {
+    if (stage !== 6) {
         return <></>;
     }
 
     if (disputeRespondedToBountyPosts.length > 0) {
         return (
-            <NestedAccordian key={props.postId} 
+            <NestedAccordian key={postId} 
                 postLinks={thisPostData[0].data.postLinks}
                 startDate={thisPostData[0].data.startDate}
                 endDate={thisPostData[0].data.endDate}
@@ -193,7 +193,7 @@ const GETWORKSUBMITTEDPOSTS = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test2"]
+                    values: ["Cornucopia-test4"]
                 },
                 {
                     name: "Form-Type",

@@ -24,26 +24,26 @@ const MyBountiesInfo: React.FC<Props> = props => {
                 <br />
                 <br />
                 In Progress: View all the bounties where a bounty creator accepted your application. To submit your work, click on the 
-                Submit button to link and submit your finished work. This will open up your wallet to log the time you've submitted your 
+                Submit button to link and submit your finished work. This will open up your wallet to log the time you&apos;ve submitted your 
                 work in the Cornucopia smart contract.
                 <br />
                 <br />
-                Submitted: View all bounties that you've submitted your work for and are waiting for the bounty creator to payout the bounty 
+                Submitted: View all bounties that you&apos;ve submitted your work for and are waiting for the bounty creator to payout the bounty 
                 amount or dispute the work.
                 <br />
                 <br />
                 Dispute Initiated: View all bounties where the bounty creator has disputed your submitted work. You will have 1 week to 
                 respond to the dispute if you so choose. If you respond to the dispute, then you put up a bond and the dispute 
                 is escalated to UMA token holders (using <Link target="_blank" rel="noopener" href="https://umaproject.org/products/optimistic-oracle">UMAs Optimistic Oracle</Link>) 
-                who will then vote on whether you did the work, didn't do the work, or if it's unclear if you did the work according to the creator's spec. 
+                who will then vote on whether you did the work, didn&apos;t do the work, or if it&apos;s unclear if you did the work according to the creator&apos;s spec. 
                 <br />
                 <br />
-                Dispute Responded To: View all bounties where you responded to the bounty creator's dispute and are now waiting for the dispute to be resolved. 
+                Dispute Responded To: View all bounties where you responded to the bounty creator&apos;s dispute and are now waiting for the dispute to be resolved. 
                 Once resolved, the bounty will move to the Finished stage. 
                 <br />
                 <br />
                 Force Payout: View all bounties where you can force the bounty creator to payout the funds to you for your submitted work. Bounties enter this
-                stage if the creator hasn't payed you out or disputed your work within 2 weeks of your work submission. 
+                stage if the creator hasn&apos;t payed you out or disputed your work within 2 weeks of your work submission. 
                 <br />
                 <br />
                 Finished: View all finished bounties, including those payed out normally or those that were disputed and are 
