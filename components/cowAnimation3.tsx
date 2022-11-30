@@ -3,18 +3,18 @@ import { gsap } from 'gsap';
 import Cow from '../images/cow.svg';
 
 function Icon() {
-    const cow = React.useRef();
-    const legLower1 = React.useRef();
-    const legLower2 = React.useRef();
-    const legUpper1 = React.useRef();
-    const legUpper2 = React.useRef();
-    const tail = React.useRef();
+    const cow = React.useRef<gsap.TweenTarget>();
+    const legLower1 = React.useRef<gsap.TweenTarget>();
+    const legLower2 = React.useRef<gsap.TweenTarget>();
+    const legUpper1 = React.useRef<gsap.TweenTarget>();
+    const legUpper2 = React.useRef<gsap.TweenTarget>();
+    const tail = React.useRef<gsap.TweenTarget>();
 
     React.useEffect(() => {
 
-        gsap.fromTo(cow.current, {
+        gsap.fromTo(cow.current!, {
             paused: true,
-            x: -50,
+            x: -50, // -300
             repeat: -1,
             ease:"linear.out"
           },{
@@ -23,7 +23,7 @@ function Icon() {
             ease:"linear.out",
             duration: 100
           });
-          gsap.fromTo(legUpper1.current, {
+          gsap.fromTo(legUpper1.current!, {
             transformOrigin: "top top",
             rotation: -15,
             repeat:-1,
@@ -39,7 +39,7 @@ function Icon() {
             yoyo: true,
             ease:"linear.out"
             });
-          gsap.fromTo(legLower1.current, {
+          gsap.fromTo(legLower1.current!, {
             transformOrigin: "top top",
             rotation: -20,
             repeat:-1,
@@ -54,7 +54,7 @@ function Icon() {
             yoyo: true,
             ease:"linear.out"
             }).delay(1.5);
-            gsap.fromTo(legUpper2.current, {
+            gsap.fromTo(legUpper2.current!, {
                 transformOrigin: "top top",
                 rotation: -15,
                 repeat:-1,
@@ -70,7 +70,7 @@ function Icon() {
                 yoyo: true,
                 ease:"linear.out"
                 });
-              gsap.fromTo(legLower2.current, {
+              gsap.fromTo(legLower2.current!, {
                 transformOrigin: "top top",
                 rotation: -20,
                 repeat:-1,
@@ -85,7 +85,7 @@ function Icon() {
                 yoyo: true,
                 ease:"linear.out"
                 }).delay(1.5);
-          gsap.to(tail.current, {
+          gsap.to(tail.current!, {
             duration: 1.5,
             transformOrigin: "top right",
             rotation: 20,
