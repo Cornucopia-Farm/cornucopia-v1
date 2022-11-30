@@ -11,14 +11,7 @@ import fourGrass from '../images/four_grass.svg';
 export default function Footer() {
     return ( 
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px', position: 'relative', bottom: 0, width: '100%', marginTop: 'auto', }}> 
-        {/* <Box>  */}
-          {/* <CowAnimation /> */}
-          {/* <CowAnimation2 /> */}
-          <CowAnimation3 />
-        {/* </Box> */}
-
-        {/* <Image src="/corn_logo_full copy.png" height="100px" width="154px"/> */}
-        {/* <Image src="/corn_logo_full copy.png" height="88px" width="135px"/> */}
+        <CowAnimation3 />
         <Box sx={{ display: 'flex', justifyContent: 'center'}}> 
           <Box sx={{ display: 'flex', justifyContent: 'center'}}>
             <Image alt="" src={tripleGrass} height="24px" width="121px"/>
@@ -34,7 +27,6 @@ export default function Footer() {
             <Image alt="" src={fourGrass} height="24px" width="121px"/>
           </Box>
         </Box>
-        
       </Box>   
     );
 };
