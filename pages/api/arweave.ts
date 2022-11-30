@@ -1,10 +1,11 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
 import Bundlr from "@bundlr-network/client";
-import privateKey from '../../arweave-key-UxP5TeAmfwJXIbZY9rJE1uw4z1FHs-QuV-UlfC28cOI.json';
+// import privateKey from '../../arweave-key-UxP5TeAmfwJXIbZY9rJE1uw4z1FHs-QuV-UlfC28cOI.json';
 
 const uploadToArweave = async (bountyData: Object, tags: Array<any>) => {
   // can't use arweave currency on web
+  const privateKey = JSON.parse(process.env.NEXT_PUBLIC_ARWEAVE_KEY!);
   const bundlr = new Bundlr("https://node1.bundlr.network", "arweave", privateKey);
 
   const address = bundlr.address;
