@@ -36,19 +36,19 @@ import { getEscrowEventData } from '../getEscrowEventData';
 
 // Escrow Contract Config
 const contractConfig = {
-    addressOrName: process.env.NEXT_PUBLIC_ESCROW_ADDRESS!, // contract address
+    addressOrName: '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', // process.env.NEXT_PUBLIC_ESCROW_ADDRESS!, // contract address
     contractInterface: escrowABI['abi'], // contract abi in json or JS format
 };
 
 // UMA Skinny OO Contract Config
 const umaContractConfig = {
-    addressOrName: process.env.NEXT_PUBLIC_OO_ADDRESS!, // contract address for OO not skinny OO so need to change
+    addressOrName: '0xeDc52A961B5Ca2AC7B2e0bc36714dB60E5a115Ab', //process.env.NEXT_PUBLIC_OO_ADDRESS!, // contract address for OO not skinny OO so need to change
     contractInterface: umaABI['abi'],
 };
 
 // WETH Contract Config (For UMA Bonds)
 const wethContractConfig = {
-    addressOrName: process.env.NEXT_PUBLIC_WETH_ADDRESS!, // contract address
+    addressOrName: '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6', // process.env.NEXT_PUBLIC_WETH_ADDRESS!, // contract address
     contractInterface: wethABI as ContractInterface, // contract abi in json or JS format
 };
 
@@ -58,7 +58,7 @@ const MyBounties: NextPage = () => {
     const provider = useProvider();
     const { chain } = useNetwork();
 
-    const escrowAddress = process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
+    const escrowAddress = '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4'; //process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
     const escrowContract = useContract({...contractConfig, signerOrProvider: signer, });
     const umaContract = useContract({...umaContractConfig, signerOrProvider: signer, });
     const wethContract = useContract({...wethContractConfig, signerOrProvider: signer, });
