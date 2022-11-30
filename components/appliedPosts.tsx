@@ -1,22 +1,22 @@
 import * as React from 'react';
-import { useQuery, gql } from '@apollo/client';
 import axios from 'axios';
 import NestedAccordian from './nestedAccordion';
 import Application from './application';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
-import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransaction, useContractRead, useBlockNumber, useContract, usePrepareContractWrite, useContractEvent, useSigner, useNetwork } from 'wagmi';
-import { ethers } from 'ethers';
+import { useAccount, useContract, useSigner, useNetwork } from 'wagmi';
+import { BigNumber, ethers } from 'ethers';
+import dayjs from 'dayjs';
+import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
+import useSWR from 'swr';
+import gqlFetcher from '../swrFetchers';
+import { gql } from 'graphql-request';
 
 type Props = {
     postId: string;
-    existsSubmitted: Promise<Map<string, boolean>>;
+    existsSubmitted: Map<string, boolean>;
     setAppliedMap: (postId: string) => void;
+    incrementAppliedHits: () => void;
+    stage: number;
 };
 
 // Escrow Contract Config
@@ -25,32 +25,45 @@ const contractConfig = {
     contractInterface: escrowABI['abi'], // contract abi in json or JS format
 };
 
-const AppliedPosts: React.FC<Props> = props => {
+const AppliedPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedMap, incrementAppliedHits, stage, }) => {
  
     const { address, isConnected } = useAccount();
     const { data: signer, isError, isLoading } = useSigner();
     const { chain } = useNetwork();
+    const zeroAddress = '0x0000000000000000000000000000000000000000';
+    const escrowAddress = process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
 
     const escrowContract = useContract({...contractConfig, signerOrProvider: signer,});
 
     const [appliedBountyPosts, setAppliedBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
 
-    // Fetch Data
-    const { data, loading, error, startPolling } = useQuery(GETAPPLIEDTOPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, });
-    startPolling(10000);
+    const { data, error, isValidating } = useSWR([GETAPPLIEDTOPOSTS, { postId: postId, chain: chain?.network! },], gqlFetcher);
     
+    const loaded = React.useRef(false); 
+
     if (error) {
         console.error(error);
     }
     
-    const bountyIds = data?.transactions.edges.map((edge: any) => edge.node.id);
-    
-    if (!loading && bountyIds?.length > 0) {
-        props.setAppliedMap(props.postId);
-    }
+    const bountyIds = React.useMemo(() => {
+        return data?.transactions?.edges.map((edge: any) => edge.node.id);
+    }, [data?.transactions?.edges]);
 
-    const getAppliedPosts = async (openBountyIds: Array<string>, existsSubmitted: Promise<Map<string, boolean>>) => {
+    React.useEffect(() => {
+        if (!isValidating && bountyIds?.length > 0) {
+            setAppliedMap(postId);
+        } 
+    }, [isValidating, bountyIds?.length, setAppliedMap, postId]);
+
+    React.useEffect(() => {
+        if (!isValidating && !loaded.current) {
+            loaded.current = true;
+            incrementAppliedHits();
+        }
+    }, [isValidating, incrementAppliedHits]);
+
+    const getAppliedPosts = React.useCallback(async (openBountyIds: Array<string>, existsSubmitted: Map<string, boolean>) => {
 
         let appliedToBountiesApps: Array<JSX.Element> = [];
 
@@ -63,10 +76,10 @@ const AppliedPosts: React.FC<Props> = props => {
             const postData = await axios.get(`https://arweave.net/${openBountyId}`);
             const postId = postData?.config?.url?.split("https://arweave.net/")[1];
             // this might need to be changed back to postData.data.postId
-            if ( (await existsSubmitted).has(postId!) ) { // should be postId b/c same bounty could have multiple hunters apply to it and have multiple applications?
-                return; 
+            if ( (existsSubmitted).has(postId!) ) { // should be postId b/c same bounty could have multiple hunters apply to it and have multiple applications?
+                return Promise.resolve([]);; 
             }
-            postDataArr.push(postData);
+            // postDataArr.push(postData);
             const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, address, postData.data.hunterAddress ]);
             // setBountyIdentifier(bountyIdentifierInput);
             // bountyProgress(); // keep this in props bc multiple functions need to update progress? but with different params hmm simplier to have it per component I think b/c unique combo
@@ -76,48 +89,82 @@ const AppliedPosts: React.FC<Props> = props => {
             const isEscrowed = await escrowContract.queryFilter(filter);
 
             const progress = await escrowContract.progress(bountyIdentifierInput);
-            
-            // Case 2: Applied To
-            // if ( isBountyProgressSuccess && bountyProgressData! as unknown as number === 0 && isEscrowed.length === 0 ) {
-            if (progress === 0 && isEscrowed.length === 0) {
-                appliedToBountiesApps.push(
-                    <Application key={postId} 
-                        person={postData.data.hunterAddress}
-                        experience={postData.data.experience}
-                        contactInfo={postData.data.contact}
-                        arweaveHash={openBountyId}
-                        appLinks={postData.data.appLinks}
-                        appStatus={"applied"}
-                        postId={postData.data.postId}
-                        amount={postData.data.amount}
-                    />
-                );
-            } 
+
+            // Allowance Data
+            let allowance = BigNumber.from(0);
+
+            if (postData.data.tokenAddress !== zeroAddress && postData.data.tokenAddress) {
+                const erc20Contract = new ethers.Contract(postData.data.tokenAddress, erc20ABI['abi'], signer!);
+                try { 
+                    allowance = await erc20Contract.allowance(address, escrowAddress); 
+                } catch (e) {
+                    console.log('allowance fetch error', e);
+                }    
+            }
+
+            const startDate = dayjs(postData.data.startDate);
+            const endDate = dayjs(postData.data.endDate);
+            const expirationTime = endDate.diff(startDate, 'second');
+
+            return Promise.resolve([
+                progress,
+                isEscrowed,
+                <Application key={postId} 
+                    person={postData.data.hunterAddress}
+                    experience={postData.data.experience}
+                    contactInfo={postData.data.contact}
+                    arweaveHash={openBountyId}
+                    appLinks={postData.data.appLinks}
+                    appStatus={"applied"}
+                    postId={postData.data.postId}
+                    amount={postData.data.amount}
+                    tokenAddress={postData.data.tokenAddress}
+                    tokenDecimals={postData.data.tokenDecimals}
+                    allowance={allowance}
+                    expirationTime={expirationTime}
+                />,
+                postData
+            ]); 
         });
 
-        await Promise.all(promises); // Wait for these promises to resolve before setting the state variables
-
-        setAppliedBountyPosts(appliedToBountiesApps);
-        setThisPostData(postDataArr);
-    };
+        if (promises) {
+            await Promise.all(promises).then(results => {
+                results.forEach(result => {
+                    if (result.length) {
+                        if (result[0] === 0 && result[1].length === 0) {
+                            appliedToBountiesApps.push(result[2]);
+                        }
+                        postDataArr.push(result[3]);
+                    }
+                });
+                setAppliedBountyPosts(appliedToBountiesApps);
+                setThisPostData(postDataArr);
+            });
+        }
+    }, [address, signer, escrowContract, escrowAddress]);
 
     React.useEffect(() => {
-        if (!loading && bountyIds?.length > 0) {
-            getAppliedPosts(bountyIds, props.existsSubmitted);
+        if (bountyIds && bountyIds.length > 0 && !isValidating) {
+            getAppliedPosts(bountyIds, existsSubmitted);
         }
-    }, [loading]);
+    }, [bountyIds, isValidating, getAppliedPosts, existsSubmitted]);
+
+    if (stage !== 2) {
+        return <></>;
+    }
 
     if (appliedBountyPosts.length > 0) {
         return (
-            <NestedAccordian key={props.postId} 
+            <NestedAccordian key={postId} 
                 postLinks={thisPostData[0].data.postLinks}
-                date={thisPostData[0].data.date}
-                time={thisPostData[0].data.time}
+                startDate={thisPostData[0].data.startDate}
+                endDate={thisPostData[0].data.endDate}
                 description={thisPostData[0].data.description}
                 bountyName={thisPostData[0].data.title}
                 amount={thisPostData[0].data.amount}
                 arweaveHash={thisPostData[0].data.postId} // Arweave Hash of Original Creator Post
-                applications={appliedBountyPosts}
+                tokenSymbol={thisPostData[0].data.tokenSymbol}
+                applications={appliedBountyPosts} 
             />
         );
     } 
@@ -136,7 +183,7 @@ const GETAPPLIEDTOPOSTS = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test"]
+                    values: ["Cornucopia-test4"]
                 },
                 {
                     name: "Form-Type",

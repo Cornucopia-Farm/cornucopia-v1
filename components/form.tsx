@@ -1,4 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 import * as React from 'react';
+import Image from 'next/image';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -6,25 +8,29 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
 import axios from 'axios';
-import ClientOnly from '../components/clientOnly';
-import Bundlr from "@bundlr-network/client";
-import privateKey from '../arweave-key-UxP5TeAmfwJXIbZY9rJE1uw4z1FHs-QuV-UlfC28cOI.json';
-import { NextApiResponse } from 'next';
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
 import useDebounce from './useDebounce';
 import SimpleSnackBar from './simpleSnackBar';
+import styles from '../styles/Home.module.css';
+import MenuItem from '@mui/material/MenuItem';
+import EthTokenList from '../ethTokenList.json';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import { Dayjs } from 'dayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 type Props = {
     creatorAddress: string;
     hunterAddress?: string;
     postId?: string;
     postLinks?: Array<string>;
-    date?: string;
-    time?: string;
+    startDate?: Dayjs;
+    endDate?: Dayjs;
     description?: string;
     amount?: number; 
     title?: string;
@@ -32,12 +38,13 @@ type Props = {
     summary: string;
     formButtons: Array<string>;
     formType: string;
-    // handleCloseSubmitTrue?: (bountyAppId: string, creatorAddress: string) => void;
     tags: Array<any>;
     experience?: string;
     contact?: string;
     appLinks?: Array<string>;
-    // refetch?: () => any;
+    tokenAddress?: string;
+    tokenSymbol?: string;
+    tokenDecimals?: number;
 };
 
 type ArweaveData = {
@@ -47,13 +54,16 @@ type ArweaveData = {
     title?: string;
     description?: string; 
     amount?: number; 
-    date?: string; 
-    time?: string; 
+    startDate?: Dayjs | null; 
+    endDate?: Dayjs | null; 
     postLinks?: Array<string>;
     appLinks?: Array<string>;
     experience?: string;
     contact?: string;
     workLinks?: Array<string>;
+    tokenAddress?: string;
+    tokenSymbol?: string; 
+    tokenDecimals?: number;
 };
 
 type Tags = {
@@ -67,15 +77,21 @@ const defaultValues: ArweaveData = {
     postId: "",
     title: "", 
     description: "", 
-    amount: 0, 
-    date: "", 
-    time: "", 
-    postLinks: [""],
-    appLinks: [""],
+    amount: undefined,
+    startDate: null, 
+    endDate: null, 
+    postLinks: undefined, // [""],
+    appLinks: undefined, //[""],
     experience: "",
     contact: "",
-    workLinks: [""],
+    workLinks: undefined, //[""],
+    tokenAddress: "",
+    tokenSymbol: "",
+    tokenDecimals: undefined
 };
+
+const ethTokens = EthTokenList['tokens'];
+
 
 // Escrow Contract Config
 const contractConfig = {
@@ -104,16 +120,42 @@ const Form: React.FC<Props> = props => {
     const handleCloseSubmitTrue = (bountyAppId: string, creatorAddress: string) => {
         setBountyAppId(bountyAppId);
         setCreatorAddress(creatorAddress);
-        // submit?.();
-        // handleCloseSubmit();
     };
 
 
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
+        
         setFormValues({
           ...formValues,
           [name]: value,
+        });
+    };
+
+    const handleInputChangeStartDate = (newDate: any) => { 
+        setFormValues({
+          ...formValues,
+          ["startDate"]: newDate,
+        });
+    };
+
+    const handleInputChangeEndDate = (newDate: any) => {  
+        setFormValues({
+          ...formValues,
+          ["endDate"]: newDate,
+        });
+    };
+
+    const handleInputChangeToken = (e: any) => {
+        const tokenAddress = e.target.value;
+        const tokenObj = ethTokens.filter((obj: any) => {
+            return obj.address === tokenAddress;
+        }); // Returns Array of matches so we take first one as there will only be one match
+        setFormValues({
+          ...formValues,
+          ["tokenAddress"]: tokenAddress,
+          ["tokenSymbol"]: tokenObj[0].symbol,
+          ["tokenDecimals"]: tokenObj[0].decimals,
         });
     };
 
@@ -137,16 +179,19 @@ const Form: React.FC<Props> = props => {
         if (props.title) formValues.title = props.title;
         if (props.description) formValues.description = props.description;
         if (props.amount) formValues.amount = props.amount;
-        if (props.date) formValues.date = props.date;
-        if (props.time) formValues.time = props.time;
+        if (props.startDate) formValues.startDate = props.startDate;
+        if (props.endDate) formValues.endDate = props.endDate;
         if (props.postLinks) formValues.postLinks = props.postLinks;
         if (props.experience) formValues.experience = props.experience;
         if (props.contact) formValues.contact = props.contact;
         if (props.appLinks) formValues.appLinks = props.appLinks;
+        if (props.tokenAddress) formValues.tokenAddress = props.tokenAddress;
+        if (props.tokenSymbol) formValues.tokenSymbol = props.tokenSymbol;
+        if (props.tokenDecimals) formValues.tokenDecimals = props.tokenDecimals;
+
         setArweaveTrigger(!arweaveTrigger); // Trigger useeffect to call arweave upload api
         setOpen(false);
         setOpenSubmitCheck(false);
-        // props.refetch?.(); // Refetch data in createBounties after posting a bounty to show new bounty immediately
     };
 
     React.useEffect(() => {
@@ -166,24 +211,28 @@ const Form: React.FC<Props> = props => {
             console.log("Form Values", formValues);
             uploadToArweave(formValues, props.tags);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [arweaveTrigger]);
 
     const ButtonType = () => {
-        if (props.formType == "createBounty") {
+        if (props.formType == "createBounty") { // TODO: Change color of create new bounty icon
             return (
-                <Fab sx={{ backgroundColor: 'rgba(6, 72, 41, 0.85)', color: '#FFFFFF' }} aria-label="add" onClick={handleClickOpen}>
-                    <AddIcon />
-                </Fab>
+                // <Fab sx={{ backgroundColor: 'rgba(6, 72, 41, 0.85)', color: '#FFFFFF' }} aria-label="add" onClick={handleClickOpen}> 
+                //     <AddIcon />
+                // </Fab>
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleClickOpen}>
+                    Create Bounty
+                </Button>
             );
         } else if (props.formType == "applyBounty") {
             return (
-                <Button variant="contained" sx={{ backgroundColor: 'rgba(6, 72, 41, 0.85)', borderRadius: '12px' }} onClick={handleClickOpen}>
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleClickOpen}>
                     Apply
                 </Button>
             );
         } else {
             return (
-                <Button variant="contained" sx={{ backgroundColor: 'rgba(6, 72, 41, 0.85)', borderRadius: '12px' }} onClick={handleClickOpen}>
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }}  onClick={handleClickOpen}>
                     Submit
                 </Button>
             );
@@ -199,12 +248,37 @@ const Form: React.FC<Props> = props => {
                         margin="dense"
                         id="title-input"
                         name="title"
-                        label="Title (5 words)"
+                        label= "Title" //"Title (5 words)"
                         value={formValues.title}
                         onChange={handleInputChange}
                         type="text"
                         fullWidth
                         variant="standard"
+                        inputProps={{ autoComplete: 'off'}}
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)',
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            },
+                        }} 
                     />
                     <TextField
                         autoFocus
@@ -217,20 +291,232 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        inputProps={{ autoComplete: 'off'}}
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            },
+                        }} 
                     />
+                    <TextField 
+                        autoFocus
+                        margin="dense"
+                        id="token-input"
+                        name="tokenAddress"
+                        label="Token"
+                        value={formValues.tokenAddress}
+                        onChange={handleInputChangeToken}
+                        select
+                        fullWidth
+                        variant="standard"
+                        inputProps={{ autoComplete: 'off'}}
+                        SelectProps={{
+                            MenuProps: {
+                                sx: { 
+                                    maxHeight: '50%', 
+                                    '& .MuiMenu-paper': { 
+                                        borderBottomLeftRadius: '12px',
+                                        borderBottomRightRadius: '12px',
+                                    } 
+                                },
+                                MenuListProps: {
+                                    sx: { 
+                                        backgroundColor: 'rgb(23, 21, 20)',           
+                                    }
+                                },
+                            },   
+                        }}
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            },
+                            '& .MuiSelect-icon': {
+                                color: 'rgb(233, 233, 198)'
+                            },
+                        }}
+                    >
+                        {ethTokens.map((token) => (
+                            <MenuItem key={token.address} value={token.address}>
+                                <Box sx={{ display: 'flex', gap: '12px' }}> 
+                                    <ListItemIcon sx={{ minWidth: '25px !important'}} >
+                                        <img alt="" width="25px" height="25px" src={token.logoURI} />
+                                    </ListItemIcon>
+                                    <Typography sx={{color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk'}}>{token.symbol}</Typography>
+                                </Box>
+                            </MenuItem>
+                        ))}
+                    </TextField>
                     <TextField
                         autoFocus
                         margin="dense"
                         id="amount-input"
                         name="amount"
-                        label="Amount (ETH)"
+                        label="Amount"
                         value={formValues.amount}
                         onChange={handleInputChange}
+                        // type="text" // Need to add ERC20
                         type="number"
                         fullWidth
                         variant="standard"
+                        inputProps={{ autoComplete: 'off', inputMode: 'numeric', pattern: '[0-9]*', }}
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk',
+                                '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+                                    '-webkit-appearance': 'none',
+                                },
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                },
+                            },
+                        }}
                     />
-                    <TextField
+                    <LocalizationProvider dateAdapter={AdapterDayjs}> 
+                        <DatePicker
+                            PaperProps={{
+                                sx: {
+                                    backgroundColor: 'rgb(11, 11, 9)',
+                                    '& .MuiCalendarPicker-root': {
+                                        backgroundColor: 'rgb(11, 11, 9)',
+                                        color: 'rgb(248, 215, 154)',
+                                        fontFamily: 'Space Grotesk',
+                                        borderRadius: '12px',
+                                    },
+                                    '& .MuiPickersCalendarHeader-switchViewIcon': {
+                                        color: 'rgb(248, 215, 154)',
+                                        '&:hover': { // DO WE WANT THIS TO GLOW??
+                                            backgroundColor: 'rgb(248, 215, 154)',
+                                            color: 'rgb(23, 21, 20)',
+                                        },
+                                        borderRadius: '50%',
+                                    },
+                                    '& .MuiSvgIcon-root': {
+                                        color: 'rgb(248, 215, 154)',
+                                        '&:hover': { // DO WE WANT THIS TO GLOW??
+                                            backgroundColor: 'rgb(248, 215, 154)',
+                                            color: 'rgb(23, 21, 20)',
+                                        },
+                                        borderRadius: '50%',   
+                                    },
+                                    '& .MuiDayPicker-weekDayLabel': {
+                                        color: 'rgb(248, 215, 154)',
+                                        fontFamily: 'Space Grotesk',
+                                    },
+                                    
+                                    '& .MuiPickersDay-root': {
+                                        backgroundColor: 'rgb(23, 21, 20)',
+                                        color: 'rgb(248, 215, 154)',
+                                        fontFamily: 'Space Grotesk',
+                                        '&:hover': {
+                                            backgroundColor: 'rgb(248, 215, 154)',
+                                            color: 'rgb(23, 21, 20)',
+                                        },
+                                        '&.Mui-selected': {
+                                            backgroundColor: 'rgb(233, 233, 198)',
+                                            color: 'rgb(23, 21, 20)',
+                                        },
+                                    },
+                                    '& .MuiPickersDay-today:not(.Mui-selected)': {
+                                        border: '1px solid rgb(248, 215, 154)',
+                                    },
+                                },
+                            }}
+                            label="Start Date"
+                            disablePast={true}
+                            value={formValues.startDate}
+                            onChange={handleInputChangeStartDate}
+                            renderInput={(params) => 
+                                <TextField
+                                    {...params}
+                                    autoFocus
+                                    margin="dense"
+                                    fullWidth
+                                    variant="standard"
+                                    sx={{ 
+                                        '& .MuiInputBase-input': { 
+                                            color: 'rgb(248, 215, 154)', 
+                                            fontFamily: 'Space Grotesk'
+                                        }, 
+                                        '& .MuiInputLabel-root': { 
+                                            color: 'rgb(233, 233, 198)', 
+                                            fontFamily: 'Space Grotesk'
+                                        }, 
+                                        '& label.Mui-focused': {
+                                            color: 'rgb(248, 215, 154)',
+                                        }, 
+                                        '& .MuiInput-underline:after': {
+                                            borderBottomColor: 'rgb(248, 215, 154)',
+                                        }, 
+                                        '& .MuiInput-underline:before': {
+                                            borderBottomColor: 'rgb(233, 233, 198)',
+                                        }, 
+                                        '& .MuiInput-underline': {
+                                            '&:hover:before': {
+                                                borderBottomColor: 'rgb(248, 215, 154) !important',
+                                            }
+                                        },
+                                        input: { color: 'rgb(248, 215, 154)' },
+                                        svg: { color: 'rgb(248, 215, 154)', fontSize: '24px' },
+                                    }}
+                                />
+                            }
+                        />
+                    </LocalizationProvider>
+                    {/* <TextField
                         autoFocus
                         margin="dense"
                         id="date-input"
@@ -241,8 +527,124 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
-                    />
-                    <TextField
+                        inputProps={{ autoComplete: 'off'}}
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            },
+                        }}
+                    /> */}
+                    <LocalizationProvider dateAdapter={AdapterDayjs}> 
+                        <DatePicker
+                            PaperProps={{
+                                sx: {
+                                    backgroundColor: 'rgb(11, 11, 9)',
+                                    '& .MuiCalendarPicker-root': {
+                                        backgroundColor: 'rgb(11, 11, 9)',
+                                        color: 'rgb(248, 215, 154)',
+                                        fontFamily: 'Space Grotesk',
+                                        borderRadius: '12px',
+                                    },
+                                    '& .MuiPickersCalendarHeader-switchViewIcon': {
+                                        color: 'rgb(248, 215, 154)',
+                                        '&:hover': { // DO WE WANT THIS TO GLOW??
+                                            backgroundColor: 'rgb(248, 215, 154)',
+                                            color: 'rgb(23, 21, 20)',
+                                        },
+                                        borderRadius: '50%',
+                                    },
+                                    '& .MuiSvgIcon-root': {
+                                        color: 'rgb(248, 215, 154)',
+                                        '&:hover': { // DO WE WANT THIS TO GLOW??
+                                            backgroundColor: 'rgb(248, 215, 154)',
+                                            color: 'rgb(23, 21, 20)',
+                                        },
+                                        borderRadius: '50%',   
+                                    },
+                                    '& .MuiDayPicker-weekDayLabel': {
+                                        color: 'rgb(248, 215, 154)',
+                                        fontFamily: 'Space Grotesk',
+                                    },
+                                    
+                                    '& .MuiPickersDay-root': {
+                                        backgroundColor: 'rgb(23, 21, 20)',
+                                        color: 'rgb(248, 215, 154)',
+                                        fontFamily: 'Space Grotesk',
+                                        '&:hover': {
+                                            backgroundColor: 'rgb(248, 215, 154)',
+                                            color: 'rgb(23, 21, 20)',
+                                        },
+                                        '&.Mui-selected': {
+                                            backgroundColor: 'rgb(233, 233, 198)',
+                                            color: 'rgb(23, 21, 20)',
+                                        },
+                                    },
+                                    '& .MuiPickersDay-today:not(.Mui-selected)': {
+                                        border: '1px solid rgb(248, 215, 154)',
+                                    },
+                                },
+                            }}
+                            label="End Date"
+                            disablePast={true}
+                            value={formValues.endDate}
+                            onChange={handleInputChangeEndDate}
+                            renderInput={(params) => 
+                                <TextField
+                                    {...params}
+                                    autoFocus
+                                    margin="dense"
+                                    fullWidth
+                                    variant="standard"
+                                    sx={{ 
+                                        '& .MuiInputBase-input': { 
+                                            color: 'rgb(248, 215, 154)', 
+                                            fontFamily: 'Space Grotesk'
+                                        }, 
+                                        '& .MuiInputLabel-root': { 
+                                            color: 'rgb(233, 233, 198)', 
+                                            fontFamily: 'Space Grotesk'
+                                        }, 
+                                        '& label.Mui-focused': {
+                                            color: 'rgb(248, 215, 154)',
+                                        }, 
+                                        '& .MuiInput-underline:after': {
+                                            borderBottomColor: 'rgb(248, 215, 154)',
+                                        }, 
+                                        '& .MuiInput-underline:before': {
+                                            borderBottomColor: 'rgb(233, 233, 198)',
+                                        }, 
+                                        '& .MuiInput-underline': {
+                                            '&:hover:before': {
+                                                borderBottomColor: 'rgb(248, 215, 154) !important',
+                                            }
+                                        },
+                                        input: { color: 'rgb(248, 215, 154)' },
+                                        svg: { color: 'rgb(248, 215, 154)', fontSize: '24px' },
+                                    }}
+                                />
+                            }
+                        />
+                    </LocalizationProvider>
+                    {/* <TextField
                         autoFocus
                         margin="dense"
                         id="time-input"
@@ -253,7 +655,32 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
-                    />
+                        inputProps={{ autoComplete: 'off'}}
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            },
+                        }}
+                    /> */}
                     <TextField
                         autoFocus
                         margin="dense"
@@ -264,7 +691,32 @@ const Form: React.FC<Props> = props => {
                         onChange={handleInputChange}
                         type="text"
                         fullWidth
-                        variant="standard"
+                        variant="standard" 
+                        inputProps={{ autoComplete: 'off'}}
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            },
+                        }} 
                     />
                 </div>
             );
@@ -282,6 +734,31 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        inputProps={{ autoComplete: 'off'}}
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            },
+                        }}
                     />
                     <TextField
                         autoFocus
@@ -294,6 +771,31 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        inputProps={{ autoComplete: 'off'}}
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            },
+                        }}
                     />
                     <TextField
                         autoFocus
@@ -306,6 +808,31 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        inputProps={{ autoComplete: 'off'}}
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            },
+                        }} 
                     />
                 </div>
             );
@@ -323,6 +850,31 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        inputProps={{ autoComplete: 'off'}}
+                        sx={{ 
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            },
+                        }} 
                     />
                 </div>
             );
@@ -331,44 +883,47 @@ const Form: React.FC<Props> = props => {
 
     return (
         <div>
-            {(isSubmitTxLoading || isSubmitTxSuccess) && 
-                <SimpleSnackBar msg={isSubmitTxLoading ? 'Submitting work...' : 'Submitted work!'}/>
+            {(isSubmitTxLoading || (isSubmitTxSuccess && submitTxData?.status === 1)) && 
+                <SimpleSnackBar severity={'success'} msg={isSubmitTxLoading ? 'Submitting work...' : 'Submitted work!'}/>
+            }
+            {(isSubmitTxSuccess && submitTxData?.status === 0) && 
+                <SimpleSnackBar severity={'error'} msg={'Submit transaction failed!'}/>
             }
             <ButtonType />
-            <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>{props.formName}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
+            <Dialog open={open} onClose={handleClose} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
+                <DialogTitle className={styles.formHeader}>{props.formName}</DialogTitle>
+                <DialogContent className={styles.cardBackground}>
+                    <DialogContentText className={styles.h2}>
                     {props.summary}
                     </DialogContentText>
                     {dialogBoxes(props.formType)}
                 </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>{props.formButtons[0]}</Button>
+                <DialogActions className={styles.formFooter}>
+                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleClose}>{props.formButtons[0]}</Button>
                     {props.formName !== "Submit" && 
-                        <Button onClick={handleCloseSubmit}>{props.formButtons[1]}</Button>
+                        <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleCloseSubmit}>{props.formButtons[1]}</Button>
                     }
                     {props.formName === "Submit" &&
                         <div>
-                            <Button onClick={() => {handleOpenSubmitCheck(); handleCloseSubmitTrue(props.postId!, props.creatorAddress);}}>{props.formButtons[1]}</Button>
+                            <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginLeft: '8px'}} onClick={() => {handleOpenSubmitCheck(); handleCloseSubmitTrue(props.postId!, props.creatorAddress);}}>{props.formButtons[1]}</Button>
                             <Dialog
                                 open={openSubmitCheck}
                                 onClose={handleClose}
                                 aria-labelledby="alert-dialog-title"
                                 aria-describedby="alert-dialog-description"
+                                PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}
                             >
-                                <DialogTitle id="alert-dialog-title">
+                                <DialogTitle className={styles.formHeader} id="alert-dialog-title">
                                     {"Are you sure you want to submit your work?"}
                                 </DialogTitle>
-                                <DialogContent>
-                                    <DialogContentText id="alert-dialog-description">
+                                <DialogContent className={styles.cardBackground}>
+                                    <DialogContentText className={styles.h2} id="alert-dialog-description">
                                         Once you submit your work, the bounty creator will have 2 weeks to either payout or dispute your work.
                                     </DialogContentText>
                                 </DialogContent>
-                                <DialogActions>
-                                    <Button onClick={handleClose}>No I don't</Button>
-                                    {/* <Button onClick={() => handleCloseSubmitTrue(props.postId!, props.creatorAddress)} autoFocus>Yes I want to</Button> */}
-                                    <Button onClick={() => {submit?.(); handleCloseSubmit();}} autoFocus disabled={!submit || isSubmitTxLoading}>{isSubmitTxLoading ? 'Submitting work...' : 'Yes I want to'}</Button>
+                                <DialogActions className={styles.formFooter}>
+                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleClose}>No I don&apos;t</Button>
+                                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {submit?.(); handleCloseSubmit();}} autoFocus disabled={!submit || isSubmitTxLoading}>{isSubmitTxLoading ? 'Submitting work...' : 'Yes I want to'}</Button>
                                 </DialogActions>
                             </Dialog>
                         </div>

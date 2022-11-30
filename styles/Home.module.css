@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&family=Roboto+Flex:opsz,wght@8..144,100;8..144,200&family=Rokkitt:wght@100&family=Space+Grotesk:wght@300&family=Zen+Kaku+Gothic+New:wght@300;400&display=swap');
+
 .subHeadings {
   padding-left: 400px;
   color: #D77D13;
@@ -15,6 +17,8 @@
 
 .main {
   padding: 5rem 0;
+  /* height: 108px + 1vh; */
+  /* height: 108vh !important; */
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -23,11 +27,13 @@
 }
 
 .header {
-  width: 100%;
+  /* width: 100%;
   height: 200px;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-around; */
+  background: rgb(15, 14, 13);
+  /* background: linear-gradient(to bottom, rgb(52, 117, 229), rgb(77, 137, 216)) !important; */
 }
 
 .footer {
@@ -82,6 +88,47 @@
     Bitstream Vera Sans Mono, Courier New, monospace;
 }
 
+.h2 {
+  font-family: 'Space Grotesk' !important;
+  font-weight: 300;
+  text-transform: capitalize;
+  color: rgb(233, 233, 198);
+}
+
+.cardTag {
+  font-family: 'Space Grotesk' !important;
+  font-weight: 300;
+  font-size: 15px;
+  font-style: italic;
+  color: rgb(233, 233, 198);
+  display: flex;
+  text-align: left;
+}
+
+.cardInfo {
+  font-family: 'Space Grotesk' !important;
+  font-weight: 300;
+  font-size: 'calc(2000px-1vh)';
+  /* text-transform: capitalize; */
+  color: rgb(233, 233, 198);
+  display: flex;
+  text-align: left;
+}
+
+.arweaveHash {
+  font-family: 'Space Grotesk' !important;
+  font-weight: 300;
+  font-size: 18px + 1vw;
+  text-transform: capitalize;
+  color: rgb(233, 233, 198) !important;
+  display: flex;
+}
+
+.dialogBody {
+  font-family: 'Space Grotesk' !important;
+  color: rgb(233, 233, 198) !important;
+}
+
 .grid {
   display: flex;
   align-items: center;
@@ -131,4 +178,218 @@
     width: 100%;
     flex-direction: column;
   }
+}
+
+.background {
+  /* height: 108vh !important; */
+  z-index: -1;
+  min-height: 100vh;
+  padding-bottom: 12px;
+  /* flex-grow:1; */
+  /* padding-bottom: 12px !important; */
+  /* position: 'relative'; */
+  /* min-height: 100vh; */
+  /* background: rgb(15, 14, 13); */
+  /* background: linear-gradient(to bottom, rgb(77, 137, 216), 20%, rgb(250, 239, 188), 90%, green, rgb(87, 44, 33)); */
+}
+
+.sunGlow {
+  background-color: rgb(252, 239, 192);
+  border-radius: 20px;
+  box-shadow:
+    0 0 60px 20px #fff,  /* inner white */
+    0 0 100px 60px rgb(251, 185, 64), /* middle magenta */
+    0 0 40px 70px rgb(230, 238, 165); /* outer cyan */
+}
+
+.headerFont {
+  font-family: 'Space Grotesk';
+  font-weight: 300;
+  text-transform: capitalize;
+  color:rgb(248, 215, 154) !important;
+}
+
+.accordionBackground {
+  background-color: rgb(11, 11, 9);
+}
+
+.cardBackground {
+  background-color: rgb(23, 21, 20);
+}
+
+.formHeader {
+  font-family: 'Space Grotesk' !important;
+  font-weight: 300;
+  text-transform: capitalize;
+  color: rgb(233, 233, 198);
+  background-color: rgb(23, 21, 20);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.formFooter {
+  font-family: 'Space Grotesk' !important;
+  font-weight: 300;
+  text-transform: capitalize;
+  color: rgb(233, 233, 198);
+  background-color: rgb(23, 21, 20);
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.grass {
+  background-color: #ADD37F;
+}
+
+.sky {
+  background-color: #8FC9F7;
+}
+
+.backgroundWrap {
+  /* bottom: 0;
+  left: 0;
+  padding-top: 50px;
+  position: fixed;
+  right: 0;
+  */
+  padding-top: 50px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  position: fixed;
+}
+
+/* KEYFRAMES */
+
+@-webkit-keyframes animateCloud {
+  0% {
+      margin-left: -1000px;
+  }
+  100% {
+      margin-left: 100%;
+  }
+}
+
+@-moz-keyframes animateCloud {
+  0% {
+      margin-left: -1000px;
+  }
+  100% {
+      margin-left: 100%;
+  }
+}
+
+@keyframes animateCloud {
+  0% {
+      margin-left: -1000px;
+  }
+  100% {
+      margin-left: 100%;
+  }
+}
+
+/* ANIMATIONS */
+
+.x1 {
+  -webkit-animation: animateCloud 35s linear infinite;
+  -moz-animation: animateCloud 35s linear infinite;
+  animation: animateCloud 35s linear infinite;
+
+  -webkit-transform: scale(0.65);
+  -moz-transform: scale(0.65);
+  transform: scale(0.65);
+}
+
+.x2 {
+  -webkit-animation: animateCloud 20s linear infinite;
+  -moz-animation: animateCloud 20s linear infinite;
+  animation: animateCloud 20s linear infinite;
+
+  -webkit-transform: scale(0.3);
+  -moz-transform: scale(0.3);
+  transform: scale(0.3);
+}
+
+.x3 {
+  -webkit-animation: animateCloud 30s linear infinite;
+  -moz-animation: animateCloud 30s linear infinite;
+  animation: animateCloud 30s linear infinite;
+
+  -webkit-transform: scale(0.5);
+  -moz-transform: scale(0.5);
+  transform: scale(0.5);
+}
+
+.x4 {
+  -webkit-animation: animateCloud 18s linear infinite;
+  -moz-animation: animateCloud 18s linear infinite;
+  animation: animateCloud 18s linear infinite;
+
+  -webkit-transform: scale(0.4);
+  -moz-transform: scale(0.4);
+  transform: scale(0.4);
+}
+
+.x5 {
+  -webkit-animation: animateCloud 25s linear infinite;
+  -moz-animation: animateCloud 25s linear infinite;
+  animation: animateCloud 25s linear infinite;
+
+  -webkit-transform: scale(0.55);
+  -moz-transform: scale(0.55);
+  transform: scale(0.55);
+}
+
+/* OBJECTS */
+
+.cloud {
+  background: #fff;
+  background: -moz-linear-gradient(to bottom,  #fff 5%, #f1f1f1 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(5%,#fff), color-stop(100%,#f1f1f1));
+  background: -webkit-linear-gradient(to bottom,  #fff 5%,#f1f1f1 100%);
+  background: -o-linear-gradient(to bottom,  #fff 5%,#f1f1f1 100%);
+  background: -ms-linear-gradient(to bottom,  #fff 5%,#f1f1f1 100%);
+  background: linear-gradient(to bottom,  #fff 5%,#f1f1f1 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff', endColorstr='#f1f1f1',GradientType=0 );
+
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+
+  -webkit-box-shadow: 0 8px 5px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 8px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 5px rgba(0, 0, 0, 0.1);
+
+  height: 120px;
+  position: relative;
+  width: 350px;
+}
+
+.cloud:after, .cloud:before {
+  background: #fff;
+  content: '';
+  position: absolute;
+  z-indeX: -1;
+}
+
+.cloud:after {
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+
+  height: 100px;
+  left: 50px;
+  top: -50px;
+  width: 100px;
+}
+
+.cloud:before {
+  -webkit-border-radius: 200px;
+  -moz-border-radius: 200px;
+  border-radius: 200px;
+
+  width: 180px;
+  height: 180px;
+  right: 50px;
+  top: -90px;
 }

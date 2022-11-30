@@ -1,15 +1,19 @@
 import * as React from 'react';
-import { useQuery, gql } from '@apollo/client';
 import axios from 'axios';
 import { ethers } from 'ethers';
 import NestedAccordian from './nestedAccordion';
 import Application from './application';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
-import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransaction, useContractRead, useBlockNumber, useContract, usePrepareContractWrite, useContractEvent, useSigner, useNetwork } from 'wagmi';
+import { useAccount, useContract, useSigner, useNetwork } from 'wagmi';
+import useSWR from 'swr';
+import gqlFetcher from '../swrFetchers';
+import { gql } from 'graphql-request';
 
 type Props = {
     postId: string;
     setSubmittedMap: (postId: string) => void;
+    incrementSubmittedHits: () => void;
+    stage: number;
 };
 
 // Escrow Contract Config
@@ -18,9 +22,7 @@ const contractConfig = {
     contractInterface: escrowABI['abi'], // contract abi in json or JS format
 };
 
-const defaultIdentifier = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ "default", "0x", "0x" ]);
-
-const DisputeInitiatedPosts: React.FC<Props> = props => {
+const DisputeInitiatedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSubmittedHits, stage, }) => {
 
     // Wagmi address/contract info
     const { address, isConnected } = useAccount();
@@ -32,26 +34,32 @@ const DisputeInitiatedPosts: React.FC<Props> = props => {
     const [disputeInitiatedBountyPosts, setDisputeInitiatedBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
 
-    // const [bountyIdentifier, setBountyIdentifier] = React.useState(defaultIdentifier);
-
-
-    // const { data: bountyProgressData, error: bountyProgressError, isLoading: isBountyProgressLoading, isSuccess: isBountyProgressSuccess, refetch: bountyProgress } = useContractRead({...contractConfig, functionName: 'progress', args: [bountyIdentifier], enabled: false, }); // watch causing error not sure why rn
-
-    
-    const { data, loading, error, startPolling } = useQuery(GETWORKSUBMITTEDPOSTS, { variables: { postId: props.postId, chain: chain?.network! }, });
-    startPolling(10000);
+    const { data, error, isValidating } = useSWR([GETWORKSUBMITTEDPOSTS, { postId: postId, chain: chain?.network! },], gqlFetcher);
 
     if (error) {
         console.error(error);
     }
-    
-    const bountyIds = data?.transactions.edges.map((edge: any) => edge.node.id);
-    
-    if (!loading && bountyIds.length > 0) {
-        props.setSubmittedMap(props.postId);
-    }
 
-    const getDisputeInitiatedPosts = async (openBountyIds: Array<string>) => {
+    const loaded = React.useRef(false); 
+    
+    const bountyIds = React.useMemo(() => {
+        return data?.transactions?.edges.map((edge: any) => edge.node.id);
+    }, [data?.transactions?.edges]);
+
+    React.useEffect(() => {
+        if (!isValidating && bountyIds?.length > 0) {
+            setSubmittedMap(postId);
+        }
+    }, [isValidating, bountyIds?.length, setSubmittedMap, postId]);
+
+    React.useEffect(() => {
+        if (!isValidating && !loaded.current) {
+            loaded.current = true;
+            incrementSubmittedHits();
+        }
+    }, [isValidating, incrementSubmittedHits]);
+
+    const getDisputeInitiatedPosts = React.useCallback(async (openBountyIds: Array<string>) => {
 
         let disputeInitiatedBountiesApps: Array<JSX.Element> = [];
 
@@ -64,51 +72,74 @@ const DisputeInitiatedPosts: React.FC<Props> = props => {
             const postData = await axios.get(`https://arweave.net/${openBountyId}`);
             
             const postId = postData?.config?.url?.split("https://arweave.net/")[1];
-            postDataArr.push(postData);
+            // postDataArr.push(postData);
             const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, address, postData.data.hunterAddress ]);
             // setBountyIdentifier(bountyIdentifierInput);
             // bountyProgress();
 
             const progress = await escrowContract.progress(bountyIdentifierInput);
-            
-            if (progress === 2) { // Case 5: Hunter needs to respond to creator dispute
-                disputeInitiatedBountiesApps.push(
-                    <Application key={postId} 
-                        person={postData.data.hunterAddress}
-                        experience={postData.data.experience}
-                        contactInfo={postData.data.contact}
-                        arweaveHash={openBountyId}
-                        appLinks={postData.data.appLinks}
-                        workLinks={postData.data.workLinks}
-                    />
-                );
-            }
+            // if (progress === 2) { // Case 5: Hunter needs to respond to creator dispute
+            //     disputeInitiatedBountiesApps.push(
+            //         <Application key={postId} 
+            //             person={postData.data.hunterAddress}
+            //             experience={postData.data.experience}
+            //             contactInfo={postData.data.contact}
+            //             arweaveHash={openBountyId}
+            //             appLinks={postData.data.appLinks}
+            //             workLinks={postData.data.workLinks}
+            //         />
+            //     );
+            // }
+
+            return Promise.resolve([
+                progress,
+                <Application key={postId} 
+                    person={postData.data.hunterAddress}
+                    experience={postData.data.experience}
+                    contactInfo={postData.data.contact}
+                    arweaveHash={openBountyId}
+                    appLinks={postData.data.appLinks}
+                    workLinks={postData.data.workLinks}
+                />,
+                postData
+            ]);
         });
 
         if (promises) {
-            await Promise.all(promises); // Wait for these promises to resolve before setting the state variables
+            await Promise.all(promises).then(results => {
+                results.forEach((result) => {
+                    if (result[0] === 2) {
+                        disputeInitiatedBountiesApps.push(result[1]) ;
+                    }
+                    postDataArr.push(result[2]);
+                });
+                setDisputeInitiatedBountyPosts(disputeInitiatedBountiesApps);
+                setThisPostData(postDataArr);
+            });        
         }
-
-        setDisputeInitiatedBountyPosts(disputeInitiatedBountiesApps);
-        setThisPostData(postDataArr);
-    };
+    }, [address, escrowContract]);
 
     React.useEffect(() => {
-        if (!loading && bountyIds?.length > 0) {
+        if (bountyIds && bountyIds.length > 0 && !isValidating) {
             getDisputeInitiatedPosts(bountyIds);
         }
-    }, [loading]);
+    }, [bountyIds, isValidating, getDisputeInitiatedPosts]);
+
+    if (stage !== 5) {
+        return <></>;
+    }
 
     if (disputeInitiatedBountyPosts.length > 0) {
         return (
-            <NestedAccordian key={props.postId} 
+            <NestedAccordian key={postId} 
                 postLinks={thisPostData[0].data.postLinks}
-                date={thisPostData[0].data.date}
-                time={thisPostData[0].data.time}
+                startDate={thisPostData[0].data.startDate}
+                endDate={thisPostData[0].data.endDate}
                 description={thisPostData[0].data.description}
                 bountyName={thisPostData[0].data.title}
                 amount={thisPostData[0].data.amount}
                 arweaveHash={thisPostData[0].data.postId} // Arweave Hash of Original Creator Post
+                tokenSymbol={thisPostData[0].data.tokenSymbol}
                 applications={disputeInitiatedBountyPosts}
             />
         );
@@ -129,7 +160,7 @@ const GETWORKSUBMITTEDPOSTS = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test"]
+                    values: ["Cornucopia-test4"]
                 },
                 {
                     name: "Form-Type",
