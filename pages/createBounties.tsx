@@ -15,7 +15,7 @@ import DisputeRespondedToPosts from '../components/disputeRespondedToPosts';
 import FinishedPosts from '../components/finishedPosts';
 import styles from '../styles/Home.module.css';
 import Slider from '@mui/material/Slider';
-import { Typography } from '@mui/material';
+import { Typography, useMediaQuery } from '@mui/material';
 import WelcomeCard from '../components/welcomeCard';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import CreateBountiesInfo from '../components/createBountiesInfo';
@@ -233,6 +233,9 @@ const CreateBounties: NextPage = () => {
         return marks[marks.findIndex((mark) => mark.value === value)].label
     }
 
+    const smallScreen = useMediaQuery('(max-width: 1086px)');
+    const largeScreen = useMediaQuery('(min-width: 1087px)');
+
     if (!isConnected) {
         return (
             <div className={styles.background}>
@@ -257,6 +260,7 @@ const CreateBounties: NextPage = () => {
                                 <CreateBountiesInfo open={stageInfo} setOpen={setStageInfo}/>
                                 <Typography sx={{ color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk', fontStyle: 'italic', fontWeight: '300', fontSize: '18px', position: 'relative', }}>Stages</Typography>
                             </Box>
+                            {largeScreen && 
                             <Slider
                                 aria-label="Restricted values"
                                 defaultValue={0}
@@ -295,15 +299,20 @@ const CreateBounties: NextPage = () => {
                                     }
                                 }}
                             />
+                        }
                         </Box>
+                       
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', }}> 
-                            {stage === 1 && <h2 className={styles.h2}>Posted</h2>}
-                            {stage === 2 && <h2 className={styles.h2}>Applied To</h2>}
-                            {stage === 3 && <h2 className={styles.h2}>In Progress</h2>}
-                            {stage === 4 && <h2 className={styles.h2}>Submitted: Needs Approval</h2>}
-                            {stage === 5 && <h2 className={styles.h2}>Dispute Initiated</h2>}
-                            {stage === 6 && <h2 className={styles.h2}>Dispute Responded To</h2>}
-                            {stage === 7 && <h2 className={styles.h2}>Finished</h2>}
+                            {largeScreen && stage === 1 && <h2 className={styles.h2}>Posted</h2>}
+                            {largeScreen && stage === 2 && <h2 className={styles.h2}>Applied To</h2>}
+                            {largeScreen && stage === 3 && <h2 className={styles.h2}>In Progress</h2>}
+                            {largeScreen && stage === 4 && <h2 className={styles.h2}>Submitted: Needs Approval</h2>}
+                            {largeScreen && stage === 5 && <h2 className={styles.h2}>Dispute Initiated</h2>}
+                            {largeScreen && stage === 6 && <h2 className={styles.h2}>Dispute Responded To</h2>}
+                            {largeScreen && stage === 7 && <h2 className={styles.h2}>Finished</h2>}
+
+                            {smallScreen && <h2 className={styles.h2}>Posted</h2>}
+                            
                             <Form
                                 creatorAddress={address!}
                                 formName={"Post Bounty"}
@@ -335,11 +344,17 @@ const CreateBounties: NextPage = () => {
                             /> 
                         </Box> 
                             {postedComponents}
+                            {smallScreen && <h2 className={styles.h2}>Applied To</h2>}
                             {appliedComponents}
+                            {smallScreen && <h2 className={styles.h2}>In Progress</h2>}
                             {inProgressComponents}
+                            {smallScreen && <h2 className={styles.h2}>Submitted: Needs Approval</h2>}
                             {submittedComponents}
+                            {smallScreen && <h2 className={styles.h2}>Dispute Initiated</h2>}
                             {disputeInitiatedComponents}
+                            {smallScreen && <h2 className={styles.h2}>Dispute Responded To</h2>}
                             {disputeRespondedToComponents}
+                            {smallScreen && <h2 className={styles.h2}>Finished</h2>}
                             {finishedComponents}
                     </Box>
                 </main>
