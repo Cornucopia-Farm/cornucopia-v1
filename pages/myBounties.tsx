@@ -80,8 +80,7 @@ const MyBounties: NextPage = () => {
     const [existsSubmitted, setExistsSubmitted] = React.useState(new Map<string, boolean>());
 
     const setSubmittedMap = React.useCallback((postId: string) => {
-        setExistsSubmitted(new Map(existsSubmitted.set(postId, true)));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        setExistsSubmitted(state => new Map(state.set(postId, true)));
     }, []);
 
 
