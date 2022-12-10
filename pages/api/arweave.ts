@@ -5,8 +5,19 @@ import Bundlr from "@bundlr-network/client";
 
 const uploadToArweave = async (bountyData: Object, tags: Array<any>) => {
   // can't use arweave currency on web
-  const privateKey = JSON.parse(process.env.ARWEAVE_KEY!);
-  console.log(privateKey)
+  // const privateKey = JSON.parse(process.env.ARWEAVE_KEY!);
+  const privateKey = {
+    "kty": process.env.KTY,
+    "n": process.env.N,
+    "e": process.env.E,
+    "d": process.env.D,
+    "p": process.env.P,
+    "q": process.env.Q,
+    "dp": process.env.DP,
+    "dq": process.env.DQ,
+    "qi": process.env.QI
+  }
+
   const bundlr = new Bundlr("https://node1.bundlr.network", "arweave", privateKey);
 
   const address = bundlr.address;
