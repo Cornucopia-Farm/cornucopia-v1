@@ -240,7 +240,7 @@ const CreateBounties: NextPage = () => {
                 <WelcomeCard isConnected={isConnected}/>
             </div>
         );
-    } else if (!isValidating) {
+    } else if (data || !isValidating) {
         return (
             <div>
                 <Head>
@@ -324,7 +324,7 @@ const CreateBounties: NextPage = () => {
                                     },
                                     {
                                         name: "App-Name",
-                                        value: "Cornucopia-test4"
+                                        value: "Cornucopia-test3"
                                     },
                                     {
                                         name: "Form-Type",
@@ -379,7 +379,7 @@ const GETPOSTS = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test4"]
+                    values: ["Cornucopia-test3"]
                 },
                 {
                     name: "Form-Type",

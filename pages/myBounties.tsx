@@ -561,7 +561,7 @@ const MYBOUNTIES = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test4"]
+                    values: ["Cornucopia-test3"]
                 },
                 {
                     name: "Form-Type",
@@ -597,7 +597,7 @@ const MYSUBMITTEDBOUNTIES = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test4"]
+                    values: ["Cornucopia-test3"]
                 },
                 {
                     name: "Form-Type",
