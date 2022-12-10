@@ -24,6 +24,7 @@ import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
 import { getEscrowEventData } from '../getEscrowEventData';
+import { useMediaQuery } from '@mui/material';
 
 // Bounty Stages for Hunter:
 // 1. Applied (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.NoBounty); CHECK PROGRESS MAPPING
@@ -201,7 +202,7 @@ const MyBounties: NextPage = () => {
                                             },
                                             {
                                                 name: "App-Name",
-                                                value: "Cornucopia-test4"
+                                                value: "Cornucopia-test3"
                                             },
                                             {
                                                 name: "Form-Type",
@@ -255,7 +256,7 @@ const MyBounties: NextPage = () => {
             const currentBlocktime = await provider.getBlock("latest");
 
             const wethAllowance = await wethContract.allowance(address, escrowAddress);
-
+            console.log('progress', progress)
             let umaEventData;
             if (progress === 2) {
                 umaEventData = await getUMAEventData(umaContract, escrowContract, provider, 'propose', postData.data.creatorAddress, address!, postData.data.postId);
@@ -454,6 +455,9 @@ const MyBounties: NextPage = () => {
     const [stage, setStage] = React.useState(1);
     const [stageInfo, setStageInfo] = React.useState(false);
 
+    const smallScreen = useMediaQuery('(max-width: 1086px)');
+    const largeScreen = useMediaQuery('(min-width: 1087px)');
+
     if (!isConnected) {
         return (
             <div className={styles.background}> 
@@ -479,6 +483,7 @@ const MyBounties: NextPage = () => {
                                 <MyBountiesInfo open={stageInfo} setOpen={setStageInfo}/>
                                 <Typography sx={{ color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk', fontStyle: 'italic', fontWeight: '300', fontSize: '18px', position: 'relative', }}>Stages</Typography>
                             </Box>
+                            {largeScreen && 
                             <Slider
                                 aria-label="Restricted values"
                                 defaultValue={0}
@@ -517,22 +522,38 @@ const MyBounties: NextPage = () => {
                                     }
                                 }}
                             />
+                        }
                         </Box>
-                        {stage === 1 && <h2 className={styles.h2}>Applied</h2>}
-                        {stage === 2 && <h2 className={styles.h2}>In Progress</h2>}
-                        {stage === 3 && <h2 className={styles.h2}>Submitted</h2>}
-                        {stage === 4 && <h2 className={styles.h2}>Dispute Initiated</h2>}
-                        {stage === 5 && <h2 className={styles.h2}>Dispute Responded To</h2>}
-                        {stage === 6 && <h2 className={styles.h2}>Force Payout</h2>}
-                        {stage === 7 && <h2 className={styles.h2}>Finished</h2>}
+                        {largeScreen && stage === 1 && <h2 className={styles.h2}>Applied</h2>}
+                        {largeScreen && stage === 2 && <h2 className={styles.h2}>In Progress</h2>}
+                        {largeScreen && stage === 3 && <h2 className={styles.h2}>Submitted</h2>}
+                        {largeScreen && stage === 4 && <h2 className={styles.h2}>Dispute Initiated</h2>}
+                        {largeScreen && stage === 5 && <h2 className={styles.h2}>Dispute Responded To</h2>}
+                        {largeScreen && stage === 6 && <h2 className={styles.h2}>Force Payout</h2>}
+                        {largeScreen && stage === 7 && <h2 className={styles.h2}>Finished</h2>}
 
-                        {stage === 1 && appliedBountyPosts}
-                        {stage === 2 && inProgressBountyPosts}
-                        {stage === 3 && submittedBountyPosts}
-                        {stage === 4 && disputeInitiatedBountyPosts}
-                        {stage === 5 && disputeRespondedToBountyPosts}
-                        {stage === 6 && creatorNoActionBountyPosts}
-                        {stage === 7 && finishedBountyPosts}
+                        {largeScreen && stage === 1 && appliedBountyPosts}
+                        {largeScreen && stage === 2 && inProgressBountyPosts}
+                        {largeScreen && stage === 3 && submittedBountyPosts}
+                        {largeScreen && stage === 4 && disputeInitiatedBountyPosts}
+                        {largeScreen && stage === 5 && disputeRespondedToBountyPosts}
+                        {largeScreen && stage === 6 && creatorNoActionBountyPosts}
+                        {largeScreen && stage === 7 && finishedBountyPosts}
+
+                        {smallScreen && <h2 className={styles.h2}>Applied</h2>}
+                        {smallScreen && appliedBountyPosts}
+                        {smallScreen && <h2 className={styles.h2}>In Progress</h2>}
+                        {smallScreen && inProgressBountyPosts}
+                        {smallScreen && <h2 className={styles.h2}>Submitted</h2>}
+                        {smallScreen && submittedBountyPosts}
+                        {smallScreen && <h2 className={styles.h2}>Dispute Initiated</h2>}
+                        {smallScreen && disputeInitiatedBountyPosts}
+                        {smallScreen && <h2 className={styles.h2}>Dispute Responded To</h2>}
+                        {smallScreen && disputeRespondedToBountyPosts}
+                        {smallScreen && <h2 className={styles.h2}>Force Payout</h2>}
+                        {smallScreen && creatorNoActionBountyPosts}
+                        {smallScreen && <h2 className={styles.h2}>Finished</h2>}
+                        {smallScreen && finishedBountyPosts}
                     </Box>
                 </main>
             </div>

@@ -1,11 +1,23 @@
 import * as React from 'react';
 import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
 import MuiAlert, { AlertColor, AlertProps } from '@mui/material/Alert';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 type Props = {
     msg: string;
     severity: AlertColor;
 };
+
+const theme = createTheme({
+    palette: {
+      primary: {
+        main: 'rgb(233, 233, 198)',
+      },
+      secondary: {
+        main: 'rgb(255, 69, 0)',
+      },
+    },
+});
 
 const SimpleSnackBar: React.FC<Props> = (props) => {
 
@@ -26,6 +38,7 @@ const SimpleSnackBar: React.FC<Props> = (props) => {
     // website: https://mui.com/material-ui/react-alert/#main-content
 
     return(
+        <ThemeProvider theme={theme}> 
         <Snackbar
             anchorOrigin={{vertical: 'top', horizontal: 'center'}}
             open={open}
@@ -37,10 +50,12 @@ const SimpleSnackBar: React.FC<Props> = (props) => {
             //     }
             // }}
         >
-            <Alert onClose={handleClose} severity={props.severity} sx={{ width: '100%', backgroundColor: 'rgb(23, 21, 20)', color: 'rgb(233, 233, 198)' }}>
+            <Alert onClose={handleClose} severity={props.severity} color={props.severity === 'success' ? 'primary' : 'secondary'} variant="outlined" sx={{ width: '100%', backgroundColor: 'rgb(23, 21, 20)', color: 'rgb(233, 233, 198)', borderRadius: '12px', }}>
+            {/* <Alert onClose={handleClose} severity={props.severity} color="rgb(23, 21, 20)" sx={{ width: '100%', backgroundColor: 'rgb(248, 215, 154)', color: 'rgb(23, 21, 20)', borderRadius: '12px' }}> */}
                 {props.msg}
             </Alert>
         </Snackbar>
+        </ThemeProvider>
     );
 };
 

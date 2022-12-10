@@ -18,6 +18,7 @@ type Props = {
     setSubmittedMap: (postId: string) => void;
     incrementSubmittedHits: () => void;
     stage: number;
+    smallScreen: boolean;
 };
 
 // Escrow Contract Config
@@ -26,7 +27,7 @@ const contractConfig = {
     contractInterface: escrowABI['abi'], // contract abi in json or JS format
 };
 
-const FinishedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSubmittedHits, stage, }) => {
+const FinishedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSubmittedHits, stage, smallScreen, }) => {
 
     // Wagmi address/contract info
     const { address, isConnected } = useAccount();
@@ -134,7 +135,7 @@ const FinishedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSubm
         }
     }, [bountyIds, isValidating, getFinishedPosts]);
 
-    if (stage !== 7) {
+    if (stage !== 7 && !smallScreen) {
         return <></>;
     }
 

@@ -16,6 +16,7 @@ type Props = {
     setSubmittedMap: (postId: string) => void;
     incrementSubmittedHits: () => void;
     stage: number;
+    smallScreen: boolean;
 };
 
 // Escrow Contract Config
@@ -30,7 +31,7 @@ const wethContractConfig = {
     contractInterface: wethABI as ContractInterface, // contract abi in json or JS format
 };
 
-const SubmittedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSubmittedHits, stage, })  => {
+const SubmittedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSubmittedHits, stage, smallScreen, })  => {
     const { address, isConnected } = useAccount();
 
     const { data: signer, isError, isLoading } = useSigner();
@@ -143,7 +144,7 @@ const SubmittedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSub
         }
     }, [bountyIds, isValidating, getSubmittedPosts]);
 
-    if (stage !== 4) {
+    if (stage !== 4 && !smallScreen) {
         return <></>;
     }
 

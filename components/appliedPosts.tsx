@@ -17,6 +17,7 @@ type Props = {
     setAppliedMap: (postId: string) => void;
     incrementAppliedHits: () => void;
     stage: number;
+    smallScreen: boolean;
 };
 
 // Escrow Contract Config
@@ -25,7 +26,7 @@ const contractConfig = {
     contractInterface: escrowABI['abi'], // contract abi in json or JS format
 };
 
-const AppliedPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedMap, incrementAppliedHits, stage, }) => {
+const AppliedPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedMap, incrementAppliedHits, stage, smallScreen, }) => {
  
     const { address, isConnected } = useAccount();
     const { data: signer, isError, isLoading } = useSigner();
@@ -149,7 +150,7 @@ const AppliedPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedMap,
         }
     }, [bountyIds, isValidating, getAppliedPosts, existsSubmitted]);
 
-    if (stage !== 2) {
+    if (stage !== 2 && !smallScreen) {
         return <></>;
     }
 

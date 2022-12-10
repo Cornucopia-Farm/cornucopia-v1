@@ -71,6 +71,9 @@ const CreateBounties: NextPage = () => {
     const [stage, setStage] = React.useState(1);
     const [stageInfo, setStageInfo] = React.useState(false);
 
+    const smallScreen = useMediaQuery('(max-width: 1086px)');
+    const largeScreen = useMediaQuery('(min-width: 1087px)');
+
 
     const { data, error, isValidating } = useSWR([GETPOSTS, { address: address, chain: chain?.network },], gqlFetcher);
 
@@ -93,12 +96,13 @@ const CreateBounties: NextPage = () => {
                     existsSubmitted={existsSubmitted}
                     isValidating={isValidating}
                     stage={stage}
+                    smallScreen={smallScreen}
                 />
             );
         });
 
         setPostedComponents(postedBounties);
-    }, [stage, existsApplied, existsSubmitted, isValidating]);
+    }, [stage, existsApplied, existsSubmitted, isValidating, smallScreen]);
 
     const getAppliedPosts = useCallback(async (openBountyIds: Array<string>) => {
         const appliedComponentsArr: Array<JSX.Element> = [];
@@ -112,6 +116,7 @@ const CreateBounties: NextPage = () => {
                     setAppliedMap={setAppliedMap}
                     incrementAppliedHits={incrementAppliedHits}
                     stage={stage}
+                    smallScreen={smallScreen}
                 />
             );
             inProgressComponentsArr.push(
@@ -121,6 +126,7 @@ const CreateBounties: NextPage = () => {
                     setAppliedMap={setAppliedMap}
                     incrementAppliedHits={incrementAppliedHits}
                     stage={stage}
+                    smallScreen={smallScreen}
                 />
             );
         });
@@ -128,7 +134,7 @@ const CreateBounties: NextPage = () => {
         setAppliedComponents(appliedComponentsArr);
         setInProgressComponents(inProgressComponentsArr);
 
-    }, [stage, incrementAppliedHits, setAppliedMap, existsSubmitted]); // is there an external dependency here??
+    }, [stage, incrementAppliedHits, setAppliedMap, existsSubmitted, smallScreen]); // is there an external dependency here??
 
     const getSubmittedPosts = useCallback((openBountyIds: Array<string>) => {
         const submittedComponentsArr: Array<JSX.Element> = [];
@@ -143,6 +149,7 @@ const CreateBounties: NextPage = () => {
                     setSubmittedMap={setSubmittedMap}
                     incrementSubmittedHits={incrementSubmittedHits}
                     stage={stage}
+                    smallScreen={smallScreen}
                 />
             );
             disputeInitiatedComponentsArr.push(
@@ -151,6 +158,7 @@ const CreateBounties: NextPage = () => {
                     setSubmittedMap={setSubmittedMap}
                     incrementSubmittedHits={incrementSubmittedHits}
                     stage={stage}
+                    smallScreen={smallScreen}
                 />
             );
             disputeRespondedToComponentsArr.push(
@@ -159,6 +167,7 @@ const CreateBounties: NextPage = () => {
                     setSubmittedMap={setSubmittedMap}
                     incrementSubmittedHits={incrementSubmittedHits}
                     stage={stage}
+                    smallScreen={smallScreen}
                 />
             );
             finishedComponentsArr.push(
@@ -167,6 +176,7 @@ const CreateBounties: NextPage = () => {
                     setSubmittedMap={setSubmittedMap}
                     incrementSubmittedHits={incrementSubmittedHits}
                     stage={stage}
+                    smallScreen={smallScreen}
                 />
             );
         });
@@ -176,7 +186,7 @@ const CreateBounties: NextPage = () => {
         setDisputeRespondedToComponents(disputeRespondedToComponentsArr);
         setFinishedComponents(finishedComponentsArr);
 
-    }, [stage, setSubmittedMap, incrementSubmittedHits]);
+    }, [stage, setSubmittedMap, incrementSubmittedHits, smallScreen]);
 
     useEffect(() => {
         if (!isValidating && postIds?.length > 0) {
@@ -230,9 +240,6 @@ const CreateBounties: NextPage = () => {
     function valuetext(value: number) {
         return marks[marks.findIndex((mark) => mark.value === value)].label
     }
-
-    const smallScreen = useMediaQuery('(max-width: 1086px)');
-    const largeScreen = useMediaQuery('(min-width: 1087px)');
 
     if (!isConnected) {
         return (

@@ -8,6 +8,7 @@ type Props = {
     existsSubmitted: Map<string, boolean>;
     isValidating: boolean;
     stage: number;
+    smallScreen: boolean;
 };
 
 const PostedPosts: React.FC<Props> = props => {
@@ -45,7 +46,7 @@ const PostedPosts: React.FC<Props> = props => {
         }
     }, [props.isValidating, props.postId, getPostedPosts, props.existsApplied, props.existsSubmitted]);
 
-    if (props.stage !== 1) {
+    if (props.stage !== 1 && !props.smallScreen) {
         return <></>;
     }
 
