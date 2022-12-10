@@ -6,6 +6,7 @@ import Bundlr from "@bundlr-network/client";
 const uploadToArweave = async (bountyData: Object, tags: Array<any>) => {
   // can't use arweave currency on web
   const privateKey = JSON.parse(process.env.ARWEAVE_KEY!);
+  console.log(privateKey)
   const bundlr = new Bundlr("https://node1.bundlr.network", "arweave", privateKey);
 
   const address = bundlr.address;

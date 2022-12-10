@@ -485,7 +485,6 @@ const Form: React.FC<Props> = props => {
                                     margin="dense"
                                     fullWidth
                                     variant="standard"
-                                    inputProps={{ autoComplete: 'off'}}
                                     sx={{ 
                                         '& .MuiInputBase-input': { 
                                             color: 'rgb(248, 215, 154)', 
@@ -614,7 +613,6 @@ const Form: React.FC<Props> = props => {
                                     margin="dense"
                                     fullWidth
                                     variant="standard"
-                                    inputProps={{ autoComplete: 'off'}}
                                     sx={{ 
                                         '& .MuiInputBase-input': { 
                                             color: 'rgb(248, 215, 154)', 
