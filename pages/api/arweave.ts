@@ -1,11 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next';
+// import { NextApiRequest, NextApiResponse } from 'next';
 import Bundlr from "@bundlr-network/client";
 // import privateKey from '../../arweave-key-UxP5TeAmfwJXIbZY9rJE1uw4z1FHs-QuV-UlfC28cOI.json';
 
 const uploadToArweave = async (bountyData: Object, tags: Array<any>) => {
   // can't use arweave currency on web
   // const privateKey = JSON.parse(process.env.ARWEAVE_KEY!);
+  
   const privateKey = {
     "kty": process.env.KTY,
     "n": process.env.N,
@@ -36,7 +37,7 @@ const uploadToArweave = async (bountyData: Object, tags: Array<any>) => {
   return id;
 };
 
-export default function handler(req: NextApiRequest, res: NextApiResponse<any>) {
+export default function handler(req: any, res: any) { // Making this a type causes prod issues
   if (req.method === 'POST') {
     try {
       const id = uploadToArweave(req.body.bountyData, req.body.tags);
