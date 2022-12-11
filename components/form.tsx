@@ -219,7 +219,7 @@ const Form: React.FC<Props> = props => {
                 // <Fab sx={{ backgroundColor: 'rgba(6, 72, 41, 0.85)', color: '#FFFFFF' }} aria-label="add" onClick={handleClickOpen}> 
                 //     <AddIcon />
                 // </Fab>
-                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleClickOpen}>
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleClickOpen}>
                     Create Bounty
                 </Button>
             );

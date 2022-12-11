@@ -50,7 +50,7 @@ const CreateBountiesInfo: React.FC<Props> = props => {
                 </DialogContentText>
             </DialogContent>
             <DialogActions className={styles.formFooter}>
-                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => props.setOpen(false)}>Got it!</Button>
+                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => props.setOpen(false)}>Got it!</Button>
             </DialogActions>
         </Dialog>
     );

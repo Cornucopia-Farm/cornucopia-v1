@@ -24,7 +24,7 @@ type Props = {
 const NestedAccordion: React.FC<Props> = props => {
   return (
     <div>
-      <Accordion square={true} sx={{ borderRadius: '12px', backgroundColor: 'rgba(6, 72, 41, 0.05)', }}>
+      <Accordion square={true} sx={{ borderRadius: '12px', backgroundColor: 'rgba(6, 72, 41, 0.05)', boxShadow: '0px 0px 5px rgb(248, 215, 154)', }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon sx={{ color: 'rgb(233, 233, 198)', }}/>}
           aria-controls="panel1a-content"

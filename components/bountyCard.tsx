@@ -28,7 +28,7 @@ const BasicCard: React.FC<Props> = props => {
   // const largeScreen = true //useMediaQuery('(min-width: 623px)');
 
   return (
-    <Card className={styles.cardBackground} sx={{ minWidth: '275', borderRadius: '12px', }}>
+    <Card className={styles.cardBackground} sx={{ minWidth: '275', borderRadius: '12px',  }}>
       <CardContent>
         <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '1px', paddingRight: '1px', paddingTop: '1px', }}>
           <Box sx={{ display: 'flex', paddingLeft: 0, paddingBottom: 1}}> 

@@ -8,6 +8,7 @@ import styles from '../styles/Home.module.css';
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MenuIcon from "@mui/icons-material/Menu";
+import DragHandleIcon from '@mui/icons-material/DragHandle';
 import { useMediaQuery } from '@mui/material';
 
 export default function HeaderTabs() {
@@ -19,7 +20,7 @@ export default function HeaderTabs() {
   const open = Boolean(anchorEl);
 
   const handleClick = React.useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorElement(event.currentTarget);
+    setAnchorEl(event.currentTarget);
   }, []);
 
   const handleClose = React.useCallback(() => {
@@ -33,30 +34,41 @@ export default function HeaderTabs() {
             <Image alt="" src="/corn_logo.png" height="100px" width="100px"/>
         </Box>
         {largeScreen && 
-        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', gap: '24px', }}> 
-          <Link href="/openBounties" >
-            <Button className={styles.headerFont} sx={{ fontSize: '16px', }}>Open Bounties</Button>
-          </Link>
+          <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', gap: '24px', }}> 
+            <Link href="/openBounties" >
+              <Button className={styles.headerFont} sx={{ fontSize: '16px', }}>Open Bounties</Button>
+            </Link>
 
-          <Link href="/myBounties">
-              <Button className={styles.headerFont} sx={{ fontSize: '16px', }}>My Bounties</Button>
-          </Link>
-          
-          <Link href="/createBounties">
-            <Button className={styles.headerFont} sx={{ fontSize: '16px', }}>Create Bounties</Button>
-          </Link>
-        </Box>
+            <Link href="/myBounties">
+                <Button className={styles.headerFont} sx={{ fontSize: '16px', }}>My Bounties</Button>
+            </Link>
+            
+            <Link href="/createBounties">
+              <Button className={styles.headerFont} sx={{ fontSize: '16px', }}>Create Bounties</Button>
+            </Link>
+          </Box>
         }
-        {smallScreen &&
-          <div>  
+      </Box>
+      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', }}> 
+        <Box sx={{ paddingRight: '20px'}}> 
+          <ConnectButton />
+        </Box>
+        {/* <Box>
+          <Image alt="" src="/corn_logo.png" height="100px" width="100px"/>
+        </Box> */}
+      {/* </Box> */}
+      {smallScreen &&
+          <>  
             <Button
               id="basic-button"
               aria-controls={open ? 'basic-menu' : undefined}
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
               onClick={handleClick}
+              sx={{ color: 'rgb(248, 215, 154)', paddingRight: '24px'}}
             >
-              <MenuIcon fontSize="large" />
+              {/* <MenuIcon fontSize="large" /> */}
+              <DragHandleIcon fontSize="large" />
             </Button>
             <Menu
               id="basic-menu"
@@ -64,28 +76,40 @@ export default function HeaderTabs() {
               open={open}
               onClose={handleClose}
               MenuListProps={{
-                'aria-labelledby': 'basic-button',
+                "aria-labelledby": "basic-button",
+                disablePadding: true,
+              }}
+              sx={{ 
+                '& .MuiMenu-list': {
+                  // backgroundColor: 'rgb(23, 21, 20)',
+                  backgroundColor: 'rgb(248, 215, 154) !important',
+                }, 
+                '& .MuiMenu-paper': {
+                  borderRadius: '12px',
+
+                },
+                
               }}
             >
               <MenuItem onClick={handleClose}>
-              <Link href="/openBounties" >
-            <Button className={styles.headerFont} sx={{ fontSize: '16px', }}>Open Bounties</Button>
-          </Link>
+                <Link href="/openBounties" >
+                  <Button className={styles.headerFontDropdown} sx={{ fontSize: '16px', }}>Open Bounties</Button>
+                </Link>
               </MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
+              <MenuItem onClick={handleClose}>
+                <Link href="/myBounties">
+                  <Button className={styles.headerFontDropdown} sx={{ fontSize: '16px', }}>My Bounties</Button>
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <Link href="/createBounties">
+                  <Button className={styles.headerFontDropdown} sx={{ fontSize: '16px', }}>Create Bounties</Button>
+                </Link>
+              </MenuItem>
             </Menu>
-          </div>
+          </>
         }
-      </Box>
-      {/* <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', }}>  */}
-        <Box sx={{ paddingRight: '24px'}}> 
-          <ConnectButton />
         </Box>
-        {/* <Box>
-          <Image alt="" src="/corn_logo.png" height="100px" width="100px"/>
-        </Box> */}
-      {/* </Box> */}
     </Box>   
   );
 };

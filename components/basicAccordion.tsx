@@ -11,6 +11,7 @@ import { useEnsName, useNetwork } from 'wagmi';
 import { Dayjs } from 'dayjs';
 import styles from '../styles/Home.module.css';
 import { BountyOutcome } from '../getEscrowEventData';
+import { useMediaQuery } from '@mui/material';
 
 type Props = { // need to change bounty card to specify which component it is for!
   company: string;
@@ -61,21 +62,37 @@ const BasicAccordion: React.FC<Props> = props => {
   };
 
   const blockExplorerURL = blockExplorer(chain?.network);
+  // 733
+  const smallScreen = useMediaQuery('(max-width: 760px)');
+  const largeScreen = useMediaQuery('(min-width: 761px)');
+
 
   return (
     <div>
       <Accordion className={styles.accordionBackground} square={true} sx={{ borderRadius: '12px', backgroundColor: 'rgba(6, 72, 41, 0.05)' }} >
         <AccordionSummary 
-          expandIcon={<ExpandMoreIcon sx={{ color: 'rgb(233, 233, 198)', }}/>}
+          expandIcon={<ExpandMoreIcon sx={{ color: 'rgb(233, 233, 198)', marginLeft: '24px !important'}}/>}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Box sx={{ borderRadius: '12px', width: '40%', flexShrink: 0 }}> 
-            <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
-          </Box>
-          <Typography className={styles.h2} sx={{ width: '40%', flexShrink: 0, color: '#064829', maxWidth: '40%', marginRight: '10%', whiteSpace: 'nowrap', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', }, }}>{props.bountyName}</Typography> 
-          <Typography className={styles.h2} sx={{ color: '#064829', }}>{props.amount} {props.tokenSymbol}</Typography> 
-          
+          {largeScreen && 
+            <> 
+              <Box sx={{ borderRadius: '12px', width: '43%', flexShrink: 0 }}> 
+                <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
+              </Box>
+              <Typography className={styles.h2} sx={{  color: '#064829', width: '43%', flexShrink: 0, maxHeight: '50px', marginRight: '40px', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', }, }}>{props.bountyName}</Typography> 
+              <Typography className={styles.h2} sx={{ color: '#064829',  }}>{props.amount} {props.tokenSymbol}</Typography> 
+            </>
+          } 
+          {smallScreen && 
+            <> 
+              <Box sx={{ borderRadius: '12px', width: '55%', flexShrink: 0, }}> 
+                <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
+                <Typography className={styles.h2} sx={{ color: '#064829', paddingTop: '5px' }}>{props.amount} {props.tokenSymbol}</Typography> 
+              </Box>
+              <Typography className={styles.h2} sx={{  color: '#064829', width: '45%', flexShrink: 0, maxHeight: '50px', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', }, }}>{props.bountyName}</Typography> 
+            </>
+          } 
         </AccordionSummary>
         <AccordionDetails >
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
