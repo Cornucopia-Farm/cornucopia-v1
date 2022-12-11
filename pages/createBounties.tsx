@@ -244,6 +244,8 @@ const CreateBounties: NextPage = () => {
         return marks[marks.findIndex((mark) => mark.value === value)].label
     }
 
+    const stageLarge = React.useRef(1);
+
     if (!isConnected) {
         return (
             <div className={styles.background}>
@@ -271,12 +273,12 @@ const CreateBounties: NextPage = () => {
                             {largeScreen && 
                             <Slider
                                 aria-label="Restricted values"
-                                defaultValue={0}
+                                defaultValue={marks[stageLarge.current - 1].value}
                                 getAriaValueText={valuetext}
                                 step={null}
                                 valueLabelDisplay="off"
                                 marks={marks}
-                                onChange={(e, val) => setStage(marks.findIndex((mark) => mark.value === val) + 1)}
+                                onChange={(e, val) => { setStage(marks.findIndex((mark) => mark.value === val) + 1); stageLarge.current = marks.findIndex((mark) => mark.value === val) + 1; }}
                                 sx={{ 
                                     height: 12, 
                                     color: 'rgb(233, 233, 198)', 

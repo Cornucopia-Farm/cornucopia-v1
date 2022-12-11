@@ -11,7 +11,7 @@ type Props = {
 const theme = createTheme({
     palette: {
       primary: {
-        main: 'rgb(233, 233, 198)',
+        main: 'rgb(248, 215, 154)',
       },
       secondary: {
         main: 'rgb(255, 69, 0)',
@@ -50,7 +50,7 @@ const SimpleSnackBar: React.FC<Props> = (props) => {
             //     }
             // }}
         >
-            <Alert onClose={handleClose} severity={props.severity} color={props.severity === 'success' ? 'primary' : 'secondary'} variant="outlined" sx={{ width: '100%', backgroundColor: 'rgb(23, 21, 20)', color: 'rgb(233, 233, 198)', borderRadius: '12px', }}>
+            <Alert onClose={handleClose} severity={props.severity} color={props.severity === 'success' ? 'primary' as 'success' : 'secondary' as 'error'} variant="outlined" sx={{ width: '100%', backgroundColor: 'rgb(23, 21, 20)', color: 'rgb(233, 233, 198)', borderRadius: '12px', }}>
                 {props.msg}
             </Alert>
         </Snackbar>

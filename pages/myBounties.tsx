@@ -461,6 +461,8 @@ const MyBounties: NextPage = () => {
     const smallScreenCard = useMediaQuery('(max-width: 700px)');
     const largeScreenCard = useMediaQuery('(min-width: 701px)');
 
+    const stageLarge = React.useRef(1);
+    
     if (!isConnected) {
         return (
             <div className={styles.background}> 
@@ -489,12 +491,12 @@ const MyBounties: NextPage = () => {
                             {largeScreen && 
                             <Slider
                                 aria-label="Restricted values"
-                                defaultValue={0}
+                                defaultValue={marks[stageLarge.current - 1].value}
                                 getAriaValueText={valuetext}
                                 step={null}
                                 valueLabelDisplay="off"
                                 marks={marks}
-                                onChange={(e, val) => setStage(marks.findIndex((mark) => mark.value === val) + 1)}
+                                onChange={(e, val) => { setStage(marks.findIndex((mark) => mark.value === val) + 1); stageLarge.current = marks.findIndex((mark) => mark.value === val) + 1; }}
                                 sx={{ 
                                     height: 12, 
                                     color: 'rgb(233, 233, 198)', 
