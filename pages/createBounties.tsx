@@ -215,19 +215,19 @@ const CreateBounties: NextPage = () => {
             label: 'Posted',
         },
         {
-            value: 15,
+            value: 11,
             label: 'Applied To',
         },
         {
-            value: 27,
+            value: 23,
             label: 'In Progress',
         },
         {
-            value: 45,
+            value: 42,
             label: 'Submitted: Needs Approval',
         },
         {
-            value: 65,
+            value: 63,
             label: 'Dispute Initiated',
         },
         {

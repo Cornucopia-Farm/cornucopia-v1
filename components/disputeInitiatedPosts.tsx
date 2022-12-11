@@ -77,8 +77,14 @@ const DisputeInitiatedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incre
             const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, address, postData.data.hunterAddress ]);
             // setBountyIdentifier(bountyIdentifierInput);
             // bountyProgress();
-
+            // let progress = 0;
+            // try {
+            //     progress = await escrowContract.progress(bountyIdentifierInput);
+            // } catch (e) {
+            //     console.log('Dispute Initated Posts Progress Error', e)
+            // }
             const progress = await escrowContract.progress(bountyIdentifierInput);
+
             // if (progress === 2) { // Case 5: Hunter needs to respond to creator dispute
             //     disputeInitiatedBountiesApps.push(
             //         <Application key={postId} 

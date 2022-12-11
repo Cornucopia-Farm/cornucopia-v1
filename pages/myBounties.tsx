@@ -253,15 +253,17 @@ const MyBounties: NextPage = () => {
 
             const progress = await escrowContract.progress(bountyIdentifierInput);
             const payoutExpirationTime = await escrowContract.payoutExpiration(bountyIdentifierInput);
-            const currentBlocktime = await provider.getBlock("latest");
+            const currentBlockInfo = await provider.getBlock("latest");
+            const currentBlocktime = currentBlockInfo.timestamp;
 
             const wethAllowance = await wethContract.allowance(address, escrowAddress);
-            console.log('progress', progress)
+           
             let umaEventData;
             if (progress === 2) {
                 umaEventData = await getUMAEventData(umaContract, escrowContract, provider, 'propose', postData.data.creatorAddress, address!, postData.data.postId);
 
             }
+
             let finishedStatus;
             if (progress === 4) {
                 finishedStatus = await getEscrowEventData(escrowContract, 'finished', postData.data.creatorAddress, address!, postData.data.postId);
@@ -406,7 +408,6 @@ const MyBounties: NextPage = () => {
 
     useEffect(() => { 
         if (!isSubmittedValidating && postSubmittedIds?.length > 0) {
-            console.log("get submitted called")
             getSubmittedPosts(postSubmittedIds);
         }
     }, [isSubmittedValidating, postSubmittedIds, getSubmittedPosts]);
@@ -435,11 +436,11 @@ const MyBounties: NextPage = () => {
             label: 'Dispute Initiated',
         },
         {
-            value: 65,
+            value: 66,
             label: 'Dispute Responded To',
         },
         {
-            value: 83,
+            value: 85,
             label: 'Force Payout',
         },
         {
