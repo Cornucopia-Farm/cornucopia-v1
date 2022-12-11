@@ -13,7 +13,6 @@ import WelcomeCard from '../components/welcomeCard';
 import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
-import { useMediaQuery } from '@mui/material';
 
 const OpenBounties: NextPage = () => {
     const { address, isConnected } = useAccount();
@@ -114,8 +113,6 @@ const OpenBounties: NextPage = () => {
         } 
     }, [getPosts, postIds, isValidating]);
 
-    const smallScreenCard = useMediaQuery('(max-width: 700px)');
-    const largeScreenCard = useMediaQuery('(min-width: 701px)');
     
     if (!isConnected) {
         return (
