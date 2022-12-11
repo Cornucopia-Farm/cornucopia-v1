@@ -132,7 +132,7 @@ const OpenBounties: NextPage = () => {
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
                 <main> 
-                <Box sx={{ display: 'flex', flexDirection: 'column', ...(largeScreenCard && {paddingLeft: '160px', paddingRight: '160px',}), ...(smallScreenCard && {paddingLeft: '80px', paddingRight: '80px',}), color: 'rgba(6, 72, 41, 0.85)', }}> 
+                <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '16vw', paddingRight: '16vw', color: 'rgba(6, 72, 41, 0.85)', }}> 
                     <h2 className={styles.h2}>Open Bounties</h2>
                     <Card className={styles.accordionBackground} sx={{ backgroundColor: 'rgba(6, 72, 41, 0.05)', borderRadius: '12px', paddingTop: '12px', paddingLeft: '12px', paddingRight: '12px', paddingBottom: '12px', }}> 
                         {openBountyPosts}

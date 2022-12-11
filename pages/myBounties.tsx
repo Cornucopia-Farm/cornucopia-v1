@@ -477,7 +477,7 @@ const MyBounties: NextPage = () => {
                 </Head>
     
                 <main> 
-                    <Box sx={{ display: 'flex', flexDirection: 'column', ...(largeScreenCard && {paddingLeft: '160px', paddingRight: '160px',}), ...(smallScreenCard && {paddingLeft: '80px', paddingRight: '80px',}), paddingTop: '24px', color: 'rgba(6, 72, 41, 0.85)', }}> 
+                    <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '16vw', paddingRight: '16vw', paddingTop: '24px', color: 'rgba(6, 72, 41, 0.85)', }}> 
                         <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center'}}> 
                             <Box sx={{ display: 'flex', flexDirection: 'column', }}>
                                 <Button onClick={() => setStageInfo(true)} sx={{ width: '13px !important', height: '13px !important', position: 'absolute', paddingBottom: '20px', paddingLeft: '68px', }}> 
