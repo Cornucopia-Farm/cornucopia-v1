@@ -69,6 +69,7 @@ const BasicAccordion: React.FC<Props> = props => {
           expandIcon={<ExpandMoreIcon sx={{color: 'rgb(233, 233, 198)'}}/>}
           aria-controls="panel1a-content"
           id="panel1a-header"
+          
         >
           <Box sx={{ borderRadius: '12px', width: '45%', flexShrink: 0 }}> 
             <Typography className={styles.h2} sx={{ color: '#064829' }}><Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>

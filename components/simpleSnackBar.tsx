@@ -51,7 +51,6 @@ const SimpleSnackBar: React.FC<Props> = (props) => {
             // }}
         >
             <Alert onClose={handleClose} severity={props.severity} color={props.severity === 'success' ? 'primary' : 'secondary'} variant="outlined" sx={{ width: '100%', backgroundColor: 'rgb(23, 21, 20)', color: 'rgb(233, 233, 198)', borderRadius: '12px', }}>
-            {/* <Alert onClose={handleClose} severity={props.severity} color="rgb(23, 21, 20)" sx={{ width: '100%', backgroundColor: 'rgb(248, 215, 154)', color: 'rgb(23, 21, 20)', borderRadius: '12px' }}> */}
                 {props.msg}
             </Alert>
         </Snackbar>

@@ -13,6 +13,7 @@ import WelcomeCard from '../components/welcomeCard';
 import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
+import { useMediaQuery } from '@mui/material';
 
 const OpenBounties: NextPage = () => {
     const { address, isConnected } = useAccount();
@@ -112,6 +113,9 @@ const OpenBounties: NextPage = () => {
             getPosts(postIds);
         } 
     }, [getPosts, postIds, isValidating]);
+
+    const smallScreenCard = useMediaQuery('(max-width: 700px)');
+    const largeScreenCard = useMediaQuery('(min-width: 701px)');
     
     if (!isConnected) {
         return (
@@ -127,8 +131,8 @@ const OpenBounties: NextPage = () => {
                     <meta name="description" content="Cornucopia is a permissionless freelancing protocol where projects/DAOs can create bounties for freelancers to complete." />
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
-                <main>
-                <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '160px', paddingRight: '160px', color: 'rgba(6, 72, 41, 0.85)', }}> 
+                <main> 
+                <Box sx={{ display: 'flex', flexDirection: 'column', ...(largeScreenCard && {paddingLeft: '160px', paddingRight: '160px',}), ...(smallScreenCard && {paddingLeft: '80px', paddingRight: '80px',}), color: 'rgba(6, 72, 41, 0.85)', }}> 
                     <h2 className={styles.h2}>Open Bounties</h2>
                     <Card className={styles.accordionBackground} sx={{ backgroundColor: 'rgba(6, 72, 41, 0.05)', borderRadius: '12px', paddingTop: '12px', paddingLeft: '12px', paddingRight: '12px', paddingBottom: '12px', }}> 
                         {openBountyPosts}
