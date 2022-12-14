@@ -71,7 +71,7 @@ const myTheme = merge(midnightTheme(), {
     connectButtonText: 'rgb(233, 233, 198)',
     connectButtonTextError: 'rgb(233, 233, 198)',
     modalText: 'rgb(233, 233, 198)',
-    accentColor: 'rgb(233, 233, 198)', // Connect Wallet Color
+    accentColor: 'rgb(248, 215, 154)', // Connect Wallet Color
     accentColorForeground: 'rgb(23, 21, 20)', // Connect Wallet Font
     // actionButtonSecondaryBackground: 'rgb(233, 233, 198)',
     // selectedOptionBorder: 'rgb(248, 215, 154)',

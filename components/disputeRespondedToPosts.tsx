@@ -194,7 +194,7 @@ const GETWORKSUBMITTEDPOSTS = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test3"]
+                    values: ["Cornucopia-test5"]
                 },
                 {
                     name: "Form-Type",

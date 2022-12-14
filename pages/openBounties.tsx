@@ -79,7 +79,7 @@ const OpenBounties: NextPage = () => {
                                     },
                                     {
                                         name: "App-Name",
-                                        value: "Cornucopia-test3"
+                                        value: "Cornucopia-test5"
                                     },
                                     {
                                         name: "Form-Type",
@@ -158,7 +158,7 @@ const OPENBOUNTIES = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test3"]
+                    values: ["Cornucopia-test5"]
                 },
                 {
                     name: "Form-Type",
