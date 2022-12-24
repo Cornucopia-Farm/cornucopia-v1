@@ -16,8 +16,8 @@ type Props = {
   startDate: Dayjs;
   endDate: Dayjs;
   arweaveHash: string;
-  links: Array<string>;
-  workLinks?: Array<string>;
+  links: string;
+  workLinks?: string;
   children?: React.ReactNode;
   finishedStatus?: BountyOutcome;
 };
@@ -27,9 +27,13 @@ const BasicCard: React.FC<Props> = props => {
   // const smallScreen = false // useMediaQuery('(max-width: 622px)');
   // const largeScreen = true //useMediaQuery('(min-width: 623px)');
 
-  const links = props.links.map(link => {
-    return <Link key={link} sx= {{ color: 'rgb(233, 233, 198)'}} target="_blank" rel="noopener" href={link}>{link}</Link>
-  });
+  const showLinks = (links: string) => {
+    return links.split(",").map(link => {
+        return (
+          <Link key={link} sx= {{ color: 'rgb(233, 233, 198)'}} target="_blank" rel="noopener" href={"https://" + link}>{link}</Link>
+        );
+    });
+  };
 
   return (
     <Card className={styles.cardBackground} sx={{ minWidth: '275', borderRadius: '12px', }}>
@@ -50,7 +54,7 @@ const BasicCard: React.FC<Props> = props => {
           <Box sx={{ display: 'flex', paddingLeft: 0}}> 
             <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%', }}>Links </Typography>
             <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', },}}>
-              {links}
+              {showLinks(props.links)}
             </Typography>
           </Box>
           
@@ -77,7 +81,9 @@ const BasicCard: React.FC<Props> = props => {
           {props.workLinks &&
             <Box sx={{ display: 'flex', paddingLeft: 0}}> 
               <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Work Links </Typography>
-              <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', }, }}>{props.workLinks}</Typography>
+              <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', }, }}>
+                {showLinks(props.workLinks)}
+              </Typography>
             </Box>
           }
           <Box sx={{ display: 'flex', paddingLeft: 0}}> 

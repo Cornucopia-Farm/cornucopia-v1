@@ -15,8 +15,8 @@ type Props = {
   bountyName: string;
   amount: number;
   arweaveHash: string;
-  postLinks: Array<string>;
-  workLinks?: Array<string>;
+  postLinks: string;
+  workLinks?: string;
   applications?: Array<JSX.Element>;
   tokenSymbol: string;
 };

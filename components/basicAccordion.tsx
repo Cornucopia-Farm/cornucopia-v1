@@ -19,10 +19,10 @@ type Props = { // need to change bounty card to specify which component it is fo
   description: string;
   startDate: Dayjs;
   endDate: Dayjs;
-  postLinks: Array<string>;
+  postLinks: string;
   amount: number;
   arweaveHash: string;
-  workLinks?: Array<string>;
+  workLinks?: string;
   disputes: boolean;
   children?: React.ReactNode;
   tokenSymbol: string;

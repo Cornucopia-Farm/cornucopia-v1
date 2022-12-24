@@ -12,13 +12,22 @@ type Props = {
   experience: string;
   contactInfo: string;
   arweaveHash: string;
-  links: Array<string>;
-  workLinks?: Array<string>;
+  links: string;
+  workLinks?: string;
   children?: React.ReactNode;
   finishedStatus?: BountyOutcome;
 };
 
 const BasicCard: React.FC<Props> = props => {
+
+  const showLinks = (links: string) => {
+    return links.split(",").map(link => {
+        return (
+          <Link key={link} sx= {{ color: 'rgb(233, 233, 198)'}} target="_blank" rel="noopener" href={"https://" + link}>{link}</Link>
+        );
+    });
+  };
+
   return (
     <Card className={styles.cardBackground} sx={{ minWidth: '275', borderRadius: '12px',  }}>
       <CardContent>
@@ -33,12 +42,18 @@ const BasicCard: React.FC<Props> = props => {
           </Box>
           <Box sx={{ display: 'flex', paddingLeft: 0}}> 
             <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Links </Typography>
-            <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', }, }}>{props.links}</Typography>
+            <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', }, }}>
+              {showLinks(props.links)}
+            </Typography>
           </Box>
-          <Box sx={{ display: 'flex', paddingLeft: 0}}> 
-            <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Work Links </Typography>
-            <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', }, }}>{props.workLinks}</Typography>
-          </Box>
+          {props.workLinks &&
+            <Box sx={{ display: 'flex', paddingLeft: 0}}> 
+              <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Work Links </Typography>
+              <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', }, }}>
+                {showLinks(props.workLinks)}
+              </Typography>
+            </Box>
+          }
           <Box sx={{ display: 'flex', paddingLeft: 0}}> 
             <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', width: '45%'}}>Arweave Hash </Typography>
             <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', width: '45%', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', }, }}>

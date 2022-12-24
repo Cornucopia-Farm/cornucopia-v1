@@ -28,12 +28,12 @@ type Props = {
     experience: string;
     contactInfo: string;
     arweaveHash: string;
-    appLinks: Array<string>;
+    appLinks: string;
     appStatus?: string;
     postId?: string;
     amount?: string;
-    workLinks?: Array<string>;
-    postLinks?: Array<string>;
+    workLinks?: string;
+    postLinks?: string;
     timestamp?: number;
     ancillaryData?: string; // Ancillary Data in byte form from UMA event used during payoutIfDispute call
     request?: Request; 
@@ -159,8 +159,8 @@ const Application: React.FC<Props> = props => {
     setOpenContest(false);
   };
 
-  const handleCloseContestTrue = (bountyAppId: string, hunterAddress: string, workLinks: Array<string>, postLinks: Array<string>) => {
-    const thisAncillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications?" + " Work: " + workLinks.toString() + ", Specification: " +  postLinks.toString() + ", p1:0, p2:1, p3:2";
+  const handleCloseContestTrue = (bountyAppId: string, hunterAddress: string, workLinks: string, postLinks: string) => {
+    const thisAncillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications?" + " Work: " + workLinks + ", Specification: " +  postLinks + ", p1:0, p2:1, p3:2";
     setAncillaryData(thisAncillaryData);
     setBountyAppId(bountyAppId);
     setHunterAddress(hunterAddress);
@@ -267,7 +267,7 @@ const Application: React.FC<Props> = props => {
     }
   };
 
-  const handleCloseIncreaseAllowanceDisputeOnceTrue = (amount: string, decimals: number, wethAllowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string, workLinks: Array<string>, postLinks: Array<string>) => {
+  const handleCloseIncreaseAllowanceDisputeOnceTrue = (amount: string, decimals: number, wethAllowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string, workLinks: string, postLinks: string) => {
     const total = bondAmt.add(finalFee);
     if (total.gt(wethAllowance)) {
       setAllowanceAmtOnce(total);
@@ -279,7 +279,7 @@ const Application: React.FC<Props> = props => {
     }
   };
 
-  const handleCloseIncreaseAllowanceDisputeAlwaysTrue = (amount: string, decimals: number, wethAllowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string, workLinks: Array<string>, postLinks: Array<string>) => {
+  const handleCloseIncreaseAllowanceDisputeAlwaysTrue = (amount: string, decimals: number, wethAllowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string, workLinks: string, postLinks: string) => {
     const total = bondAmt.add(finalFee);
     if (total.gt(wethAllowance)) {
       setAllowanceAmtAlways(BigNumber.from(hexAlwaysApprove));

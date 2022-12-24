@@ -28,7 +28,7 @@ type Props = {
     creatorAddress: string;
     hunterAddress?: string;
     postId?: string;
-    postLinks?: Array<string>;
+    postLinks?: string;
     startDate?: Dayjs;
     endDate?: Dayjs;
     description?: string;
@@ -41,7 +41,7 @@ type Props = {
     tags: Array<any>;
     experience?: string;
     contact?: string;
-    appLinks?: Array<string>;
+    appLinks?: string;
     tokenAddress?: string;
     tokenSymbol?: string;
     tokenDecimals?: number;
@@ -56,11 +56,11 @@ type ArweaveData = {
     amount?: number; 
     startDate?: Dayjs | null; 
     endDate?: Dayjs | null; 
-    postLinks?: Array<string>;
-    appLinks?: Array<string>;
+    postLinks?: string;
+    appLinks?: string;
     experience?: string;
     contact?: string;
-    workLinks?: Array<string>;
+    workLinks?: string;
     tokenAddress?: string;
     tokenSymbol?: string; 
     tokenDecimals?: number;
