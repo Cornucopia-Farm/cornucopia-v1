@@ -102,7 +102,7 @@ const AppliedPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedMap,
             let allowance = BigNumber.from(0);
 
             if (postData.data.tokenAddress !== zeroAddress && postData.data.tokenAddress) {
-                const erc20Contract = new ethers.Contract(postData.data.tokenAddress, erc20ABI['abi'], signer!);
+                const erc20Contract = new ethers.Contract(postData.data.tokenAddress, erc20ABI['abi'], provider!);
                 try { 
                     allowance = await erc20Contract.allowance(address, escrowAddress); 
                 } catch (e) {
@@ -149,7 +149,7 @@ const AppliedPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedMap,
                 setThisPostData(postDataArr);
             });
         }
-    }, [address, signer, escrowContract, escrowAddress]);
+    }, [address, provider, escrowContract, escrowAddress]);
 
     React.useEffect(() => {
         if (bountyIds && bountyIds.length > 0 && !isValidating) {

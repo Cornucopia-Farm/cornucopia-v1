@@ -9,8 +9,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
-import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
-import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
+import { useAccount, useContractWrite, usePrepareContractWrite, useProvider, useWaitForTransaction } from 'wagmi';
+import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; 
+import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
 import useDebounce from './useDebounce';
 import SimpleSnackBar from './simpleSnackBar';
 import styles from '../styles/Home.module.css';
@@ -23,6 +24,7 @@ import { Dayjs } from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { ethers } from 'ethers';
 
 type Props = {
     creatorAddress: string;
@@ -115,6 +117,31 @@ const Form: React.FC<Props> = props => {
     const { config: submitConfig } = usePrepareContractWrite({...contractConfig, functionName: 'submit', args: [debouncedBountyAppId, debouncedCreatorAddress], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedCreatorAddress),});
     const { data: submitData, error: submitError, isLoading: isSubmitLoading, isSuccess: isSubmitSuccess, write: submit } = useContractWrite(submitConfig);
     const { data: submitTxData, isLoading: isSubmitTxLoading, isSuccess: isSubmitTxSuccess, error: submitTxError } = useWaitForTransaction({ hash: submitData?.hash, enabled: true, });
+
+    const { address, isConnected } = useAccount();
+    const provider = useProvider();
+    const zeroAddress = '0x0000000000000000000000000000000000000000';
+
+    const [canPay, setCanPay] = React.useState(false);
+
+    const enoughTokens = async (tokenAddress?: string, amount?: number) => {
+        let balance;
+        if (tokenAddress && tokenAddress !== zeroAddress) {
+            const erc20Contract = new ethers.Contract(tokenAddress, erc20ABI['abi'], provider!);
+            try { 
+                balance = await erc20Contract.balanceOf(address); 
+            } catch (e) {
+                console.log('Form balance fetch error', e);
+            }    
+        } else if (tokenAddress && tokenAddress === zeroAddress) {
+            balance = await provider.getBalance(address!);
+        } else {
+            balance = 0;
+        }
+ 
+        const canPayBool = (amount && balance > amount) ? true : false;
+        setCanPay(canPayBool);
+    };
 
     const handleCloseSubmitTrue = (bountyAppId: string, creatorAddress: string) => {
         setBountyAppId(bountyAppId);
@@ -335,11 +362,15 @@ const Form: React.FC<Props> = props => {
                                     '& .MuiMenu-paper': { 
                                         borderBottomLeftRadius: '12px',
                                         borderBottomRightRadius: '12px',
+                                        scrollbarWidth: 'none', 
+                                        '&::-webkit-scrollbar': { 
+                                            display: 'none', 
+                                        },
                                     } 
                                 },
                                 MenuListProps: {
                                     sx: { 
-                                        backgroundColor: 'rgb(23, 21, 20)',           
+                                        backgroundColor: 'rgb(23, 21, 20)',          
                                     }
                                 },
                             },   
@@ -392,6 +423,9 @@ const Form: React.FC<Props> = props => {
                         value={formValues.amount}
                         onChange={handleInputChange}
                         // type="text" // Need to add ERC20
+                        // onChange={ () => { handleInputChange; enoughTokens(formValues.tokenAddress, formValues.amount); }}
+                        // error={Boolean(formValues.amount && !canPay)}
+                        // helperText={Boolean(formValues.amount && !canPay) ? "Insufficient Balance!" : ""}
                         type="number"
                         fullWidth
                         variant="standard"
