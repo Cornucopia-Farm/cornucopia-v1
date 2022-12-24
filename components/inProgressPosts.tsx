@@ -36,7 +36,7 @@ const InProgressPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedM
     const provider = useProvider();
     const { chain } = useNetwork();
 
-    const escrowContract = useContract({...contractConfig, signerOrProvider: signer,});
+    const escrowContract = useContract({...contractConfig, signerOrProvider: provider,});
 
     const [inProgressBountyPosts, setInProgressBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
@@ -92,8 +92,16 @@ const InProgressPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedM
 
             // Expiration
             const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, address, postData.data.hunterAddress ]);
-            const expirationTime = await escrowContract.expiration(bountyIdentifierInput);
-            // todo: get current blocktime and compare it to expirationTime then set creatorRefund
+            
+            let expirationTime;
+            try {
+                expirationTime = await escrowContract.expiration(bountyIdentifierInput);
+            } catch (e) {
+                console.log('InProgress posts expiration fetch error', e);
+                return Promise.resolve([]);
+            }
+            // const expirationTime = await escrowContract.expiration(bountyIdentifierInput);
+
             const currentBlocktime = await provider.getBlock("latest");
             const creatorRefund = expirationTime < currentBlocktime ? true : false;
             /*if ( isEscrowed.length > 0 ) { // Case 3: In Progress

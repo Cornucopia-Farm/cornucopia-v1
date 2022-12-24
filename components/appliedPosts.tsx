@@ -3,7 +3,7 @@ import axios from 'axios';
 import NestedAccordian from './nestedAccordion';
 import Application from './application';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
-import { useAccount, useContract, useSigner, useNetwork } from 'wagmi';
+import { useAccount, useContract, useSigner, useNetwork, useProvider } from 'wagmi';
 import { BigNumber, ethers } from 'ethers';
 import dayjs from 'dayjs';
 import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
@@ -34,7 +34,8 @@ const AppliedPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedMap,
     const zeroAddress = '0x0000000000000000000000000000000000000000';
     const escrowAddress = '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4'; //process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
 
-    const escrowContract = useContract({...contractConfig, signerOrProvider: signer,});
+    const provider = useProvider();
+    const escrowContract = useContract({...contractConfig, signerOrProvider: provider,});
 
     const [appliedBountyPosts, setAppliedBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
@@ -89,7 +90,13 @@ const AppliedPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedMap,
             const filter = escrowContract.filters.Escrowed(address, postData.data.hunterAddress, postData.data.postId);
             const isEscrowed = await escrowContract.queryFilter(filter);
 
-            const progress = await escrowContract.progress(bountyIdentifierInput);
+            let progress = 0;
+            try {
+                progress = await escrowContract.progress(bountyIdentifierInput);
+            } catch (e) {
+                console.log('Applied posts progress fetch error', e);
+            } 
+            // const progress = await escrowContract.progress(bountyIdentifierInput);
 
             // Allowance Data
             let allowance = BigNumber.from(0);
@@ -99,7 +106,7 @@ const AppliedPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedMap,
                 try { 
                     allowance = await erc20Contract.allowance(address, escrowAddress); 
                 } catch (e) {
-                    console.log('allowance fetch error', e);
+                    console.log('Applied posts allowance fetch error', e);
                 }    
             }
 

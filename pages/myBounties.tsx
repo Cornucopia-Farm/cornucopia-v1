@@ -60,9 +60,9 @@ const MyBounties: NextPage = () => {
     const { chain } = useNetwork();
 
     const escrowAddress = '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4'; //process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
-    const escrowContract = useContract({...contractConfig, signerOrProvider: signer, });
-    const umaContract = useContract({...umaContractConfig, signerOrProvider: signer, });
-    const wethContract = useContract({...wethContractConfig, signerOrProvider: signer, });
+    const escrowContract = useContract({...contractConfig, signerOrProvider: provider, });
+    const umaContract = useContract({...umaContractConfig, signerOrProvider: provider, });
+    const wethContract = useContract({...wethContractConfig, signerOrProvider: provider, });
 
     const [appliedBountyPosts, setAppliedBountyPosts] = React.useState(Array<JSX.Element>);
     const [inProgressBountyPosts, setInProgressBountyPosts] = React.useState(Array<JSX.Element>);

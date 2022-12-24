@@ -40,8 +40,8 @@ const DisputeRespondedToPosts: React.FC<Props> = ({ postId, setSubmittedMap, inc
     const provider = useProvider();
     const { chain } = useNetwork();
 
-    const escrowContract = useContract({...contractConfig, signerOrProvider: signer,});
-    const umaContract = useContract({...umaContractConfig, signerOrProvider: signer, });
+    const escrowContract = useContract({...contractConfig, signerOrProvider: provider,});
+    const umaContract = useContract({...umaContractConfig, signerOrProvider: provider, });
     const escrowAddress = '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4'; // process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
     const identifier = "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000";
 
@@ -88,7 +88,14 @@ const DisputeRespondedToPosts: React.FC<Props> = ({ postId, setSubmittedMap, inc
             const postId = postData?.config?.url?.split("https://arweave.net/")[1];
             // postDataArr.push(postData);
             const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, address, postData.data.hunterAddress ]);
-            const progress = await escrowContract.progress(bountyIdentifierInput);
+            let progress;
+            try {
+                progress = await escrowContract.progress(bountyIdentifierInput);
+            } catch (e) {
+                console.log('Dispute Responded to posts progress fetch error', e);
+                return Promise.resolve([]);
+            } 
+            // const progress = await escrowContract.progress(bountyIdentifierInput);
 
             if (progress != 3) {
                 return Promise.resolve([]); // Prevent getUmaEventData from being called if not correct state of bounty

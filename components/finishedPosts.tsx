@@ -5,7 +5,7 @@ import { ethers } from 'ethers';
 import NestedAccordian from './nestedAccordion';
 import Application from './application';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; 
-import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransaction, useContractRead, useBlockNumber, useContract, usePrepareContractWrite, useContractEvent, useSigner, useNetwork } from 'wagmi';
+import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransaction, useContractRead, useBlockNumber, useContract, usePrepareContractWrite, useContractEvent, useSigner, useNetwork, useProvider } from 'wagmi';
 import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
@@ -35,7 +35,8 @@ const FinishedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSubm
     const { data: signer, isError, isLoading } = useSigner();
     const { chain } = useNetwork();
 
-    const escrowContract = useContract({...contractConfig, signerOrProvider: signer, });
+    const provider = useProvider();
+    const escrowContract = useContract({...contractConfig, signerOrProvider: provider, });
 
     const [finishedBountyPosts, setFinishedBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
@@ -80,8 +81,14 @@ const FinishedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSubm
             const postId = postData?.config?.url?.split("https://arweave.net/")[1];
             // postDataArr.push(postData);
             const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, address, postData.data.hunterAddress ]);
-
-            const progress = await escrowContract.progress(bountyIdentifierInput);
+            let progress;
+            try {
+                progress = await escrowContract.progress(bountyIdentifierInput);
+            } catch (e) {
+                console.log('Finished posts progress fetch error', e);
+                return Promise.resolve([]);
+            } 
+            // const progress = await escrowContract.progress(bountyIdentifierInput);
 
             const finishedStatus = await getEscrowEventData(escrowContract, 'finished', address!, postData.data.hunterAddress, postData.data.postId);
 

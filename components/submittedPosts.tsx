@@ -4,7 +4,7 @@ import { BigNumber, ContractInterface, ethers } from 'ethers';
 import NestedAccordian from './nestedAccordion';
 import Application from './application';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
-import { useAccount, useContract, useSigner, useNetwork } from 'wagmi';
+import { useAccount, useContract, useSigner, useNetwork, useProvider } from 'wagmi';
 import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
 import wethABI from '../WETH9.json';
 import useSWR from 'swr';
@@ -39,8 +39,9 @@ const SubmittedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSub
     const zeroAddress = '0x0000000000000000000000000000000000000000';
     const escrowAddress = '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4'; // process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
 
-    const escrowContract = useContract({...contractConfig, signerOrProvider: signer, });
-    const wethContract = useContract({...wethContractConfig, signerOrProvider: signer, });
+    const provider = useProvider();
+    const escrowContract = useContract({...contractConfig, signerOrProvider: provider, });
+    const wethContract = useContract({...wethContractConfig, signerOrProvider: provider, });
 
     const [submittedBountyPosts, setSubmittedBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
@@ -85,8 +86,14 @@ const SubmittedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSub
             
             const postId = postData?.config?.url?.split("https://arweave.net/")[1];
             const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, address, postData.data.hunterAddress ]);
-
-            const progress = await escrowContract.progress(bountyIdentifierInput);
+            let progress;
+            try {
+                progress = await escrowContract.progress(bountyIdentifierInput);
+            } catch (e) {
+                console.log('Submitted posts progress fetch error', e);
+                return Promise.resolve([]);
+            } 
+            // const progress = await escrowContract.progress(bountyIdentifierInput);
 
             // Allowance Data
             let allowance = BigNumber.from(0);
@@ -100,7 +107,14 @@ const SubmittedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSub
                 }
             }
 
-            const wethAllowance = await wethContract.allowance(address, escrowAddress);
+            let wethAllowance;
+            try {
+                wethAllowance = await wethContract.allowance(address, escrowAddress);
+            } catch (e) {
+                console.log('Submitted posts weth allowance fetch error', e);
+                return Promise.resolve([]);
+            }
+            // const wethAllowance = await wethContract.allowance(address, escrowAddress);
 
             return Promise.resolve([
                 progress,

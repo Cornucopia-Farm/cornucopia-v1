@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 import NestedAccordian from './nestedAccordion';
 import Application from './application';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
-import { useAccount, useContract, useSigner, useNetwork } from 'wagmi';
+import { useAccount, useContract, useSigner, useNetwork, useProvider } from 'wagmi';
 import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
@@ -30,7 +30,8 @@ const DisputeInitiatedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incre
     const { data: signer, isError, isLoading } = useSigner();
     const { chain } = useNetwork();
 
-    const escrowContract = useContract({...contractConfig, signerOrProvider: signer,});
+    const provider = useProvider();
+    const escrowContract = useContract({...contractConfig, signerOrProvider: provider,});
 
     const [disputeInitiatedBountyPosts, setDisputeInitiatedBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
@@ -83,7 +84,14 @@ const DisputeInitiatedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incre
             // } catch (e) {
             //     console.log('Dispute Initated Posts Progress Error', e)
             // }
-            const progress = await escrowContract.progress(bountyIdentifierInput);
+            let progress;
+            try {
+                progress = await escrowContract.progress(bountyIdentifierInput);
+            } catch (e) {
+                console.log('Dispute Initiated posts progress fetch error', e);
+                return Promise.resolve([]);
+            } 
+            // const progress = await escrowContract.progress(bountyIdentifierInput);
 
             // if (progress === 2) { // Case 5: Hunter needs to respond to creator dispute
             //     disputeInitiatedBountiesApps.push(
