@@ -122,26 +122,33 @@ const Form: React.FC<Props> = props => {
     const provider = useProvider();
     const zeroAddress = '0x0000000000000000000000000000000000000000';
 
-    const [canPay, setCanPay] = React.useState(false);
+    const [notEnoughError, setNotEnoughError] = React.useState("");
 
-    const enoughTokens = async (tokenAddress?: string, amount?: number) => {
-        let balance;
-        if (tokenAddress && tokenAddress !== zeroAddress) {
-            const erc20Contract = new ethers.Contract(tokenAddress, erc20ABI['abi'], provider!);
-            try { 
-                balance = await erc20Contract.balanceOf(address); 
-            } catch (e) {
-                console.log('Form balance fetch error', e);
-            }    
-        } else if (tokenAddress && tokenAddress === zeroAddress) {
-            balance = await provider.getBalance(address!);
-        } else {
-            balance = 0;
-        }
+    // const enoughTokens = React.useCallback(async (tokenAddress?: string, amount?: number) => {
+    //     let balance;
+    //     if (tokenAddress !== zeroAddress) {
+    //         const erc20Contract = new ethers.Contract(tokenAddress!, erc20ABI['abi'], provider!);
+    //         try { 
+    //             balance = await erc20Contract.balanceOf(address); 
+    //         } catch (e) {
+    //             console.log('Form balance fetch error', e);
+    //         }    
+    //     } else if (tokenAddress === zeroAddress) {
+    //         balance = await provider.getBalance(address!);
+    //     } else {
+    //         balance = 0;
+    //     }
  
-        const canPayBool = (amount && balance > amount) ? true : false;
-        setCanPay(canPayBool);
-    };
+    //     console.log(amount)
+    //     console.log('balance', balance)
+    //     amount && balance < amount ? setNotEnoughError("Insufficient balance") : setNotEnoughError("");
+    // }, [address, provider]);
+
+    // React.useEffect(() => {
+    //     if (formValues.tokenAddress && formValues.amount) {
+    //         enoughTokens(formValues.tokenAddress, formValues.amount);
+    //     }
+    // }, [formValues.amount, enoughTokens, formValues.tokenAddress])
 
     const handleCloseSubmitTrue = (bountyAppId: string, creatorAddress: string) => {
         setBountyAppId(bountyAppId);
@@ -421,11 +428,11 @@ const Form: React.FC<Props> = props => {
                         name="amount"
                         label="Amount"
                         value={formValues.amount}
-                        onChange={handleInputChange}
+                        // onChange={handleInputChange}
                         // type="text" // Need to add ERC20
                         // onChange={ () => { handleInputChange; enoughTokens(formValues.tokenAddress, formValues.amount); }}
-                        // error={Boolean(formValues.amount && !canPay)}
-                        // helperText={Boolean(formValues.amount && !canPay) ? "Insufficient Balance!" : ""}
+                        error={Boolean(notEnoughError)}
+                        helperText={notEnoughError}
                         type="number"
                         fullWidth
                         variant="standard"
