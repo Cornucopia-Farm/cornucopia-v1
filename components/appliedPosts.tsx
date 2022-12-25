@@ -10,6 +10,7 @@ import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
 import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
+import contractAddresses from '../contractAddresses.json';
 
 type Props = {
     postId: string;
@@ -22,7 +23,7 @@ type Props = {
 
 // Escrow Contract Config
 const contractConfig = {
-    addressOrName: '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', // process.env.NEXT_PUBLIC_ESCROW_ADDRESS!, // contract address
+    addressOrName: contractAddresses.escrow, // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', 
     contractInterface: escrowABI['abi'], // contract abi in json or JS format
 };
 
@@ -32,7 +33,7 @@ const AppliedPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedMap,
     const { data: signer, isError, isLoading } = useSigner();
     const { chain } = useNetwork();
     const zeroAddress = '0x0000000000000000000000000000000000000000';
-    const escrowAddress = '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4'; //process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
+    const escrowAddress =  contractAddresses.escrow// '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4';
 
     const provider = useProvider();
     const escrowContract = useContract({...contractConfig, signerOrProvider: provider,});

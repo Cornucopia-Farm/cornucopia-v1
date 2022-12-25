@@ -22,6 +22,7 @@ import wethABI from '../WETH9.json';
 import styles from '../styles/Home.module.css';
 import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
 import { BountyOutcome } from '../getEscrowEventData';
+import contractAddresses from '../contractAddresses.json';
 
 type Props = {
     person: string;
@@ -49,13 +50,13 @@ type Props = {
 
 // Escrow Contract Config
 const contractConfig = {
-  addressOrName: '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', // process.env.NEXT_PUBLIC_ESCROW_ADDRESS!, // contract address
+  addressOrName: contractAddresses.escrow, // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', 
   contractInterface: escrowABI['abi'], // contract abi in json or JS format
 };
 
 // WETH Contract Config
 const wethContractConfig = {
-  addressOrName: '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6', // process.env.NEXT_PUBLIC_WETH_ADDRESS!, // contract address
+  addressOrName: contractAddresses.weth, // '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6', 
   contractInterface: wethABI as ContractInterface, // contract abi in json or JS format
 };
 
@@ -216,7 +217,7 @@ const Application: React.FC<Props> = props => {
     contractInterface: erc20ABI['abi'], // contract abi in json or JS format
   };
 
-  const escrowAddress = '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4'; //process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
+  const escrowAddress = contractAddresses.escrow; // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4'; 
   const hexAlwaysApprove = '0x8000000000000000000000000000000000000000000000000000000000000000';
 
   const { config: increaseAllowanceOnceConfig } = usePrepareContractWrite({...erc20ContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmtOnce], enabled: Boolean(debouncedAllowanceAmtOnce), });

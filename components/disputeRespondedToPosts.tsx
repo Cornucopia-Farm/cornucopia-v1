@@ -11,6 +11,7 @@ import { Request, getUMAEventData } from '../getUMAEventData';
 import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
+import contractAddresses from '../contractAddresses.json';
 
 type Props = {
     postId: string;
@@ -22,13 +23,13 @@ type Props = {
 
 // Escrow Contract Config
 const contractConfig = {
-    addressOrName: '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', // process.env.NEXT_PUBLIC_ESCROW_ADDRESS!, // contract address
+    addressOrName: contractAddresses.escrow, // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', 
     contractInterface: escrowABI['abi'], // contract abi in json or JS format
 };
 
 // UMA Skinny OO Contract Config
 const umaContractConfig = {
-    addressOrName: '0xeDc52A961B5Ca2AC7B2e0bc36714dB60E5a115Ab', // process.env.NEXT_PUBLIC_OO_ADDRESS!, // contract address for OO not skinny OO so need to change
+    addressOrName: contractAddresses.oracle, // '0xeDc52A961B5Ca2AC7B2e0bc36714dB60E5a115Ab', 
     contractInterface: umaABI['abi'],
 };
 
@@ -42,7 +43,7 @@ const DisputeRespondedToPosts: React.FC<Props> = ({ postId, setSubmittedMap, inc
 
     const escrowContract = useContract({...contractConfig, signerOrProvider: provider,});
     const umaContract = useContract({...umaContractConfig, signerOrProvider: provider, });
-    const escrowAddress = '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4'; // process.env.NEXT_PUBLIC_ESCROW_ADDRESS!;
+    const escrowAddress = contractAddresses.escrow; // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4'; 
     const identifier = "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000";
 
     const [disputeRespondedToBountyPosts, setDisputeRespondedToBountyPosts] = React.useState(Array<JSX.Element>);

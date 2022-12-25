@@ -10,6 +10,7 @@ import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
 import { getEscrowEventData } from '../getEscrowEventData';
+import contractAddresses from '../contractAddresses.json';
 
 // TODO: add logic too look at event for finished post to determine who won dispute (if this was an issue), or non dispute 
 
@@ -23,7 +24,7 @@ type Props = {
 
 // Escrow Contract Config
 const contractConfig = {
-    addressOrName: '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', // process.env.NEXT_PUBLIC_ESCROW_ADDRESS!, // contract address
+    addressOrName: contractAddresses.escrow, // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', 
     contractInterface: escrowABI['abi'], // contract abi in json or JS format
 };
 

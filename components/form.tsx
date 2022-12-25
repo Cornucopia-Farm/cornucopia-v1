@@ -25,6 +25,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { ethers } from 'ethers';
+import contractAddresses from '../contractAddresses.json';
 
 type Props = {
     creatorAddress: string;
@@ -97,7 +98,7 @@ const ethTokens = EthTokenList['tokens'];
 
 // Escrow Contract Config
 const contractConfig = {
-    addressOrName: '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', // process.env.NEXT_PUBLIC_ESCROW_ADDRESS!, // contract address
+    addressOrName: contractAddresses.escrow, // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', 
     contractInterface: escrowABI['abi'], // contract abi in json or JS format
 };
 
