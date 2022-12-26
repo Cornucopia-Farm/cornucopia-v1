@@ -13,6 +13,7 @@ import WelcomeCard from '../components/welcomeCard';
 import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
+import { useMediaQuery } from '@mui/material';
 
 const OpenBounties: NextPage = () => {
     const { address, isConnected } = useAccount();
@@ -113,6 +114,7 @@ const OpenBounties: NextPage = () => {
         } 
     }, [getPosts, postIds, isValidating]);
 
+    const largeScreen = useMediaQuery('(min-width: 531px)');
     
     if (!isConnected) {
         return (
@@ -129,7 +131,7 @@ const OpenBounties: NextPage = () => {
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
                 <main> 
-                <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '16vw', paddingRight: '16vw', color: 'rgba(6, 72, 41, 0.85)', }}> 
+                <Box sx={{ display: 'flex', flexDirection: 'column', ...(largeScreen ? { paddingLeft: '16vw', } : { paddingLeft: '12vw', }), ...(largeScreen ? { paddingRight: '16vw', } : { paddingRight: '12vw', }), color: 'rgba(6, 72, 41, 0.85)', }}> 
                     <h2 className={styles.h2}>Open Bounties</h2>
                     <Card className={styles.accordionBackground} sx={{ backgroundColor: 'rgba(6, 72, 41, 0.05)', borderRadius: '12px', paddingTop: '12px', paddingLeft: '12px', paddingRight: '12px', paddingBottom: '12px', }}> 
                         {openBountyPosts}

@@ -74,9 +74,7 @@ const CreateBounties: NextPage = () => {
     const smallScreen = useMediaQuery('(max-width: 1086px)');
     const largeScreen = useMediaQuery('(min-width: 1087px)');
 
-    const smallScreenCard = useMediaQuery('(max-width: 700px)');
-    const largeScreenCard = useMediaQuery('(min-width: 701px)');
-
+    const notMobileScreen = useMediaQuery('(min-width: 531px)');
 
     const { data, error, isValidating } = useSWR([GETPOSTS, { address: address, chain: chain?.network },], gqlFetcher);
 
@@ -261,7 +259,7 @@ const CreateBounties: NextPage = () => {
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
                 <main className={styles.background}>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: '16vw', paddingRight: '16vw', paddingTop: '24px', color: 'rgba(6, 72, 41, 0.85)', }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', ...(notMobileScreen ? { paddingLeft: '16vw', } : { paddingLeft: '12vw', }), ...(notMobileScreen ? { paddingRight: '16vw', } : { paddingRight: '12vw', }), paddingTop: '24px', color: 'rgba(6, 72, 41, 0.85)', }}>
                         <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', }}> 
                             <Box sx={{ display: 'flex', flexDirection: 'column', }}>
                                 <Button onClick={() => setStageInfo(true)} sx={{ width: '13px !important', height: '13px !important', position: 'absolute', paddingBottom: '20px', paddingLeft: '68px', }}> 
