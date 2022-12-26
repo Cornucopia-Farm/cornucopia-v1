@@ -100,7 +100,7 @@ const Application: React.FC<Props> = props => {
 
   const bondAmt = ethers.utils.parseUnits("0.1", "ether"); // Hard-coded (for now) bondAmt
   const finalFee = ethers.utils.parseUnits("0.35", "ether"); // Hard-coded finalFee (Set by UMA)
-  const oracleAddress = '0xeDc52A961B5Ca2AC7B2e0bc36714dB60E5a115Ab'; // process.env.NEXT_PUBLIC_OO_ADDRESS!; // Goerli OO
+  const oracleAddress =  contractAddresses.oracle; // '0xeDc52A961B5Ca2AC7B2e0bc36714dB60E5a115Ab'; 
   const wethContract = useContract({...wethContractConfig});
   const zeroAddress = '0x0000000000000000000000000000000000000000';
 
