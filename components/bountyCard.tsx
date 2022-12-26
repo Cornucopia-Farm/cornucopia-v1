@@ -24,8 +24,8 @@ type Props = {
 
 const BasicCard: React.FC<Props> = props => {
 
-  const mobileScreen = useMediaQuery('(max-width: 425px)');
-  const largeScreen = useMediaQuery('(min-width: 426px)');
+  const mobileScreen = useMediaQuery('(max-width: 500px)');
+  const largeScreen = useMediaQuery('(min-width: 501px)');
 
   const showLinks = (links: string) => {
     return links.split(",").map(link => {
@@ -64,10 +64,10 @@ const BasicCard: React.FC<Props> = props => {
           {mobileScreen && 
           <> 
           <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: 0, paddingBottom: 1, }}> 
-            <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', }}>Description </Typography>
+            <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', paddingBottom: 0.5, }}>Description </Typography>
             <Typography className={styles.cardInfo} sx={{ fontSize: 16, color: '#064829',  }}>{props.description}</Typography>
           </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: 0, paddingBottom: 1, }}> 
+          <Box sx={{ display: 'flex', flexDirection: 'column', paddingLeft: 0, paddingBottom: 1,  }}> 
             <Typography className={styles.cardTag} sx={{ fontSize: 16, color: '#064829', }}>Start Date </Typography>
             <Typography className={styles.cardInfo} sx={{fontSize: 16, color: '#064829', }}>{dayjs(props.startDate).format('MM-DD-YYYY')}</Typography>
           </Box>
