@@ -26,7 +26,6 @@ const BasicCard: React.FC<Props> = props => {
 
   const mobileScreen = useMediaQuery('(max-width: 425px)');
   const largeScreen = useMediaQuery('(min-width: 426px)');
-  // const largeScreen = true //useMediaQuery('(min-width: 623px)');
 
   const showLinks = (links: string) => {
     return links.split(",").map(link => {
