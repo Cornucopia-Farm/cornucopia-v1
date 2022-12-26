@@ -10,7 +10,7 @@ import fourGrass from '../images/four_grass.svg';
 // img size is 1080 x 703
 export default function Footer() {
     return ( 
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px', position: 'relative', bottom: 0, width: '100vw', marginTop: 'auto', }}> 
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px', position: 'relative', bottom: 0, width: '100vw', marginTop: '3vh', }}> 
         <CowAnimation3 />
         <Box sx={{ display: 'flex', justifyContent: 'center'}}> 
           <Box sx={{ display: 'flex', justifyContent: 'center'}}>
@@ -18,9 +18,9 @@ export default function Footer() {
             <Image alt="" src={twoBlades} height="24px" width="121px"/>          
             <Image alt="" src={threeBlades} height="24px" width="121px"/>
           </Box>
-          {/* <Box sx={{ minHeight:'24px', minWidth:'121px', }}> */}
+          <Box sx={{ minHeight:'24px', minWidth:'121px', }}>
             <Image alt="" src="/corn_text.png" height="24px" width="121px"/>
-          {/* </Box> */}
+          </Box>
           <Box sx={{ display: 'flex', justifyContent: 'center'}}>
             <Image alt="" src={threeBlades} height="24px" width="121px"/>
             <Image alt="" src={twoBlades} height="24px" width="121px"/>
