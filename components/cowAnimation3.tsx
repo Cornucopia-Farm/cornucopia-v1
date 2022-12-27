@@ -102,14 +102,14 @@ function Icon() {
     return (
         <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="100%"
-        // width={smallScreen ? "900px" : "100%"}
+        // width="100%"
+        width={smallScreen ? "900px" : "100%"}
         height="100%"
         display="block"
         version="1.1"
         viewBox="0 828.166 1332.014 118.841"
-        // style={{ width: smallScreen ? "900px" : "100%", height: "100%", }}
-        style={{ width: "100%", height: "100%", }}
+        style={{ width: smallScreen ? "900px" : "100%", height: "100%", overflow: 'hidden', }}
+        // style={{ width: "100%", height: "100%", }}
       >
         <g
           className="s-cow-move-right"

@@ -10,7 +10,7 @@ import fourGrass from '../images/four_grass.svg';
 // img size is 1080 x 703
 export default function Footer() {
     return ( 
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px', position: 'relative', bottom: 0, width: '100vw', marginTop: '3vh', }}> 
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px', position: 'relative', bottom: 0, width: '100vw', marginTop: '3vh', overflow: 'hidden', }}> 
         <CowAnimation3 />
         <Box sx={{ display: 'flex', justifyContent: 'center'}}> 
           <Box sx={{ display: 'flex', justifyContent: 'center'}}>
