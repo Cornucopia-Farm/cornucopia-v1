@@ -64,6 +64,7 @@ const BasicAccordion: React.FC<Props> = props => {
   const blockExplorerURL = blockExplorer(chain?.network);
   // 733
   const smallScreen = useMediaQuery('(max-width: 760px)');
+  const mediumScreen = useMediaQuery('(min-width: 761px) and (max-width: 900px)');
   const largeScreen = useMediaQuery('(min-width: 761px)');
 
 
@@ -80,13 +81,13 @@ const BasicAccordion: React.FC<Props> = props => {
               <Box sx={{ borderRadius: '12px', width: '43%', flexShrink: 0 }}> 
                 <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
               </Box>
-              <Typography className={styles.h2} sx={{  color: '#064829', width: '43%', flexShrink: 0, maxHeight: '50px', marginRight: '40px', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', }, }}>{props.bountyName}</Typography> 
-              <Typography className={styles.h2} sx={{ color: '#064829',  }}>{props.amount} {props.tokenSymbol}</Typography> 
+              <Typography className={styles.h2} sx={{  color: '#064829', ...(mediumScreen ? { width: '36%', } : { width: '40%', }), flexShrink: 0, maxHeight: '50px', marginRight: '40px', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', }, }}>{props.bountyName}</Typography> 
+              <Typography className={styles.h2} sx={{ color: '#064829', marginTop: 'auto', marginBottom: 'auto', }}>{props.amount} {props.tokenSymbol}</Typography> 
             </>
           } 
           {smallScreen && 
             <> 
-              <Box sx={{ borderRadius: '12px', width: '55%', flexShrink: 0, }}> 
+              <Box sx={{ borderRadius: '12px', width: '53%', flexShrink: 0, }}> 
                 <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
                 <Typography className={styles.h2} sx={{ color: '#064829', paddingTop: '5px' }}>{props.amount} {props.tokenSymbol}</Typography> 
               </Box>

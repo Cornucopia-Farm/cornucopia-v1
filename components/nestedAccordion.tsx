@@ -7,6 +7,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import BountyCard from './bountyCard';
 import { Dayjs } from 'dayjs';
 import styles from '../styles/Home.module.css';
+import { useMediaQuery } from '@mui/material';
 
 type Props = {
   description: string;
@@ -22,6 +23,10 @@ type Props = {
 };
 
 const NestedAccordion: React.FC<Props> = props => {
+
+  const smallScreen = useMediaQuery('(max-width: 680px)');
+  const largeScreen = useMediaQuery('(min-width: 681px)');
+  
   return (
     <div>
       <Accordion square={true} sx={{ borderRadius: '12px', backgroundColor: 'rgba(6, 72, 41, 0.05)', boxShadow: '0px 0px 3px rgb(248, 215, 154)', }}>
@@ -30,8 +35,18 @@ const NestedAccordion: React.FC<Props> = props => {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
+            {largeScreen && 
+            <> 
             <Typography className={styles.h2} sx={{ width: '90%', flexShrink: 0, color: '#064829', }}>{props.bountyName}</Typography>
-            <Typography className={styles.h2} sx={{ color: '#064829', }}>{props.amount} {props.tokenSymbol}</Typography>     
+            <Typography className={styles.h2} sx={{ color: '#064829', }}>{props.amount} {props.tokenSymbol}</Typography>  
+            </>
+            } 
+            {smallScreen && 
+            <>
+            <Typography className={styles.h2} sx={{ width: '60%', flexShrink: 0, color: '#064829', maxHeight: '45px', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', },}}>{props.bountyName}</Typography>
+            <Typography className={styles.h2} sx={{ marginLeft: '8vw !important', marginTop: 'auto', marginBottom: 'auto', color: '#064829', }}>{props.amount} {props.tokenSymbol}</Typography>  
+            </>
+            }   
         </AccordionSummary>
         <AccordionDetails>
           <BountyCard 
