@@ -31,7 +31,7 @@ const NestedAccordion: React.FC<Props> = props => {
     <div>
       <Accordion square={true} sx={{ borderRadius: '12px', backgroundColor: 'rgba(6, 72, 41, 0.05)', boxShadow: '0px 0px 3px rgb(248, 215, 154)', }}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon sx={{ color: 'rgb(233, 233, 198)', marginLeft: '2vh !important', }}/>}
+          expandIcon={<ExpandMoreIcon sx={{ color: 'rgb(233, 233, 198)', }}/>}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
@@ -43,7 +43,7 @@ const NestedAccordion: React.FC<Props> = props => {
             } 
             {smallScreen && 
             <>
-            <Typography className={styles.h2} sx={{ width: '60%', flexShrink: 0, color: '#064829', maxHeight: '45px', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', },}}>{props.bountyName}</Typography>
+            <Typography className={styles.h2} sx={{ width: '60%', flexShrink: 0, color: '#064829', maxHeight: '50px', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', },}}>{props.bountyName}</Typography>
             <Typography className={styles.h2} sx={{ marginLeft: '8vw !important', marginTop: 'auto', marginBottom: 'auto', color: '#064829', }}>{props.amount} {props.tokenSymbol}</Typography>  
             </>
             }   

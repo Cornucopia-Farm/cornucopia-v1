@@ -72,7 +72,7 @@ const BasicAccordion: React.FC<Props> = props => {
     <div>
       <Accordion className={styles.accordionBackground} square={true} sx={{ borderRadius: '12px', backgroundColor: 'rgba(6, 72, 41, 0.05)' }} >
         <AccordionSummary 
-          expandIcon={<ExpandMoreIcon sx={{ color: 'rgb(233, 233, 198)', marginLeft: '2vw !important', }}/>}
+          expandIcon={<ExpandMoreIcon sx={{ color: 'rgb(233, 233, 198)', }}/>}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
@@ -91,7 +91,7 @@ const BasicAccordion: React.FC<Props> = props => {
                 <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
                 <Typography className={styles.h2} sx={{ color: '#064829', paddingTop: '5px' }}>{props.amount} {props.tokenSymbol}</Typography> 
               </Box>
-              <Typography className={styles.h2} sx={{ marginLeft: '2vw !important', color: '#064829', width: '45%', flexShrink: 0, maxHeight: '50px', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', }, }}>{props.bountyName}</Typography> 
+              <Typography className={styles.h2} sx={{ marginLeft: '2vw !important', marginRight: '4vw !important', color: '#064829', width: '45%', flexShrink: 0, maxHeight: '50px', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', }, }}>{props.bountyName}</Typography> 
             </>
           } 
         </AccordionSummary>
