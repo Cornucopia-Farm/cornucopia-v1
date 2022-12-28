@@ -24,8 +24,10 @@ import { Dayjs } from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 import contractAddresses from '../contractAddresses.json';
+import { lt } from 'lodash';
+import { useSyncExternalStoreWithTracked } from 'wagmi/dist/declarations/src/hooks/utils';
 
 type Props = {
     creatorAddress: string;
@@ -125,31 +127,34 @@ const Form: React.FC<Props> = props => {
 
     const [notEnoughError, setNotEnoughError] = React.useState("");
 
-    // const enoughTokens = React.useCallback(async (tokenAddress?: string, amount?: number) => {
-    //     let balance;
-    //     if (tokenAddress !== zeroAddress) {
-    //         const erc20Contract = new ethers.Contract(tokenAddress!, erc20ABI['abi'], provider!);
-    //         try { 
-    //             balance = await erc20Contract.balanceOf(address); 
-    //         } catch (e) {
-    //             console.log('Form balance fetch error', e);
-    //         }    
-    //     } else if (tokenAddress === zeroAddress) {
-    //         balance = await provider.getBalance(address!);
-    //     } else {
-    //         balance = 0;
-    //     }
- 
-    //     console.log(amount)
-    //     console.log('balance', balance)
-    //     amount && balance < amount ? setNotEnoughError("Insufficient balance") : setNotEnoughError("");
-    // }, [address, provider]);
+    const enoughTokens = React.useCallback(async (amount?: number, tokenAddress?: string, tokenDecimals?: number) => {
+        let balance;
 
-    // React.useEffect(() => {
-    //     if (formValues.tokenAddress && formValues.amount) {
-    //         enoughTokens(formValues.tokenAddress, formValues.amount);
-    //     }
-    // }, [formValues.amount, enoughTokens, formValues.tokenAddress])
+        if (!tokenAddress || !amount) {
+            setNotEnoughError("");
+        } else {
+            const amountBN = ethers.utils.parseUnits(amount.toString(), tokenDecimals);
+
+            if (tokenAddress !== zeroAddress) {
+                const erc20Contract = new ethers.Contract(tokenAddress, erc20ABI['abi'], provider!);
+                try { 
+                    balance = await erc20Contract.balanceOf(address); 
+                } catch (e) {
+                    console.log('Form balance fetch error', e);
+                }   
+            } else if (tokenAddress === zeroAddress) {
+                balance = await provider.getBalance(address!);
+            } else {
+                balance = 0;
+            }
+
+            if (balance.lt(amountBN)) {
+                setNotEnoughError("Insufficient balance to pay this bounty");
+            } else {
+                setNotEnoughError("");
+            }
+        }    
+    }, [address, provider]);
 
     const handleCloseSubmitTrue = (bountyAppId: string, creatorAddress: string) => {
         setBountyAppId(bountyAppId);
@@ -429,15 +434,13 @@ const Form: React.FC<Props> = props => {
                         name="amount"
                         label="Amount"
                         value={formValues.amount}
-                        // onChange={handleInputChange}
-                        // type="text" // Need to add ERC20
-                        // onChange={ () => { handleInputChange; enoughTokens(formValues.tokenAddress, formValues.amount); }}
+                        onChange={ (e: any) => { handleInputChange(e); enoughTokens(e.target.value, formValues.tokenAddress, formValues.tokenDecimals); }}
                         error={Boolean(notEnoughError)}
                         helperText={notEnoughError}
                         type="number"
                         fullWidth
                         variant="standard"
-                        inputProps={{ autoComplete: 'off', inputMode: 'numeric', pattern: '[0-9]*', }}
+                        inputProps={{ autoComplete: 'off', inputMode: 'numeric', pattern: '[0-9]*', }} 
                         sx={{ 
                             '& .MuiInputBase-input': { 
                                 color: 'rgb(248, 215, 154)', 
@@ -446,10 +449,18 @@ const Form: React.FC<Props> = props => {
                                     '-webkit-appearance': 'none',
                                 },
                             }, 
+                            '& .MuiFormHelperText-root.Mui-error': {
+                                color: 'rgb(255, 69, 0)',
+                                fontFamily: 'Space Grotesk',
+                            },
                             '& .MuiInputLabel-root': { 
                                 color: 'rgb(233, 233, 198)', 
-                                fontFamily: 'Space Grotesk'
+                                fontFamily: 'Space Grotesk',
                             }, 
+                            '& .MuiInputLabel-root.Mui-error': { 
+                                color: 'rgb(255, 69, 0)', 
+                                fontFamily: 'Space Grotesk',
+                            },
                             '& label.Mui-focused': {
                                 color: 'rgb(248, 215, 154)',
                             }, 

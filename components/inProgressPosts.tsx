@@ -79,7 +79,7 @@ const InProgressPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedM
         
         const promises = openBountyIds?.map( async (openBountyId: string) => {
             const postData = await axios.get(`https://arweave.net/${openBountyId}`);
-            console.log('in progress data', postData)
+          
             if ( (existsSubmitted).has(postData.data.postId) ) {
                 return Promise.resolve([]); // Equivalent ot continue in a forEach loop in ts
             }
@@ -136,7 +136,6 @@ const InProgressPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedM
                 results.forEach(result => {
                     if (result.length) {
                         if (result[0].length > 0) { // Case 3: In Progress
-                            console.log('in progress true')
                             inProgressBountiesApps.push(result[1]);
                         }
                         postDataArr.push(result[2]);

@@ -100,11 +100,11 @@ const SubmittedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSub
             let allowance = BigNumber.from(0);
 
             if (postData.data.tokenAddress !== zeroAddress && postData.data.tokenAddress) {
-                const erc20Contract = new ethers.Contract(postData.data.tokenAddress, erc20ABI['abi'], signer!);
+                const erc20Contract = new ethers.Contract(postData.data.tokenAddress, erc20ABI['abi'], provider!);
                 try { 
                     allowance = await erc20Contract.allowance(address, escrowAddress); 
                 } catch (e) {
-                    console.log('allowance fetch error', e);
+                    console.log('Submitted posts allowance fetch error', e);
                 }
             }
 
