@@ -98,8 +98,6 @@ const defaultValues: ArweaveData = {
     tokenDecimals: undefined
 };
 
-const ethTokens = EthTokenList['tokens'];
-
 // Escrow Contract Config
 const contractConfig = {
     addressOrName: contractAddresses.escrow, // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', 
@@ -136,6 +134,7 @@ const Form: React.FC<Props> = props => {
     // } else if (chain?.network === 'polygon') {
 
     const [notEnoughError, setNotEnoughError] = React.useState("");
+    const [endDateBeforeError, setEndDateBeforeError] = React.useState("");
 
     const enoughTokens = React.useCallback(async (amount?: number, tokenAddress?: string, tokenDecimals?: number) => {
         let balance;
@@ -165,6 +164,19 @@ const Form: React.FC<Props> = props => {
             }
         }    
     }, [address, provider]);
+
+    const dateCheck = React.useCallback( (startDate?: Dayjs | null, endDate?: Dayjs) => {
+        if (startDate && endDate) {
+            const diff = endDate.diff(startDate);
+            if (diff < 0) {
+                setEndDateBeforeError("End date before start date");
+            } else {
+                setEndDateBeforeError("");
+            }
+        } else {
+            setEndDateBeforeError("");
+        }
+    }, []);
 
     const handleCloseSubmitTrue = (bountyAppId: string, creatorAddress: string) => {
         setBountyAppId(bountyAppId);
@@ -377,7 +389,7 @@ const Form: React.FC<Props> = props => {
                         select
                         fullWidth
                         variant="standard"
-                        inputProps={{ autoComplete: 'off'}}
+                        inputProps={{ autoComplete: 'off' }}
                         SelectProps={{
                             MenuProps: {
                                 sx: { 
@@ -673,7 +685,7 @@ const Form: React.FC<Props> = props => {
                             label="End Date"
                             disablePast={true}
                             value={formValues.endDate}
-                            onChange={handleInputChangeEndDate}
+                            onChange={ (newDate: any) => { handleInputChangeEndDate(newDate); dateCheck(formValues.startDate, newDate); }}
                             renderInput={(params) => 
                                 <TextField
                                     {...params}
@@ -681,15 +693,25 @@ const Form: React.FC<Props> = props => {
                                     margin="dense"
                                     fullWidth
                                     variant="standard"
+                                    error={Boolean(endDateBeforeError)}
+                                    helperText={endDateBeforeError}
                                     sx={{ 
                                         '& .MuiInputBase-input': { 
                                             color: 'rgb(248, 215, 154)', 
                                             fontFamily: 'Space Grotesk'
                                         }, 
+                                        '& .MuiFormHelperText-root.Mui-error': {
+                                            color: 'rgb(255, 69, 0)',
+                                            fontFamily: 'Space Grotesk',
+                                        },
                                         '& .MuiInputLabel-root': { 
                                             color: 'rgb(233, 233, 198)', 
                                             fontFamily: 'Space Grotesk'
                                         }, 
+                                        '& .MuiInputLabel-root.Mui-error': { 
+                                            color: 'rgb(255, 69, 0)', 
+                                            fontFamily: 'Space Grotesk',
+                                        },
                                         '& label.Mui-focused': {
                                             color: 'rgb(248, 215, 154)',
                                         }, 
