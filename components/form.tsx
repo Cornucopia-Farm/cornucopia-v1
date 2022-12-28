@@ -9,7 +9,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
-import { useAccount, useContractWrite, usePrepareContractWrite, useProvider, useWaitForTransaction } from 'wagmi';
+import { useAccount, useContractWrite, useNetwork, usePrepareContractWrite, useProvider, useWaitForTransaction } from 'wagmi';
 import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; 
 import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
 import useDebounce from './useDebounce';
@@ -17,6 +17,9 @@ import SimpleSnackBar from './simpleSnackBar';
 import styles from '../styles/Home.module.css';
 import MenuItem from '@mui/material/MenuItem';
 import EthTokenList from '../ethTokenList.json';
+import GoerliTokenList from '../goerliTokenList.json';
+import PolygonTokenList from '../polygonTokenList.json';
+import AuroraTokenList from '../auroraTokenList.json';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -97,7 +100,6 @@ const defaultValues: ArweaveData = {
 
 const ethTokens = EthTokenList['tokens'];
 
-
 // Escrow Contract Config
 const contractConfig = {
     addressOrName: contractAddresses.escrow, // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', 
@@ -123,7 +125,15 @@ const Form: React.FC<Props> = props => {
 
     const { address, isConnected } = useAccount();
     const provider = useProvider();
+    const { chain } = useNetwork();
     const zeroAddress = '0x0000000000000000000000000000000000000000';
+    let tokenList = EthTokenList['tokens']; // Ethereum Default
+    if (chain?.network === 'goerli') {
+        tokenList = GoerliTokenList['tokens'];
+    }
+    // } else if (chain?.network === 'arbitrum') {
+    //     tokenList = GoerliTokenList['tokens']
+    // } else if (chain?.network === 'polygon') {
 
     const [notEnoughError, setNotEnoughError] = React.useState("");
 
@@ -187,7 +197,7 @@ const Form: React.FC<Props> = props => {
 
     const handleInputChangeToken = (e: any) => {
         const tokenAddress = e.target.value;
-        const tokenObj = ethTokens.filter((obj: any) => {
+        const tokenObj = tokenList.filter((obj: any) => {
             return obj.address === tokenAddress;
         }); // Returns Array of matches so we take first one as there will only be one match
         setFormValues({
@@ -375,6 +385,8 @@ const Form: React.FC<Props> = props => {
                                     '& .MuiMenu-paper': { 
                                         borderBottomLeftRadius: '12px',
                                         borderBottomRightRadius: '12px',
+                                        backgroundColor: 'transparent', 
+                                        boxShadow: 'none',
                                         scrollbarWidth: 'none', 
                                         '&::-webkit-scrollbar': { 
                                             display: 'none', 
@@ -383,7 +395,10 @@ const Form: React.FC<Props> = props => {
                                 },
                                 MenuListProps: {
                                     sx: { 
-                                        backgroundColor: 'rgb(23, 21, 20)',          
+                                        backgroundColor: 'rgb(23, 21, 20)',
+                                        '& .MuiMenuItem-root.Mui-selected': {
+                                            backgroundColor: 'transparent',
+                                        },
                                     }
                                 },
                             },   
@@ -416,7 +431,7 @@ const Form: React.FC<Props> = props => {
                             },
                         }}
                     >
-                        {ethTokens.map((token) => (
+                        {tokenList.map((token) => (
                             <MenuItem key={token.address} value={token.address}>
                                 <Box sx={{ display: 'flex', gap: '12px' }}> 
                                     <ListItemIcon sx={{ minWidth: '25px !important'}} >

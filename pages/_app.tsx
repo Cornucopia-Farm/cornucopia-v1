@@ -10,6 +10,7 @@ import client from "../apollo-client";
 import '@rainbow-me/rainbowkit/styles.css';
 import { connectorsForWallets, getDefaultWallets, RainbowKitProvider, wallet, darkTheme, midnightTheme, Theme } from '@rainbow-me/rainbowkit';
 import {
+  Chain,
   chain,
   configureChains,
   createClient,
@@ -27,6 +28,23 @@ type NextPageWithLayout = NextPage & {
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
+}
+
+const aurora: Chain = {
+  id: 1313161554,
+  name: 'Aurora',
+  network: 'aurora',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Ether',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    default: 'https://mainnet.aurora.dev',
+  },
+  blockExplorers: {
+    default: { name: 'AuroraScan', url: 'aurorascan.dev' },
+  },
 }
 
 const { chains, provider, webSocketProvider  } = configureChains(
