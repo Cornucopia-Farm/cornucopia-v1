@@ -8,9 +8,8 @@ import Layout from '../components/layout';
 import { ApolloProvider } from "@apollo/client";
 import client from "../apollo-client";
 import '@rainbow-me/rainbowkit/styles.css';
-import { connectorsForWallets, getDefaultWallets, RainbowKitProvider, wallet, darkTheme, midnightTheme, Theme } from '@rainbow-me/rainbowkit';
+import { connectorsForWallets, getDefaultWallets, RainbowKitProvider, wallet, darkTheme, midnightTheme, Theme, Chain } from '@rainbow-me/rainbowkit';
 import {
-  Chain,
   chain,
   configureChains,
   createClient,
@@ -34,23 +33,32 @@ const aurora: Chain = {
   id: 1313161554,
   name: 'Aurora',
   network: 'aurora',
+  iconUrl: 'https://raw.githubusercontent.com/aurora-is-near/bridge-assets/master/tokens/aurora.svg',
   nativeCurrency: {
     decimals: 18,
     name: 'Ether',
-    symbol: 'ETH',
+    symbol: 'ETH'
   },
   rpcUrls: {
     default: 'https://mainnet.aurora.dev',
   },
   blockExplorers: {
     default: { name: 'AuroraScan', url: 'aurorascan.dev' },
-  },
+  }
 }
 
 const { chains, provider, webSocketProvider  } = configureChains(
-  [chain.mainnet, chain.polygon, chain.arbitrum, chain.optimism, chain.goerli], // chain.localhost,
+  [chain.mainnet, chain.polygon, chain.arbitrum, chain.optimism, chain.goerli, aurora], // chain.localhost,
   [
     alchemyProvider({ apiKey: '8kuy75lJC7Rq_P7tpu-n2_q1cOJ0nctf' }),
+    jsonRpcProvider({
+      rpc: (chain) => {
+        if (chain.id === aurora.id) {
+          return { http: chain.rpcUrls.default };
+        } 
+        return null;
+      },
+    }),
     // publicProvider(),
     // jsonRpcProvider({ rpc: (chain: any) => ({ http: `http://localhost:8545/ ` })}),
   ]
