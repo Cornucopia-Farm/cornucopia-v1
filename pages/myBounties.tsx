@@ -24,7 +24,7 @@ import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
 import { getEscrowEventData } from '../getEscrowEventData';
-import { useMediaQuery } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import contractAddresses from '../contractAddresses.json';
 
 // Bounty Stages for Hunter:

@@ -13,7 +13,7 @@ import WelcomeCard from '../components/welcomeCard';
 import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
-import { useMediaQuery } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const OpenBounties: NextPage = () => {
     const { address, isConnected } = useAccount();

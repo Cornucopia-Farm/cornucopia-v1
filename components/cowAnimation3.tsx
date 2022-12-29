@@ -1,7 +1,7 @@
 import React, { RefObject } from 'react';
 import { gsap } from 'gsap';
 import Cow from '../images/cow.svg';
-import { useMediaQuery } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 function Icon() {
     const cow = React.useRef<gsap.TweenTarget>();

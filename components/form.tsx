@@ -467,7 +467,7 @@ const Form: React.FC<Props> = props => {
                         type="number"
                         fullWidth
                         variant="standard"
-                        inputProps={{ autoComplete: 'off', inputMode: 'numeric', pattern: '[0-9]*', }} 
+                        inputProps={{ autoComplete: 'off', inputMode: 'decimal', pattern: '[0-9]*', }} 
                         sx={{ 
                             '& .MuiInputBase-input': { 
                                 color: 'rgb(248, 215, 154)', 
@@ -555,6 +555,7 @@ const Form: React.FC<Props> = props => {
                                 },
                             }}
                             label="Start Date"
+                            desktopModeMediaQuery="@media (min-width: 1px)"
                             disablePast={true}
                             value={formValues.startDate}
                             onChange={handleInputChangeStartDate}
@@ -683,6 +684,7 @@ const Form: React.FC<Props> = props => {
                                 },
                             }}
                             label="End Date"
+                            desktopModeMediaQuery="@media (min-width: 1px)"
                             disablePast={true}
                             value={formValues.endDate}
                             onChange={ (newDate: any) => { handleInputChangeEndDate(newDate); dateCheck(formValues.startDate, newDate); }}
@@ -1000,7 +1002,8 @@ const Form: React.FC<Props> = props => {
                                 onClose={handleClose}
                                 aria-labelledby="alert-dialog-title"
                                 aria-describedby="alert-dialog-description"
-                                PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}
+                                PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none", }, }}
+                                
                             >
                                 <DialogTitle className={styles.formHeader} id="alert-dialog-title">
                                     {"Are you sure you want to submit your work?"}

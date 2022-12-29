@@ -11,7 +11,7 @@ import { useEnsName, useNetwork } from 'wagmi';
 import { Dayjs } from 'dayjs';
 import styles from '../styles/Home.module.css';
 import { BountyOutcome } from '../getEscrowEventData';
-import { useMediaQuery } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 type Props = { // need to change bounty card to specify which component it is for!
   company: string;

@@ -7,7 +7,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import BountyCard from './bountyCard';
 import { Dayjs } from 'dayjs';
 import styles from '../styles/Home.module.css';
-import { useMediaQuery } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 type Props = {
   description: string;

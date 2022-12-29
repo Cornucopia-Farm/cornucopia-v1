@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import styles from '../styles/Home.module.css';
 import { BountyOutcome } from '../getEscrowEventData';
-import { useMediaQuery } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 type Props = {
   experience: string;
