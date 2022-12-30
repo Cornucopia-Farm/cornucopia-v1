@@ -1,17 +1,10 @@
-[submodule "/Users/alextoberoff/Desktop/Cornucopia/cornucopia/cornucopia-contracts/lib/ds-test"]
-	path = /Users/alextoberoff/Desktop/Cornucopia/cornucopia/cornucopia-contracts/lib/ds-test
-	url = https://github.com/dapphub/ds-test
-[submodule "/Users/alextoberoff/Desktop/Cornucopia/cornucopia/cornucopia-contracts/lib/protocol"]
-	path = /Users/alextoberoff/Desktop/Cornucopia/cornucopia/cornucopia-contracts/lib/protocol
-	url = https://github.com/UMAprotocol/protocol
-[submodule "/Users/alextoberoff/Desktop/Cornucopia/cornucopia/cornucopia-contracts/lib/openzeppelin-contracts"]
-	path = /Users/alextoberoff/Desktop/Cornucopia/cornucopia/cornucopia-contracts/lib/openzeppelin-contracts
-	url = https://github.com/openzeppelin/openzeppelin-contracts
-[submodule "cornucopia-contracts/lib/forge-std"]
-	path = cornucopia-contracts/lib/forge-std
-	url = https://github.com/foundry-rs/forge-std
 [submodule "contracts/lib/forge-std"]
 	path = contracts/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
 [submodule "lib/forge-std"]
 	branch = v1.2.0
+[submodule "contracts/lib/openzeppelin-contracts"]
+	path = contracts/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "lib/openzeppelin-contracts"]
+	branch = v4.8.0
