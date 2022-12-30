@@ -681,6 +681,13 @@ const Form: React.FC<Props> = props => {
                                     '& .MuiPickersDay-today:not(.Mui-selected)': {
                                         border: '1px solid rgb(248, 215, 154)',
                                     },
+                                    '&::--webkit-autofill:focus': {     
+                                        '-webkit-background-color': 'transparent',
+                                    },
+                                    'input:-internal-autofill-selected': {
+                                        backgroundColor: 'transparent',
+                                    },
+                                    
                                 },
                             }}
                             label="End Date"
