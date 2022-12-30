@@ -10,8 +10,10 @@ import "uma-dvm-interface/StoreInterface.sol";
 import "uma-dvm-interface/FinderInterface.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-
-contract Escrow {
+import "@openzeppelin-upgradeable/contracts/proxy/utils/Initializable.sol";
+import "@openzeppelin-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol";
+import "@openzeppelin-upgradeable/contracts/access/OwnableUpgradeable.sol";
+contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 
     using SafeERC20 for IERC20;
 
@@ -38,6 +40,19 @@ contract Escrow {
     event FundsSent(address indexed creator, address indexed hunter, string indexed bountyAppId, string message);
     event FundsWithdrawnToCreator(address indexed creator, address indexed hunter, string indexed bountyAppId, string message);
     event FundsForceSentToHunter(address indexed creator, address indexed hunter, string indexed bountyAppId, string message);
+
+    // @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
+    }
+
+    function initialize() public initializer {
+        __Ownable_init();
+        __UUPSUpgradeable_init();
+    }
+
+    // Only the owner can upgrade the implementation.
+    function _authorizeUpgrade(address) internal override onlyOwner {}
 
     // Mapping arweave bounty address => bounty amount 
     function escrow(string memory _bountyAppId, address _hunter, uint _expiration, address _token, uint _amount) external payable {
