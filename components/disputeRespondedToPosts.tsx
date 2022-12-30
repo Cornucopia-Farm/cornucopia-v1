@@ -4,8 +4,8 @@ import axios from 'axios';
 import { ethers } from 'ethers';
 import NestedAccordian from './nestedAccordion';
 import Application from './application';
-import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
-import umaABI from '../cornucopia-contracts/out/SkinnyOptimisticOracle.sol/SkinnyOptimisticOracle.json';
+import escrowABI from '../contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
+import umaABI from '../contracts/out/SkinnyOptimisticOracle.sol/SkinnyOptimisticOracle.json';
 import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransaction, useContractRead, useBlockNumber, useContract, usePrepareContractWrite, useContractEvent, useSigner, useProvider, ProviderRpcError, useNetwork } from 'wagmi';
 import { Request, getUMAEventData } from '../getUMAEventData';
 import useSWR from 'swr';

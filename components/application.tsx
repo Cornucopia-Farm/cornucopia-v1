@@ -12,7 +12,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Link from '@mui/material/Link';
-import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; 
+import escrowABI from '../contracts/out/Escrow.sol/Escrow.json'; 
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction, useContract, useEnsName, useNetwork, useAccount, useSigner, useProvider } from 'wagmi';
 import { BigNumber, ContractInterface, ethers } from 'ethers';
 import useDebounce from './useDebounce';
@@ -20,7 +20,7 @@ import SimpleSnackBar from './simpleSnackBar';
 import { Request } from '../getUMAEventData';
 import wethABI from '../WETH9.json';
 import styles from '../styles/Home.module.css';
-import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
+import erc20ABI from '../contracts/out/ERC20.sol/ERC20.json';
 import { BountyOutcome } from '../getEscrowEventData';
 import contractAddresses from '../contractAddresses.json';
 

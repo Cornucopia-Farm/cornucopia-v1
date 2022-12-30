@@ -3,9 +3,9 @@ import axios from 'axios';
 import { BigNumber, ContractInterface, ethers } from 'ethers';
 import NestedAccordian from './nestedAccordion';
 import Application from './application';
-import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
+import escrowABI from '../contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
 import { useAccount, useContract, useSigner, useNetwork, useProvider } from 'wagmi';
-import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
+import erc20ABI from '../contracts/out/ERC20.sol/ERC20.json';
 import wethABI from '../WETH9.json';
 import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
@@ -151,7 +151,7 @@ const SubmittedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSub
                 setThisPostData(postDataArr);
             });
         }
-    }, [address, signer, wethContract, escrowContract, escrowAddress]);
+    }, [address, provider, wethContract, escrowContract, escrowAddress]);
 
     React.useEffect(() => {
         if (bountyIds && bountyIds.length > 0 && !isValidating) {

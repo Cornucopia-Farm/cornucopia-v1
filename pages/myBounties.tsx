@@ -10,8 +10,8 @@ import axios from 'axios';
 import { TailSpin } from 'react-loader-spinner';
 import { useAccount, useContract, useNetwork, useProvider, useSigner } from 'wagmi';
 import { ethers, ContractInterface } from 'ethers';
-import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
-import umaABI from '../cornucopia-contracts/out/SkinnyOptimisticOracle.sol/SkinnyOptimisticOracle.json';
+import escrowABI from '../contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
+import umaABI from '../contracts/out/SkinnyOptimisticOracle.sol/SkinnyOptimisticOracle.json';
 import wethABI from '../WETH9.json';
 import { getUMAEventData } from '../getUMAEventData';
 import styles from '../styles/Home.module.css';

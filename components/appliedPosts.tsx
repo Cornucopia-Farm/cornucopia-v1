@@ -2,11 +2,11 @@ import * as React from 'react';
 import axios from 'axios';
 import NestedAccordian from './nestedAccordion';
 import Application from './application';
-import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
+import escrowABI from '../contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
 import { useAccount, useContract, useSigner, useNetwork, useProvider } from 'wagmi';
 import { BigNumber, ethers } from 'ethers';
 import dayjs from 'dayjs';
-import erc20ABI from '../cornucopia-contracts/out/ERC20.sol/ERC20.json';
+import erc20ABI from '../contracts/out/ERC20.sol/ERC20.json';
 import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';

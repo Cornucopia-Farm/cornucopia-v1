@@ -23,7 +23,7 @@
   },
   "exclude": [
     "node_modules",
-    "cornucopia-contracts"
+    "contracts"
   ],
   "include": [
     "next-env.d.ts",
