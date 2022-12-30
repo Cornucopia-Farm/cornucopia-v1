@@ -11,10 +11,10 @@
     "linkReferences": {}
   },
   "methodIdentifiers": {},
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.14+commit.80d49f37\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"lib/forge-std/src/Base.sol\":\"CommonBase\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\"]},\"sources\":{\"lib/forge-std/src/Base.sol\":{\"keccak256\":\"0x7f6016716c0c6f49e8163af625290c7ef270a045d9b82be04e269035726d3213\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://bd050537b58640f8545b319928ee66bef9649d1ebd68a3afa1d28a1ce8cea3dd\",\"dweb:/ipfs/QmbBVxERnZ2ciQuRuZ45czd2DRgouCLEhibLWtC2CrH2j4\"]},\"lib/forge-std/src/StdStorage.sol\":{\"keccak256\":\"0xb31c4ee03d05c6202f6e354245ac3ab883d954f9f36074902089e1b3e645273d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://33bd98bde50b840b8d7d5cebf818176b9f219345078ed5d3bd0071f035efb2e3\",\"dweb:/ipfs/QmPYC7FZvCWCPF2qWg6TXXTTPGEdnT4y5nebPn1AoZ1H4p\"]},\"lib/forge-std/src/Vm.sol\":{\"keccak256\":\"0xfd793ebfb854f707ccf9dfec320b3b75d0d73ba54af0dfae727862fe93bc1cfd\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9a0a39917aabf39d981b17d1a06c9b82377917c3a0eedce8e9dc00df5c096bf9\",\"dweb:/ipfs/Qme7GpiHd32FFKYNbY4vdhiiciWPV1z1Uwtj1KDQAusxki\"]}},\"version\":1}",
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"lib/forge-std/src/Base.sol\":\"CommonBase\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin-upgradeable/=lib/openzeppelin-contracts--upgradeable/\",\":@openzeppelin/=lib/openzeppelin-contracts/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":protocol/=lib/protocol/\",\":uma-dvm-implementation/=lib/protocol/packages/core/contracts/data-verification-mechanism/implementation/\",\":uma-dvm-interface/=lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/\",\":uma-oracle-implementation/=lib/protocol/packages/core/contracts/optimistic-oracle/\",\":uma-oracle-interface/=lib/protocol/packages/core/contracts/optimistic-oracle/interfaces/\"]},\"sources\":{\"lib/forge-std/src/Base.sol\":{\"keccak256\":\"0x7f6016716c0c6f49e8163af625290c7ef270a045d9b82be04e269035726d3213\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://bd050537b58640f8545b319928ee66bef9649d1ebd68a3afa1d28a1ce8cea3dd\",\"dweb:/ipfs/QmbBVxERnZ2ciQuRuZ45czd2DRgouCLEhibLWtC2CrH2j4\"]},\"lib/forge-std/src/StdStorage.sol\":{\"keccak256\":\"0xb31c4ee03d05c6202f6e354245ac3ab883d954f9f36074902089e1b3e645273d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://33bd98bde50b840b8d7d5cebf818176b9f219345078ed5d3bd0071f035efb2e3\",\"dweb:/ipfs/QmPYC7FZvCWCPF2qWg6TXXTTPGEdnT4y5nebPn1AoZ1H4p\"]},\"lib/forge-std/src/Vm.sol\":{\"keccak256\":\"0xfd793ebfb854f707ccf9dfec320b3b75d0d73ba54af0dfae727862fe93bc1cfd\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9a0a39917aabf39d981b17d1a06c9b82377917c3a0eedce8e9dc00df5c096bf9\",\"dweb:/ipfs/Qme7GpiHd32FFKYNbY4vdhiiciWPV1z1Uwtj1KDQAusxki\"]}},\"version\":1}",
   "metadata": {
     "compiler": {
-      "version": "0.8.14+commit.80d49f37"
+      "version": "0.8.17+commit.8df45f5f"
     },
     "language": "Solidity",
     "output": {
@@ -32,8 +32,15 @@
     },
     "settings": {
       "remappings": [
+        ":@openzeppelin-upgradeable/=lib/openzeppelin-contracts--upgradeable/",
+        ":@openzeppelin/=lib/openzeppelin-contracts/",
         ":ds-test/=lib/forge-std/lib/ds-test/src/",
-        ":forge-std/=lib/forge-std/src/"
+        ":forge-std/=lib/forge-std/src/",
+        ":protocol/=lib/protocol/",
+        ":uma-dvm-implementation/=lib/protocol/packages/core/contracts/data-verification-mechanism/implementation/",
+        ":uma-dvm-interface/=lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/",
+        ":uma-oracle-implementation/=lib/protocol/packages/core/contracts/optimistic-oracle/",
+        ":uma-oracle-interface/=lib/protocol/packages/core/contracts/optimistic-oracle/interfaces/"
       ],
       "optimizer": {
         "enabled": true,
@@ -261,6 +268,7 @@
                           "isPure": true,
                           "kind": "functionCall",
                           "lValueRequested": false,
+                          "nameLocations": [],
                           "names": [],
                           "nodeType": "FunctionCall",
                           "src": "317:28:1",
@@ -303,6 +311,7 @@
                       "isPure": true,
                       "kind": "typeConversion",
                       "lValueRequested": false,
+                      "nameLocations": [],
                       "names": [],
                       "nodeType": "FunctionCall",
                       "src": "309:37:1",
@@ -345,6 +354,7 @@
                   "isPure": true,
                   "kind": "typeConversion",
                   "lValueRequested": false,
+                  "nameLocations": [],
                   "names": [],
                   "nodeType": "FunctionCall",
                   "src": "301:46:1",
@@ -387,6 +397,7 @@
               "isPure": true,
               "kind": "typeConversion",
               "lValueRequested": false,
+              "nameLocations": [],
               "names": [],
               "nodeType": "FunctionCall",
               "src": "293:55:1",
@@ -519,6 +530,7 @@
                           "isPure": true,
                           "kind": "functionCall",
                           "lValueRequested": false,
+                          "nameLocations": [],
                           "names": [],
                           "nodeType": "FunctionCall",
                           "src": "686:35:1",
@@ -561,6 +573,7 @@
                       "isPure": true,
                       "kind": "typeConversion",
                       "lValueRequested": false,
+                      "nameLocations": [],
                       "names": [],
                       "nodeType": "FunctionCall",
                       "src": "678:44:1",
@@ -603,6 +616,7 @@
                   "isPure": true,
                   "kind": "typeConversion",
                   "lValueRequested": false,
+                  "nameLocations": [],
                   "names": [],
                   "nodeType": "FunctionCall",
                   "src": "670:53:1",
@@ -645,6 +659,7 @@
               "isPure": true,
               "kind": "typeConversion",
               "lValueRequested": false,
+              "nameLocations": [],
               "names": [],
               "nodeType": "FunctionCall",
               "src": "662:62:1",
@@ -767,6 +782,9 @@
               "pathNode": {
                 "id": 1831,
                 "name": "Vm",
+                "nameLocations": [
+                  "1031:2:1"
+                ],
                 "nodeType": "IdentifierPath",
                 "referencedDeclaration": 9352,
                 "src": "1031:2:1"
@@ -817,6 +835,7 @@
               "isPure": true,
               "kind": "typeConversion",
               "lValueRequested": false,
+              "nameLocations": [],
               "names": [],
               "nodeType": "FunctionCall",
               "src": "1057:14:1",
@@ -850,6 +869,9 @@
               "pathNode": {
                 "id": 1837,
                 "name": "StdStorage",
+                "nameLocations": [
+                  "1077:10:1"
+                ],
                 "nodeType": "IdentifierPath",
                 "referencedDeclaration": 6088,
                 "src": "1077:10:1"
@@ -889,6 +911,9 @@
             "baseName": {
               "id": 1841,
               "name": "CommonBase",
+              "nameLocations": [
+                "1140:10:1"
+              ],
               "nodeType": "IdentifierPath",
               "referencedDeclaration": 1840,
               "src": "1140:10:1"
@@ -983,6 +1008,9 @@
               "pathNode": {
                 "id": 1849,
                 "name": "VmSafe",
+                "nameLocations": [
+                  "1398:6:1"
+                ],
                 "nodeType": "IdentifierPath",
                 "referencedDeclaration": 9027,
                 "src": "1398:6:1"
@@ -1033,6 +1061,7 @@
               "isPure": true,
               "kind": "typeConversion",
               "lValueRequested": false,
+              "nameLocations": [],
               "names": [],
               "nodeType": "FunctionCall",
               "src": "1432:18:1",
@@ -1051,6 +1080,9 @@
             "baseName": {
               "id": 1844,
               "name": "CommonBase",
+              "nameLocations": [
+                "1187:10:1"
+              ],
               "nodeType": "IdentifierPath",
               "referencedDeclaration": 1840,
               "src": "1187:10:1"

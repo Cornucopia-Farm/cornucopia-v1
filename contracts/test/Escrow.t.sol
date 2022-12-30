@@ -1,18 +1,18 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.13;
+pragma solidity 0.8.17;
 
 import "forge-std/Test.sol";
-import "../Escrow.sol";
-import "../../lib/protocol/packages/core/contracts/oracle/test/MockOracleAncillary.sol";
-import "../../lib/protocol/packages/core/contracts/oracle/implementation/previous-versions/SkinnyOptimisticOracle.sol";
-import "../../lib/protocol/packages/core/contracts/oracle/interfaces/SkinnyOptimisticOracleInterface.sol";
-import "../../lib/protocol/packages/core/contracts/oracle/implementation/store.sol";
-import "../../lib/protocol/packages/core/contracts/oracle/implementation/Finder.sol";
-import "../../lib/protocol/packages/core/contracts/oracle/implementation/IdentifierWhitelist.sol";
-import "../../lib/protocol/packages/core/contracts/common/implementation/Timer.sol";
-import "../../lib/protocol/packages/core/contracts/common/implementation/AddressWhitelist.sol";
-import "../../lib/protocol/packages/core/contracts/common/implementation/FixedPoint.sol";
-import "../../lib/protocol/packages/core/contracts/common/implementation/ExpandedERC20.sol";
+import "../src/Escrow.sol";
+import "../lib/protocol/packages/core/contracts/data-verification-mechanism/test/MockOracleAncillary.sol";
+import "../lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol";
+import "../lib/protocol/packages/core/contracts/optimistic-oracle/interfaces/SkinnyOptimisticOracleInterface.sol";
+import "../lib/protocol/packages/core/contracts/data-verification-mechanism/implementation/store.sol";
+import "../lib/protocol/packages/core/contracts/data-verification-mechanism/implementation/Finder.sol";
+import "../lib/protocol/packages/core/contracts/data-verification-mechanism/implementation/IdentifierWhitelist.sol";
+import "../lib/protocol/packages/core/contracts/common/implementation/Timer.sol";
+import "../lib/protocol/packages/core/contracts/common/implementation/AddressWhitelist.sol";
+import "../lib/protocol/packages/core/contracts/common/implementation/FixedPoint.sol";
+import "../lib/protocol/packages/core/contracts/common/implementation/ExpandedERC20.sol";
 
 contract EscrowTest is Test {
     Escrow public escrowContract;

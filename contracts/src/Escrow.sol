@@ -1,15 +1,13 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.13;
+pragma solidity 0.8.17;
 
-// Add contract tests in Foundry
-// Integrate with UMA for dispute arbitration
 // Add nice @dev, etc. comments for contract to make it extra clear
-import "uma-interface/SkinnyOptimisticOracleInterface.sol";
-import "uma-implementation/previous-versions/SkinnyOptimisticOracle.sol";
-import "uma-implementation/Constants.sol";
-import "uma-interface/OptimisticOracleInterface.sol";
-import "uma-interface/StoreInterface.sol";
-import "uma-interface/FinderInterface.sol";
+import "uma-oracle-interface/SkinnyOptimisticOracleInterface.sol";
+import "uma-oracle-implementation/previous-versions/SkinnyOptimisticOracle.sol";
+import "uma-dvm-implementation/Constants.sol";
+import "uma-oracle-interface/OptimisticOracleInterface.sol";
+import "uma-dvm-interface/StoreInterface.sol";
+import "uma-dvm-interface/FinderInterface.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 

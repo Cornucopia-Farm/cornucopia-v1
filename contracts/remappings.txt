@@ -1,6 +1,8 @@
 @openzeppelin/=lib/openzeppelin-contracts/
 @openzeppelin-upgradeable/=lib/openzeppelin-contracts--upgradeable/
-uma-interface/=lib/protocol/packages/core/contracts/oracle/interfaces/
-uma-implementation/=lib/protocol/packages/core/contracts/oracle/implementation/
+uma-oracle-interface/=lib/protocol/packages/core/contracts/optimistic-oracle/interfaces/
+uma-oracle-implementation/=lib/protocol/packages/core/contracts/optimistic-oracle/
+uma-dvm-implementation/=lib/protocol/packages/core/contracts/data-verification-mechanism/implementation/
+uma-dvm-interface/=lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/
 ds-test/=lib/forge-std/lib/ds-test/src/
 forge-std/=lib/forge-std/src/
