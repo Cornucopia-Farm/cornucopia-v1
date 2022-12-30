@@ -13,3 +13,8 @@
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable
 [submodule "lib/openzeppelin-contracts-upgradeable"]
 	branch = v4.8.0
+[submodule "contracts/lib/protocol"]
+	path = contracts/lib/protocol
+	url = https://github.com/UMAprotocol/protocol
+[submodule "lib/protocol"]
+	branch = v1.2.1
