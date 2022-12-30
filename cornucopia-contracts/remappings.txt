@@ -1,5 +1,0 @@
-@openzeppelin/=lib/openzeppelin-contracts/
-uma-interface/=lib/protocol/packages/core/contracts/oracle/interfaces/
-uma-implementation/=lib/protocol/packages/core/contracts/oracle/implementation/
-ds-test/=lib/forge-std/lib/ds-test/src/
-forge-std/=lib/forge-std/src/

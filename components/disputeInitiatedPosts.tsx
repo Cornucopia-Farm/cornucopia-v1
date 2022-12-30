@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ethers } from 'ethers';
 import NestedAccordian from './nestedAccordion';
 import Application from './application';
-import escrowABI from '../cornucopia-contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
+import escrowABI from '../contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
 import { useAccount, useContract, useSigner, useNetwork, useProvider } from 'wagmi';
 import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
