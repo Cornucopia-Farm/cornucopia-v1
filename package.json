@@ -47,6 +47,7 @@
     "winston": "^3.8.1"
   },
   "devDependencies": {
+    "@nomicfoundation/hardhat-foundry": "^1.0.0-dev.0",
     "@nomiclabs/hardhat-ethers": "^2.2.1",
     "@openzeppelin/hardhat-upgrades": "^1.22.0",
     "@types/chai": "^4.2.22",

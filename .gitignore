@@ -40,9 +40,12 @@ arweave-key-UxP5TeAmfwJXIbZY9rJE1uw4z1FHs-QuV-UlfC28cOI.json
 
 node_modules
 .env
+contracts/.env
 coverage
 coverage.json
 typechain
+contracts/typechain
+contracts/node_modules
 
 #Hardhat files
 cache

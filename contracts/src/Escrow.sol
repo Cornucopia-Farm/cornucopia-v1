@@ -13,6 +13,7 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin-upgradeable/contracts/proxy/utils/Initializable.sol";
 import "@openzeppelin-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin-upgradeable/contracts/access/OwnableUpgradeable.sol";
+
 contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 
     using SafeERC20 for IERC20;
@@ -41,7 +42,7 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     event FundsWithdrawnToCreator(address indexed creator, address indexed hunter, string indexed bountyAppId, string message);
     event FundsForceSentToHunter(address indexed creator, address indexed hunter, string indexed bountyAppId, string message);
 
-    // @custom:oz-upgrades-unsafe-allow constructor
+    /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
         _disableInitializers();
     }

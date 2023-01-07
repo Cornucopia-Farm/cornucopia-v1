@@ -97,7 +97,7 @@
     "hasPrice(bytes32,uint256,bytes)": "b551cd50",
     "requestPrice(bytes32,uint256,bytes)": "216666a4"
   },
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"time\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"}],\"name\":\"getPrice\",\"outputs\":[{\"internalType\":\"int256\",\"name\":\"\",\"type\":\"int256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"time\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"}],\"name\":\"hasPrice\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"time\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"}],\"name\":\"requestPrice\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Interface used by financial contracts to interact with the Oracle. Voters will use a different interface.\",\"kind\":\"dev\",\"methods\":{\"getPrice(bytes32,uint256,bytes)\":{\"details\":\"If the price is not available, the method reverts.\",\"params\":{\"ancillaryData\":\"arbitrary data appended to a price request to give the voters more info from the caller.\",\"identifier\":\"uniquely identifies the price requested. eg BTC/USD (encoded as bytes32) could be requested.\",\"time\":\"unix timestamp for the price request.\"},\"returns\":{\"_0\":\"int256 representing the resolved price for the given identifier and timestamp.\"}},\"hasPrice(bytes32,uint256,bytes)\":{\"details\":\"Time must be in the past and the identifier must be supported.\",\"params\":{\"ancillaryData\":\"arbitrary data appended to a price request to give the voters more info from the caller.\",\"identifier\":\"uniquely identifies the price requested. eg BTC/USD (encoded as bytes32) could be requested.\",\"time\":\"unix timestamp for the price request.\"},\"returns\":{\"_0\":\"bool if the DVM has resolved to a price for the given identifier and timestamp.\"}},\"requestPrice(bytes32,uint256,bytes)\":{\"details\":\"Time must be in the past and the identifier must be supported.\",\"params\":{\"ancillaryData\":\"arbitrary data appended to a price request to give the voters more info from the caller.\",\"identifier\":\"uniquely identifies the price requested. eg BTC/USD (encoded as bytes32) could be requested.\",\"time\":\"unix timestamp for the price request.\"}}},\"title\":\"Financial contract facing Oracle interface.\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"getPrice(bytes32,uint256,bytes)\":{\"notice\":\"Gets the price for `identifier` and `time` if it has already been requested and resolved.\"},\"hasPrice(bytes32,uint256,bytes)\":{\"notice\":\"Whether the price for `identifier` and `time` is available.\"},\"requestPrice(bytes32,uint256,bytes)\":{\"notice\":\"Enqueues a request (if a request isn't already present) for the given `identifier`, `time` pair.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/OracleAncillaryInterface.sol\":\"OracleAncillaryInterface\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin-upgradeable/=lib/openzeppelin-contracts--upgradeable/\",\":@openzeppelin/=lib/openzeppelin-contracts/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":protocol/=lib/protocol/\",\":uma-dvm-implementation/=lib/protocol/packages/core/contracts/data-verification-mechanism/implementation/\",\":uma-dvm-interface/=lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/\",\":uma-oracle-implementation/=lib/protocol/packages/core/contracts/optimistic-oracle/\",\":uma-oracle-interface/=lib/protocol/packages/core/contracts/optimistic-oracle/interfaces/\"]},\"sources\":{\"lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/OracleAncillaryInterface.sol\":{\"keccak256\":\"0xd58b41fe1e389f7871db7c04f2c05c1aac1d0455bbc521534da81fd657016a1f\",\"license\":\"AGPL-3.0-only\",\"urls\":[\"bzz-raw://cc532e9c550bb1bba0daa33fda748590cd06ce94a9566fe65dac04e7d40977bc\",\"dweb:/ipfs/QmZKvfRW2LJFt5MWZbKuU9ujkXnS2hkPUJVj8wwJWcuZGX\"]}},\"version\":1}",
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"time\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"}],\"name\":\"getPrice\",\"outputs\":[{\"internalType\":\"int256\",\"name\":\"\",\"type\":\"int256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"time\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"}],\"name\":\"hasPrice\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"identifier\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"time\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"ancillaryData\",\"type\":\"bytes\"}],\"name\":\"requestPrice\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Interface used by financial contracts to interact with the Oracle. Voters will use a different interface.\",\"kind\":\"dev\",\"methods\":{\"getPrice(bytes32,uint256,bytes)\":{\"details\":\"If the price is not available, the method reverts.\",\"params\":{\"ancillaryData\":\"arbitrary data appended to a price request to give the voters more info from the caller.\",\"identifier\":\"uniquely identifies the price requested. eg BTC/USD (encoded as bytes32) could be requested.\",\"time\":\"unix timestamp for the price request.\"},\"returns\":{\"_0\":\"int256 representing the resolved price for the given identifier and timestamp.\"}},\"hasPrice(bytes32,uint256,bytes)\":{\"details\":\"Time must be in the past and the identifier must be supported.\",\"params\":{\"ancillaryData\":\"arbitrary data appended to a price request to give the voters more info from the caller.\",\"identifier\":\"uniquely identifies the price requested. eg BTC/USD (encoded as bytes32) could be requested.\",\"time\":\"unix timestamp for the price request.\"},\"returns\":{\"_0\":\"bool if the DVM has resolved to a price for the given identifier and timestamp.\"}},\"requestPrice(bytes32,uint256,bytes)\":{\"details\":\"Time must be in the past and the identifier must be supported.\",\"params\":{\"ancillaryData\":\"arbitrary data appended to a price request to give the voters more info from the caller.\",\"identifier\":\"uniquely identifies the price requested. eg BTC/USD (encoded as bytes32) could be requested.\",\"time\":\"unix timestamp for the price request.\"}}},\"title\":\"Financial contract facing Oracle interface.\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"getPrice(bytes32,uint256,bytes)\":{\"notice\":\"Gets the price for `identifier` and `time` if it has already been requested and resolved.\"},\"hasPrice(bytes32,uint256,bytes)\":{\"notice\":\"Whether the price for `identifier` and `time` is available.\"},\"requestPrice(bytes32,uint256,bytes)\":{\"notice\":\"Enqueues a request (if a request isn't already present) for the given `identifier`, `time` pair.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/OracleAncillaryInterface.sol\":\"OracleAncillaryInterface\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin-upgradeable/=lib/openzeppelin-contracts-upgradeable/\",\":@openzeppelin/=lib/openzeppelin-contracts/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":protocol/=lib/protocol/\",\":uma-dvm-implementation/=lib/protocol/packages/core/contracts/data-verification-mechanism/implementation/\",\":uma-dvm-interface/=lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/\",\":uma-oracle-implementation/=lib/protocol/packages/core/contracts/optimistic-oracle/\",\":uma-oracle-interface/=lib/protocol/packages/core/contracts/optimistic-oracle/interfaces/\"]},\"sources\":{\"lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/OracleAncillaryInterface.sol\":{\"keccak256\":\"0xd58b41fe1e389f7871db7c04f2c05c1aac1d0455bbc521534da81fd657016a1f\",\"license\":\"AGPL-3.0-only\",\"urls\":[\"bzz-raw://cc532e9c550bb1bba0daa33fda748590cd06ce94a9566fe65dac04e7d40977bc\",\"dweb:/ipfs/QmZKvfRW2LJFt5MWZbKuU9ujkXnS2hkPUJVj8wwJWcuZGX\"]}},\"version\":1}",
   "metadata": {
     "compiler": {
       "version": "0.8.17+commit.8df45f5f"
@@ -240,7 +240,7 @@
     },
     "settings": {
       "remappings": [
-        ":@openzeppelin-upgradeable/=lib/openzeppelin-contracts--upgradeable/",
+        ":@openzeppelin-upgradeable/=lib/openzeppelin-contracts-upgradeable/",
         ":@openzeppelin/=lib/openzeppelin-contracts/",
         ":ds-test/=lib/forge-std/lib/ds-test/src/",
         ":forge-std/=lib/forge-std/src/",
@@ -276,19 +276,19 @@
   },
   "ast": {
     "absolutePath": "lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/OracleAncillaryInterface.sol",
-    "id": 31459,
+    "id": 32671,
     "exportedSymbols": {
       "OracleAncillaryInterface": [
-        31458
+        32670
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "42:2306:43",
+    "src": "42:2306:52",
     "nodes": [
       {
-        "id": 31422,
+        "id": 32634,
         "nodeType": "PragmaDirective",
-        "src": "42:23:43",
+        "src": "42:23:52",
         "nodes": [],
         "literals": [
           "solidity",
@@ -298,19 +298,19 @@
         ]
       },
       {
-        "id": 31458,
+        "id": 32670,
         "nodeType": "ContractDefinition",
-        "src": "243:2104:43",
+        "src": "243:2104:52",
         "nodes": [
           {
-            "id": 31433,
+            "id": 32645,
             "nodeType": "FunctionDefinition",
-            "src": "788:129:43",
+            "src": "788:129:52",
             "nodes": [],
             "documentation": {
-              "id": 31424,
+              "id": 32636,
               "nodeType": "StructuredDocumentation",
-              "src": "292:490:43",
+              "src": "292:490:52",
               "text": " @notice Enqueues a request (if a request isn't already present) for the given `identifier`, `time` pair.\n @dev Time must be in the past and the identifier must be supported.\n @param identifier uniquely identifies the price requested. eg BTC/USD (encoded as bytes32) could be requested.\n @param ancillaryData arbitrary data appended to a price request to give the voters more info from the caller.\n @param time unix timestamp for the price request."
             },
             "functionSelector": "216666a4",
@@ -318,20 +318,20 @@
             "kind": "function",
             "modifiers": [],
             "name": "requestPrice",
-            "nameLocation": "797:12:43",
+            "nameLocation": "797:12:52",
             "parameters": {
-              "id": 31431,
+              "id": 32643,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 31426,
+                  "id": 32638,
                   "mutability": "mutable",
                   "name": "identifier",
-                  "nameLocation": "827:10:43",
+                  "nameLocation": "827:10:52",
                   "nodeType": "VariableDeclaration",
-                  "scope": 31433,
-                  "src": "819:18:43",
+                  "scope": 32645,
+                  "src": "819:18:52",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -339,10 +339,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 31425,
+                    "id": 32637,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "819:7:43",
+                    "src": "819:7:52",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -352,13 +352,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 31428,
+                  "id": 32640,
                   "mutability": "mutable",
                   "name": "time",
-                  "nameLocation": "855:4:43",
+                  "nameLocation": "855:4:52",
                   "nodeType": "VariableDeclaration",
-                  "scope": 31433,
-                  "src": "847:12:43",
+                  "scope": 32645,
+                  "src": "847:12:52",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -366,10 +366,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 31427,
+                    "id": 32639,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "847:7:43",
+                    "src": "847:7:52",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -379,13 +379,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 31430,
+                  "id": 32642,
                   "mutability": "mutable",
                   "name": "ancillaryData",
-                  "nameLocation": "882:13:43",
+                  "nameLocation": "882:13:52",
                   "nodeType": "VariableDeclaration",
-                  "scope": 31433,
-                  "src": "869:26:43",
+                  "scope": 32645,
+                  "src": "869:26:52",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -393,10 +393,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 31429,
+                    "id": 32641,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "869:5:43",
+                    "src": "869:5:52",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -405,28 +405,28 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "809:92:43"
+              "src": "809:92:52"
             },
             "returnParameters": {
-              "id": 31432,
+              "id": 32644,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "916:0:43"
+              "src": "916:0:52"
             },
-            "scope": 31458,
+            "scope": 32670,
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "public"
           },
           {
-            "id": 31445,
+            "id": 32657,
             "nodeType": "FunctionDefinition",
-            "src": "1476:145:43",
+            "src": "1476:145:52",
             "nodes": [],
             "documentation": {
-              "id": 31434,
+              "id": 32646,
               "nodeType": "StructuredDocumentation",
-              "src": "923:548:43",
+              "src": "923:548:52",
               "text": " @notice Whether the price for `identifier` and `time` is available.\n @dev Time must be in the past and the identifier must be supported.\n @param identifier uniquely identifies the price requested. eg BTC/USD (encoded as bytes32) could be requested.\n @param time unix timestamp for the price request.\n @param ancillaryData arbitrary data appended to a price request to give the voters more info from the caller.\n @return bool if the DVM has resolved to a price for the given identifier and timestamp."
             },
             "functionSelector": "b551cd50",
@@ -434,20 +434,20 @@
             "kind": "function",
             "modifiers": [],
             "name": "hasPrice",
-            "nameLocation": "1485:8:43",
+            "nameLocation": "1485:8:52",
             "parameters": {
-              "id": 31441,
+              "id": 32653,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 31436,
+                  "id": 32648,
                   "mutability": "mutable",
                   "name": "identifier",
-                  "nameLocation": "1511:10:43",
+                  "nameLocation": "1511:10:52",
                   "nodeType": "VariableDeclaration",
-                  "scope": 31445,
-                  "src": "1503:18:43",
+                  "scope": 32657,
+                  "src": "1503:18:52",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -455,10 +455,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 31435,
+                    "id": 32647,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1503:7:43",
+                    "src": "1503:7:52",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -468,13 +468,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 31438,
+                  "id": 32650,
                   "mutability": "mutable",
                   "name": "time",
-                  "nameLocation": "1539:4:43",
+                  "nameLocation": "1539:4:52",
                   "nodeType": "VariableDeclaration",
-                  "scope": 31445,
-                  "src": "1531:12:43",
+                  "scope": 32657,
+                  "src": "1531:12:52",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -482,10 +482,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 31437,
+                    "id": 32649,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1531:7:43",
+                    "src": "1531:7:52",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -495,13 +495,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 31440,
+                  "id": 32652,
                   "mutability": "mutable",
                   "name": "ancillaryData",
-                  "nameLocation": "1566:13:43",
+                  "nameLocation": "1566:13:52",
                   "nodeType": "VariableDeclaration",
-                  "scope": 31445,
-                  "src": "1553:26:43",
+                  "scope": 32657,
+                  "src": "1553:26:52",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -509,10 +509,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 31439,
+                    "id": 32651,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1553:5:43",
+                    "src": "1553:5:52",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -521,21 +521,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1493:92:43"
+              "src": "1493:92:52"
             },
             "returnParameters": {
-              "id": 31444,
+              "id": 32656,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 31443,
+                  "id": 32655,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 31445,
-                  "src": "1615:4:43",
+                  "scope": 32657,
+                  "src": "1615:4:52",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -543,10 +543,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 31442,
+                    "id": 32654,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1615:4:43",
+                    "src": "1615:4:52",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -555,22 +555,22 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1614:6:43"
+              "src": "1614:6:52"
             },
-            "scope": 31458,
+            "scope": 32670,
             "stateMutability": "view",
             "virtual": true,
             "visibility": "public"
           },
           {
-            "id": 31457,
+            "id": 32669,
             "nodeType": "FunctionDefinition",
-            "src": "2198:147:43",
+            "src": "2198:147:52",
             "nodes": [],
             "documentation": {
-              "id": 31446,
+              "id": 32658,
               "nodeType": "StructuredDocumentation",
-              "src": "1627:565:43",
+              "src": "1627:565:52",
               "text": " @notice Gets the price for `identifier` and `time` if it has already been requested and resolved.\n @dev If the price is not available, the method reverts.\n @param identifier uniquely identifies the price requested. eg BTC/USD (encoded as bytes32) could be requested.\n @param time unix timestamp for the price request.\n @param ancillaryData arbitrary data appended to a price request to give the voters more info from the caller.\n @return int256 representing the resolved price for the given identifier and timestamp."
             },
             "functionSelector": "719c6d56",
@@ -578,20 +578,20 @@
             "kind": "function",
             "modifiers": [],
             "name": "getPrice",
-            "nameLocation": "2207:8:43",
+            "nameLocation": "2207:8:52",
             "parameters": {
-              "id": 31453,
+              "id": 32665,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 31448,
+                  "id": 32660,
                   "mutability": "mutable",
                   "name": "identifier",
-                  "nameLocation": "2233:10:43",
+                  "nameLocation": "2233:10:52",
                   "nodeType": "VariableDeclaration",
-                  "scope": 31457,
-                  "src": "2225:18:43",
+                  "scope": 32669,
+                  "src": "2225:18:52",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -599,10 +599,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 31447,
+                    "id": 32659,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2225:7:43",
+                    "src": "2225:7:52",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -612,13 +612,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 31450,
+                  "id": 32662,
                   "mutability": "mutable",
                   "name": "time",
-                  "nameLocation": "2261:4:43",
+                  "nameLocation": "2261:4:52",
                   "nodeType": "VariableDeclaration",
-                  "scope": 31457,
-                  "src": "2253:12:43",
+                  "scope": 32669,
+                  "src": "2253:12:52",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -626,10 +626,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 31449,
+                    "id": 32661,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2253:7:43",
+                    "src": "2253:7:52",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -639,13 +639,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 31452,
+                  "id": 32664,
                   "mutability": "mutable",
                   "name": "ancillaryData",
-                  "nameLocation": "2288:13:43",
+                  "nameLocation": "2288:13:52",
                   "nodeType": "VariableDeclaration",
-                  "scope": 31457,
-                  "src": "2275:26:43",
+                  "scope": 32669,
+                  "src": "2275:26:52",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -653,10 +653,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 31451,
+                    "id": 32663,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2275:5:43",
+                    "src": "2275:5:52",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -665,21 +665,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2215:92:43"
+              "src": "2215:92:52"
             },
             "returnParameters": {
-              "id": 31456,
+              "id": 32668,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 31455,
+                  "id": 32667,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 31457,
-                  "src": "2337:6:43",
+                  "scope": 32669,
+                  "src": "2337:6:52",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -687,10 +687,10 @@
                     "typeString": "int256"
                   },
                   "typeName": {
-                    "id": 31454,
+                    "id": 32666,
                     "name": "int256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2337:6:43",
+                    "src": "2337:6:52",
                     "typeDescriptions": {
                       "typeIdentifier": "t_int256",
                       "typeString": "int256"
@@ -699,9 +699,9 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2336:8:43"
+              "src": "2336:8:52"
             },
-            "scope": 31458,
+            "scope": 32670,
             "stateMutability": "view",
             "virtual": true,
             "visibility": "public"
@@ -713,22 +713,22 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "documentation": {
-          "id": 31423,
+          "id": 32635,
           "nodeType": "StructuredDocumentation",
-          "src": "67:175:43",
+          "src": "67:175:52",
           "text": " @title Financial contract facing Oracle interface.\n @dev Interface used by financial contracts to interact with the Oracle. Voters will use a different interface."
         },
         "fullyImplemented": false,
         "linearizedBaseContracts": [
-          31458
+          32670
         ],
         "name": "OracleAncillaryInterface",
-        "nameLocation": "261:24:43",
-        "scope": 31459,
+        "nameLocation": "261:24:52",
+        "scope": 32671,
         "usedErrors": []
       }
     ],
     "license": "AGPL-3.0-only"
   },
-  "id": 43
+  "id": 52
 }

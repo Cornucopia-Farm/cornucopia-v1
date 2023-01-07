@@ -75,7 +75,7 @@
     "isOnWhitelist(address)": "3a3ab672",
     "removeFromWhitelist(address)": "8ab1d681"
   },
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newElement\",\"type\":\"address\"}],\"name\":\"addToWhitelist\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getWhitelist\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newElement\",\"type\":\"address\"}],\"name\":\"isOnWhitelist\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newElement\",\"type\":\"address\"}],\"name\":\"removeFromWhitelist\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"lib/protocol/packages/core/contracts/common/interfaces/AddressWhitelistInterface.sol\":\"AddressWhitelistInterface\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin-upgradeable/=lib/openzeppelin-contracts--upgradeable/\",\":@openzeppelin/=lib/openzeppelin-contracts/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":protocol/=lib/protocol/\",\":uma-dvm-implementation/=lib/protocol/packages/core/contracts/data-verification-mechanism/implementation/\",\":uma-dvm-interface/=lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/\",\":uma-oracle-implementation/=lib/protocol/packages/core/contracts/optimistic-oracle/\",\":uma-oracle-interface/=lib/protocol/packages/core/contracts/optimistic-oracle/interfaces/\"]},\"sources\":{\"lib/protocol/packages/core/contracts/common/interfaces/AddressWhitelistInterface.sol\":{\"keccak256\":\"0x22fb8588dff1d5cff76a28111d6c9b190765d99facd93c8ff3b54771f245c0d8\",\"license\":\"AGPL-3.0-only\",\"urls\":[\"bzz-raw://5ecd993f00de290a3c7bf21da23a9439cf2ccb22028316df92b79780ac8aa533\",\"dweb:/ipfs/QmTZ7x7U4EEzTacqapzSdFs2np5WNsqm4XeUBqzQxxDJei\"]}},\"version\":1}",
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newElement\",\"type\":\"address\"}],\"name\":\"addToWhitelist\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getWhitelist\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newElement\",\"type\":\"address\"}],\"name\":\"isOnWhitelist\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newElement\",\"type\":\"address\"}],\"name\":\"removeFromWhitelist\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"lib/protocol/packages/core/contracts/common/interfaces/AddressWhitelistInterface.sol\":\"AddressWhitelistInterface\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin-upgradeable/=lib/openzeppelin-contracts-upgradeable/\",\":@openzeppelin/=lib/openzeppelin-contracts/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":protocol/=lib/protocol/\",\":uma-dvm-implementation/=lib/protocol/packages/core/contracts/data-verification-mechanism/implementation/\",\":uma-dvm-interface/=lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/\",\":uma-oracle-implementation/=lib/protocol/packages/core/contracts/optimistic-oracle/\",\":uma-oracle-interface/=lib/protocol/packages/core/contracts/optimistic-oracle/interfaces/\"]},\"sources\":{\"lib/protocol/packages/core/contracts/common/interfaces/AddressWhitelistInterface.sol\":{\"keccak256\":\"0x22fb8588dff1d5cff76a28111d6c9b190765d99facd93c8ff3b54771f245c0d8\",\"license\":\"AGPL-3.0-only\",\"urls\":[\"bzz-raw://5ecd993f00de290a3c7bf21da23a9439cf2ccb22028316df92b79780ac8aa533\",\"dweb:/ipfs/QmTZ7x7U4EEzTacqapzSdFs2np5WNsqm4XeUBqzQxxDJei\"]}},\"version\":1}",
   "metadata": {
     "compiler": {
       "version": "0.8.17+commit.8df45f5f"
@@ -153,7 +153,7 @@
     },
     "settings": {
       "remappings": [
-        ":@openzeppelin-upgradeable/=lib/openzeppelin-contracts--upgradeable/",
+        ":@openzeppelin-upgradeable/=lib/openzeppelin-contracts-upgradeable/",
         ":@openzeppelin/=lib/openzeppelin-contracts/",
         ":ds-test/=lib/forge-std/lib/ds-test/src/",
         ":forge-std/=lib/forge-std/src/",
@@ -189,19 +189,19 @@
   },
   "ast": {
     "absolutePath": "lib/protocol/packages/core/contracts/common/interfaces/AddressWhitelistInterface.sol",
-    "id": 30778,
+    "id": 31990,
     "exportedSymbols": {
       "AddressWhitelistInterface": [
-        30777
+        31989
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "42:336:34",
+    "src": "42:336:43",
     "nodes": [
       {
-        "id": 30753,
+        "id": 31965,
         "nodeType": "PragmaDirective",
-        "src": "42:23:34",
+        "src": "42:23:43",
         "nodes": [],
         "literals": [
           "solidity",
@@ -211,34 +211,34 @@
         ]
       },
       {
-        "id": 30777,
+        "id": 31989,
         "nodeType": "ContractDefinition",
-        "src": "67:310:34",
+        "src": "67:310:43",
         "nodes": [
           {
-            "id": 30758,
+            "id": 31970,
             "nodeType": "FunctionDefinition",
-            "src": "109:53:34",
+            "src": "109:53:43",
             "nodes": [],
             "functionSelector": "e43252d7",
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "addToWhitelist",
-            "nameLocation": "118:14:34",
+            "nameLocation": "118:14:43",
             "parameters": {
-              "id": 30756,
+              "id": 31968,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 30755,
+                  "id": 31967,
                   "mutability": "mutable",
                   "name": "newElement",
-                  "nameLocation": "141:10:34",
+                  "nameLocation": "141:10:43",
                   "nodeType": "VariableDeclaration",
-                  "scope": 30758,
-                  "src": "133:18:34",
+                  "scope": 31970,
+                  "src": "133:18:43",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -246,10 +246,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 30754,
+                    "id": 31966,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "133:7:34",
+                    "src": "133:7:43",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -259,43 +259,43 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "132:20:34"
+              "src": "132:20:43"
             },
             "returnParameters": {
-              "id": 30757,
+              "id": 31969,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "161:0:34"
+              "src": "161:0:43"
             },
-            "scope": 30777,
+            "scope": 31989,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 30763,
+            "id": 31975,
             "nodeType": "FunctionDefinition",
-            "src": "168:58:34",
+            "src": "168:58:43",
             "nodes": [],
             "functionSelector": "8ab1d681",
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "removeFromWhitelist",
-            "nameLocation": "177:19:34",
+            "nameLocation": "177:19:43",
             "parameters": {
-              "id": 30761,
+              "id": 31973,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 30760,
+                  "id": 31972,
                   "mutability": "mutable",
                   "name": "newElement",
-                  "nameLocation": "205:10:34",
+                  "nameLocation": "205:10:43",
                   "nodeType": "VariableDeclaration",
-                  "scope": 30763,
-                  "src": "197:18:34",
+                  "scope": 31975,
+                  "src": "197:18:43",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -303,10 +303,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 30759,
+                    "id": 31971,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "197:7:34",
+                    "src": "197:7:43",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -316,43 +316,43 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "196:20:34"
+              "src": "196:20:43"
             },
             "returnParameters": {
-              "id": 30762,
+              "id": 31974,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "225:0:34"
+              "src": "225:0:43"
             },
-            "scope": 30777,
+            "scope": 31989,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 30770,
+            "id": 31982,
             "nodeType": "FunctionDefinition",
-            "src": "232:72:34",
+            "src": "232:72:43",
             "nodes": [],
             "functionSelector": "3a3ab672",
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "isOnWhitelist",
-            "nameLocation": "241:13:34",
+            "nameLocation": "241:13:43",
             "parameters": {
-              "id": 30766,
+              "id": 31978,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 30765,
+                  "id": 31977,
                   "mutability": "mutable",
                   "name": "newElement",
-                  "nameLocation": "263:10:34",
+                  "nameLocation": "263:10:43",
                   "nodeType": "VariableDeclaration",
-                  "scope": 30770,
-                  "src": "255:18:34",
+                  "scope": 31982,
+                  "src": "255:18:43",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -360,10 +360,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 30764,
+                    "id": 31976,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "255:7:34",
+                    "src": "255:7:43",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -373,21 +373,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "254:20:34"
+              "src": "254:20:43"
             },
             "returnParameters": {
-              "id": 30769,
+              "id": 31981,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 30768,
+                  "id": 31980,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 30770,
-                  "src": "298:4:34",
+                  "scope": 31982,
+                  "src": "298:4:43",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -395,10 +395,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 30767,
+                    "id": 31979,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "298:4:34",
+                    "src": "298:4:43",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -407,43 +407,43 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "297:6:34"
+              "src": "297:6:43"
             },
-            "scope": 30777,
+            "scope": 31989,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 30776,
+            "id": 31988,
             "nodeType": "FunctionDefinition",
-            "src": "310:65:34",
+            "src": "310:65:43",
             "nodes": [],
             "functionSelector": "d01f63f5",
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getWhitelist",
-            "nameLocation": "319:12:34",
+            "nameLocation": "319:12:43",
             "parameters": {
-              "id": 30771,
+              "id": 31983,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "331:2:34"
+              "src": "331:2:43"
             },
             "returnParameters": {
-              "id": 30775,
+              "id": 31987,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 30774,
+                  "id": 31986,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 30776,
-                  "src": "357:16:34",
+                  "scope": 31988,
+                  "src": "357:16:43",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -452,19 +452,19 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 30772,
+                      "id": 31984,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
-                      "src": "357:7:34",
+                      "src": "357:7:43",
                       "stateMutability": "nonpayable",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
                       }
                     },
-                    "id": 30773,
+                    "id": 31985,
                     "nodeType": "ArrayTypeName",
-                    "src": "357:9:34",
+                    "src": "357:9:43",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
                       "typeString": "address[]"
@@ -473,9 +473,9 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "356:18:34"
+              "src": "356:18:43"
             },
-            "scope": 30777,
+            "scope": 31989,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
@@ -488,15 +488,15 @@
         "contractKind": "interface",
         "fullyImplemented": false,
         "linearizedBaseContracts": [
-          30777
+          31989
         ],
         "name": "AddressWhitelistInterface",
-        "nameLocation": "77:25:34",
-        "scope": 30778,
+        "nameLocation": "77:25:43",
+        "scope": 31990,
         "usedErrors": []
       }
     ],
     "license": "AGPL-3.0-only"
   },
-  "id": 34
+  "id": 43
 }

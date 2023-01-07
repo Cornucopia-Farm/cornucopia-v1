@@ -1497,6 +1497,13 @@
     mcl-wasm "^0.7.1"
     rustbn.js "~0.2.0"
 
+"@nomicfoundation/hardhat-foundry@^1.0.0-dev.0":
+  version "1.0.0-dev.0"
+  resolved "https://registry.yarnpkg.com/@nomicfoundation/hardhat-foundry/-/hardhat-foundry-1.0.0-dev.0.tgz#80e58b4dd1f942ece10803acbb674939d8266eab"
+  integrity sha512-krRtbiTyrfHbLuKllPfBvP9BdicZ/tKtW9U8r/LZ19FUQy6aVXuEUshkufL8uUgbcC2eGQf4GtjjqZpUpSPyyw==
+  dependencies:
+    chalk "^2.4.2"
+
 "@nomicfoundation/solidity-analyzer-darwin-arm64@0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@nomicfoundation/solidity-analyzer-darwin-arm64/-/solidity-analyzer-darwin-arm64-0.1.0.tgz#83a7367342bd053a76d04bbcf4f373fef07cf760"
