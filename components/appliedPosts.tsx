@@ -139,6 +139,9 @@ const AppliedPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedMap,
         if (promises) {
             await Promise.all(promises).then(results => {
                 results.forEach(result => {
+                    // console.log('post data', result[3].data.title)
+                    // console.log('progress', result[0])
+                    // console.log('is escrowed', result[1])
                     if (result.length) {
                         if (result[0] === 0 && result[1].length === 0) {
                             appliedToBountiesApps.push(result[2]);

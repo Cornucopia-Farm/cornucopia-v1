@@ -35,7 +35,6 @@ const InProgressPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedM
     const { data: signer, isError, isLoading } = useSigner();
     const provider = useProvider();
     const { chain } = useNetwork();
-
     const escrowContract = useContract({...contractConfig, signerOrProvider: provider,});
 
     const [inProgressBountyPosts, setInProgressBountyPosts] = React.useState(Array<JSX.Element>);

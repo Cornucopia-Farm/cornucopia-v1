@@ -309,6 +309,1586 @@
       "lib/openzeppelin-contracts-upgradeable/contracts/utils/AddressUpgradeable.sol:AddressUpgradeable": {
         "src": "lib/openzeppelin-contracts-upgradeable/contracts/utils/AddressUpgradeable.sol:9",
         "version": {
+          "withMetadata": "d65e256e33a6d738e4d4a1ac28fe31d0a5666b00e7247cb66468cf73fda6e234",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/openzeppelin-contracts-upgradeable/contracts/utils/ContextUpgradeable.sol:ContextUpgradeable": {
+        "src": "lib/openzeppelin-contracts-upgradeable/contracts/utils/ContextUpgradeable.sol:17",
+        "inherit": [
+          "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:Initializable"
+        ],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:62",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:67"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_array(t_uint256)50_storage",
+              "contract": "ContextUpgradeable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/utils/ContextUpgradeable.sol:36"
+            }
+          ],
+          "types": {
+            "t_array(t_uint256)50_storage": {
+              "label": "uint256[50]",
+              "numberOfBytes": "1600"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/openzeppelin-contracts-upgradeable/contracts/utils/StorageSlotUpgradeable.sol:StorageSlotUpgradeable": {
+        "src": "lib/openzeppelin-contracts-upgradeable/contracts/utils/StorageSlotUpgradeable.sol:32",
+        "version": {
+          "withMetadata": "8c47729f697ae3015b0d69ad9827a882b8ec7a3fe0491b2a7f67dabee231d471",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/openzeppelin-contracts/contracts/access/Ownable.sol:Ownable": {
+        "src": "lib/openzeppelin-contracts/contracts/access/Ownable.sol:20",
+        "inherit": [
+          "lib/openzeppelin-contracts/contracts/utils/Context.sol:Context"
+        ],
+        "libraries": [],
+        "methods": [
+          "owner()",
+          "renounceOwnership()",
+          "transferOwnership(address)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "Ownable",
+            "src": "lib/openzeppelin-contracts/contracts/access/Ownable.sol:28"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "_owner",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_address",
+              "contract": "Ownable",
+              "src": "lib/openzeppelin-contracts/contracts/access/Ownable.sol:21"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol:IERC20": {
+        "src": "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol:9",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "totalSupply()",
+          "balanceOf(address)",
+          "transfer(address,uint256)",
+          "allowance(address,address)",
+          "approve(address,uint256)",
+          "transferFrom(address,address,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/draft-IERC20Permit.sol:IERC20Permit": {
+        "src": "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/draft-IERC20Permit.sol:14",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)",
+          "nonces(address)",
+          "DOMAIN_SEPARATOR()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol:SafeERC20": {
+        "src": "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol:19",
+        "version": {
+          "withMetadata": "54aaaf1a0fec7ce54cb86be756fb68747a7835527ab3b15def5fc3f9f86c55b6",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [
+          "lib/openzeppelin-contracts/contracts/utils/Address.sol:Address"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/openzeppelin-contracts/contracts/utils/Address.sol:Address": {
+        "src": "lib/openzeppelin-contracts/contracts/utils/Address.sol:9",
+        "version": {
+          "withMetadata": "7fbfe241808361e4008c586d87fe792879c3154d751b9d805c31b1a42593aaa7",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "delegatecall",
+            "src": "lib/openzeppelin-contracts/contracts/utils/Address.sol:185"
+          }
+        ],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/openzeppelin-contracts/contracts/utils/Context.sol:Context": {
+        "src": "lib/openzeppelin-contracts/contracts/utils/Context.sol:16",
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/openzeppelin-contracts/contracts/utils/math/SafeMath.sol:SafeMath": {
+        "src": "lib/openzeppelin-contracts/contracts/utils/math/SafeMath.sol:16",
+        "version": {
+          "withMetadata": "95b49f4475f8f3e402c7b2796308e8eda58f76d91931b8f72a6fd581ab44f5df",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/openzeppelin-contracts/contracts/utils/math/SignedSafeMath.sol:SignedSafeMath": {
+        "src": "lib/openzeppelin-contracts/contracts/utils/math/SignedSafeMath.sol:12",
+        "version": {
+          "withMetadata": "dd32c0aa9561bc3819b2cfb8eae197970201e22ed4fc22ab93a900a41d812d72",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/protocol/packages/core/contracts/common/implementation/AddressWhitelist.sol:AddressWhitelist": {
+        "src": "lib/protocol/packages/core/contracts/common/implementation/AddressWhitelist.sol:11",
+        "version": {
+          "withMetadata": "70abc05384eda86b852b5a7824890928675ca17ae0c61ec1f5ac4b980370013f",
+          "withoutMetadata": "2d059708e6b196182ffef6f95e9d6b76e8569698a37304f34960aad650c84c1a",
+          "linkedWithoutMetadata": "2d059708e6b196182ffef6f95e9d6b76e8569698a37304f34960aad650c84c1a"
+        },
+        "inherit": [
+          "lib/protocol/packages/core/contracts/common/implementation/Lockable.sol:Lockable",
+          "lib/openzeppelin-contracts/contracts/access/Ownable.sol:Ownable",
+          "lib/openzeppelin-contracts/contracts/utils/Context.sol:Context",
+          "lib/protocol/packages/core/contracts/common/interfaces/AddressWhitelistInterface.sol:AddressWhitelistInterface"
+        ],
+        "libraries": [],
+        "methods": [
+          "addToWhitelist(address)",
+          "removeFromWhitelist(address)",
+          "isOnWhitelist(address)",
+          "getWhitelist()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_owner",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_address",
+              "contract": "Ownable",
+              "src": "lib/openzeppelin-contracts/contracts/access/Ownable.sol:21"
+            },
+            {
+              "label": "_notEntered",
+              "offset": 20,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Lockable",
+              "src": "lib/protocol/packages/core/contracts/common/implementation/Lockable.sol:10"
+            },
+            {
+              "label": "whitelist",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_address,t_enum(Status)2463)",
+              "contract": "AddressWhitelist",
+              "src": "lib/protocol/packages/core/contracts/common/implementation/AddressWhitelist.sol:13"
+            },
+            {
+              "label": "whitelistIndices",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_array(t_address)dyn_storage",
+              "contract": "AddressWhitelist",
+              "src": "lib/protocol/packages/core/contracts/common/implementation/AddressWhitelist.sol:15"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_array(t_address)dyn_storage": {
+              "label": "address[]",
+              "numberOfBytes": "32"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_enum(Status)2463": {
+              "label": "enum AddressWhitelist.Status",
+              "members": [
+                "None",
+                "In",
+                "Out"
+              ],
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_address,t_enum(Status)2463)": {
+              "label": "mapping(address => enum AddressWhitelist.Status)",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/protocol/packages/core/contracts/common/implementation/AncillaryData.sol:AncillaryData": {
+        "src": "lib/protocol/packages/core/contracts/common/implementation/AncillaryData.sol:12",
+        "version": {
+          "withMetadata": "e90c897ba27c11f2b02b997035637abce77ee6c042f189b8e23c0c595de3700f",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/protocol/packages/core/contracts/common/implementation/FixedPoint.sol:FixedPoint": {
+        "src": "lib/protocol/packages/core/contracts/common/implementation/FixedPoint.sol:10",
+        "version": {
+          "withMetadata": "8a260d79a18130ad1b9a0ede35d1eeb03dae0c9821275f608cb62a71b2573cbb",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [
+          "lib/openzeppelin-contracts/contracts/utils/math/SafeMath.sol:SafeMath",
+          "lib/openzeppelin-contracts/contracts/utils/math/SignedSafeMath.sol:SignedSafeMath"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/protocol/packages/core/contracts/common/implementation/Lockable.sol:Lockable": {
+        "src": "lib/protocol/packages/core/contracts/common/implementation/Lockable.sol:9",
+        "version": {
+          "withMetadata": "b5fcfa5f44b8f695f41466f10de000b671ad5ed45eec523e494559977a30055c",
+          "withoutMetadata": "b2da6fe5c52d3b8ab978749a7769a89610f331aa86e302770caf2ee8f0adeb3e",
+          "linkedWithoutMetadata": "b2da6fe5c52d3b8ab978749a7769a89610f331aa86e302770caf2ee8f0adeb3e"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "()"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "Lockable",
+            "src": "lib/protocol/packages/core/contracts/common/implementation/Lockable.sol:12"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "_notEntered",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Lockable",
+              "src": "lib/protocol/packages/core/contracts/common/implementation/Lockable.sol:10"
+            }
+          ],
+          "types": {
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/protocol/packages/core/contracts/common/implementation/Testable.sol:Testable": {
+        "src": "lib/protocol/packages/core/contracts/common/implementation/Testable.sol:9",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "setCurrentTime(uint256)",
+          "getCurrentTime()"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "Testable",
+            "src": "lib/protocol/packages/core/contracts/common/implementation/Testable.sol:19"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "timerAddress",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_address",
+              "contract": "Testable",
+              "src": "lib/protocol/packages/core/contracts/common/implementation/Testable.sol:12"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/protocol/packages/core/contracts/common/implementation/Timer.sol:Timer": {
+        "src": "lib/protocol/packages/core/contracts/common/implementation/Timer.sol:7",
+        "version": {
+          "withMetadata": "f521c841d87d86f8f84c59939043f2bcb16b807f81afe1a72b0db7098c0a4c05",
+          "withoutMetadata": "4bd41ab4c83c12d276bde8fe89bd54732dc1cc008f49b9022e7fe5170eb43311",
+          "linkedWithoutMetadata": "4bd41ab4c83c12d276bde8fe89bd54732dc1cc008f49b9022e7fe5170eb43311"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "()",
+          "setCurrentTime(uint256)",
+          "getCurrentTime()"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "Timer",
+            "src": "lib/protocol/packages/core/contracts/common/implementation/Timer.sol:10"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "currentTime",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint256",
+              "contract": "Timer",
+              "src": "lib/protocol/packages/core/contracts/common/implementation/Timer.sol:8"
+            }
+          ],
+          "types": {
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/protocol/packages/core/contracts/common/interfaces/AddressWhitelistInterface.sol:AddressWhitelistInterface": {
+        "src": "lib/protocol/packages/core/contracts/common/interfaces/AddressWhitelistInterface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "addToWhitelist(address)",
+          "removeFromWhitelist(address)",
+          "isOnWhitelist(address)",
+          "getWhitelist()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/protocol/packages/core/contracts/data-verification-mechanism/implementation/Constants.sol:OptimisticOracleConstraints": {
+        "src": "lib/protocol/packages/core/contracts/data-verification-mechanism/implementation/Constants.sol:27",
+        "version": {
+          "withMetadata": "4b8ccac9ad3cd4af51d0242ec1386019f64614af70b2870a50435b1b21117711",
+          "withoutMetadata": "0ac509cf50dc2fa9b0e3c1ab73623973bf120b69e6aed1e8bab70c4caf0c47c8",
+          "linkedWithoutMetadata": "0ac509cf50dc2fa9b0e3c1ab73623973bf120b69e6aed1e8bab70c4caf0c47c8"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/protocol/packages/core/contracts/data-verification-mechanism/implementation/Constants.sol:OracleInterfaces": {
+        "src": "lib/protocol/packages/core/contracts/data-verification-mechanism/implementation/Constants.sol:7",
+        "version": {
+          "withMetadata": "97601bab5c31691318a07d551843eae07a8ef77600a811d24e3d3c611151fb60",
+          "withoutMetadata": "980d298e9ae87059707cdb287b135263c1ed85d26cedb372afeba6ddb1ce4b4a",
+          "linkedWithoutMetadata": "980d298e9ae87059707cdb287b135263c1ed85d26cedb372afeba6ddb1ce4b4a"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/FinderInterface.sol:FinderInterface": {
+        "src": "lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/FinderInterface.sol:8",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "changeImplementationAddress(bytes32,address)",
+          "getImplementationAddress(bytes32)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/IdentifierWhitelistInterface.sol:IdentifierWhitelistInterface": {
+        "src": "lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/IdentifierWhitelistInterface.sol:7",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "addSupportedIdentifier(bytes32)",
+          "removeSupportedIdentifier(bytes32)",
+          "isIdentifierSupported(bytes32)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/OracleAncillaryInterface.sol:OracleAncillaryInterface": {
+        "src": "lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/OracleAncillaryInterface.sol:8",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "requestPrice(bytes32,uint256,bytes)",
+          "hasPrice(bytes32,uint256,bytes)",
+          "getPrice(bytes32,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/StoreInterface.sol:StoreInterface": {
+        "src": "lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/StoreInterface.sol:10",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "payOracleFees()",
+          "payOracleFeesErc20(address,(uint256))",
+          "computeRegularFee(uint256,uint256,(uint256))",
+          "computeFinalFee(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/protocol/packages/core/contracts/optimistic-oracle/interfaces/OptimisticOracleInterface.sol:OptimisticOracleInterface": {
+        "src": "lib/protocol/packages/core/contracts/optimistic-oracle/interfaces/OptimisticOracleInterface.sol:11",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "defaultLiveness()",
+          "finder()",
+          "getCurrentTime()",
+          "requestPrice(bytes32,uint256,bytes,address,uint256)",
+          "setBond(bytes32,uint256,bytes,uint256)",
+          "setRefundOnDispute(bytes32,uint256,bytes)",
+          "setCustomLiveness(bytes32,uint256,bytes,uint256)",
+          "proposePriceFor(address,address,bytes32,uint256,bytes,int256)",
+          "proposePrice(address,bytes32,uint256,bytes,int256)",
+          "disputePriceFor(address,address,bytes32,uint256,bytes)",
+          "disputePrice(address,bytes32,uint256,bytes)",
+          "settleAndGetPrice(bytes32,uint256,bytes)",
+          "settle(address,bytes32,uint256,bytes)",
+          "getRequest(address,bytes32,uint256,bytes)",
+          "getState(address,bytes32,uint256,bytes)",
+          "hasPrice(address,bytes32,uint256,bytes)",
+          "stampAncillaryData(bytes,address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "requests",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_mapping(t_bytes32,t_struct(Request)5202_storage)",
+              "contract": "OptimisticOracleInterface",
+              "src": "lib/protocol/packages/core/contracts/optimistic-oracle/interfaces/OptimisticOracleInterface.sol:90"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_bytes32": {
+              "label": "bytes32",
+              "numberOfBytes": "32"
+            },
+            "t_contract(IERC20)1402": {
+              "label": "contract IERC20",
+              "numberOfBytes": "20"
+            },
+            "t_int256": {
+              "label": "int256",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_bytes32,t_struct(Request)5202_storage)": {
+              "label": "mapping(bytes32 => struct OptimisticOracleInterface.Request)",
+              "numberOfBytes": "32"
+            },
+            "t_struct(Request)5202_storage": {
+              "label": "struct OptimisticOracleInterface.Request",
+              "members": [
+                {
+                  "label": "proposer",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "disputer",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "currency",
+                  "type": "t_contract(IERC20)1402",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "settled",
+                  "type": "t_bool",
+                  "offset": 20,
+                  "slot": "2"
+                },
+                {
+                  "label": "refundOnDispute",
+                  "type": "t_bool",
+                  "offset": 21,
+                  "slot": "2"
+                },
+                {
+                  "label": "proposedPrice",
+                  "type": "t_int256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "resolvedPrice",
+                  "type": "t_int256",
+                  "offset": 0,
+                  "slot": "4"
+                },
+                {
+                  "label": "expirationTime",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "5"
+                },
+                {
+                  "label": "reward",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "6"
+                },
+                {
+                  "label": "finalFee",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "7"
+                },
+                {
+                  "label": "bond",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "8"
+                },
+                {
+                  "label": "customLiveness",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "9"
+                }
+              ],
+              "numberOfBytes": "320"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/protocol/packages/core/contracts/optimistic-oracle/interfaces/SkinnyOptimisticOracleInterface.sol:SkinnyOptimisticOracleInterface": {
+        "src": "lib/protocol/packages/core/contracts/optimistic-oracle/interfaces/SkinnyOptimisticOracleInterface.sol:22",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "requestPrice(bytes32,uint32,bytes,address,uint256,uint256,uint256)",
+          "proposePriceFor(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),address,int256)",
+          "proposePrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),int256)",
+          "requestAndProposePriceFor(bytes32,uint32,bytes,address,uint256,uint256,uint256,address,int256)",
+          "disputePriceFor(bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),address,address)",
+          "disputePrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))",
+          "settle(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))",
+          "getState(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))",
+          "hasPrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))",
+          "stampAncillaryData(bytes,address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol:OptimisticRequester": {
+        "src": "lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol:31",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "priceProposed(bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))",
+          "priceDisputed(bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))",
+          "priceSettled(bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol:SkinnyOptimisticOracle": {
+        "src": "lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol:79",
+        "version": {
+          "withMetadata": "117916d0e333d03c8f3e1f11ba4aa09b1fa373a192e0e09e40f4e58df532c38f",
+          "withoutMetadata": "a75231d8eca2719ed7c0bd95880673d6d61a4bf61188639c31d18140cdf70e41",
+          "linkedWithoutMetadata": "a75231d8eca2719ed7c0bd95880673d6d61a4bf61188639c31d18140cdf70e41"
+        },
+        "inherit": [
+          "lib/protocol/packages/core/contracts/common/implementation/Lockable.sol:Lockable",
+          "lib/protocol/packages/core/contracts/common/implementation/Testable.sol:Testable",
+          "lib/protocol/packages/core/contracts/optimistic-oracle/interfaces/SkinnyOptimisticOracleInterface.sol:SkinnyOptimisticOracleInterface"
+        ],
+        "libraries": [
+          "lib/openzeppelin-contracts/contracts/utils/math/SafeMath.sol:SafeMath",
+          "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol:SafeERC20",
+          "lib/openzeppelin-contracts/contracts/utils/Address.sol:Address",
+          "lib/protocol/packages/core/contracts/common/implementation/FixedPoint.sol:FixedPoint",
+          "lib/protocol/packages/core/contracts/data-verification-mechanism/implementation/Constants.sol:OracleInterfaces",
+          "lib/protocol/packages/core/contracts/common/implementation/AncillaryData.sol:AncillaryData"
+        ],
+        "methods": [
+          "(uint256,address,address)",
+          "requestPrice(bytes32,uint32,bytes,address,uint256,uint256,uint256)",
+          "proposePriceFor(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),address,int256)",
+          "proposePrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),int256)",
+          "requestAndProposePriceFor(bytes32,uint32,bytes,address,uint256,uint256,uint256,address,int256)",
+          "disputePriceFor(bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),address,address)",
+          "disputePrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))",
+          "settle(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))",
+          "getState(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))",
+          "hasPrice(address,bytes32,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))",
+          "stampAncillaryData(bytes,address)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "SkinnyOptimisticOracle",
+            "src": "lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol:129"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "timerAddress",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_address",
+              "contract": "Testable",
+              "src": "lib/protocol/packages/core/contracts/common/implementation/Testable.sol:12"
+            },
+            {
+              "label": "_notEntered",
+              "offset": 20,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Lockable",
+              "src": "lib/protocol/packages/core/contracts/common/implementation/Lockable.sol:10"
+            },
+            {
+              "label": "requests",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_bytes32,t_bytes32)",
+              "contract": "SkinnyOptimisticOracle",
+              "src": "lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol:115"
+            },
+            {
+              "label": "finder",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_contract(FinderInterface)4988",
+              "contract": "SkinnyOptimisticOracle",
+              "src": "lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol:118"
+            },
+            {
+              "label": "defaultLiveness",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_uint256",
+              "contract": "SkinnyOptimisticOracle",
+              "src": "lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol:121"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_bytes32": {
+              "label": "bytes32",
+              "numberOfBytes": "32"
+            },
+            "t_contract(FinderInterface)4988": {
+              "label": "contract FinderInterface",
+              "numberOfBytes": "20"
+            },
+            "t_mapping(t_bytes32,t_bytes32)": {
+              "label": "mapping(bytes32 => bytes32)",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol:SkinnyOptimisticOracleProd": {
+        "src": "lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol:694",
+        "version": {
+          "withMetadata": "9317b26a4bbc2ceabd98c3a5ff7f7233b0725e619a21dd57d4d1902b23532f1f",
+          "withoutMetadata": "2c8c51162f12addce21e11f52173bb59333f83511e239516c058010d1ec645f7",
+          "linkedWithoutMetadata": "2c8c51162f12addce21e11f52173bb59333f83511e239516c058010d1ec645f7"
+        },
+        "inherit": [
+          "lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol:SkinnyOptimisticOracle",
+          "lib/protocol/packages/core/contracts/common/implementation/Lockable.sol:Lockable",
+          "lib/protocol/packages/core/contracts/common/implementation/Testable.sol:Testable",
+          "lib/protocol/packages/core/contracts/optimistic-oracle/interfaces/SkinnyOptimisticOracleInterface.sol:SkinnyOptimisticOracleInterface"
+        ],
+        "libraries": [],
+        "methods": [
+          "(uint256,address,address)",
+          "getCurrentTime()"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "SkinnyOptimisticOracleProd",
+            "src": "lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol:695"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "timerAddress",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_address",
+              "contract": "Testable",
+              "src": "lib/protocol/packages/core/contracts/common/implementation/Testable.sol:12"
+            },
+            {
+              "label": "_notEntered",
+              "offset": 20,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Lockable",
+              "src": "lib/protocol/packages/core/contracts/common/implementation/Lockable.sol:10"
+            },
+            {
+              "label": "requests",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_bytes32,t_bytes32)",
+              "contract": "SkinnyOptimisticOracle",
+              "src": "lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol:115"
+            },
+            {
+              "label": "finder",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_contract(FinderInterface)4988",
+              "contract": "SkinnyOptimisticOracle",
+              "src": "lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol:118"
+            },
+            {
+              "label": "defaultLiveness",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_uint256",
+              "contract": "SkinnyOptimisticOracle",
+              "src": "lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol:121"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_bytes32": {
+              "label": "bytes32",
+              "numberOfBytes": "32"
+            },
+            "t_contract(FinderInterface)4988": {
+              "label": "contract FinderInterface",
+              "numberOfBytes": "20"
+            },
+            "t_mapping(t_bytes32,t_bytes32)": {
+              "label": "mapping(bytes32 => bytes32)",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.17"
+      },
+      "src/Escrow.sol:Escrow": {
+        "src": "src/Escrow.sol:17",
+        "version": {
+          "withMetadata": "b26d2bb2d66478c5dddc5f6f4c81d6ecf050d98bdb4dcbaf75953df9d5e7325d",
+          "withoutMetadata": "d46388d5f349ec8a8ce2142f7d82808476f96f382a612ea61d08ab15aa42ad45",
+          "linkedWithoutMetadata": "d46388d5f349ec8a8ce2142f7d82808476f96f382a612ea61d08ab15aa42ad45"
+        },
+        "inherit": [
+          "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol:UUPSUpgradeable",
+          "lib/openzeppelin-contracts-upgradeable/contracts/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:ERC1967UpgradeUpgradeable",
+          "lib/openzeppelin-contracts-upgradeable/contracts/interfaces/draft-IERC1822Upgradeable.sol:IERC1822ProxiableUpgradeable",
+          "lib/openzeppelin-contracts-upgradeable/contracts/access/OwnableUpgradeable.sol:OwnableUpgradeable",
+          "lib/openzeppelin-contracts-upgradeable/contracts/utils/ContextUpgradeable.sol:ContextUpgradeable",
+          "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:Initializable"
+        ],
+        "libraries": [
+          "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol:SafeERC20"
+        ],
+        "methods": [
+          "()",
+          "initialize()",
+          "escrow(string,address,uint256,address,uint256)",
+          "submit(string,address)",
+          "initiateDispute(string,address,address,uint256,string,address)",
+          "hunterDisputeResponse(string,address,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))",
+          "forceHunterPayout(string,address,address)",
+          "payoutIfDispute(string,address,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),address)",
+          "payout(string,address,address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:62",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:67"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_array(t_uint256)50_storage",
+              "contract": "ContextUpgradeable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/utils/ContextUpgradeable.sol:36"
+            },
+            {
+              "label": "_owner",
+              "offset": 0,
+              "slot": "51",
+              "type": "t_address",
+              "contract": "OwnableUpgradeable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/access/OwnableUpgradeable.sol:22"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "52",
+              "type": "t_array(t_uint256)49_storage",
+              "contract": "OwnableUpgradeable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/access/OwnableUpgradeable.sol:94"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "101",
+              "type": "t_array(t_uint256)50_storage",
+              "contract": "ERC1967UpgradeUpgradeable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:211"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "151",
+              "type": "t_array(t_uint256)50_storage",
+              "contract": "UUPSUpgradeable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol:107"
+            },
+            {
+              "label": "bountyAmounts",
+              "offset": 0,
+              "slot": "201",
+              "type": "t_mapping(t_bytes32,t_uint256)",
+              "contract": "Escrow",
+              "src": "src/Escrow.sol:21"
+            },
+            {
+              "label": "progress",
+              "offset": 0,
+              "slot": "202",
+              "type": "t_mapping(t_bytes32,t_enum(Status)7411)",
+              "contract": "Escrow",
+              "src": "src/Escrow.sol:22"
+            },
+            {
+              "label": "expiration",
+              "offset": 0,
+              "slot": "203",
+              "type": "t_mapping(t_bytes32,t_uint256)",
+              "contract": "Escrow",
+              "src": "src/Escrow.sol:23"
+            },
+            {
+              "label": "payoutExpiration",
+              "offset": 0,
+              "slot": "204",
+              "type": "t_mapping(t_bytes32,t_uint256)",
+              "contract": "Escrow",
+              "src": "src/Escrow.sol:24"
+            },
+            {
+              "label": "oracleInterface",
+              "offset": 0,
+              "slot": "205",
+              "type": "t_contract(SkinnyOptimisticOracleInterface)5642",
+              "contract": "Escrow",
+              "src": "src/Escrow.sol:26"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]",
+              "numberOfBytes": "1568"
+            },
+            "t_array(t_uint256)50_storage": {
+              "label": "uint256[50]",
+              "numberOfBytes": "1600"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_bytes32": {
+              "label": "bytes32",
+              "numberOfBytes": "32"
+            },
+            "t_contract(SkinnyOptimisticOracleInterface)5642": {
+              "label": "contract SkinnyOptimisticOracleInterface",
+              "numberOfBytes": "20"
+            },
+            "t_enum(Status)7411": {
+              "label": "enum Escrow.Status",
+              "members": [
+                "NoBounty",
+                "Submitted",
+                "DisputeInitiated",
+                "DisputeRespondedTo",
+                "Resolved"
+              ],
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_bytes32,t_enum(Status)7411)": {
+              "label": "mapping(bytes32 => enum Escrow.Status)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_bytes32,t_uint256)": {
+              "label": "mapping(bytes32 => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.17"
+      }
+    },
+    {
+      "lib/openzeppelin-contracts-upgradeable/contracts/access/OwnableUpgradeable.sol:OwnableUpgradeable": {
+        "src": "lib/openzeppelin-contracts-upgradeable/contracts/access/OwnableUpgradeable.sol:21",
+        "inherit": [
+          "lib/openzeppelin-contracts-upgradeable/contracts/utils/ContextUpgradeable.sol:ContextUpgradeable",
+          "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:Initializable"
+        ],
+        "libraries": [],
+        "methods": [
+          "owner()",
+          "renounceOwnership()",
+          "transferOwnership(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:62",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:67"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_array(t_uint256)50_storage",
+              "contract": "ContextUpgradeable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/utils/ContextUpgradeable.sol:36"
+            },
+            {
+              "label": "_owner",
+              "offset": 0,
+              "slot": "51",
+              "type": "t_address",
+              "contract": "OwnableUpgradeable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/access/OwnableUpgradeable.sol:22"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "52",
+              "type": "t_array(t_uint256)49_storage",
+              "contract": "OwnableUpgradeable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/access/OwnableUpgradeable.sol:94"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]",
+              "numberOfBytes": "1568"
+            },
+            "t_array(t_uint256)50_storage": {
+              "label": "uint256[50]",
+              "numberOfBytes": "1600"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/openzeppelin-contracts-upgradeable/contracts/interfaces/draft-IERC1822Upgradeable.sol:IERC1822ProxiableUpgradeable": {
+        "src": "lib/openzeppelin-contracts-upgradeable/contracts/interfaces/draft-IERC1822Upgradeable.sol:10",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "proxiableUUID()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/openzeppelin-contracts-upgradeable/contracts/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:ERC1967UpgradeUpgradeable": {
+        "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:20",
+        "inherit": [
+          "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:Initializable"
+        ],
+        "libraries": [
+          "lib/openzeppelin-contracts-upgradeable/contracts/utils/StorageSlotUpgradeable.sol:StorageSlotUpgradeable",
+          "lib/openzeppelin-contracts-upgradeable/contracts/utils/AddressUpgradeable.sol:AddressUpgradeable"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:62",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:67"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_array(t_uint256)50_storage",
+              "contract": "ERC1967UpgradeUpgradeable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:211"
+            }
+          ],
+          "types": {
+            "t_array(t_uint256)50_storage": {
+              "label": "uint256[50]",
+              "numberOfBytes": "1600"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/openzeppelin-contracts-upgradeable/contracts/proxy/beacon/IBeaconUpgradeable.sol:IBeaconUpgradeable": {
+        "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/beacon/IBeaconUpgradeable.sol:9",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "implementation()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:Initializable": {
+        "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:57",
+        "inherit": [],
+        "libraries": [
+          "lib/openzeppelin-contracts-upgradeable/contracts/utils/AddressUpgradeable.sol:AddressUpgradeable"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:62",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:67"
+            }
+          ],
+          "types": {
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol:UUPSUpgradeable": {
+        "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol:22",
+        "inherit": [
+          "lib/openzeppelin-contracts-upgradeable/contracts/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:ERC1967UpgradeUpgradeable",
+          "lib/openzeppelin-contracts-upgradeable/contracts/interfaces/draft-IERC1822Upgradeable.sol:IERC1822ProxiableUpgradeable",
+          "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:Initializable"
+        ],
+        "libraries": [],
+        "methods": [
+          "proxiableUUID()",
+          "upgradeTo(address)",
+          "upgradeToAndCall(address,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:62",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:67"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_array(t_uint256)50_storage",
+              "contract": "ERC1967UpgradeUpgradeable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:211"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "51",
+              "type": "t_array(t_uint256)50_storage",
+              "contract": "UUPSUpgradeable",
+              "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol:107"
+            }
+          ],
+          "types": {
+            "t_array(t_uint256)50_storage": {
+              "label": "uint256[50]",
+              "numberOfBytes": "1600"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.17"
+      },
+      "lib/openzeppelin-contracts-upgradeable/contracts/utils/AddressUpgradeable.sol:AddressUpgradeable": {
+        "src": "lib/openzeppelin-contracts-upgradeable/contracts/utils/AddressUpgradeable.sol:9",
+        "version": {
           "withMetadata": "5ebe334ac53d3c59232b57907f48b11e0da026624028642d3b3ddaa2aaea74e7",
           "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
           "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
