@@ -114,11 +114,11 @@ const Application: React.FC<Props> = props => {
   const { data: initiateDisputeData, error: initiateDisputeError, isLoading: isInitiateDisputeLoading, isSuccess: isInitiateDisputeSuccess, write: initiateDispute } = useContractWrite(initiateDisputeConfig);
   const { data: initiateDisputeTxData, isLoading: isInitiateDisputeTxLoading, isSuccess: isInitiateDisputeTxSuccess, error: initiateDisputeTxError } = useWaitForTransaction({ hash: initiateDisputeData?.hash, enabled: true,});
 
-  const { config: payoutIfDisputeConfig } = usePrepareContractWrite({...contractConfig, functionName: 'payoutIfDispute', args: [debouncedBountyAppId, debouncedHunterAddress, debouncedTimestamp, debouncedAncillaryData, debouncedRequest, debouncedTokenAddressERC20], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedTimestamp) && Boolean(debouncedAncillaryData) && Boolean(debouncedRequest) && Boolean(debouncedTokenAddressERC20), });
+  const { config: payoutIfDisputeConfig } = usePrepareContractWrite({...contractConfig, functionName: 'payoutIfDispute', args: [debouncedBountyAppId, debouncedHunterAddress, debouncedTimestamp, debouncedAncillaryData, debouncedRequest], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedTimestamp) && Boolean(debouncedAncillaryData) && Boolean(debouncedRequest), });
   const { data: payoutIfDisputeData, error: payoutIfDisputeError, isLoading: isPayoutIfDisputeLoading, isSuccess: isPayoutIfDisputeSuccess, write: payoutIfDispute } = useContractWrite(payoutIfDisputeConfig);
   const { data: payoutIfDisputeTxData, isLoading: isPayoutIfDisputeTxLoading, isSuccess: isPayoutIfDisputeTxSuccess, error: payoutIfDisputeTxError } = useWaitForTransaction({ hash: payoutIfDisputeData?.hash, enabled: true,});
 
-  const { config: payoutConfig } = usePrepareContractWrite({...contractConfig, functionName: 'payout', args: [debouncedBountyAppId, debouncedHunterAddress, debouncedTokenAddressERC20], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedTokenAddressERC20) && Boolean(debouncedPayoutBool),});
+  const { config: payoutConfig } = usePrepareContractWrite({...contractConfig, functionName: 'payout', args: [debouncedBountyAppId, debouncedHunterAddress], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedPayoutBool),});
   const { data: payoutData, error: payoutError, isLoading: isPayoutLoading, isSuccess: isPayoutSuccess, write: payout } = useContractWrite(payoutConfig);
   const { data: payoutTxData, isLoading: isPayoutTxLoading, isSuccess: isPayoutTxSuccess, error: payoutTxError } = useWaitForTransaction({ hash: payoutData?.hash, enabled: true,});
 
@@ -171,11 +171,11 @@ const Application: React.FC<Props> = props => {
     setOpenPay(false);
   };
 
-  const handleClosePayTrue = (bountyAppId: string, hunterAddress: string, tokenAddress: string) => {
+  const handleClosePayTrue = (bountyAppId: string, hunterAddress: string) => {
     // setOpenPay(false);
     setBountyAppId(bountyAppId);
     setHunterAddress(hunterAddress);
-    setTokenAddressERC20(tokenAddress);
+    // setTokenAddressERC20(tokenAddress);
     setPayoutBool(true);
     // payout?.();
   };
@@ -196,13 +196,13 @@ const Application: React.FC<Props> = props => {
     setOpenSettle(false);
   };
 
-  const handleCloseSettleTrue = (bountyAppId: string, hunterAddress: string, timestamp: number, ancillaryData: string, request: Request, tokenAddress: string) => {
+  const handleCloseSettleTrue = (bountyAppId: string, hunterAddress: string, timestamp: number, ancillaryData: string, request: Request) => {
     setBountyAppId(bountyAppId);
     setHunterAddress(hunterAddress);
     setTimestamp(timestamp);
     setAncillaryData(ancillaryData);
     setRequest(request);
-    setTokenAddressERC20(tokenAddress);
+    // setTokenAddressERC20(tokenAddress);
   };
 
   
@@ -448,7 +448,7 @@ const Application: React.FC<Props> = props => {
             }
             {props.creatorRefund &&
               <div>
-                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenPay(); handleClosePayTrue(props.postId!, props.person, props.tokenAddress!);}}>Refund</Button>
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenPay(); handleClosePayTrue(props.postId!, props.person);}}>Refund</Button>
                 <Dialog
                   open={openPay}
                   onClose={handleClosePayFalse}
@@ -516,7 +516,7 @@ const Application: React.FC<Props> = props => {
                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {initiateDispute?.(); setOpenContest(false);}} autoFocus disabled={!initiateDispute || isInitiateDisputeTxLoading}>{isInitiateDisputeTxLoading ? 'Initiating dispute...' : 'Yes I want to'}</Button>
                   </DialogActions>
                 </Dialog>
-                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenPay(); handleClosePayTrue(props.postId!, props.person, props.tokenAddress!);}}>Pay</Button>
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenPay(); handleClosePayTrue(props.postId!, props.person);}}>Pay</Button>
                 <Dialog
                   open={openPay}
                   onClose={handleClosePayFalse}
@@ -556,7 +556,7 @@ const Application: React.FC<Props> = props => {
                       <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleCloseSettleFalse} autoFocus>Yes I don&apos;t want to</Button> 
                   </DialogActions>
                 </Dialog>
-                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenSettle(); handleCloseSettleTrue(props.postId!, props.person, props.timestamp!, props.ancillaryData!, props.request!, props.tokenAddress!);}}>Settle</Button>
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenSettle(); handleCloseSettleTrue(props.postId!, props.person, props.timestamp!, props.ancillaryData!, props.request!);}}>Settle</Button>
                 <Dialog
                   open={openSettle}
                   onClose={handleCloseSettleFalse}

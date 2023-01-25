@@ -89,7 +89,7 @@ const HunterContractActions: React.FC<Props> = props => {
     const { data: hunterDisputeResponseTxData, isLoading: isHunterDisputeResponseTxLoading, isSuccess: isHunterDisputeResponseTxSuccess, error: hunterDisputeResponseTxError } = useWaitForTransaction({ hash: hunterDisputeResponseData?.hash, enabled: true, });
 
     // ForceHunterPayout Contract Interactions
-    const { config: forceHunterPayoutConfig } = usePrepareContractWrite({...contractConfig, functionName: 'forceHunterPayout', args: [debouncedBountyAppId, debouncedCreatorAddress, debouncedTokenAddressERC20], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedCreatorAddress) && Boolean(debouncedTokenAddressERC20),});
+    const { config: forceHunterPayoutConfig } = usePrepareContractWrite({...contractConfig, functionName: 'forceHunterPayout', args: [debouncedBountyAppId, debouncedCreatorAddress], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedCreatorAddress),});
     const { data: forceHunterPayoutData, error: forceHunterPayoutError, isLoading: isForceHunterPayoutLoading, isSuccess: isForceHunterPayoutSuccess, write: forceHunterPayout } = useContractWrite(forceHunterPayoutConfig);
     const { data: forceHunterPayoutTxData, isLoading: isForceHunterPayoutTxLoading, isSuccess: isForceHunterPayoutTxSuccess, error: forceHunterPayoutTxError } = useWaitForTransaction({ hash: forceHunterPayoutData?.hash, enabled: true, });    
 
