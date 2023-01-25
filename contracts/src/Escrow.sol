@@ -22,6 +22,7 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     mapping(bytes32 => Status) public progress;
     mapping(bytes32 => uint) public expiration;
     mapping(bytes32 => uint) public payoutExpiration;
+    mapping(bytes32 => address) public bountyToken;
 
     SkinnyOptimisticOracleInterface public oracleInterface;
 
@@ -64,6 +65,7 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         } else { // Creator escrows ERC20
             IERC20(_token).safeTransferFrom(msg.sender, address(this), _amount);
             bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = _amount;
+            bountyToken[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = _token;
         }
         
         expiration[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = block.timestamp + _expiration; 
@@ -139,7 +141,7 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         return hunterBondAmt; // Hunter bond plus finalFee 
     }
     
-    function forceHunterPayout(string memory _bountyAppId, address _creator, address _token) external {
+    function forceHunterPayout(string memory _bountyAppId, address _creator) external {
         // Case 4: Bounty creator did not pay or dispute within 2 weeks following hunter submitting work.
         require(progress[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] == Status.Submitted, "Work not Submitted");
         require(payoutExpiration[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] <= block.timestamp, "Creator can still pay or dispute");
@@ -147,8 +149,10 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         uint value = bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))];
         bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] -= value;
 
-        if (_token != address(0)) { // If ERC-20 token
-            IERC20(_token).safeTransfer(msg.sender, value);
+        address token = bountyToken[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))];
+
+        if (token != address(0)) { // If ERC-20 token
+            IERC20(token).safeTransfer(msg.sender, value);
         } else {
             (bool sent, ) = payable(msg.sender).call{value: value}("");
             require(sent, "Failed to send Ether");
@@ -163,8 +167,7 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         address _hunter,
         uint32 _timestamp, 
         bytes memory _ancillaryData,
-        SkinnyOptimisticOracleInterface.Request memory _request,
-        address _token
+        SkinnyOptimisticOracleInterface.Request memory _request
     ) external {
         Status status = progress[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))];
         require(status != Status.Submitted, "Creator hasn't disputed work");
@@ -173,6 +176,7 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         OptimisticOracleInterface.State state = oracleInterface.getState(address(this), bytes32("YES_OR_NO_QUERY"), _timestamp, _ancillaryData, _request); // Note: EscrowContract is actually the requester not the creator
 
         uint value = bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))];
+        address token = bountyToken[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))];
 
         if (status != Status.Resolved && 
             (state == OptimisticOracleInterface.State.Resolved || state == OptimisticOracleInterface.State.Expired)) { // Case 2 or Case 3
@@ -180,8 +184,8 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
             (, int256 winner) = oracleInterface.settle(address(this), bytes32("YES_OR_NO_QUERY"), _timestamp, _ancillaryData, _request); // Note: EscrowContract is actually the requester not the creator
             if (winner == 0) { // Send funds to creator
                 bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] -= value;
-                if (_token != address(0)) { // If ERC-20 token
-                    IERC20(_token).safeTransfer(msg.sender, value);
+                if (token != address(0)) { // If ERC-20 token
+                    IERC20(token).safeTransfer(msg.sender, value);
                 } else {
                     (bool sent, ) = payable(msg.sender).call{value: value}("");
                     require(sent, "Failed to send Ether");
@@ -189,8 +193,8 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
                 emit FundsSent(msg.sender, _hunter, _bountyAppId, "Funds sent back to creator!");
             } else if (winner == 1) { // Send funds to hunter
                 bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] -= value;
-                if (_token != address(0)) { // If ERC-20 token
-                    IERC20(_token).safeTransfer(_hunter, value);
+                if (token != address(0)) { // If ERC-20 token
+                    IERC20(token).safeTransfer(_hunter, value);
                 } else {
                     (bool sent, ) = payable(_hunter).call{value: value}("");
                     require(sent, "Failed to send Ether");
@@ -198,9 +202,9 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
                 emit FundsSent(msg.sender, _hunter, _bountyAppId, "Funds sent to hunter!");
             } else if (winner == 2) { // Send half funds to creator and half to hunter
                 bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] -= value;
-                if (_token != address(0)) { // If ERC-20 token
-                    IERC20(_token).safeTransfer(_hunter, value / 2);
-                    IERC20(_token).safeTransfer(msg.sender, value / 2);
+                if (token != address(0)) { // If ERC-20 token
+                    IERC20(token).safeTransfer(_hunter, value / 2);
+                    IERC20(token).safeTransfer(msg.sender, value / 2);
                 } else {
                     (bool sent, ) = payable(_hunter).call{value: value / 2 }("");
                     require(sent, "Failed to send Ether");
@@ -217,15 +221,16 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         } 
     }
 
-    function payout(string memory _bountyAppId, address _hunter, address _token) external {
+    function payout(string memory _bountyAppId, address _hunter) external {
         uint value = bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))];
+        address token = bountyToken[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))];
 
         // Case 5: Bounty Hunter doesn't submit work within specified time
         if(progress[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] == Status.NoBounty 
             && expiration[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] <= block.timestamp) {
                 bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] -= value;
-                if (_token != address(0)) { // If ERC-20 token
-                    IERC20(_token).safeTransfer(msg.sender, value);
+                if (token != address(0)) { // If ERC-20 token
+                    IERC20(token).safeTransfer(msg.sender, value);
                 } else {
                     (bool sent, ) = payable(msg.sender).call{value: value}("");
                     require(sent, "Failed to send Ether");
@@ -238,8 +243,8 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         // Case 1: Bounty creator doesn't dispute and pays out normal amount
         if (status == Status.Submitted) {
             bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] -= value;
-            if (_token != address(0)) { // If ERC-20 token
-                    IERC20(_token).safeTransfer(_hunter, value);
+            if (token != address(0)) { // If ERC-20 token
+                    IERC20(token).safeTransfer(_hunter, value);
             } else {
                 (bool sent, ) = payable(_hunter).call{value: value}("");
                 require(sent, "Failed to send Ether");

@@ -38,7 +38,6 @@ contract EscrowTest is Test {
 
     // UMA Events
     event ProposePrice(address indexed requester, bytes32 indexed identifier, uint32 timestamp, bytes ancillaryData, SkinnyOptimisticOracleInterface.Request request);
-    struct TestLog {bytes32[] topics; bytes data;}
 
     function setUp() public {
         escrowContract = new Escrow();
@@ -118,6 +117,7 @@ contract EscrowTest is Test {
         escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10^18);
         assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 1 * 10^18); // Check that bountyAmounts for this bountyId, creator, hunter combo is set to msg.value
         assertEq(escrowContract.expiration(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 1000000 + expiration); // Check that expirtation for this bountyId, creator, hunter combo is set to current block timestamp + expiraton data
+        assertEq(escrowContract.bountyToken(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), address(token)); // Check that bountyToken for this bountyId, creator, hunter combo is set to the token address
         
         vm.stopPrank(); // Sets msg.sender back to address(this)
     }
@@ -224,7 +224,7 @@ contract EscrowTest is Test {
         vm.expectEmit(true, true, true, true); // Want to check the first 3 indexed event params, and the last non-indexed param
         emit FundsSent(creator, hunter, bountyAppId, "Funds sent to hunter!"); // This is the event we expect to be emitted
 
-        escrowContract.payout(bountyAppId, hunter, address(0));
+        escrowContract.payout(bountyAppId, hunter);
         assertEq(escrowContractBalanceBefore - address(escrowContract).balance, hunter.balance - hunterBalanceBefore); // Check that same amount paid out to hunter was deducted from the contract
         assertEq(hunter.balance - hunterBalanceBefore, valueToBePaidToHunter); // Check that the value paid out to the hunter was the expected amount 
         assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that the bountyAmount corresponding to this bountyAppId, creator, hunter is set to 0
@@ -260,7 +260,7 @@ contract EscrowTest is Test {
         vm.expectEmit(true, true, true, true); // Want to check the first 3 indexed event params, and the last non-indexed param
         emit FundsSent(creator, hunter, bountyAppId, "Funds sent to hunter!"); // This is the event we expect to be emitted
 
-        escrowContract.payout(bountyAppId, hunter, address(token));
+        escrowContract.payout(bountyAppId, hunter);
     
         assertEq(escrowContractBalanceBefore - token.balanceOf(address(escrowContract)), token.balanceOf(hunter) - hunterBalanceBefore); // Check that same amount paid out to hunter was deducted from the contract
         assertEq(token.balanceOf(hunter) - hunterBalanceBefore, valueToBePaidToHunter); // Check that the value paid out to the hunter was the expected amount 
@@ -294,7 +294,7 @@ contract EscrowTest is Test {
 
         assertEq(uint(progress), uint(Escrow.Status.NoBounty)); // Check that Status enum set to NoBounty as hunter hasn't submitted work yet
 
-        escrowContract.payout(bountyAppId, hunter, address(0));
+        escrowContract.payout(bountyAppId, hunter);
 
         assertEq(escrowContractBalanceBefore - address(escrowContract).balance, creator.balance -  creatorBalanceBefore); // Check that same amount paid out to creator was deducted from the contract
         assertEq(creator.balance - creatorBalanceBefore, valueToBePaidToCreator); // Check that the value paid out to the hunter was the expected amount 
@@ -329,7 +329,7 @@ contract EscrowTest is Test {
 
         assertEq(uint(progress), uint(Escrow.Status.NoBounty)); // Check that Status enum set to NoBounty as hunter hasn't submitted work yet
 
-        escrowContract.payout(bountyAppId, hunter, address(token));
+        escrowContract.payout(bountyAppId, hunter);
 
         assertEq(escrowContractBalanceBefore - token.balanceOf(address(escrowContract)), token.balanceOf(creator) -  creatorBalanceBefore); // Check that same amount paid out to creator was deducted from the contract
         assertEq(token.balanceOf(creator) - creatorBalanceBefore, valueToBePaidToCreator); // Check that the value paid out to the hunter was the expected amount 
@@ -535,7 +535,7 @@ contract EscrowTest is Test {
         );  
     }
 
-    function testForceHunterDisputeETH() public {
+    function testForceHunterPayoutETH() public {
         string memory bountyAppId = "AppId";
         address creator = address(0xABCD);
         address hunter = address(0xBEEF);
@@ -561,7 +561,7 @@ contract EscrowTest is Test {
         uint hunterBalanceBefore = hunter.balance;
         uint valueToBePaidToHunter = escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter)));
 
-        escrowContract.forceHunterPayout(bountyAppId, creator, address(0)); // Force payout
+        escrowContract.forceHunterPayout(bountyAppId, creator); // Force payout
 
         assertEq(escrowContractBalanceBefore - address(escrowContract).balance, hunter.balance -  hunterBalanceBefore); // Check that same amount paid out to hunter was deducted from the contract
         assertEq(hunter.balance - hunterBalanceBefore, valueToBePaidToHunter); // Check that the value paid out to the hunter was the expected amount 
@@ -570,7 +570,7 @@ contract EscrowTest is Test {
         vm.stopPrank();
     }
 
-    function testForceHunterDisputeERC20() public {
+    function testForceHunterPayoutERC20() public {
         string memory bountyAppId = "AppId";
         address creator = address(0xABCD);
         address hunter = address(0xBEEF);
@@ -599,7 +599,7 @@ contract EscrowTest is Test {
         uint hunterBalanceBefore = token.balanceOf(hunter);
         uint valueToBePaidToHunter = escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter)));
 
-        escrowContract.forceHunterPayout(bountyAppId, creator, address(token)); // Force payout
+        escrowContract.forceHunterPayout(bountyAppId, creator); // Force payout
 
         assertEq(escrowContractBalanceBefore - token.balanceOf(address(escrowContract)), token.balanceOf(hunter) - hunterBalanceBefore); // Check that same amount paid out to hunter was deducted from the contract
         assertEq(token.balanceOf(hunter) - hunterBalanceBefore, valueToBePaidToHunter); // Check that the value paid out to the hunter was the expected amount 
@@ -608,7 +608,7 @@ contract EscrowTest is Test {
         vm.stopPrank();
     }
 
-    function testHunterNoSubmitWorkForceHunterDispute() public {
+    function testHunterNoSubmitWorkForceHunterPayout() public {
         string memory bountyAppId = "AppId";
         address creator = address(0xABCD);
         address hunter = address(0xBEEF);
@@ -622,10 +622,10 @@ contract EscrowTest is Test {
 
         vm.prank(hunter);
         vm.expectRevert(bytes("Work not Submitted")); // Expect this revert error
-        escrowContract.forceHunterPayout(bountyAppId, creator, address(0));   
+        escrowContract.forceHunterPayout(bountyAppId, creator);   
     }
 
-    function testCreatorResponseWindowOpenForceHunterDispute() public {
+    function testCreatorResponseWindowOpenForceHunterPayout() public {
         string memory bountyAppId = "AppId";
         address creator = address(0xABCD);
         address hunter = address(0xBEEF);
@@ -643,7 +643,7 @@ contract EscrowTest is Test {
         escrowContract.submit(bountyAppId, creator); // Submit work
 
         vm.expectRevert(bytes("Creator can still pay or dispute")); // Expect this revert error
-        escrowContract.forceHunterPayout(bountyAppId, creator, address(0)); 
+        escrowContract.forceHunterPayout(bountyAppId, creator); 
         vm.stopPrank();
     }
 
@@ -739,8 +739,7 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request2,
-            address(0)
+            request2
         );
 
         assertEq(2 ether, creator.balance); // Check that creator paid back the 1 eth they escrowed before
@@ -842,8 +841,7 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request2,
-            address(0)
+            request2
         );
 
         assertEq(1 ether, hunter.balance); // Check that hunter was paid the 1 eth escrowed
@@ -945,8 +943,7 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request2,
-            address(0)
+            request2
         );
 
         // Note: even if it's a tie, hunter is still considered the winner so they get the WETH as if the dispute was voted in their favor (price of 1)
@@ -1020,8 +1017,7 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request,
-            address(0)
+            request
         );
 
         assertEq(2 ether, creator.balance); // Check that creator paid back the 1 eth they escrowed before
@@ -1125,8 +1121,7 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request2,
-            address(token)
+            request2
         );
 
         assertEq(100 * 10^18, token.balanceOf(creator)); // Check that creator paid back the 1 Test Token they escrowed before
@@ -1230,8 +1225,7 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request2,
-            address(token)
+            request2
         );
 
         assertEq(1 * 10^18, token.balanceOf(hunter)); // Check that hunter was paid the 1 Test Token escrowed
@@ -1335,8 +1329,7 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request2,
-            address(token)
+            request2
         );
 
         // Note: even if it's a tie, hunter is still considered the winner so they get the WETH as if the dispute was voted in their favor (price of 1)
@@ -1412,8 +1405,7 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request,
-            address(token)
+            request
         );
 
         assertEq(100 * 10^18, token.balanceOf(creator)); // Check that creator paid back the 1 Test Token they escrowed before
@@ -1504,8 +1496,7 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request2,
-            address(0)
+            request2
         );
         vm.stopPrank();
     }
@@ -1568,8 +1559,7 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request,
-            address(0)
+            request
         );
         vm.stopPrank();
     }
@@ -1608,8 +1598,7 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request,
-            address(0)
+            request
         );
         vm.stopPrank();
     }
@@ -1704,8 +1693,7 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request2,
-            address(0)
+            request2
         );
 
         request2.settled = true; // Set this value to true as this is the new request struct after a dispute has been settled (produced in settle in OO contract)
@@ -1715,8 +1703,7 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request2,
-            address(0)
+            request2
         );
         
         vm.stopPrank();
@@ -1750,7 +1737,7 @@ contract EscrowTest is Test {
 
         vm.startPrank(creator);
 
-        escrowContract.payout(bountyAppId, hunter, address(0));
+        escrowContract.payout(bountyAppId, hunter);
 
         vm.expectRevert(bytes("Bounty has been payed out")); // Expect this revert error
         escrowContract.payoutIfDispute(
@@ -1758,8 +1745,7 @@ contract EscrowTest is Test {
             hunter,
             1000001, 
             bytes(ancillaryData), 
-            request,
-            address(0)
+            request
         );
         vm.stopPrank();
     }
