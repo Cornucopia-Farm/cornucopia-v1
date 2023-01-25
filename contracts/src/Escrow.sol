@@ -75,7 +75,7 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     // Hunter submitting work
     function submit(string memory _bountyAppId, address _creator) external {
         require(bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] != 0, "Funds not escrowed");
-        require(progress[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] != Status.Submitted, "Work already submitted");
+        require(progress[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] == Status.NoBounty, "Work already submitted");
         progress[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] = Status.Submitted;
         payoutExpiration[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] = block.timestamp + 2 weeks; // Creator has 2 weeks to pay 
         emit Submitted(_creator, msg.sender, _bountyAppId, "Submitted!"); 
