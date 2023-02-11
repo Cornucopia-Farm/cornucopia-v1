@@ -140,6 +140,24 @@ contract EscrowTest is Test {
         vm.stopPrank();
     }
 
+    function testEscrowERC20AmountZero() public {
+        string memory bountyAppId = "AppId";
+        address creator = address(0xABCD);
+        address hunter = address(0xBEEF);
+        uint expiration = 1 weeks;
+        
+        token.mint(creator, 100 * 10^18); // Mint 100 Test Token
+        vm.startPrank(creator); // Sets msg.sender = creator till stopPrank called
+        vm.warp(1000000); // Sets block.timestamp = 1000000
+
+        token.approve(address(escrowContract), 1 * 10^18);
+
+        vm.expectRevert(bytes("Amount must be non-zero")); // Expect this revert error; note: case sensitive
+        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 0);
+
+        vm.stopPrank();
+    }
+
     // Test Submit Function
     function testSubmit() public {
         string memory bountyAppId = "AppId";

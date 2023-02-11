@@ -1514,7 +1514,7 @@
   },
   "ast": {
     "absolutePath": "lib/protocol/packages/core/contracts/data-verification-mechanism/implementation/store.sol",
-    "id": 44960,
+    "id": 45057,
     "exportedSymbols": {
       "Address": [
         28174
@@ -1547,7 +1547,7 @@
         28572
       ],
       "Store": [
-        44959
+        45056
       ],
       "StoreInterface": [
         32715
@@ -1566,7 +1566,7 @@
     "src": "42:7805:49",
     "nodes": [
       {
-        "id": 44619,
+        "id": 44716,
         "nodeType": "PragmaDirective",
         "src": "42:23:49",
         "nodes": [],
@@ -1578,122 +1578,122 @@
         ]
       },
       {
-        "id": 44620,
+        "id": 44717,
         "nodeType": "ImportDirective",
         "src": "67:57:49",
         "nodes": [],
         "absolutePath": "lib/openzeppelin-contracts/contracts/utils/math/SafeMath.sol",
         "file": "@openzeppelin/contracts/utils/math/SafeMath.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 44960,
+        "scope": 45057,
         "sourceUnit": 28509,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "id": 44621,
+        "id": 44718,
         "nodeType": "ImportDirective",
         "src": "125:56:49",
         "nodes": [],
         "absolutePath": "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
         "file": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 44960,
+        "scope": 45057,
         "sourceUnit": 27503,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "id": 44622,
+        "id": 44719,
         "nodeType": "ImportDirective",
         "src": "182:65:49",
         "nodes": [],
         "absolutePath": "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
         "file": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 44960,
+        "scope": 45057,
         "sourceUnit": 27845,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "id": 44623,
+        "id": 44720,
         "nodeType": "ImportDirective",
         "src": "248:52:49",
         "nodes": [],
         "absolutePath": "lib/protocol/packages/core/contracts/common/implementation/FixedPoint.sol",
         "file": "../../common/implementation/FixedPoint.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 44960,
+        "scope": 45057,
         "sourceUnit": 31055,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "id": 44624,
+        "id": 44721,
         "nodeType": "ImportDirective",
         "src": "301:51:49",
         "nodes": [],
         "absolutePath": "lib/protocol/packages/core/contracts/common/implementation/MultiRole.sol",
         "file": "../../common/implementation/MultiRole.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 44960,
+        "scope": 45057,
         "sourceUnit": 31757,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "id": 44625,
+        "id": 44722,
         "nodeType": "ImportDirective",
         "src": "353:54:49",
         "nodes": [],
         "absolutePath": "lib/protocol/packages/core/contracts/common/implementation/Withdrawable.sol",
         "file": "../../common/implementation/Withdrawable.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 44960,
+        "scope": 45057,
         "sourceUnit": 31964,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "id": 44626,
+        "id": 44723,
         "nodeType": "ImportDirective",
         "src": "408:50:49",
         "nodes": [],
         "absolutePath": "lib/protocol/packages/core/contracts/common/implementation/Testable.sol",
         "file": "../../common/implementation/Testable.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 44960,
+        "scope": 45057,
         "sourceUnit": 31830,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "id": 44627,
+        "id": 44724,
         "nodeType": "ImportDirective",
         "src": "459:42:49",
         "nodes": [],
         "absolutePath": "lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/StoreInterface.sol",
         "file": "../interfaces/StoreInterface.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 44960,
+        "scope": 45057,
         "sourceUnit": 32716,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "id": 44959,
+        "id": 45056,
         "nodeType": "ContractDefinition",
         "src": "613:7233:49",
         "nodes": [
           {
-            "id": 44637,
+            "id": 44734,
             "nodeType": "UsingForDirective",
             "src": "676:27:49",
             "nodes": [],
             "global": false,
             "libraryName": {
-              "id": 44635,
+              "id": 44732,
               "name": "SafeMath",
               "nameLocations": [
                 "682:8:49"
@@ -1703,7 +1703,7 @@
               "src": "682:8:49"
             },
             "typeName": {
-              "id": 44636,
+              "id": 44733,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
               "src": "695:7:49",
@@ -1714,13 +1714,13 @@
             }
           },
           {
-            "id": 44641,
+            "id": 44738,
             "nodeType": "UsingForDirective",
             "src": "708:41:49",
             "nodes": [],
             "global": false,
             "libraryName": {
-              "id": 44638,
+              "id": 44735,
               "name": "FixedPoint",
               "nameLocations": [
                 "714:10:49"
@@ -1730,10 +1730,10 @@
               "src": "714:10:49"
             },
             "typeName": {
-              "id": 44640,
+              "id": 44737,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
-                "id": 44639,
+                "id": 44736,
                 "name": "FixedPoint.Unsigned",
                 "nameLocations": [
                   "729:10:49",
@@ -1752,13 +1752,13 @@
             }
           },
           {
-            "id": 44644,
+            "id": 44741,
             "nodeType": "UsingForDirective",
             "src": "754:29:49",
             "nodes": [],
             "global": false,
             "libraryName": {
-              "id": 44642,
+              "id": 44739,
               "name": "FixedPoint",
               "nameLocations": [
                 "760:10:49"
@@ -1768,7 +1768,7 @@
               "src": "760:10:49"
             },
             "typeName": {
-              "id": 44643,
+              "id": 44740,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
               "src": "775:7:49",
@@ -1779,13 +1779,13 @@
             }
           },
           {
-            "id": 44648,
+            "id": 44745,
             "nodeType": "UsingForDirective",
             "src": "788:27:49",
             "nodes": [],
             "global": false,
             "libraryName": {
-              "id": 44645,
+              "id": 44742,
               "name": "SafeERC20",
               "nameLocations": [
                 "794:9:49"
@@ -1795,10 +1795,10 @@
               "src": "794:9:49"
             },
             "typeName": {
-              "id": 44647,
+              "id": 44744,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
-                "id": 44646,
+                "id": 44743,
                 "name": "IERC20",
                 "nameLocations": [
                   "808:6:49"
@@ -1816,21 +1816,21 @@
             }
           },
           {
-            "id": 44651,
+            "id": 44748,
             "nodeType": "EnumDefinition",
             "src": "961:32:49",
             "nodes": [],
             "canonicalName": "Store.Roles",
             "members": [
               {
-                "id": 44649,
+                "id": 44746,
                 "name": "Owner",
                 "nameLocation": "974:5:49",
                 "nodeType": "EnumValue",
                 "src": "974:5:49"
               },
               {
-                "id": 44650,
+                "id": 44747,
                 "name": "Withdrawer",
                 "nameLocation": "981:10:49",
                 "nodeType": "EnumValue",
@@ -1841,7 +1841,7 @@
             "nameLocation": "966:5:49"
           },
           {
-            "id": 44654,
+            "id": 44751,
             "nodeType": "VariableDeclaration",
             "src": "999:56:49",
             "nodes": [],
@@ -1850,7 +1850,7 @@
             "mutability": "mutable",
             "name": "fixedOracleFeePerSecondPerPfc",
             "nameLocation": "1026:29:49",
-            "scope": 44959,
+            "scope": 45056,
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -1858,10 +1858,10 @@
               "typeString": "struct FixedPoint.Unsigned"
             },
             "typeName": {
-              "id": 44653,
+              "id": 44750,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
-                "id": 44652,
+                "id": 44749,
                 "name": "FixedPoint.Unsigned",
                 "nameLocations": [
                   "999:10:49",
@@ -1881,7 +1881,7 @@
             "visibility": "public"
           },
           {
-            "id": 44657,
+            "id": 44754,
             "nodeType": "VariableDeclaration",
             "src": "1108:56:49",
             "nodes": [],
@@ -1890,7 +1890,7 @@
             "mutability": "mutable",
             "name": "weeklyDelayFeePerSecondPerPfc",
             "nameLocation": "1135:29:49",
-            "scope": 44959,
+            "scope": 45056,
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -1898,10 +1898,10 @@
               "typeString": "struct FixedPoint.Unsigned"
             },
             "typeName": {
-              "id": 44656,
+              "id": 44753,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
-                "id": 44655,
+                "id": 44752,
                 "name": "FixedPoint.Unsigned",
                 "nameLocations": [
                   "1108:10:49",
@@ -1921,7 +1921,7 @@
             "visibility": "public"
           },
           {
-            "id": 44662,
+            "id": 44759,
             "nodeType": "VariableDeclaration",
             "src": "1224:56:49",
             "nodes": [],
@@ -1930,7 +1930,7 @@
             "mutability": "mutable",
             "name": "finalFees",
             "nameLocation": "1271:9:49",
-            "scope": 44959,
+            "scope": 45056,
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -1938,9 +1938,9 @@
               "typeString": "mapping(address => struct FixedPoint.Unsigned)"
             },
             "typeName": {
-              "id": 44661,
+              "id": 44758,
               "keyType": {
-                "id": 44658,
+                "id": 44755,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "1232:7:49",
@@ -1956,10 +1956,10 @@
                 "typeString": "mapping(address => struct FixedPoint.Unsigned)"
               },
               "valueType": {
-                "id": 44660,
+                "id": 44757,
                 "nodeType": "UserDefinedTypeName",
                 "pathNode": {
-                  "id": 44659,
+                  "id": 44756,
                   "name": "FixedPoint.Unsigned",
                   "nameLocations": [
                     "1243:10:49",
@@ -1980,7 +1980,7 @@
             "visibility": "public"
           },
           {
-            "id": 44665,
+            "id": 44762,
             "nodeType": "VariableDeclaration",
             "src": "1286:49:49",
             "nodes": [],
@@ -1989,7 +1989,7 @@
             "mutability": "constant",
             "name": "SECONDS_PER_WEEK",
             "nameLocation": "1310:16:49",
-            "scope": 44959,
+            "scope": 45056,
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -1997,7 +1997,7 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 44663,
+              "id": 44760,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
               "src": "1286:7:49",
@@ -2008,7 +2008,7 @@
             },
             "value": {
               "hexValue": "363034383030",
-              "id": 44664,
+              "id": 44761,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -2025,7 +2025,7 @@
             "visibility": "public"
           },
           {
-            "id": 44670,
+            "id": 44767,
             "nodeType": "EventDefinition",
             "src": "1482:73:49",
             "nodes": [],
@@ -2034,18 +2034,18 @@
             "name": "NewFixedOracleFeePerSecondPerPfc",
             "nameLocation": "1488:32:49",
             "parameters": {
-              "id": 44669,
+              "id": 44766,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44668,
+                  "id": 44765,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "newOracleFee",
                   "nameLocation": "1541:12:49",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44670,
+                  "scope": 44767,
                   "src": "1521:32:49",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2054,10 +2054,10 @@
                     "typeString": "struct FixedPoint.Unsigned"
                   },
                   "typeName": {
-                    "id": 44667,
+                    "id": 44764,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 44666,
+                      "id": 44763,
                       "name": "FixedPoint.Unsigned",
                       "nameLocations": [
                         "1521:10:49",
@@ -2081,7 +2081,7 @@
             }
           },
           {
-            "id": 44675,
+            "id": 44772,
             "nodeType": "EventDefinition",
             "src": "1560:93:49",
             "nodes": [],
@@ -2090,18 +2090,18 @@
             "name": "NewWeeklyDelayFeePerSecondPerPfc",
             "nameLocation": "1566:32:49",
             "parameters": {
-              "id": 44674,
+              "id": 44771,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44673,
+                  "id": 44770,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "newWeeklyDelayFeePerSecondPerPfc",
                   "nameLocation": "1619:32:49",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44675,
+                  "scope": 44772,
                   "src": "1599:52:49",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2110,10 +2110,10 @@
                     "typeString": "struct FixedPoint.Unsigned"
                   },
                   "typeName": {
-                    "id": 44672,
+                    "id": 44769,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 44671,
+                      "id": 44768,
                       "name": "FixedPoint.Unsigned",
                       "nameLocations": [
                         "1599:10:49",
@@ -2137,7 +2137,7 @@
             }
           },
           {
-            "id": 44680,
+            "id": 44777,
             "nodeType": "EventDefinition",
             "src": "1658:51:49",
             "nodes": [],
@@ -2146,18 +2146,18 @@
             "name": "NewFinalFee",
             "nameLocation": "1664:11:49",
             "parameters": {
-              "id": 44679,
+              "id": 44776,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44678,
+                  "id": 44775,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "newFinalFee",
                   "nameLocation": "1696:11:49",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44680,
+                  "scope": 44777,
                   "src": "1676:31:49",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2166,10 +2166,10 @@
                     "typeString": "struct FixedPoint.Unsigned"
                   },
                   "typeName": {
-                    "id": 44677,
+                    "id": 44774,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 44676,
+                      "id": 44773,
                       "name": "FixedPoint.Unsigned",
                       "nameLocations": [
                         "1676:10:49",
@@ -2193,12 +2193,12 @@
             }
           },
           {
-            "id": 44734,
+            "id": 44831,
             "nodeType": "FunctionDefinition",
             "src": "1776:538:49",
             "nodes": [],
             "body": {
-              "id": 44733,
+              "id": 44830,
               "nodeType": "Block",
               "src": "1983:331:49",
               "nodes": [],
@@ -2210,18 +2210,18 @@
                         "arguments": [
                           {
                             "expression": {
-                              "id": 44698,
+                              "id": 44795,
                               "name": "Roles",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 44651,
+                              "referencedDeclaration": 44748,
                               "src": "2022:5:49",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_type$_t_enum$_Roles_$44651_$",
+                                "typeIdentifier": "t_type$_t_enum$_Roles_$44748_$",
                                 "typeString": "type(enum Store.Roles)"
                               }
                             },
-                            "id": 44699,
+                            "id": 44796,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -2229,10 +2229,10 @@
                             "memberLocation": "2028:5:49",
                             "memberName": "Owner",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 44649,
+                            "referencedDeclaration": 44746,
                             "src": "2022:11:49",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_enum$_Roles_$44651",
+                              "typeIdentifier": "t_enum$_Roles_$44748",
                               "typeString": "enum Store.Roles"
                             }
                           }
@@ -2240,11 +2240,11 @@
                         "expression": {
                           "argumentTypes": [
                             {
-                              "typeIdentifier": "t_enum$_Roles_$44651",
+                              "typeIdentifier": "t_enum$_Roles_$44748",
                               "typeString": "enum Store.Roles"
                             }
                           ],
-                          "id": 44697,
+                          "id": 44794,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -2256,14 +2256,14 @@
                             "typeString": "type(uint256)"
                           },
                           "typeName": {
-                            "id": 44696,
+                            "id": 44793,
                             "name": "uint256",
                             "nodeType": "ElementaryTypeName",
                             "src": "2014:7:49",
                             "typeDescriptions": {}
                           }
                         },
-                        "id": 44700,
+                        "id": 44797,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -2283,18 +2283,18 @@
                         "arguments": [
                           {
                             "expression": {
-                              "id": 44703,
+                              "id": 44800,
                               "name": "Roles",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 44651,
+                              "referencedDeclaration": 44748,
                               "src": "2044:5:49",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_type$_t_enum$_Roles_$44651_$",
+                                "typeIdentifier": "t_type$_t_enum$_Roles_$44748_$",
                                 "typeString": "type(enum Store.Roles)"
                               }
                             },
-                            "id": 44704,
+                            "id": 44801,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -2302,10 +2302,10 @@
                             "memberLocation": "2050:5:49",
                             "memberName": "Owner",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 44649,
+                            "referencedDeclaration": 44746,
                             "src": "2044:11:49",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_enum$_Roles_$44651",
+                              "typeIdentifier": "t_enum$_Roles_$44748",
                               "typeString": "enum Store.Roles"
                             }
                           }
@@ -2313,11 +2313,11 @@
                         "expression": {
                           "argumentTypes": [
                             {
-                              "typeIdentifier": "t_enum$_Roles_$44651",
+                              "typeIdentifier": "t_enum$_Roles_$44748",
                               "typeString": "enum Store.Roles"
                             }
                           ],
-                          "id": 44702,
+                          "id": 44799,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -2329,14 +2329,14 @@
                             "typeString": "type(uint256)"
                           },
                           "typeName": {
-                            "id": 44701,
+                            "id": 44798,
                             "name": "uint256",
                             "nodeType": "ElementaryTypeName",
                             "src": "2036:7:49",
                             "typeDescriptions": {}
                           }
                         },
-                        "id": 44705,
+                        "id": 44802,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -2354,7 +2354,7 @@
                       },
                       {
                         "expression": {
-                          "id": 44706,
+                          "id": 44803,
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
@@ -2365,7 +2365,7 @@
                             "typeString": "msg"
                           }
                         },
-                        "id": 44707,
+                        "id": 44804,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -2395,7 +2395,7 @@
                           "typeString": "address"
                         }
                       ],
-                      "id": 44695,
+                      "id": 44792,
                       "name": "_createExclusiveRole",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -2406,7 +2406,7 @@
                         "typeString": "function (uint256,uint256,address)"
                       }
                     },
-                    "id": 44708,
+                    "id": 44805,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2422,7 +2422,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 44709,
+                  "id": 44806,
                   "nodeType": "ExpressionStatement",
                   "src": "1993:76:49"
                 },
@@ -2433,18 +2433,18 @@
                         "arguments": [
                           {
                             "expression": {
-                              "id": 44713,
+                              "id": 44810,
                               "name": "Roles",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 44651,
+                              "referencedDeclaration": 44748,
                               "src": "2107:5:49",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_type$_t_enum$_Roles_$44651_$",
+                                "typeIdentifier": "t_type$_t_enum$_Roles_$44748_$",
                                 "typeString": "type(enum Store.Roles)"
                               }
                             },
-                            "id": 44714,
+                            "id": 44811,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -2452,10 +2452,10 @@
                             "memberLocation": "2113:10:49",
                             "memberName": "Withdrawer",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 44650,
+                            "referencedDeclaration": 44747,
                             "src": "2107:16:49",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_enum$_Roles_$44651",
+                              "typeIdentifier": "t_enum$_Roles_$44748",
                               "typeString": "enum Store.Roles"
                             }
                           }
@@ -2463,11 +2463,11 @@
                         "expression": {
                           "argumentTypes": [
                             {
-                              "typeIdentifier": "t_enum$_Roles_$44651",
+                              "typeIdentifier": "t_enum$_Roles_$44748",
                               "typeString": "enum Store.Roles"
                             }
                           ],
-                          "id": 44712,
+                          "id": 44809,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -2479,14 +2479,14 @@
                             "typeString": "type(uint256)"
                           },
                           "typeName": {
-                            "id": 44711,
+                            "id": 44808,
                             "name": "uint256",
                             "nodeType": "ElementaryTypeName",
                             "src": "2099:7:49",
                             "typeDescriptions": {}
                           }
                         },
-                        "id": 44715,
+                        "id": 44812,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -2506,18 +2506,18 @@
                         "arguments": [
                           {
                             "expression": {
-                              "id": 44718,
+                              "id": 44815,
                               "name": "Roles",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 44651,
+                              "referencedDeclaration": 44748,
                               "src": "2134:5:49",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_type$_t_enum$_Roles_$44651_$",
+                                "typeIdentifier": "t_type$_t_enum$_Roles_$44748_$",
                                 "typeString": "type(enum Store.Roles)"
                               }
                             },
-                            "id": 44719,
+                            "id": 44816,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -2525,10 +2525,10 @@
                             "memberLocation": "2140:5:49",
                             "memberName": "Owner",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 44649,
+                            "referencedDeclaration": 44746,
                             "src": "2134:11:49",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_enum$_Roles_$44651",
+                              "typeIdentifier": "t_enum$_Roles_$44748",
                               "typeString": "enum Store.Roles"
                             }
                           }
@@ -2536,11 +2536,11 @@
                         "expression": {
                           "argumentTypes": [
                             {
-                              "typeIdentifier": "t_enum$_Roles_$44651",
+                              "typeIdentifier": "t_enum$_Roles_$44748",
                               "typeString": "enum Store.Roles"
                             }
                           ],
-                          "id": 44717,
+                          "id": 44814,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -2552,14 +2552,14 @@
                             "typeString": "type(uint256)"
                           },
                           "typeName": {
-                            "id": 44716,
+                            "id": 44813,
                             "name": "uint256",
                             "nodeType": "ElementaryTypeName",
                             "src": "2126:7:49",
                             "typeDescriptions": {}
                           }
                         },
-                        "id": 44720,
+                        "id": 44817,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -2577,7 +2577,7 @@
                       },
                       {
                         "expression": {
-                          "id": 44721,
+                          "id": 44818,
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
@@ -2588,7 +2588,7 @@
                             "typeString": "msg"
                           }
                         },
-                        "id": 44722,
+                        "id": 44819,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -2618,7 +2618,7 @@
                           "typeString": "address"
                         }
                       ],
-                      "id": 44710,
+                      "id": 44807,
                       "name": "_createWithdrawRole",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -2629,7 +2629,7 @@
                         "typeString": "function (uint256,uint256,address)"
                       }
                     },
-                    "id": 44723,
+                    "id": 44820,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2645,7 +2645,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 44724,
+                  "id": 44821,
                   "nodeType": "ExpressionStatement",
                   "src": "2079:80:49"
                 },
@@ -2653,11 +2653,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 44726,
+                        "id": 44823,
                         "name": "_fixedOracleFeePerSecondPerPfc",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 44684,
+                        "referencedDeclaration": 44781,
                         "src": "2202:30:49",
                         "typeDescriptions": {
                           "typeIdentifier": "t_struct$_Unsigned_$29440_memory_ptr",
@@ -2672,18 +2672,18 @@
                           "typeString": "struct FixedPoint.Unsigned memory"
                         }
                       ],
-                      "id": 44725,
+                      "id": 44822,
                       "name": "setFixedOracleFeePerSecondPerPfc",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44900,
+                      "referencedDeclaration": 44997,
                       "src": "2169:32:49",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_Unsigned_$29440_memory_ptr_$returns$__$",
                         "typeString": "function (struct FixedPoint.Unsigned memory)"
                       }
                     },
-                    "id": 44727,
+                    "id": 44824,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2699,7 +2699,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 44728,
+                  "id": 44825,
                   "nodeType": "ExpressionStatement",
                   "src": "2169:64:49"
                 },
@@ -2707,11 +2707,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 44730,
+                        "id": 44827,
                         "name": "_weeklyDelayFeePerSecondPerPfc",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 44687,
+                        "referencedDeclaration": 44784,
                         "src": "2276:30:49",
                         "typeDescriptions": {
                           "typeIdentifier": "t_struct$_Unsigned_$29440_memory_ptr",
@@ -2726,18 +2726,18 @@
                           "typeString": "struct FixedPoint.Unsigned memory"
                         }
                       ],
-                      "id": 44729,
+                      "id": 44826,
                       "name": "setWeeklyDelayFeePerSecondPerPfc",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44931,
+                      "referencedDeclaration": 45028,
                       "src": "2243:32:49",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_Unsigned_$29440_memory_ptr_$returns$__$",
                         "typeString": "function (struct FixedPoint.Unsigned memory)"
                       }
                     },
-                    "id": 44731,
+                    "id": 44828,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2753,14 +2753,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 44732,
+                  "id": 44829,
                   "nodeType": "ExpressionStatement",
                   "src": "2243:64:49"
                 }
               ]
             },
             "documentation": {
-              "id": 44681,
+              "id": 44778,
               "nodeType": "StructuredDocumentation",
               "src": "1715:56:49",
               "text": " @notice Construct the Store contract."
@@ -2771,11 +2771,11 @@
               {
                 "arguments": [
                   {
-                    "id": 44692,
+                    "id": 44789,
                     "name": "_timerAddress",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 44689,
+                    "referencedDeclaration": 44786,
                     "src": "1968:13:49",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2783,10 +2783,10 @@
                     }
                   }
                 ],
-                "id": 44693,
+                "id": 44790,
                 "kind": "baseConstructorSpecifier",
                 "modifierName": {
-                  "id": 44691,
+                  "id": 44788,
                   "name": "Testable",
                   "nameLocations": [
                     "1959:8:49"
@@ -2802,17 +2802,17 @@
             "name": "",
             "nameLocation": "-1:-1:-1",
             "parameters": {
-              "id": 44690,
+              "id": 44787,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44684,
+                  "id": 44781,
                   "mutability": "mutable",
                   "name": "_fixedOracleFeePerSecondPerPfc",
                   "nameLocation": "1824:30:49",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44734,
+                  "scope": 44831,
                   "src": "1797:57:49",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -2821,10 +2821,10 @@
                     "typeString": "struct FixedPoint.Unsigned"
                   },
                   "typeName": {
-                    "id": 44683,
+                    "id": 44780,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 44682,
+                      "id": 44779,
                       "name": "FixedPoint.Unsigned",
                       "nameLocations": [
                         "1797:10:49",
@@ -2845,12 +2845,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 44687,
+                  "id": 44784,
                   "mutability": "mutable",
                   "name": "_weeklyDelayFeePerSecondPerPfc",
                   "nameLocation": "1891:30:49",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44734,
+                  "scope": 44831,
                   "src": "1864:57:49",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -2859,10 +2859,10 @@
                     "typeString": "struct FixedPoint.Unsigned"
                   },
                   "typeName": {
-                    "id": 44686,
+                    "id": 44783,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 44685,
+                      "id": 44782,
                       "name": "FixedPoint.Unsigned",
                       "nameLocations": [
                         "1864:10:49",
@@ -2883,12 +2883,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 44689,
+                  "id": 44786,
                   "mutability": "mutable",
                   "name": "_timerAddress",
                   "nameLocation": "1939:13:49",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44734,
+                  "scope": 44831,
                   "src": "1931:21:49",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2897,7 +2897,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 44688,
+                    "id": 44785,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1931:7:49",
@@ -2913,23 +2913,23 @@
               "src": "1787:171:49"
             },
             "returnParameters": {
-              "id": 44694,
+              "id": 44791,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1983:0:49"
             },
-            "scope": 44959,
+            "scope": 45056,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
           },
           {
-            "id": 44748,
+            "id": 44845,
             "nodeType": "FunctionDefinition",
             "src": "2595:118:49",
             "nodes": [],
             "body": {
-              "id": 44747,
+              "id": 44844,
               "nodeType": "Block",
               "src": "2646:67:49",
               "nodes": [],
@@ -2942,14 +2942,14 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 44743,
+                        "id": 44840,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "expression": {
-                            "id": 44740,
+                            "id": 44837,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -2960,7 +2960,7 @@
                               "typeString": "msg"
                             }
                           },
-                          "id": 44741,
+                          "id": 44838,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -2978,7 +2978,7 @@
                         "operator": ">",
                         "rightExpression": {
                           "hexValue": "30",
-                          "id": 44742,
+                          "id": 44839,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -3000,7 +3000,7 @@
                       },
                       {
                         "hexValue": "56616c75652073656e742063616e2774206265207a65726f",
-                        "id": 44744,
+                        "id": 44841,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -3026,7 +3026,7 @@
                           "typeString": "literal_string \"Value sent can't be zero\""
                         }
                       ],
-                      "id": 44739,
+                      "id": 44836,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -3040,7 +3040,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 44745,
+                    "id": 44842,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3056,7 +3056,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 44746,
+                  "id": 44843,
                   "nodeType": "ExpressionStatement",
                   "src": "2656:50:49"
                 }
@@ -3066,7 +3066,7 @@
               32679
             ],
             "documentation": {
-              "id": 44735,
+              "id": 44832,
               "nodeType": "StructuredDocumentation",
               "src": "2460:130:49",
               "text": " @notice Pays Oracle fees in ETH to the store.\n @dev To be used by contracts whose margin currency is ETH."
@@ -3078,52 +3078,52 @@
             "name": "payOracleFees",
             "nameLocation": "2604:13:49",
             "overrides": {
-              "id": 44737,
+              "id": 44834,
               "nodeType": "OverrideSpecifier",
               "overrides": [],
               "src": "2637:8:49"
             },
             "parameters": {
-              "id": 44736,
+              "id": 44833,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2617:2:49"
             },
             "returnParameters": {
-              "id": 44738,
+              "id": 44835,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2646:0:49"
             },
-            "scope": 44959,
+            "scope": 45056,
             "stateMutability": "payable",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 44787,
+            "id": 44884,
             "nodeType": "FunctionDefinition",
             "src": "3075:304:49",
             "nodes": [],
             "body": {
-              "id": 44786,
+              "id": 44883,
               "nodeType": "Block",
               "src": "3180:199:49",
               "nodes": [],
               "statements": [
                 {
                   "assignments": [
-                    44760
+                    44857
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 44760,
+                      "id": 44857,
                       "mutability": "mutable",
                       "name": "erc20",
                       "nameLocation": "3197:5:49",
                       "nodeType": "VariableDeclaration",
-                      "scope": 44786,
+                      "scope": 44883,
                       "src": "3190:12:49",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -3132,10 +3132,10 @@
                         "typeString": "contract IERC20"
                       },
                       "typeName": {
-                        "id": 44759,
+                        "id": 44856,
                         "nodeType": "UserDefinedTypeName",
                         "pathNode": {
-                          "id": 44758,
+                          "id": 44855,
                           "name": "IERC20",
                           "nameLocations": [
                             "3190:6:49"
@@ -3154,15 +3154,15 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 44764,
+                  "id": 44861,
                   "initialValue": {
                     "arguments": [
                       {
-                        "id": 44762,
+                        "id": 44859,
                         "name": "erc20Address",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 44751,
+                        "referencedDeclaration": 44848,
                         "src": "3212:12:49",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -3177,7 +3177,7 @@
                           "typeString": "address"
                         }
                       ],
-                      "id": 44761,
+                      "id": 44858,
                       "name": "IERC20",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -3188,7 +3188,7 @@
                         "typeString": "type(contract IERC20)"
                       }
                     },
-                    "id": 44763,
+                    "id": 44860,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3214,7 +3214,7 @@
                         "arguments": [
                           {
                             "hexValue": "30",
-                            "id": 44768,
+                            "id": 44865,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -3237,18 +3237,18 @@
                             }
                           ],
                           "expression": {
-                            "id": 44766,
+                            "id": 44863,
                             "name": "amount",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 44754,
+                            "referencedDeclaration": 44851,
                             "src": "3243:6:49",
                             "typeDescriptions": {
                               "typeIdentifier": "t_struct$_Unsigned_$29440_calldata_ptr",
                               "typeString": "struct FixedPoint.Unsigned calldata"
                             }
                           },
-                          "id": 44767,
+                          "id": 44864,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -3263,7 +3263,7 @@
                             "typeString": "function (struct FixedPoint.Unsigned memory,uint256) pure returns (bool)"
                           }
                         },
-                        "id": 44769,
+                        "id": 44866,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -3281,7 +3281,7 @@
                       },
                       {
                         "hexValue": "416d6f756e742073656e742063616e2774206265207a65726f",
-                        "id": 44770,
+                        "id": 44867,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -3307,7 +3307,7 @@
                           "typeString": "literal_string \"Amount sent can't be zero\""
                         }
                       ],
-                      "id": 44765,
+                      "id": 44862,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -3321,7 +3321,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 44771,
+                    "id": 44868,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3337,7 +3337,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 44772,
+                  "id": 44869,
                   "nodeType": "ExpressionStatement",
                   "src": "3235:61:49"
                 },
@@ -3346,7 +3346,7 @@
                     "arguments": [
                       {
                         "expression": {
-                          "id": 44776,
+                          "id": 44873,
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
@@ -3357,7 +3357,7 @@
                             "typeString": "msg"
                           }
                         },
-                        "id": 44777,
+                        "id": 44874,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -3374,14 +3374,14 @@
                       {
                         "arguments": [
                           {
-                            "id": 44780,
+                            "id": 44877,
                             "name": "this",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": -28,
                             "src": "3349:4:49",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_contract$_Store_$44959",
+                              "typeIdentifier": "t_contract$_Store_$45056",
                               "typeString": "contract Store"
                             }
                           }
@@ -3389,11 +3389,11 @@
                         "expression": {
                           "argumentTypes": [
                             {
-                              "typeIdentifier": "t_contract$_Store_$44959",
+                              "typeIdentifier": "t_contract$_Store_$45056",
                               "typeString": "contract Store"
                             }
                           ],
-                          "id": 44779,
+                          "id": 44876,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -3405,14 +3405,14 @@
                             "typeString": "type(address)"
                           },
                           "typeName": {
-                            "id": 44778,
+                            "id": 44875,
                             "name": "address",
                             "nodeType": "ElementaryTypeName",
                             "src": "3341:7:49",
                             "typeDescriptions": {}
                           }
                         },
-                        "id": 44781,
+                        "id": 44878,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -3430,18 +3430,18 @@
                       },
                       {
                         "expression": {
-                          "id": 44782,
+                          "id": 44879,
                           "name": "amount",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 44754,
+                          "referencedDeclaration": 44851,
                           "src": "3356:6:49",
                           "typeDescriptions": {
                             "typeIdentifier": "t_struct$_Unsigned_$29440_calldata_ptr",
                             "typeString": "struct FixedPoint.Unsigned calldata"
                           }
                         },
-                        "id": 44783,
+                        "id": 44880,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -3473,18 +3473,18 @@
                         }
                       ],
                       "expression": {
-                        "id": 44773,
+                        "id": 44870,
                         "name": "erc20",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 44760,
+                        "referencedDeclaration": 44857,
                         "src": "3306:5:49",
                         "typeDescriptions": {
                           "typeIdentifier": "t_contract$_IERC20_$27502",
                           "typeString": "contract IERC20"
                         }
                       },
-                      "id": 44775,
+                      "id": 44872,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -3499,7 +3499,7 @@
                         "typeString": "function (contract IERC20,address,address,uint256)"
                       }
                     },
-                    "id": 44784,
+                    "id": 44881,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3515,7 +3515,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 44785,
+                  "id": 44882,
                   "nodeType": "ExpressionStatement",
                   "src": "3306:66:49"
                 }
@@ -3525,7 +3525,7 @@
               32688
             ],
             "documentation": {
-              "id": 44749,
+              "id": 44846,
               "nodeType": "StructuredDocumentation",
               "src": "2719:351:49",
               "text": " @notice Pays oracle fees in the margin currency, erc20Address, to the store.\n @dev To be used if the margin currency is an ERC20 token rather than ETH.\n @param erc20Address address of the ERC20 token used to pay the fee.\n @param amount number of tokens to transfer. An approval for at least this amount must exist."
@@ -3537,23 +3537,23 @@
             "name": "payOracleFeesErc20",
             "nameLocation": "3084:18:49",
             "overrides": {
-              "id": 44756,
+              "id": 44853,
               "nodeType": "OverrideSpecifier",
               "overrides": [],
               "src": "3171:8:49"
             },
             "parameters": {
-              "id": 44755,
+              "id": 44852,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44751,
+                  "id": 44848,
                   "mutability": "mutable",
                   "name": "erc20Address",
                   "nameLocation": "3111:12:49",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44787,
+                  "scope": 44884,
                   "src": "3103:20:49",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3562,7 +3562,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 44750,
+                    "id": 44847,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "3103:7:49",
@@ -3576,12 +3576,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 44754,
+                  "id": 44851,
                   "mutability": "mutable",
                   "name": "amount",
                   "nameLocation": "3154:6:49",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44787,
+                  "scope": 44884,
                   "src": "3125:35:49",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -3590,10 +3590,10 @@
                     "typeString": "struct FixedPoint.Unsigned"
                   },
                   "typeName": {
-                    "id": 44753,
+                    "id": 44850,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 44752,
+                      "id": 44849,
                       "name": "FixedPoint.Unsigned",
                       "nameLocations": [
                         "3125:10:49",
@@ -3616,40 +3616,40 @@
               "src": "3102:59:49"
             },
             "returnParameters": {
-              "id": 44757,
+              "id": 44854,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "3180:0:49"
             },
-            "scope": 44959,
+            "scope": 45056,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 44854,
+            "id": 44951,
             "nodeType": "FunctionDefinition",
             "src": "4482:1165:49",
             "nodes": [],
             "body": {
-              "id": 44853,
+              "id": 44950,
               "nodeType": "Block",
               "src": "4720:927:49",
               "nodes": [],
               "statements": [
                 {
                   "assignments": [
-                    44806
+                    44903
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 44806,
+                      "id": 44903,
                       "mutability": "mutable",
                       "name": "timeDiff",
                       "nameLocation": "4738:8:49",
                       "nodeType": "VariableDeclaration",
-                      "scope": 44853,
+                      "scope": 44950,
                       "src": "4730:16:49",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -3658,7 +3658,7 @@
                         "typeString": "uint256"
                       },
                       "typeName": {
-                        "id": 44805,
+                        "id": 44902,
                         "name": "uint256",
                         "nodeType": "ElementaryTypeName",
                         "src": "4730:7:49",
@@ -3670,15 +3670,15 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 44811,
+                  "id": 44908,
                   "initialValue": {
                     "arguments": [
                       {
-                        "id": 44809,
+                        "id": 44906,
                         "name": "startTime",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 44790,
+                        "referencedDeclaration": 44887,
                         "src": "4761:9:49",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -3694,18 +3694,18 @@
                         }
                       ],
                       "expression": {
-                        "id": 44807,
+                        "id": 44904,
                         "name": "endTime",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 44792,
+                        "referencedDeclaration": 44889,
                         "src": "4749:7:49",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         }
                       },
-                      "id": 44808,
+                      "id": 44905,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -3720,7 +3720,7 @@
                         "typeString": "function (uint256,uint256) pure returns (uint256)"
                       }
                     },
-                    "id": 44810,
+                    "id": 44907,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3741,17 +3741,17 @@
                 },
                 {
                   "expression": {
-                    "id": 44820,
+                    "id": 44917,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 44812,
+                      "id": 44909,
                       "name": "regularFee",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44800,
+                      "referencedDeclaration": 44897,
                       "src": "4866:10:49",
                       "typeDescriptions": {
                         "typeIdentifier": "t_struct$_Unsigned_$29440_memory_ptr",
@@ -3763,11 +3763,11 @@
                     "rightHandSide": {
                       "arguments": [
                         {
-                          "id": 44818,
+                          "id": 44915,
                           "name": "fixedOracleFeePerSecondPerPfc",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 44654,
+                          "referencedDeclaration": 44751,
                           "src": "4901:29:49",
                           "typeDescriptions": {
                             "typeIdentifier": "t_struct$_Unsigned_$29440_storage",
@@ -3785,11 +3785,11 @@
                         "expression": {
                           "arguments": [
                             {
-                              "id": 44815,
+                              "id": 44912,
                               "name": "timeDiff",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 44806,
+                              "referencedDeclaration": 44903,
                               "src": "4887:8:49",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
@@ -3805,18 +3805,18 @@
                               }
                             ],
                             "expression": {
-                              "id": 44813,
+                              "id": 44910,
                               "name": "pfc",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 44795,
+                              "referencedDeclaration": 44892,
                               "src": "4879:3:49",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_struct$_Unsigned_$29440_calldata_ptr",
                                 "typeString": "struct FixedPoint.Unsigned calldata"
                               }
                             },
-                            "id": 44814,
+                            "id": 44911,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -3831,7 +3831,7 @@
                               "typeString": "function (struct FixedPoint.Unsigned memory,uint256) pure returns (struct FixedPoint.Unsigned memory)"
                             }
                           },
-                          "id": 44816,
+                          "id": 44913,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -3847,7 +3847,7 @@
                             "typeString": "struct FixedPoint.Unsigned memory"
                           }
                         },
-                        "id": 44817,
+                        "id": 44914,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
@@ -3862,7 +3862,7 @@
                           "typeString": "function (struct FixedPoint.Unsigned memory,struct FixedPoint.Unsigned memory) pure returns (struct FixedPoint.Unsigned memory)"
                         }
                       },
-                      "id": 44819,
+                      "id": 44916,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -3884,23 +3884,23 @@
                       "typeString": "struct FixedPoint.Unsigned memory"
                     }
                   },
-                  "id": 44821,
+                  "id": 44918,
                   "nodeType": "ExpressionStatement",
                   "src": "4866:65:49"
                 },
                 {
                   "assignments": [
-                    44823
+                    44920
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 44823,
+                      "id": 44920,
                       "mutability": "mutable",
                       "name": "paymentDelay",
                       "nameLocation": "5031:12:49",
                       "nodeType": "VariableDeclaration",
-                      "scope": 44853,
+                      "scope": 44950,
                       "src": "5023:20:49",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -3909,7 +3909,7 @@
                         "typeString": "uint256"
                       },
                       "typeName": {
-                        "id": 44822,
+                        "id": 44919,
                         "name": "uint256",
                         "nodeType": "ElementaryTypeName",
                         "src": "5023:7:49",
@@ -3921,15 +3921,15 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 44829,
+                  "id": 44926,
                   "initialValue": {
                     "arguments": [
                       {
-                        "id": 44827,
+                        "id": 44924,
                         "name": "startTime",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 44790,
+                        "referencedDeclaration": 44887,
                         "src": "5067:9:49",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -3948,7 +3948,7 @@
                         "arguments": [],
                         "expression": {
                           "argumentTypes": [],
-                          "id": 44824,
+                          "id": 44921,
                           "name": "getCurrentTime",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
@@ -3959,7 +3959,7 @@
                             "typeString": "function () view returns (uint256)"
                           }
                         },
-                        "id": 44825,
+                        "id": 44922,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -3975,7 +3975,7 @@
                           "typeString": "uint256"
                         }
                       },
-                      "id": 44826,
+                      "id": 44923,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -3990,7 +3990,7 @@
                         "typeString": "function (uint256,uint256) pure returns (uint256)"
                       }
                     },
-                    "id": 44828,
+                    "id": 44925,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -4011,17 +4011,17 @@
                 },
                 {
                   "assignments": [
-                    44834
+                    44931
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 44834,
+                      "id": 44931,
                       "mutability": "mutable",
                       "name": "penaltyPercentagePerSecond",
                       "nameLocation": "5385:26:49",
                       "nodeType": "VariableDeclaration",
-                      "scope": 44853,
+                      "scope": 44950,
                       "src": "5358:53:49",
                       "stateVariable": false,
                       "storageLocation": "memory",
@@ -4030,10 +4030,10 @@
                         "typeString": "struct FixedPoint.Unsigned"
                       },
                       "typeName": {
-                        "id": 44833,
+                        "id": 44930,
                         "nodeType": "UserDefinedTypeName",
                         "pathNode": {
-                          "id": 44832,
+                          "id": 44929,
                           "name": "FixedPoint.Unsigned",
                           "nameLocations": [
                             "5358:10:49",
@@ -4053,17 +4053,17 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 44842,
+                  "id": 44939,
                   "initialValue": {
                     "arguments": [
                       {
                         "arguments": [
                           {
-                            "id": 44839,
+                            "id": 44936,
                             "name": "SECONDS_PER_WEEK",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 44665,
+                            "referencedDeclaration": 44762,
                             "src": "5477:16:49",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -4079,18 +4079,18 @@
                             }
                           ],
                           "expression": {
-                            "id": 44837,
+                            "id": 44934,
                             "name": "paymentDelay",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 44823,
+                            "referencedDeclaration": 44920,
                             "src": "5460:12:49",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
                             }
                           },
-                          "id": 44838,
+                          "id": 44935,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -4105,7 +4105,7 @@
                             "typeString": "function (uint256,uint256) pure returns (uint256)"
                           }
                         },
-                        "id": 44840,
+                        "id": 44937,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -4130,18 +4130,18 @@
                         }
                       ],
                       "expression": {
-                        "id": 44835,
+                        "id": 44932,
                         "name": "weeklyDelayFeePerSecondPerPfc",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 44657,
+                        "referencedDeclaration": 44754,
                         "src": "5426:29:49",
                         "typeDescriptions": {
                           "typeIdentifier": "t_struct$_Unsigned_$29440_storage",
                           "typeString": "struct FixedPoint.Unsigned storage ref"
                         }
                       },
-                      "id": 44836,
+                      "id": 44933,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
@@ -4156,7 +4156,7 @@
                         "typeString": "function (struct FixedPoint.Unsigned memory,uint256) pure returns (struct FixedPoint.Unsigned memory)"
                       }
                     },
-                    "id": 44841,
+                    "id": 44938,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -4177,17 +4177,17 @@
                 },
                 {
                   "expression": {
-                    "id": 44851,
+                    "id": 44948,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 44843,
+                      "id": 44940,
                       "name": "latePenalty",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44803,
+                      "referencedDeclaration": 44900,
                       "src": "5577:11:49",
                       "typeDescriptions": {
                         "typeIdentifier": "t_struct$_Unsigned_$29440_memory_ptr",
@@ -4199,11 +4199,11 @@
                     "rightHandSide": {
                       "arguments": [
                         {
-                          "id": 44849,
+                          "id": 44946,
                           "name": "penaltyPercentagePerSecond",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 44834,
+                          "referencedDeclaration": 44931,
                           "src": "5613:26:49",
                           "typeDescriptions": {
                             "typeIdentifier": "t_struct$_Unsigned_$29440_memory_ptr",
@@ -4221,11 +4221,11 @@
                         "expression": {
                           "arguments": [
                             {
-                              "id": 44846,
+                              "id": 44943,
                               "name": "timeDiff",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 44806,
+                              "referencedDeclaration": 44903,
                               "src": "5599:8:49",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
@@ -4241,18 +4241,18 @@
                               }
                             ],
                             "expression": {
-                              "id": 44844,
+                              "id": 44941,
                               "name": "pfc",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 44795,
+                              "referencedDeclaration": 44892,
                               "src": "5591:3:49",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_struct$_Unsigned_$29440_calldata_ptr",
                                 "typeString": "struct FixedPoint.Unsigned calldata"
                               }
                             },
-                            "id": 44845,
+                            "id": 44942,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -4267,7 +4267,7 @@
                               "typeString": "function (struct FixedPoint.Unsigned memory,uint256) pure returns (struct FixedPoint.Unsigned memory)"
                             }
                           },
-                          "id": 44847,
+                          "id": 44944,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -4283,7 +4283,7 @@
                             "typeString": "struct FixedPoint.Unsigned memory"
                           }
                         },
-                        "id": 44848,
+                        "id": 44945,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
@@ -4298,7 +4298,7 @@
                           "typeString": "function (struct FixedPoint.Unsigned memory,struct FixedPoint.Unsigned memory) pure returns (struct FixedPoint.Unsigned memory)"
                         }
                       },
-                      "id": 44850,
+                      "id": 44947,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -4320,7 +4320,7 @@
                       "typeString": "struct FixedPoint.Unsigned memory"
                     }
                   },
-                  "id": 44852,
+                  "id": 44949,
                   "nodeType": "ExpressionStatement",
                   "src": "5577:63:49"
                 }
@@ -4330,7 +4330,7 @@
               32705
             ],
             "documentation": {
-              "id": 44788,
+              "id": 44885,
               "nodeType": "StructuredDocumentation",
               "src": "3385:1092:49",
               "text": " @notice Computes the regular oracle fees that a contract should pay for a period.\n @dev The late penalty is similar to the regular fee in that is is charged per second over the period between\n startTime and endTime.\n The late penalty percentage increases over time as follows:\n - 0-1 week since startTime: no late penalty\n - 1-2 weeks since startTime: 1x late penalty percentage is applied\n - 2-3 weeks since startTime: 2x late penalty percentage is applied\n - ...\n @param startTime defines the beginning time from which the fee is paid.\n @param endTime end time until which the fee is paid.\n @param pfc \"profit from corruption\", or the maximum amount of margin currency that a\n token sponsor could extract from the contract through corrupting the price feed in their favor.\n @return regularFee amount owed for the duration from start to end time for the given pfc.\n @return latePenalty penalty percentage, if any, for paying the fee after the deadline."
@@ -4342,23 +4342,23 @@
             "name": "computeRegularFee",
             "nameLocation": "4491:17:49",
             "overrides": {
-              "id": 44797,
+              "id": 44894,
               "nodeType": "OverrideSpecifier",
               "overrides": [],
               "src": "4623:8:49"
             },
             "parameters": {
-              "id": 44796,
+              "id": 44893,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44790,
+                  "id": 44887,
                   "mutability": "mutable",
                   "name": "startTime",
                   "nameLocation": "4526:9:49",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44854,
+                  "scope": 44951,
                   "src": "4518:17:49",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4367,7 +4367,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 44789,
+                    "id": 44886,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "4518:7:49",
@@ -4380,12 +4380,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 44792,
+                  "id": 44889,
                   "mutability": "mutable",
                   "name": "endTime",
                   "nameLocation": "4553:7:49",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44854,
+                  "scope": 44951,
                   "src": "4545:15:49",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4394,7 +4394,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 44791,
+                    "id": 44888,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "4545:7:49",
@@ -4407,12 +4407,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 44795,
+                  "id": 44892,
                   "mutability": "mutable",
                   "name": "pfc",
                   "nameLocation": "4599:3:49",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44854,
+                  "scope": 44951,
                   "src": "4570:32:49",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -4421,10 +4421,10 @@
                     "typeString": "struct FixedPoint.Unsigned"
                   },
                   "typeName": {
-                    "id": 44794,
+                    "id": 44891,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 44793,
+                      "id": 44890,
                       "name": "FixedPoint.Unsigned",
                       "nameLocations": [
                         "4570:10:49",
@@ -4447,17 +4447,17 @@
               "src": "4508:100:49"
             },
             "returnParameters": {
-              "id": 44804,
+              "id": 44901,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44800,
+                  "id": 44897,
                   "mutability": "mutable",
                   "name": "regularFee",
                   "nameLocation": "4668:10:49",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44854,
+                  "scope": 44951,
                   "src": "4641:37:49",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -4466,10 +4466,10 @@
                     "typeString": "struct FixedPoint.Unsigned"
                   },
                   "typeName": {
-                    "id": 44799,
+                    "id": 44896,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 44798,
+                      "id": 44895,
                       "name": "FixedPoint.Unsigned",
                       "nameLocations": [
                         "4641:10:49",
@@ -4490,12 +4490,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 44803,
+                  "id": 44900,
                   "mutability": "mutable",
                   "name": "latePenalty",
                   "nameLocation": "4707:11:49",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44854,
+                  "scope": 44951,
                   "src": "4680:38:49",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -4504,10 +4504,10 @@
                     "typeString": "struct FixedPoint.Unsigned"
                   },
                   "typeName": {
-                    "id": 44802,
+                    "id": 44899,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 44801,
+                      "id": 44898,
                       "name": "FixedPoint.Unsigned",
                       "nameLocations": [
                         "4680:10:49",
@@ -4529,18 +4529,18 @@
               ],
               "src": "4640:79:49"
             },
-            "scope": 44959,
+            "scope": 45056,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 44869,
+            "id": 44966,
             "nodeType": "FunctionDefinition",
             "src": "5884:146:49",
             "nodes": [],
             "body": {
-              "id": 44868,
+              "id": 44965,
               "nodeType": "Block",
               "src": "5987:43:49",
               "nodes": [],
@@ -4548,24 +4548,24 @@
                 {
                   "expression": {
                     "baseExpression": {
-                      "id": 44864,
+                      "id": 44961,
                       "name": "finalFees",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44662,
+                      "referencedDeclaration": 44759,
                       "src": "6004:9:49",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Unsigned_$29440_storage_$",
                         "typeString": "mapping(address => struct FixedPoint.Unsigned storage ref)"
                       }
                     },
-                    "id": 44866,
+                    "id": 44963,
                     "indexExpression": {
-                      "id": 44865,
+                      "id": 44962,
                       "name": "currency",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44857,
+                      "referencedDeclaration": 44954,
                       "src": "6014:8:49",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -4583,8 +4583,8 @@
                       "typeString": "struct FixedPoint.Unsigned storage ref"
                     }
                   },
-                  "functionReturnParameters": 44863,
-                  "id": 44867,
+                  "functionReturnParameters": 44960,
+                  "id": 44964,
                   "nodeType": "Return",
                   "src": "5997:26:49"
                 }
@@ -4594,7 +4594,7 @@
               32714
             ],
             "documentation": {
-              "id": 44855,
+              "id": 44952,
               "nodeType": "StructuredDocumentation",
               "src": "5653:226:49",
               "text": " @notice Computes the final oracle fees that a contract should pay at settlement.\n @param currency token used to pay the final fee.\n @return finalFee amount due denominated in units of `currency`."
@@ -4606,23 +4606,23 @@
             "name": "computeFinalFee",
             "nameLocation": "5893:15:49",
             "overrides": {
-              "id": 44859,
+              "id": 44956,
               "nodeType": "OverrideSpecifier",
               "overrides": [],
               "src": "5941:8:49"
             },
             "parameters": {
-              "id": 44858,
+              "id": 44955,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44857,
+                  "id": 44954,
                   "mutability": "mutable",
                   "name": "currency",
                   "nameLocation": "5917:8:49",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44869,
+                  "scope": 44966,
                   "src": "5909:16:49",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4631,7 +4631,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 44856,
+                    "id": 44953,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "5909:7:49",
@@ -4647,17 +4647,17 @@
               "src": "5908:18:49"
             },
             "returnParameters": {
-              "id": 44863,
+              "id": 44960,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44862,
+                  "id": 44959,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44869,
+                  "scope": 44966,
                   "src": "5959:26:49",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -4666,10 +4666,10 @@
                     "typeString": "struct FixedPoint.Unsigned"
                   },
                   "typeName": {
-                    "id": 44861,
+                    "id": 44958,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 44860,
+                      "id": 44957,
                       "name": "FixedPoint.Unsigned",
                       "nameLocations": [
                         "5959:10:49",
@@ -4691,18 +4691,18 @@
               ],
               "src": "5958:28:49"
             },
-            "scope": 44959,
+            "scope": 45056,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 44900,
+            "id": 44997,
             "nodeType": "FunctionDefinition",
             "src": "6334:485:49",
             "nodes": [],
             "body": {
-              "id": 44899,
+              "id": 44996,
               "nodeType": "Block",
               "src": "6501:318:49",
               "nodes": [],
@@ -4714,7 +4714,7 @@
                         "arguments": [
                           {
                             "hexValue": "31",
-                            "id": 44886,
+                            "id": 44983,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -4737,18 +4737,18 @@
                             }
                           ],
                           "expression": {
-                            "id": 44884,
+                            "id": 44981,
                             "name": "newFixedOracleFeePerSecondPerPfc",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 44873,
+                            "referencedDeclaration": 44970,
                             "src": "6576:32:49",
                             "typeDescriptions": {
                               "typeIdentifier": "t_struct$_Unsigned_$29440_memory_ptr",
                               "typeString": "struct FixedPoint.Unsigned memory"
                             }
                           },
-                          "id": 44885,
+                          "id": 44982,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
@@ -4763,7 +4763,7 @@
                             "typeString": "function (struct FixedPoint.Unsigned memory,uint256) pure returns (bool)"
                           }
                         },
-                        "id": 44887,
+                        "id": 44984,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -4781,7 +4781,7 @@
                       },
                       {
                         "hexValue": "466565206d757374206265203c203130302520706572207365636f6e642e",
-                        "id": 44888,
+                        "id": 44985,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -4807,7 +4807,7 @@
                           "typeString": "literal_string \"Fee must be < 100% per second.\""
                         }
                       ],
-                      "id": 44883,
+                      "id": 44980,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -4821,7 +4821,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 44889,
+                    "id": 44986,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -4837,23 +4837,23 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 44890,
+                  "id": 44987,
                   "nodeType": "ExpressionStatement",
                   "src": "6568:89:49"
                 },
                 {
                   "expression": {
-                    "id": 44893,
+                    "id": 44990,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 44891,
+                      "id": 44988,
                       "name": "fixedOracleFeePerSecondPerPfc",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44654,
+                      "referencedDeclaration": 44751,
                       "src": "6667:29:49",
                       "typeDescriptions": {
                         "typeIdentifier": "t_struct$_Unsigned_$29440_storage",
@@ -4863,11 +4863,11 @@
                     "nodeType": "Assignment",
                     "operator": "=",
                     "rightHandSide": {
-                      "id": 44892,
+                      "id": 44989,
                       "name": "newFixedOracleFeePerSecondPerPfc",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44873,
+                      "referencedDeclaration": 44970,
                       "src": "6699:32:49",
                       "typeDescriptions": {
                         "typeIdentifier": "t_struct$_Unsigned_$29440_memory_ptr",
@@ -4880,7 +4880,7 @@
                       "typeString": "struct FixedPoint.Unsigned storage ref"
                     }
                   },
-                  "id": 44894,
+                  "id": 44991,
                   "nodeType": "ExpressionStatement",
                   "src": "6667:64:49"
                 },
@@ -4888,11 +4888,11 @@
                   "eventCall": {
                     "arguments": [
                       {
-                        "id": 44896,
+                        "id": 44993,
                         "name": "newFixedOracleFeePerSecondPerPfc",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 44873,
+                        "referencedDeclaration": 44970,
                         "src": "6779:32:49",
                         "typeDescriptions": {
                           "typeIdentifier": "t_struct$_Unsigned_$29440_memory_ptr",
@@ -4907,18 +4907,18 @@
                           "typeString": "struct FixedPoint.Unsigned memory"
                         }
                       ],
-                      "id": 44895,
+                      "id": 44992,
                       "name": "NewFixedOracleFeePerSecondPerPfc",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44670,
+                      "referencedDeclaration": 44767,
                       "src": "6746:32:49",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_struct$_Unsigned_$29440_memory_ptr_$returns$__$",
                         "typeString": "function (struct FixedPoint.Unsigned memory)"
                       }
                     },
-                    "id": 44897,
+                    "id": 44994,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -4934,14 +4934,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 44898,
+                  "id": 44995,
                   "nodeType": "EmitStatement",
                   "src": "6741:71:49"
                 }
               ]
             },
             "documentation": {
-              "id": 44870,
+              "id": 44967,
               "nodeType": "StructuredDocumentation",
               "src": "6176:153:49",
               "text": " @notice Sets a new oracle fee per second.\n @param newFixedOracleFeePerSecondPerPfc new fee per second charged to use the oracle."
@@ -4956,18 +4956,18 @@
                     "arguments": [
                       {
                         "expression": {
-                          "id": 44878,
+                          "id": 44975,
                           "name": "Roles",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 44651,
+                          "referencedDeclaration": 44748,
                           "src": "6483:5:49",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_enum$_Roles_$44651_$",
+                            "typeIdentifier": "t_type$_t_enum$_Roles_$44748_$",
                             "typeString": "type(enum Store.Roles)"
                           }
                         },
-                        "id": 44879,
+                        "id": 44976,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -4975,10 +4975,10 @@
                         "memberLocation": "6489:5:49",
                         "memberName": "Owner",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 44649,
+                        "referencedDeclaration": 44746,
                         "src": "6483:11:49",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_enum$_Roles_$44651",
+                          "typeIdentifier": "t_enum$_Roles_$44748",
                           "typeString": "enum Store.Roles"
                         }
                       }
@@ -4986,11 +4986,11 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_enum$_Roles_$44651",
+                          "typeIdentifier": "t_enum$_Roles_$44748",
                           "typeString": "enum Store.Roles"
                         }
                       ],
-                      "id": 44877,
+                      "id": 44974,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -5002,14 +5002,14 @@
                         "typeString": "type(uint256)"
                       },
                       "typeName": {
-                        "id": 44876,
+                        "id": 44973,
                         "name": "uint256",
                         "nodeType": "ElementaryTypeName",
                         "src": "6475:7:49",
                         "typeDescriptions": {}
                       }
                     },
-                    "id": 44880,
+                    "id": 44977,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -5026,10 +5026,10 @@
                     }
                   }
                 ],
-                "id": 44881,
+                "id": 44978,
                 "kind": "modifierInvocation",
                 "modifierName": {
-                  "id": 44875,
+                  "id": 44972,
                   "name": "onlyRoleHolder",
                   "nameLocations": [
                     "6460:14:49"
@@ -5045,17 +5045,17 @@
             "name": "setFixedOracleFeePerSecondPerPfc",
             "nameLocation": "6343:32:49",
             "parameters": {
-              "id": 44874,
+              "id": 44971,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44873,
+                  "id": 44970,
                   "mutability": "mutable",
                   "name": "newFixedOracleFeePerSecondPerPfc",
                   "nameLocation": "6403:32:49",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44900,
+                  "scope": 44997,
                   "src": "6376:59:49",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -5064,10 +5064,10 @@
                     "typeString": "struct FixedPoint.Unsigned"
                   },
                   "typeName": {
-                    "id": 44872,
+                    "id": 44969,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 44871,
+                      "id": 44968,
                       "name": "FixedPoint.Unsigned",
                       "nameLocations": [
                         "6376:10:49",
@@ -5090,23 +5090,23 @@
               "src": "6375:61:49"
             },
             "returnParameters": {
-              "id": 44882,
+              "id": 44979,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "6501:0:49"
             },
-            "scope": 44959,
+            "scope": 45056,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
           },
           {
-            "id": 44931,
+            "id": 45028,
             "nodeType": "FunctionDefinition",
             "src": "6977:429:49",
             "nodes": [],
             "body": {
-              "id": 44930,
+              "id": 45027,
               "nodeType": "Block",
               "src": "7144:262:49",
               "nodes": [],
@@ -5118,7 +5118,7 @@
                         "arguments": [
                           {
                             "hexValue": "31",
-                            "id": 44917,
+                            "id": 45014,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -5141,18 +5141,18 @@
                             }
                           ],
                           "expression": {
-                            "id": 44915,
+                            "id": 45012,
                             "name": "newWeeklyDelayFeePerSecondPerPfc",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 44904,
+                            "referencedDeclaration": 45001,
                             "src": "7162:32:49",
                             "typeDescriptions": {
                               "typeIdentifier": "t_struct$_Unsigned_$29440_memory_ptr",
                               "typeString": "struct FixedPoint.Unsigned memory"
                             }
                           },
-                          "id": 44916,
+                          "id": 45013,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
@@ -5167,7 +5167,7 @@
                             "typeString": "function (struct FixedPoint.Unsigned memory,uint256) pure returns (bool)"
                           }
                         },
-                        "id": 44918,
+                        "id": 45015,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -5185,7 +5185,7 @@
                       },
                       {
                         "hexValue": "7765656b6c792064656c617920666565206d757374206265203c2031303025",
-                        "id": 44919,
+                        "id": 45016,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -5211,7 +5211,7 @@
                           "typeString": "literal_string \"weekly delay fee must be < 100%\""
                         }
                       ],
-                      "id": 44914,
+                      "id": 45011,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -5225,7 +5225,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 44920,
+                    "id": 45017,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -5241,23 +5241,23 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 44921,
+                  "id": 45018,
                   "nodeType": "ExpressionStatement",
                   "src": "7154:90:49"
                 },
                 {
                   "expression": {
-                    "id": 44924,
+                    "id": 45021,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 44922,
+                      "id": 45019,
                       "name": "weeklyDelayFeePerSecondPerPfc",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44657,
+                      "referencedDeclaration": 44754,
                       "src": "7254:29:49",
                       "typeDescriptions": {
                         "typeIdentifier": "t_struct$_Unsigned_$29440_storage",
@@ -5267,11 +5267,11 @@
                     "nodeType": "Assignment",
                     "operator": "=",
                     "rightHandSide": {
-                      "id": 44923,
+                      "id": 45020,
                       "name": "newWeeklyDelayFeePerSecondPerPfc",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44904,
+                      "referencedDeclaration": 45001,
                       "src": "7286:32:49",
                       "typeDescriptions": {
                         "typeIdentifier": "t_struct$_Unsigned_$29440_memory_ptr",
@@ -5284,7 +5284,7 @@
                       "typeString": "struct FixedPoint.Unsigned storage ref"
                     }
                   },
-                  "id": 44925,
+                  "id": 45022,
                   "nodeType": "ExpressionStatement",
                   "src": "7254:64:49"
                 },
@@ -5292,11 +5292,11 @@
                   "eventCall": {
                     "arguments": [
                       {
-                        "id": 44927,
+                        "id": 45024,
                         "name": "newWeeklyDelayFeePerSecondPerPfc",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 44904,
+                        "referencedDeclaration": 45001,
                         "src": "7366:32:49",
                         "typeDescriptions": {
                           "typeIdentifier": "t_struct$_Unsigned_$29440_memory_ptr",
@@ -5311,18 +5311,18 @@
                           "typeString": "struct FixedPoint.Unsigned memory"
                         }
                       ],
-                      "id": 44926,
+                      "id": 45023,
                       "name": "NewWeeklyDelayFeePerSecondPerPfc",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44675,
+                      "referencedDeclaration": 44772,
                       "src": "7333:32:49",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_struct$_Unsigned_$29440_memory_ptr_$returns$__$",
                         "typeString": "function (struct FixedPoint.Unsigned memory)"
                       }
                     },
-                    "id": 44928,
+                    "id": 45025,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -5338,14 +5338,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 44929,
+                  "id": 45026,
                   "nodeType": "EmitStatement",
                   "src": "7328:71:49"
                 }
               ]
             },
             "documentation": {
-              "id": 44901,
+              "id": 44998,
               "nodeType": "StructuredDocumentation",
               "src": "6825:147:49",
               "text": " @notice Sets a new weekly delay fee.\n @param newWeeklyDelayFeePerSecondPerPfc fee escalation per week of late fee payment."
@@ -5360,18 +5360,18 @@
                     "arguments": [
                       {
                         "expression": {
-                          "id": 44909,
+                          "id": 45006,
                           "name": "Roles",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 44651,
+                          "referencedDeclaration": 44748,
                           "src": "7126:5:49",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_enum$_Roles_$44651_$",
+                            "typeIdentifier": "t_type$_t_enum$_Roles_$44748_$",
                             "typeString": "type(enum Store.Roles)"
                           }
                         },
-                        "id": 44910,
+                        "id": 45007,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -5379,10 +5379,10 @@
                         "memberLocation": "7132:5:49",
                         "memberName": "Owner",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 44649,
+                        "referencedDeclaration": 44746,
                         "src": "7126:11:49",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_enum$_Roles_$44651",
+                          "typeIdentifier": "t_enum$_Roles_$44748",
                           "typeString": "enum Store.Roles"
                         }
                       }
@@ -5390,11 +5390,11 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_enum$_Roles_$44651",
+                          "typeIdentifier": "t_enum$_Roles_$44748",
                           "typeString": "enum Store.Roles"
                         }
                       ],
-                      "id": 44908,
+                      "id": 45005,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -5406,14 +5406,14 @@
                         "typeString": "type(uint256)"
                       },
                       "typeName": {
-                        "id": 44907,
+                        "id": 45004,
                         "name": "uint256",
                         "nodeType": "ElementaryTypeName",
                         "src": "7118:7:49",
                         "typeDescriptions": {}
                       }
                     },
-                    "id": 44911,
+                    "id": 45008,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -5430,10 +5430,10 @@
                     }
                   }
                 ],
-                "id": 44912,
+                "id": 45009,
                 "kind": "modifierInvocation",
                 "modifierName": {
-                  "id": 44906,
+                  "id": 45003,
                   "name": "onlyRoleHolder",
                   "nameLocations": [
                     "7103:14:49"
@@ -5449,17 +5449,17 @@
             "name": "setWeeklyDelayFeePerSecondPerPfc",
             "nameLocation": "6986:32:49",
             "parameters": {
-              "id": 44905,
+              "id": 45002,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44904,
+                  "id": 45001,
                   "mutability": "mutable",
                   "name": "newWeeklyDelayFeePerSecondPerPfc",
                   "nameLocation": "7046:32:49",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44931,
+                  "scope": 45028,
                   "src": "7019:59:49",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -5468,10 +5468,10 @@
                     "typeString": "struct FixedPoint.Unsigned"
                   },
                   "typeName": {
-                    "id": 44903,
+                    "id": 45000,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 44902,
+                      "id": 44999,
                       "name": "FixedPoint.Unsigned",
                       "nameLocations": [
                         "7019:10:49",
@@ -5494,54 +5494,54 @@
               "src": "7018:61:49"
             },
             "returnParameters": {
-              "id": 44913,
+              "id": 45010,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "7144:0:49"
             },
-            "scope": 44959,
+            "scope": 45056,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
           },
           {
-            "id": 44958,
+            "id": 45055,
             "nodeType": "FunctionDefinition",
             "src": "7612:232:49",
             "nodes": [],
             "body": {
-              "id": 44957,
+              "id": 45054,
               "nodeType": "Block",
               "src": "7755:89:49",
               "nodes": [],
               "statements": [
                 {
                   "expression": {
-                    "id": 44951,
+                    "id": 45048,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 44947,
+                        "id": 45044,
                         "name": "finalFees",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 44662,
+                        "referencedDeclaration": 44759,
                         "src": "7765:9:49",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Unsigned_$29440_storage_$",
                           "typeString": "mapping(address => struct FixedPoint.Unsigned storage ref)"
                         }
                       },
-                      "id": 44949,
+                      "id": 45046,
                       "indexExpression": {
-                        "id": 44948,
+                        "id": 45045,
                         "name": "currency",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 44934,
+                        "referencedDeclaration": 45031,
                         "src": "7775:8:49",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -5562,11 +5562,11 @@
                     "nodeType": "Assignment",
                     "operator": "=",
                     "rightHandSide": {
-                      "id": 44950,
+                      "id": 45047,
                       "name": "newFinalFee",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44937,
+                      "referencedDeclaration": 45034,
                       "src": "7787:11:49",
                       "typeDescriptions": {
                         "typeIdentifier": "t_struct$_Unsigned_$29440_memory_ptr",
@@ -5579,7 +5579,7 @@
                       "typeString": "struct FixedPoint.Unsigned storage ref"
                     }
                   },
-                  "id": 44952,
+                  "id": 45049,
                   "nodeType": "ExpressionStatement",
                   "src": "7765:33:49"
                 },
@@ -5587,11 +5587,11 @@
                   "eventCall": {
                     "arguments": [
                       {
-                        "id": 44954,
+                        "id": 45051,
                         "name": "newFinalFee",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 44937,
+                        "referencedDeclaration": 45034,
                         "src": "7825:11:49",
                         "typeDescriptions": {
                           "typeIdentifier": "t_struct$_Unsigned_$29440_memory_ptr",
@@ -5606,18 +5606,18 @@
                           "typeString": "struct FixedPoint.Unsigned memory"
                         }
                       ],
-                      "id": 44953,
+                      "id": 45050,
                       "name": "NewFinalFee",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44680,
+                      "referencedDeclaration": 44777,
                       "src": "7813:11:49",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_struct$_Unsigned_$29440_memory_ptr_$returns$__$",
                         "typeString": "function (struct FixedPoint.Unsigned memory)"
                       }
                     },
-                    "id": 44955,
+                    "id": 45052,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -5633,14 +5633,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 44956,
+                  "id": 45053,
                   "nodeType": "EmitStatement",
                   "src": "7808:29:49"
                 }
               ]
             },
             "documentation": {
-              "id": 44932,
+              "id": 45029,
               "nodeType": "StructuredDocumentation",
               "src": "7412:195:49",
               "text": " @notice Sets a new final fee for a particular currency.\n @param currency defines the token currency used to pay the final fee.\n @param newFinalFee final fee amount."
@@ -5655,18 +5655,18 @@
                     "arguments": [
                       {
                         "expression": {
-                          "id": 44942,
+                          "id": 45039,
                           "name": "Roles",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 44651,
+                          "referencedDeclaration": 44748,
                           "src": "7737:5:49",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_enum$_Roles_$44651_$",
+                            "typeIdentifier": "t_type$_t_enum$_Roles_$44748_$",
                             "typeString": "type(enum Store.Roles)"
                           }
                         },
-                        "id": 44943,
+                        "id": 45040,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -5674,10 +5674,10 @@
                         "memberLocation": "7743:5:49",
                         "memberName": "Owner",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 44649,
+                        "referencedDeclaration": 44746,
                         "src": "7737:11:49",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_enum$_Roles_$44651",
+                          "typeIdentifier": "t_enum$_Roles_$44748",
                           "typeString": "enum Store.Roles"
                         }
                       }
@@ -5685,11 +5685,11 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_enum$_Roles_$44651",
+                          "typeIdentifier": "t_enum$_Roles_$44748",
                           "typeString": "enum Store.Roles"
                         }
                       ],
-                      "id": 44941,
+                      "id": 45038,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -5701,14 +5701,14 @@
                         "typeString": "type(uint256)"
                       },
                       "typeName": {
-                        "id": 44940,
+                        "id": 45037,
                         "name": "uint256",
                         "nodeType": "ElementaryTypeName",
                         "src": "7729:7:49",
                         "typeDescriptions": {}
                       }
                     },
-                    "id": 44944,
+                    "id": 45041,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -5725,10 +5725,10 @@
                     }
                   }
                 ],
-                "id": 44945,
+                "id": 45042,
                 "kind": "modifierInvocation",
                 "modifierName": {
-                  "id": 44939,
+                  "id": 45036,
                   "name": "onlyRoleHolder",
                   "nameLocations": [
                     "7714:14:49"
@@ -5744,17 +5744,17 @@
             "name": "setFinalFee",
             "nameLocation": "7621:11:49",
             "parameters": {
-              "id": 44938,
+              "id": 45035,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44934,
+                  "id": 45031,
                   "mutability": "mutable",
                   "name": "currency",
                   "nameLocation": "7641:8:49",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44958,
+                  "scope": 45055,
                   "src": "7633:16:49",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -5763,7 +5763,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 44933,
+                    "id": 45030,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "7633:7:49",
@@ -5777,12 +5777,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 44937,
+                  "id": 45034,
                   "mutability": "mutable",
                   "name": "newFinalFee",
                   "nameLocation": "7678:11:49",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44958,
+                  "scope": 45055,
                   "src": "7651:38:49",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -5791,10 +5791,10 @@
                     "typeString": "struct FixedPoint.Unsigned"
                   },
                   "typeName": {
-                    "id": 44936,
+                    "id": 45033,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 44935,
+                      "id": 45032,
                       "name": "FixedPoint.Unsigned",
                       "nameLocations": [
                         "7651:10:49",
@@ -5817,12 +5817,12 @@
               "src": "7632:58:49"
             },
             "returnParameters": {
-              "id": 44946,
+              "id": 45043,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "7755:0:49"
             },
-            "scope": 44959,
+            "scope": 45056,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
@@ -5832,7 +5832,7 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 44629,
+              "id": 44726,
               "name": "StoreInterface",
               "nameLocations": [
                 "631:14:49"
@@ -5841,13 +5841,13 @@
               "referencedDeclaration": 32715,
               "src": "631:14:49"
             },
-            "id": 44630,
+            "id": 44727,
             "nodeType": "InheritanceSpecifier",
             "src": "631:14:49"
           },
           {
             "baseName": {
-              "id": 44631,
+              "id": 44728,
               "name": "Withdrawable",
               "nameLocations": [
                 "647:12:49"
@@ -5856,13 +5856,13 @@
               "referencedDeclaration": 31963,
               "src": "647:12:49"
             },
-            "id": 44632,
+            "id": 44729,
             "nodeType": "InheritanceSpecifier",
             "src": "647:12:49"
           },
           {
             "baseName": {
-              "id": 44633,
+              "id": 44730,
               "name": "Testable",
               "nameLocations": [
                 "661:8:49"
@@ -5871,7 +5871,7 @@
               "referencedDeclaration": 31829,
               "src": "661:8:49"
             },
-            "id": 44634,
+            "id": 44731,
             "nodeType": "InheritanceSpecifier",
             "src": "661:8:49"
           }
@@ -5880,14 +5880,14 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "documentation": {
-          "id": 44628,
+          "id": 44725,
           "nodeType": "StructuredDocumentation",
           "src": "503:109:49",
           "text": " @title An implementation of Store that can accept Oracle fees in ETH or any arbitrary ERC20 token."
         },
         "fullyImplemented": true,
         "linearizedBaseContracts": [
-          44959,
+          45056,
           31829,
           31963,
           31756,
@@ -5895,7 +5895,7 @@
         ],
         "name": "Store",
         "nameLocation": "622:5:49",
-        "scope": 44960,
+        "scope": 45057,
         "usedErrors": []
       }
     ],

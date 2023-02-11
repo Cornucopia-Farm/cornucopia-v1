@@ -62,7 +62,8 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 
         if (msg.value > 0) { // User sends ETH
             bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = msg.value; 
-        } else { // Creator escrows ERC20
+        } else { // Creator escrows ERC20 
+            require(_amount > 0, "Amount must be non-zero");
             IERC20(_token).safeTransferFrom(msg.sender, address(this), _amount);
             bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = _amount;
             bountyToken[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = _token;
