@@ -9,11 +9,11 @@ import axios from 'axios';
 import { useAccount, useNetwork } from 'wagmi';
 import { TailSpin } from 'react-loader-spinner';
 import styles from '../styles/Home.module.css';
-import WelcomeCard from '../components/welcomeCard';
 import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const OpenBounties: NextPage = () => {
     const { address, isConnected } = useAccount();
@@ -21,7 +21,7 @@ const OpenBounties: NextPage = () => {
 
     const [openBountyPosts, setOpenBountyPosts] = React.useState(Array<JSX.Element>);
 
-    const { data, error, isValidating } = useSWR([OPENBOUNTIES, { chain: chain?.network! ? chain?.network! : 'ethereum' },], gqlFetcher);
+    const { data, error, isValidating } = useSWR([OPENBOUNTIES, { chain: chain?.network! ? chain?.network! : 'goerli' },], gqlFetcher);
 
     if (error) {
         console.error(error); 
@@ -56,57 +56,64 @@ const OpenBounties: NextPage = () => {
                             disputes={false} 
                             tokenSymbol={postData.data.tokenSymbol}
                         >
-                            <Form 
-                                creatorAddress={postData.data.creatorAddress}
-                                hunterAddress={address!}
-                                postId={postId}
-                                postLinks={postData.data.postLinks}
-                                startDate={postData.data.startDate}
-                                endDate={postData.data.endDate}
-                                description={postData.data.description}
-                                title={postData.data.title}
-                                amount={postData.data.amount}
-                                tokenAddress={postData.data.tokenAddress}
-                                tokenSymbol={postData.data.tokenSymbol}
-                                tokenDecimals={postData.data.tokenDecimals}
-                                formName={"Apply"}
-                                summary={"Please fill out this form to apply to this bounty!"}  
-                                formButtons={["Cancel", "Apply"]}
-                                formType={"applyBounty"}
-                                tags={[
-                                    {
-                                        name: "Content-Type",
-                                        value: "application/json"
-                                    },
-                                    {
-                                        name: "App-Name",
-                                        value: "Cornucopia-test5"
-                                    },
-                                    {
-                                        name: "Form-Type",
-                                        value: "bounty-app"
-                                    },
-                                    {
-                                        name: "Hunter-Address",
-                                        value: address!
-                                    },
-                                    {
-                                        name: "Post-ID",
-                                        value: postId // postID of the bounty created by the creator
-                                    },
-                                    {
-                                        name: "Chain",
-                                        value: chain?.network!
-                                    }
-                                ]}
-                            />
+                            {isConnected && 
+                                <Form 
+                                    creatorAddress={postData.data.creatorAddress}
+                                    hunterAddress={address!}
+                                    postId={postId}
+                                    postLinks={postData.data.postLinks}
+                                    startDate={postData.data.startDate}
+                                    endDate={postData.data.endDate}
+                                    description={postData.data.description}
+                                    title={postData.data.title}
+                                    amount={postData.data.amount}
+                                    tokenAddress={postData.data.tokenAddress}
+                                    tokenSymbol={postData.data.tokenSymbol}
+                                    tokenDecimals={postData.data.tokenDecimals}
+                                    formName={"Apply"}
+                                    summary={"Please fill out this form to apply to this bounty!"}  
+                                    formButtons={["Cancel", "Apply"]}
+                                    formType={"applyBounty"}
+                                    tags={[
+                                        {
+                                            name: "Content-Type",
+                                            value: "application/json"
+                                        },
+                                        {
+                                            name: "App-Name",
+                                            value: "Cornucopia-test5"
+                                        },
+                                        {
+                                            name: "Form-Type",
+                                            value: "bounty-app"
+                                        },
+                                        {
+                                            name: "Hunter-Address",
+                                            value: address!
+                                        },
+                                        {
+                                            name: "Post-ID",
+                                            value: postId // postID of the bounty created by the creator
+                                        },
+                                        {
+                                            name: "Chain",
+                                            value: chain?.network!
+                                        }
+                                    ]}
+                                />
+                            }
+                            {!isConnected && 
+                                <Box> 
+                                    <ConnectButton />
+                                </Box>
+                            }
                         </BasicAccordian>
                     ); 
                 });
                 setOpenBountyPosts(bountyPosts);
             }); // Wait for these promises to resolve before setting the state variables
         }
-    }, [address, chain]);
+    }, [address, chain, isConnected]);
 
     useEffect(() => {
         if (postIds && postIds.length > 0 && !isValidating) {
@@ -114,15 +121,9 @@ const OpenBounties: NextPage = () => {
         } 
     }, [getPosts, postIds, isValidating]);
 
-    const largeScreen = useMediaQuery('(min-width: 531px)');
-    
-    if (!isConnected) {
-        return (
-            <div className={styles.background}> 
-                <WelcomeCard isConnected={isConnected}/>
-            </div>
-        );
-    } else if (!isValidating) {
+    const largeScreen = useMediaQuery('(min-width: 531px)'); 
+
+    if (!isValidating) {
         return (
             <div className={styles.background}>
                 <Head>

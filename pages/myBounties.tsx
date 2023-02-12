@@ -26,6 +26,7 @@ import { gql } from 'graphql-request';
 import { getEscrowEventData } from '../getEscrowEventData';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import contractAddresses from '../contractAddresses.json';
+import Image from 'next/image';
 
 // Bounty Stages for Hunter:
 // 1. Applied (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.NoBounty); CHECK PROGRESS MAPPING
@@ -466,9 +467,66 @@ const MyBounties: NextPage = () => {
     
     if (!isConnected) {
         return (
-            <div className={styles.background}> 
-                <WelcomeCard isConnected={isConnected}/>
-            </div>
+            <main className={styles.background}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', ...(notMobileScreen ? { paddingLeft: '16vw', } : { paddingLeft: '12vw', }), ...(notMobileScreen ? { paddingRight: '16vw', } : { paddingRight: '12vw', }), paddingTop: '24px', color: 'rgba(6, 72, 41, 0.85)', }}> 
+                    <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center'}}> 
+                        <Box sx={{ display: 'flex', flexDirection: 'column', }}>
+                            <Button onClick={() => setStageInfo(true)} sx={{ width: '13px !important', height: '13px !important', position: 'absolute', paddingBottom: '20px', paddingLeft: '68px', }}> 
+                                <InfoOutlinedIcon sx={{ color: 'rgb(233, 233, 198)', fontSize: '12px', }}/>
+                            </Button>
+                            <MyBountiesInfo open={stageInfo} setOpen={setStageInfo}/>
+                            <Typography sx={{ color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk', fontStyle: 'italic', fontWeight: '300', fontSize: '18px', position: 'relative', }}>Stages</Typography>
+                        </Box>
+                        {largeScreen && 
+                        <Slider
+                            aria-label="Restricted values"
+                            defaultValue={marks[stageLarge.current - 1].value}
+                            getAriaValueText={valuetext}
+                            step={null}
+                            valueLabelDisplay="off"
+                            marks={marks}
+                            onChange={(e, val) => { setStage(marks.findIndex((mark) => mark.value === val) + 1); stageLarge.current = marks.findIndex((mark) => mark.value === val) + 1; }}
+                            sx={{ 
+                                height: 12, 
+                                color: 'rgb(233, 233, 198)', 
+                                '& .MuiSlider-markLabel': { 
+                                    color: 'rgb(233, 233, 198)', 
+                                    fontFamily: 'Space Grotesk' 
+                                }, 
+                                '& .MuiSlider-thumb': {
+                                    height: 24,
+                                    width: 24,
+                                    backgroundColor: '#fff',
+                                    border: '2px solid currentColor',
+                                    '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
+                                    boxShadow: '0 0 0 8px rgba(58, 133, 137, 0.16)',
+                                    },
+                                    '&:before': {
+                                    display: 'none',
+                                    },
+                                },
+                                '& .MuiSlider-track': {
+                                    border: 'none',
+                                },
+                                '& .MuiSlider-mark': {
+                                    '&.MuiSlider-markActive': {
+                                    opacity: 1,
+                                    backgroundColor: 'currentColor',
+                                    },
+                                }
+                            }}
+                        />
+                    }
+                    </Box>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
+                        <Image alt="" src="/the_cow_scientist.png" height="300px" width="300px"/>
+                        <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 13}}>Connect your wallet to get started.</Typography>
+                    </Box>
+                </Box>
+            </main>
+            // <div className={styles.background}> 
+            //     <WelcomeCard isConnected={isConnected}/>
+            // </div>
         );
     } else if (!isValidating && !isSubmittedValidating) {
         return (
@@ -530,6 +588,16 @@ const MyBounties: NextPage = () => {
                             />
                         }
                         </Box>
+
+                        <Box>
+                            {(appliedBountyPosts.length + inProgressBountyPosts.length + submittedBountyPosts.length + disputeInitiatedBountyPosts.length + disputeRespondedToBountyPosts.length + creatorNoActionBountyPosts.length + finishedBountyPosts.length) === 0 && stage === 1 && smallScreen &&
+                                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '2vh', paddingBottom: '2.5vh', gap: '2vh', }}> 
+                                    <Image alt="" src="/the_cow_scientist.png" height="200px" width="200px"/>
+                                    <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '200px', wordWrap: 'break-word', textAlign: 'center'}}>Go to Open Bounties to apply for a bounty.</Typography>
+                                </Box>
+                            }
+                        </Box>
+
                         {largeScreen && stage === 1 && <h2 className={styles.h2}>Applied</h2>}
                         {largeScreen && stage === 2 && <h2 className={styles.h2}>In Progress</h2>}
                         {largeScreen && stage === 3 && <h2 className={styles.h2}>Submitted</h2>}
@@ -539,12 +607,54 @@ const MyBounties: NextPage = () => {
                         {largeScreen && stage === 7 && <h2 className={styles.h2}>Finished</h2>}
 
                         {largeScreen && stage === 1 && appliedBountyPosts}
+                        {appliedBountyPosts.length === 0 && stage === 1 && largeScreen &&
+                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
+                                <Image alt="" src="/the_cow_scientist.png" height="300px" width="300px"/>
+                                <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>Go to Open Bounties to apply for a bounty.</Typography>
+                            </Box>
+                        }
                         {largeScreen && stage === 2 && inProgressBountyPosts}
+                        {inProgressBountyPosts.length === 0 && stage === 2 && largeScreen &&
+                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
+                                <Image alt="" src="/the_cow_scientist.png" height="300px" width="300px"/>
+                                <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>Wait for creators to escrow funds.</Typography>
+                            </Box>
+                        }
                         {largeScreen && stage === 3 && submittedBountyPosts}
+                        {submittedBountyPosts.length === 0 && stage === 3 && largeScreen &&
+                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
+                                <Image alt="" src="/the_cow_scientist.png" height="300px" width="300px"/>
+                                <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>Submit your work.</Typography>
+                            </Box>
+                        }
                         {largeScreen && stage === 4 && disputeInitiatedBountyPosts}
+                        {disputeInitiatedBountyPosts.length === 0 && stage === 4 && largeScreen &&
+                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
+                                <Image alt="" src="/the_cow_scientist.png" height="300px" width="300px"/>
+                                <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>Creators have not disputed any of your work.</Typography>
+                            </Box>
+                        }
                         {largeScreen && stage === 5 && disputeRespondedToBountyPosts}
+                        {disputeRespondedToBountyPosts.length === 0 && stage === 5 && largeScreen &&
+                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
+                                <Image alt="" src="/the_cow_scientist.png" height="300px" width="300px"/>
+                                <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>You haven&apos;t disputed any creators&apos; disputes.</Typography>
+                            </Box>
+                        }
                         {largeScreen && stage === 6 && creatorNoActionBountyPosts}
+                        {creatorNoActionBountyPosts.length === 0 && stage === 6 && largeScreen &&
+                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
+                                <Image alt="" src="/the_cow_scientist.png" height="300px" width="300px"/>
+                                <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>Creators can still payout or dispute your work.</Typography>
+                            </Box>
+                        }
                         {largeScreen && stage === 7 && finishedBountyPosts}
+                        {finishedBountyPosts.length === 0 && stage === 7 && largeScreen &&
+                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
+                                <Image alt="" src="/the_cow_scientist.png" height="300px" width="300px"/>
+                                <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>None of your bounties are finished.</Typography>
+                            </Box>
+                        }
 
                         {smallScreen && <h2 className={styles.h2}>Applied</h2>}
                         {smallScreen && appliedBountyPosts}
