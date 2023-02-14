@@ -94,8 +94,8 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         require(progress[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] == Status.Submitted, "Work not Submitted");
         bytes memory ancillaryData = bytes(_ancillaryData);
         
-        _currency.safeTransferFrom(msg.sender, address(this), _bondAmt + 35 * 10^16); // Transfer WETH from creator to contract to then send to OO
-        _currency.safeIncreaseAllowance(_oracleAddress, _bondAmt + 35 * 10^16); // Need to approve OO contract to transfer tokens from here to OO of bondAmt + 0.35 WETH
+        _currency.safeTransferFrom(msg.sender, address(this), _bondAmt + 35 * 10**16); // Transfer WETH from creator to contract to then send to OO
+        _currency.safeIncreaseAllowance(_oracleAddress, _bondAmt + 35 * 10**16); // Need to approve OO contract to transfer tokens from here to OO of bondAmt + 0.35 WETH
 
         oracleInterface = SkinnyOptimisticOracleInterface(_oracleAddress);
         uint creatorBondAmt = oracleInterface.requestAndProposePriceFor(
@@ -125,8 +125,8 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         ) external returns (uint) {
         require(progress[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] == Status.DisputeInitiated, "Bounty creator has not disputed");
 
-        _request.currency.safeTransferFrom(msg.sender, address(this), _request.bond + 35 * 10^16); // Transfer WETH from hunter to contract to then send to OO
-        _request.currency.safeIncreaseAllowance(address(oracleInterface), _request.bond + 35 * 10^16); // Need to approve OO contract to transfer tokens from here to OO of bondAmt + 0.35 WETH
+        _request.currency.safeTransferFrom(msg.sender, address(this), _request.bond + 35 * 10**16); // Transfer WETH from hunter to contract to then send to OO
+        _request.currency.safeIncreaseAllowance(address(oracleInterface), _request.bond + 35 * 10**16); // Need to approve OO contract to transfer tokens from here to OO of bondAmt + 0.35 WETH
 
         uint hunterBondAmt = oracleInterface.disputePriceFor(
             bytes32("YES_OR_NO_QUERY"),
@@ -171,8 +171,7 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         SkinnyOptimisticOracleInterface.Request memory _request
     ) external {
         Status status = progress[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))];
-        require(status != Status.Submitted, "Creator hasn't disputed work");
-        require(status != Status.Resolved, "Bounty has been payed out");
+        require(status == Status.DisputeInitiated || status == Status.DisputeRespondedTo, "Bounty must be disputed");
 
         OptimisticOracleInterface.State state = oracleInterface.getState(address(this), bytes32("YES_OR_NO_QUERY"), _timestamp, _ancillaryData, _request); // Note: EscrowContract is actually the requester not the creator
 
