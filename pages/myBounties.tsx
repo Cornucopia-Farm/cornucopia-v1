@@ -593,7 +593,7 @@ const MyBounties: NextPage = () => {
                             {(appliedBountyPosts.length + inProgressBountyPosts.length + submittedBountyPosts.length + disputeInitiatedBountyPosts.length + disputeRespondedToBountyPosts.length + creatorNoActionBountyPosts.length + finishedBountyPosts.length) === 0 && stage === 1 && smallScreen &&
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '2vh', paddingBottom: '2.5vh', gap: '2vh', }}> 
                                     <Image alt="" src="/the_cow_scientist.png" height="200px" width="200px"/>
-                                    <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '200px', wordWrap: 'break-word', textAlign: 'center'}}>Go to Open Bounties to apply for a bounty.</Typography>
+                                    <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '200px', wordWrap: 'break-word', textAlign: 'center', }}>Go to Open Bounties to apply for a bounty.</Typography>
                                 </Box>
                             }
                         </Box>
