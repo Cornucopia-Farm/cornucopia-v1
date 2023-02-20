@@ -54,13 +54,19 @@ export default function Footer() {
             }
             {smallScreen && 
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5vw'}}>
-                <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 8, wordWrap: 'break-word', textAlign: 'center'}}><Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://osec.io/"}>Audited by Ottersec</Link></Typography>
-                <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 8, wordWrap: 'break-word', textAlign: 'center'}}>Supported by Uniswap Foundation</Typography>
-                <Button variant="text" className={styles.h2} sx={{ '&:hover': {backgroundColor: 'transparent'}, fontSize: 8, p: 0, m: 0, minWidth: 0}} onClick={() => setOpenTeam(true)}>Team</Button>
+                {/* <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 8, wordWrap: 'break-word', textAlign: 'center'}}><Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://osec.io/"}>Audited by Ottersec</Link></Typography>
+                <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 8, wordWrap: 'break-word', textAlign: 'center'}}>Supported by Uniswap Foundation</Typography> */}
+                <Button variant="text" className={styles.h2} sx={{ '&:hover': {backgroundColor: 'transparent'}, fontSize: 8, p: 0, m: 0, minWidth: 0}} onClick={() => setOpenTeam(true)}>About</Button>
                 <Dialog open={openTeam} onClose={() => setOpenTeam(false)} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
-                  <DialogTitle className={styles.formHeader}>About the Team</DialogTitle>
+                  <DialogTitle className={styles.formHeader}>About Us</DialogTitle>
                   <DialogContent className={styles.cardBackground}>
                     <DialogContentText className={styles.dialogBody}>
+                      <Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://osec.io/"}>Audited by Ottersec</Link>
+                      <br />
+                      <br />
+                      Supported by the Uniswap Foundation
+                      <br />
+                      <br />
                       Shreya and Alex founded Cornucopia to provide a public and open forum for anyone to get involved in crypto with real, tangible contributions to the community.
                       We hope you enjoy and happy hunting! 
                     </DialogContentText>
