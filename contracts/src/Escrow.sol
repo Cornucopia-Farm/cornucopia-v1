@@ -26,6 +26,7 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reentranc
     mapping(bytes32 => address) public bountyToken;
 
     SkinnyOptimisticOracleInterface public oracleInterface;
+    address public constant ORACLE_ADDRESS = 0xeDc52A961B5Ca2AC7B2e0bc36714dB60E5a115Ab; // Goerli
 
     enum Status {
         NoBounty,
@@ -87,7 +88,6 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reentranc
     function initiateDispute(
         string memory _bountyAppId, 
         address _hunter,
-        address _oracleAddress, 
         uint _bondAmt, 
         string memory _ancillaryData,
         IERC20 _currency
@@ -96,9 +96,9 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reentranc
         bytes memory ancillaryData = bytes(_ancillaryData);
         
         _currency.safeTransferFrom(msg.sender, address(this), _bondAmt + 35 * 10**16); // Transfer WETH from creator to contract to then send to OO
-        _currency.safeIncreaseAllowance(_oracleAddress, _bondAmt + 35 * 10**16); // Need to approve OO contract to transfer tokens from here to OO of bondAmt + 0.35 WETH
+        _currency.safeIncreaseAllowance(ORACLE_ADDRESS, _bondAmt + 35 * 10**16); // Need to approve OO contract to transfer tokens from here to OO of bondAmt + 0.35 WETH
 
-        oracleInterface = SkinnyOptimisticOracleInterface(_oracleAddress);
+        oracleInterface = SkinnyOptimisticOracleInterface(ORACLE_ADDRESS);
         uint creatorBondAmt = oracleInterface.requestAndProposePriceFor(
             bytes32("YES_OR_NO_QUERY"), // bytes32 identifier 
             uint32(block.timestamp), // uint32
