@@ -13,8 +13,9 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin-upgradeable/contracts/proxy/utils/Initializable.sol";
 import "@openzeppelin-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin-upgradeable/contracts/access/OwnableUpgradeable.sol";
+import "@openzeppelin-upgradeable/contracts/security/ReentrancyGuardUpgradeable.sol";
 
-contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
+contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgradeable {
 
     using SafeERC20 for IERC20;
 
@@ -142,7 +143,7 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         return hunterBondAmt; // Hunter bond plus finalFee 
     }
     
-    function forceHunterPayout(string memory _bountyAppId, address _creator) external {
+    function forceHunterPayout(string memory _bountyAppId, address _creator) external nonReentrant {
         // Case 4: Bounty creator did not pay or dispute within 2 weeks following hunter submitting work.
         require(progress[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] == Status.Submitted, "Work not Submitted");
         require(payoutExpiration[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] <= block.timestamp, "Creator can still pay or dispute");
@@ -169,7 +170,7 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         uint32 _timestamp, 
         bytes memory _ancillaryData,
         SkinnyOptimisticOracleInterface.Request memory _request
-    ) external {
+    ) external nonReentrant {
         Status status = progress[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))];
         require(status == Status.DisputeInitiated || status == Status.DisputeRespondedTo, "Bounty must be disputed");
 
@@ -221,7 +222,7 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         } 
     }
 
-    function payout(string memory _bountyAppId, address _hunter) external {
+    function payout(string memory _bountyAppId, address _hunter) external nonReentrant {
         uint value = bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))];
         address token = bountyToken[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))];
 

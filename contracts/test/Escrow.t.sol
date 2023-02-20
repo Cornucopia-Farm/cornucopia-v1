@@ -499,7 +499,7 @@ contract EscrowTest is Test {
             request 
         );
 
-        // Note: half of the bondAmt get;'s "burned" i.e. sent too the store contract
+        // Note: half of the bondAmt get's "burned" i.e. sent too the store contract
         assertEq(weth.balanceOf(address(optimisticOracle)) - ooWETHBalanceBefore + weth.balanceOf(address(storeContract)), hunterWETHBalanceBefore - weth.balanceOf(hunter)); // Check that same amount sent to Escrow then OO contract then part to store contract was deducted from hunter
         assertEq(bondAmt + finalFee, hunterWETHBalanceBefore - weth.balanceOf(hunter)); // Check that the amount escrowed in the OO contract was the bondAmt + finalFee
         assertEq(bondAmt + finalFee, hunterBondAmt); // Check that hunterBondAmt returned by OO func call is the bondAmt + finalFee inputed
