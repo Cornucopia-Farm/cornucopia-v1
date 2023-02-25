@@ -337,7 +337,7 @@
     "id": 26339,
     "exportedSymbols": {
       "AddressUpgradeable": [
-        26622
+        26695
       ],
       "ERC1967UpgradeUpgradeable": [
         26023
@@ -352,7 +352,7 @@
         26202
       ],
       "StorageSlotUpgradeable": [
-        26724
+        26797
       ],
       "UUPSUpgradeable": [
         26338

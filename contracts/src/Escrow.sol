@@ -14,6 +14,7 @@ import "@openzeppelin-upgradeable/contracts/proxy/utils/Initializable.sol";
 import "@openzeppelin-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin-upgradeable/contracts/access/OwnableUpgradeable.sol";
 import "@openzeppelin-upgradeable/contracts/security/ReentrancyGuardUpgradeable.sol";
+import "forge-std/Test.sol";
 
 contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgradeable {
 
@@ -59,8 +60,9 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reentranc
     function _authorizeUpgrade(address) internal override onlyOwner {}
 
     // Mapping arweave bounty address => bounty amount 
-    function escrow(string memory _bountyAppId, address _hunter, uint _expiration, address _token, uint _amount) external payable {
+    function escrow(string memory _bountyAppId, address _hunter, uint _expiration, address _token, uint _amount) external payable nonReentrant {
         require(bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] == 0, "Funds already escrowed");
+        // check that state is no bounty 
 
         if (msg.value > 0) { // User sends ETH
             bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = msg.value; 
@@ -76,7 +78,7 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reentranc
     }
 
     // Hunter submitting work
-    function submit(string memory _bountyAppId, address _creator) external {
+    function submit(string memory _bountyAppId, address _creator) external nonReentrant {
         require(bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] != 0, "Funds not escrowed");
         require(progress[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] == Status.NoBounty, "Work already submitted");
         progress[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] = Status.Submitted;
@@ -91,7 +93,7 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reentranc
         uint _bondAmt, 
         string memory _ancillaryData,
         IERC20 _currency
-        ) external returns (uint) {
+    ) external nonReentrant returns (uint) {
         require(progress[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] == Status.Submitted, "Work not Submitted");
         bytes memory ancillaryData = bytes(_ancillaryData);
         
@@ -123,7 +125,7 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reentranc
         uint32 _timestamp, 
         bytes memory _ancillaryData,
         SkinnyOptimisticOracleInterface.Request memory _request
-        ) external returns (uint) {
+    ) external nonReentrant returns (uint) {
         require(progress[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] == Status.DisputeInitiated, "Bounty creator has not disputed");
 
         _request.currency.safeTransferFrom(msg.sender, address(this), _request.bond + 35 * 10**16); // Transfer WETH from hunter to contract to then send to OO
@@ -166,55 +168,65 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reentranc
 
     function payoutIfDispute(
         string memory _bountyAppId, 
+        address _creator,
         address _hunter,
         uint32 _timestamp, 
         bytes memory _ancillaryData,
         SkinnyOptimisticOracleInterface.Request memory _request
     ) external nonReentrant {
-        Status status = progress[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))];
+        require(msg.sender == _creator || msg.sender == _hunter, "Caller must be creator or hunter");
+
+        Status status = progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))];
         require(status == Status.DisputeInitiated || status == Status.DisputeRespondedTo, "Bounty must be disputed");
 
         OptimisticOracleInterface.State state = oracleInterface.getState(address(this), bytes32("YES_OR_NO_QUERY"), _timestamp, _ancillaryData, _request); // Note: EscrowContract is actually the requester not the creator
 
-        uint value = bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))];
-        address token = bountyToken[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))];
+        uint value = bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))];
+        address token = bountyToken[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))];
 
         if (status != Status.Resolved && 
             (state == OptimisticOracleInterface.State.Resolved || state == OptimisticOracleInterface.State.Expired)) { // Case 2 or Case 3
             // Hunter disputes and it's resolved by DVM or Hunter doesn't dispute and it expires after 1 week; returns how much dvm pays winner and "price" (0, 1, 2)
+   
+            if (state == OptimisticOracleInterface.State.Resolved) { // Check here b/c expired state has no disputer field set in request. Prevents creator from submitting a request for a different creator and/or hunter, forcing an incorrect payout. 
+                require(_request.proposer == _creator && _request.disputer == _hunter, "Incorrect request data");
+            } else if (state == OptimisticOracleInterface.State.Expired) { // Prevents creator from submitting request, ancillary data for an expired dispute for a given hunter with an active/resolved dispute.
+                require(status == Status.DisputeInitiated, "Incorrect hunter specified");
+            }
+
             (, int256 winner) = oracleInterface.settle(address(this), bytes32("YES_OR_NO_QUERY"), _timestamp, _ancillaryData, _request); // Note: EscrowContract is actually the requester not the creator
             if (winner == 0) { // Send funds to creator
-                bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] -= value;
+                bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] -= value;
                 if (token != address(0)) { // If ERC-20 token
-                    IERC20(token).safeTransfer(msg.sender, value);
+                    IERC20(token).safeTransfer(_creator, value);
                 } else {
-                    (bool sent, ) = payable(msg.sender).call{value: value}("");
+                    (bool sent, ) = payable(_creator).call{value: value}("");
                     require(sent, "Failed to send Ether");
                 }
-                emit FundsSent(msg.sender, _hunter, _bountyAppId, "Funds sent back to creator!");
+                emit FundsSent(_creator, _hunter, _bountyAppId, "Funds sent back to creator!");
             } else if (winner == 1) { // Send funds to hunter
-                bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] -= value;
+                bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] -= value;
                 if (token != address(0)) { // If ERC-20 token
                     IERC20(token).safeTransfer(_hunter, value);
                 } else {
                     (bool sent, ) = payable(_hunter).call{value: value}("");
                     require(sent, "Failed to send Ether");
                 }
-                emit FundsSent(msg.sender, _hunter, _bountyAppId, "Funds sent to hunter!");
+                emit FundsSent(_creator, _hunter, _bountyAppId, "Funds sent to hunter!");
             } else if (winner == 2) { // Send half funds to creator and half to hunter
-                bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] -= value;
+                bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] -= value;
                 if (token != address(0)) { // If ERC-20 token
                     IERC20(token).safeTransfer(_hunter, value / 2);
-                    IERC20(token).safeTransfer(msg.sender, value / 2);
+                    IERC20(token).safeTransfer(_creator, value / 2);
                 } else {
                     (bool sent, ) = payable(_hunter).call{value: value / 2 }("");
                     require(sent, "Failed to send Ether");
-                    (bool sent2, ) = payable(msg.sender).call{value: value / 2 }("");
+                    (bool sent2, ) = payable(_creator).call{value: value / 2 }("");
                     require(sent2, "Failed to send Ether");
                 }
-                emit FundsSent(msg.sender, _hunter, _bountyAppId, "Half of funds sent back to creator and then to hunter!");
+                emit FundsSent(_creator, _hunter, _bountyAppId, "Half of funds sent back to creator and then to hunter!");
             }
-            progress[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = Status.Resolved;
+            progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] = Status.Resolved;
         } else if (status != Status.Resolved && 
             (state == OptimisticOracleInterface.State.Proposed || state == OptimisticOracleInterface.State.Disputed)) {
             // Creator dispute still live: Hunter hasn't disputed yet or hunter dispute hasn't been settled by dvm yet

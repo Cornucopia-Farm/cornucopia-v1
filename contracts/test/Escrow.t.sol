@@ -53,6 +53,7 @@ contract EscrowTest is Test {
         collateralWhitelist = new AddressWhitelist();
         mockDVM = new MockOracleAncillary(address(finderContract), address(timerContract));
         optimisticOracle = new SkinnyOptimisticOracle(1 weeks, address(finderContract), address(timerContract));
+        // Set address public constant ORACLE_ADDRESS = 0x03A6a84cD762D9707A21605b548aaaB891562aAb; in contract
         weth = new ExpandedERC20("Wrapped Ether", "WETH", 18); // fake WETH to use UMA
 
         // Add the identifier we'll be using
@@ -66,14 +67,14 @@ contract EscrowTest is Test {
 
         // Mint 100 fake WETH to creator and hunter
         weth.addMinter(address(this)); // Allow testContract to mint tokens;
-        weth.mint(creator, 100 * 10^18); // Mint 100 WETH
-        weth.mint(hunter, 100 * 10^18); // Mint 100 WETH
+        weth.mint(creator, 100 * 10**18); // Mint 100 WETH
+        weth.mint(hunter, 100 * 10**18); // Mint 100 WETH
 
         // Register this collateral 
         collateralWhitelist.addToWhitelist(address(weth));
 
         // Set finalFee in Store
-        finalFee = 35 * 10^16; // real finalFee of 0.35 WETH
+        finalFee = 35 * 10**16; // real finalFee of 0.35 WETH
         storeContract.setFinalFee(address(weth), FixedPoint.Unsigned({rawValue: finalFee}));
     }
 
@@ -105,17 +106,17 @@ contract EscrowTest is Test {
         address hunter = address(0xBEEF);
         uint expiration = 1 weeks;
         
-        token.mint(creator, 100 * 10^18); // Mint 100 Test Token
+        token.mint(creator, 100 * 10**18); // Mint 100 Test Token
         vm.startPrank(creator); // Sets msg.sender = creator till stopPrank called
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
         vm.expectEmit(true, true, true, true); // Want to check the first 3 indexed event params, and the last non-indexed param
         emit Escrowed(creator, hunter, bountyAppId, "Escrowed!"); // This is the event we expect to be emitted
 
-        token.approve(address(escrowContract), 1 * 10^18);
+        token.approve(address(escrowContract), 1 * 10**18);
 
-        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10^18);
-        assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 1 * 10^18); // Check that bountyAmounts for this bountyId, creator, hunter combo is set to msg.value
+        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10**18);
+        assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 1 * 10**18); // Check that bountyAmounts for this bountyId, creator, hunter combo is set to msg.value
         assertEq(escrowContract.expiration(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 1000000 + expiration); // Check that expirtation for this bountyId, creator, hunter combo is set to current block timestamp + expiraton data
         assertEq(escrowContract.bountyToken(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), address(token)); // Check that bountyToken for this bountyId, creator, hunter combo is set to the token address
         
@@ -146,11 +147,11 @@ contract EscrowTest is Test {
         address hunter = address(0xBEEF);
         uint expiration = 1 weeks;
         
-        token.mint(creator, 100 * 10^18); // Mint 100 Test Token
+        token.mint(creator, 100 * 10**18); // Mint 100 Test Token
         vm.startPrank(creator); // Sets msg.sender = creator till stopPrank called
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        token.approve(address(escrowContract), 1 * 10^18);
+        token.approve(address(escrowContract), 1 * 10**18);
 
         vm.expectRevert(bytes("Amount must be non-zero")); // Expect this revert error; note: case sensitive
         escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 0);
@@ -256,12 +257,12 @@ contract EscrowTest is Test {
         address hunter = address(0xBEEF);
         uint expiration = 1 weeks;
 
-        token.mint(creator, 100 * 10^18); // Mint 100 Test Token
+        token.mint(creator, 100 * 10**18); // Mint 100 Test Token
         vm.startPrank(creator); // Sets msg.sender = creator till stopPrank called
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        token.approve(address(escrowContract), 1 * 10^18);
-        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10^18); // Escrow funds
+        token.approve(address(escrowContract), 1 * 10**18);
+        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10**18); // Escrow funds
         vm.stopPrank();
 
         vm.prank(hunter); // Sets msg.sender = hunter till stopPrank called
@@ -327,12 +328,12 @@ contract EscrowTest is Test {
         address hunter = address(0xBEEF);
         uint expiration = 1 weeks;
 
-        token.mint(creator, 100 * 10^18); // Mint 100 Test Token
+        token.mint(creator, 100 * 10**18); // Mint 100 Test Token
         vm.startPrank(creator); // Sets msg.sender = creator till stopPrank called
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        token.approve(address(escrowContract), 1 * 10^18);
-        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10^18); // Escrow funds
+        token.approve(address(escrowContract), 1 * 10**18);
+        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10**18); // Escrow funds
         
         // Testing Case 5: Bounty Hunter doesn't submit work within specified time
         vm.warp(1000000 + expiration + 1); // Sets block.timestamp to be > expiration time set by creator + timestamp when they escrowed their funds.
@@ -364,7 +365,7 @@ contract EscrowTest is Test {
         uint expiration = 1 weeks;
 
         // Input variables to initiateDispute function
-        uint bondAmt = 10 * 10^18; // 10 WETH bountyAmt
+        uint bondAmt = 10 * 10**18; // 10 WETH bountyAmt
         string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
 
         // Escrow funds first
@@ -396,7 +397,6 @@ contract EscrowTest is Test {
         uint creatorBondAmt = escrowContract.initiateDispute(
             bountyAppId, 
             hunter, 
-            address(optimisticOracle),
             bondAmt, 
             ancillaryData,
             weth
@@ -427,7 +427,13 @@ contract EscrowTest is Test {
 
         // Test require statement that hunter must have submitted their work before creator can initiate dispute for this bountyid, creator, hunter combo
         vm.expectRevert(bytes("Work not Submitted")); // Expect this revert error
-        escrowContract.initiateDispute(bountyAppId, hunter, address(optimisticOracle), bondAmt, ancillaryData, weth); // Call submit with bountyid, creator, hunter
+        escrowContract.initiateDispute(
+            bountyAppId, 
+            hunter, 
+            bondAmt, 
+            ancillaryData, 
+            weth
+        ); // Call submit with bountyid, creator, hunter
         vm.stopPrank();
     }
 
@@ -438,7 +444,7 @@ contract EscrowTest is Test {
         uint expiration = 1 weeks;
 
         // Input variables to initiateDispute function
-        uint bondAmt = 10 * 10^18; // 10 WETH bondAmt
+        uint bondAmt = 10 * 10**18; // 10 WETH bondAmt
         string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
 
         // Escrow funds first
@@ -464,7 +470,6 @@ contract EscrowTest is Test {
         escrowContract.initiateDispute(
             bountyAppId, 
             hunter, 
-            address(optimisticOracle),
             bondAmt, 
             ancillaryData,
             weth
@@ -484,7 +489,7 @@ contract EscrowTest is Test {
         SkinnyOptimisticOracleInterface.Request memory request;
         request.currency = weth;
         request.reward = 0;
-        request.finalFee = 35 * 10^16;
+        request.finalFee = 35 * 10**16;
         request.bond = bondAmt;
         request.customLiveness = 1 weeks;
         request.proposer = creator;
@@ -514,7 +519,7 @@ contract EscrowTest is Test {
         uint expiration = 1 weeks;
 
         // Input variables to initiateDispute function
-        uint bondAmt = 10 * 10^18; // 10 WETH bondAmt
+        uint bondAmt = 10 * 10**18; // 10 WETH bondAmt
         string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
 
         // Escrow funds first
@@ -535,7 +540,7 @@ contract EscrowTest is Test {
         SkinnyOptimisticOracleInterface.Request memory request;
         request.currency = weth;
         request.reward = 0;
-        request.finalFee = 35 * 10^16;
+        request.finalFee = 35 * 10**16;
         request.bond = bondAmt;
         request.customLiveness = 1 weeks;
         request.proposer = creator;
@@ -594,13 +599,13 @@ contract EscrowTest is Test {
         address hunter = address(0xBEEF);
         uint expiration = 1 weeks;
 
-        token.mint(creator, 100 * 10^18); // Mint 100 Test Token
+        token.mint(creator, 100 * 10**18); // Mint 100 Test Token
         vm.startPrank(creator); // Sets msg.sender = creator till stopPrank called
         vm.warp(1000000); // Sets block.timestamp = 1000000
         
 
-        token.approve(address(escrowContract), 1 * 10^18);
-        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10^18); // Escrow funds
+        token.approve(address(escrowContract), 1 * 10**18);
+        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10**18); // Escrow funds
         vm.stopPrank();
 
         vm.startPrank(hunter);
@@ -672,7 +677,7 @@ contract EscrowTest is Test {
         uint expiration = 1 weeks;
 
         // Input variables to initiateDispute function
-        uint bondAmt = 10 * 10^18; // 10 WETH bondAmt
+        uint bondAmt = 10 * 10**18; // 10 WETH bondAmt
         string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
 
         // Escrow funds first
@@ -698,7 +703,6 @@ contract EscrowTest is Test {
         escrowContract.initiateDispute(
             bountyAppId, 
             hunter, 
-            address(optimisticOracle),
             bondAmt, 
             ancillaryData,
             weth
@@ -711,7 +715,7 @@ contract EscrowTest is Test {
         SkinnyOptimisticOracleInterface.Request memory request;
         request.currency = weth;
         request.reward = 0;
-        request.finalFee = 35 * 10^16;
+        request.finalFee = 35 * 10**16;
         request.bond = bondAmt;
         request.customLiveness = 1 weeks;
         request.proposer = creator;
@@ -744,7 +748,7 @@ contract EscrowTest is Test {
         SkinnyOptimisticOracleInterface.Request memory request2;
         request2.currency = weth;
         request2.reward = 0;
-        request2.finalFee = 35 * 10^16;
+        request2.finalFee = 35 * 10**16;
         request2.bond = bondAmt;
         request2.customLiveness = 1 weeks;
         request2.proposer = creator;
@@ -754,6 +758,7 @@ contract EscrowTest is Test {
 
         escrowContract.payoutIfDispute(
             bountyAppId, 
+            creator,
             hunter,
             1000001, 
             bytes(ancillaryData), 
@@ -767,14 +772,14 @@ contract EscrowTest is Test {
         vm.stopPrank();
     }
 
-    function testHunterWinsPayoutIfDisputeETH() public {
+    function testCreatorWinsHunterCallsPayoutIfDisputeETH() public {
         string memory bountyAppId = "AppId";
         address creator = address(0xABCD);
         address hunter = address(0xBEEF);
         uint expiration = 1 weeks;
 
         // Input variables to initiateDispute function
-        uint bondAmt = 10 * 10^18; // 10 WETH bondAmt
+        uint bondAmt = 10 * 10**18; // 10 WETH bondAmt
         string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
 
         // Escrow funds first
@@ -800,7 +805,6 @@ contract EscrowTest is Test {
         escrowContract.initiateDispute(
             bountyAppId, 
             hunter, 
-            address(optimisticOracle),
             bondAmt, 
             ancillaryData,
             weth
@@ -813,7 +817,112 @@ contract EscrowTest is Test {
         SkinnyOptimisticOracleInterface.Request memory request;
         request.currency = weth;
         request.reward = 0;
-        request.finalFee = 35 * 10^16;
+        request.finalFee = 35 * 10**16;
+        request.bond = bondAmt;
+        request.customLiveness = 1 weeks;
+        request.proposer = creator;
+        request.proposedPrice = 0;
+        request.expirationTime = 1000001 + 1 weeks;
+
+        escrowContract.hunterDisputeResponse(
+            bountyAppId, 
+            creator, 
+            1000001, 
+            bytes(ancillaryData), 
+            request 
+        ); // Hunter responds to dispute
+        vm.stopPrank();
+
+        vm.startPrank(creator);
+
+        mockDVM.pushPrice(
+            bytes32("YES_OR_NO_QUERY"), 
+            1000001, 
+            optimisticOracle.stampAncillaryData(bytes(ancillaryData), address(escrowContract)),
+            0
+        ); // Push price of 0 so creator wins
+        
+        vm.expectEmit(true, true, true, true); // Want to check the first 3 indexed event params, and the last non-indexed param
+        emit FundsSent(creator, hunter, bountyAppId, "Funds sent back to creator!"); // This is the event we expect to be emitted
+
+        uint creatorWETHBalanceBefore = weth.balanceOf(creator);
+
+        SkinnyOptimisticOracleInterface.Request memory request2;
+        request2.currency = weth;
+        request2.reward = 0;
+        request2.finalFee = 35 * 10**16;
+        request2.bond = bondAmt;
+        request2.customLiveness = 1 weeks;
+        request2.proposer = creator;
+        request2.proposedPrice = 0;
+        request2.expirationTime = 1000001 + 1 weeks;
+        request2.disputer = hunter; // Setting this field
+
+        vm.stopPrank();
+
+        vm.prank(hunter); // Set hunter to be the caller
+
+        escrowContract.payoutIfDispute(
+            bountyAppId, 
+            creator,
+            hunter,
+            1000001, 
+            bytes(ancillaryData), 
+            request2
+        );
+
+        assertEq(2 ether, creator.balance); // Check that creator paid back the 1 eth they escrowed before
+        assertEq(bondAmt + finalFee + bondAmt / 2, weth.balanceOf(creator) - creatorWETHBalanceBefore); // Check that the amount of WETH given to dispute winner (creator) is bondAmt + finalFee + bondAmt/2 (last part is unburned part of loser's bond)
+        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Resolved)); // Check that Status enum set to Resolved
+        assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that escrowed funds for the contract is now 0
+    }
+
+    function testHunterWinsPayoutIfDisputeETH() public {
+        string memory bountyAppId = "AppId";
+        address creator = address(0xABCD);
+        address hunter = address(0xBEEF);
+        uint expiration = 1 weeks;
+
+        // Input variables to initiateDispute function
+        uint bondAmt = 10 * 10**18; // 10 WETH bondAmt
+        string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
+
+        // Escrow funds first
+        vm.deal(creator, 2 ether); // Give creator some eth
+        vm.prank(creator); // Sets msg.sender = creator for next function call
+        vm.warp(1000000); // Sets block.timestamp = 1000000
+
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0);
+
+        vm.prank(hunter);
+        vm.warp(1000001); // Sets block.timestamp = 1000001
+
+        escrowContract.submit(bountyAppId, creator); // Submit work
+
+        // Test calling UMA requestAndProposePriceFor
+        setUpUMA(creator, hunter);
+
+        vm.startPrank(creator);
+        weth.approve(address(escrowContract), bondAmt + finalFee); // Approve escrowContract contract to spend on creator's behalf; should use icnreaseAllowance maybe?
+        // issue with allowances as msg.sender is not creator but the Escrow Contract
+        // we have to transfer the creator's assets into the escrow coontract before transferring into UMA
+        // escrow contract needs to call approve then
+        escrowContract.initiateDispute(
+            bountyAppId, 
+            hunter, 
+            bondAmt, 
+            ancillaryData,
+            weth
+        ); // Initiate Dispute
+        vm.stopPrank();
+
+        vm.startPrank(hunter);
+        weth.approve(address(escrowContract), bondAmt + finalFee); // Approve escrowContract contract to spend on hunter's behalf; should use icnreaseAllowance maybe?
+
+        SkinnyOptimisticOracleInterface.Request memory request;
+        request.currency = weth;
+        request.reward = 0;
+        request.finalFee = 35 * 10**16;
         request.bond = bondAmt;
         request.customLiveness = 1 weeks;
         request.proposer = creator;
@@ -846,7 +955,7 @@ contract EscrowTest is Test {
         SkinnyOptimisticOracleInterface.Request memory request2;
         request2.currency = weth;
         request2.reward = 0;
-        request2.finalFee = 35 * 10^16;
+        request2.finalFee = 35 * 10**16;
         request2.bond = bondAmt;
         request2.customLiveness = 1 weeks;
         request2.proposer = creator;
@@ -856,6 +965,7 @@ contract EscrowTest is Test {
 
         escrowContract.payoutIfDispute(
             bountyAppId, 
+            creator,
             hunter,
             1000001, 
             bytes(ancillaryData), 
@@ -876,7 +986,7 @@ contract EscrowTest is Test {
         uint expiration = 1 weeks;
 
         // Input variables to initiateDispute function
-        uint bondAmt = 10 * 10^18; // 10 WETH bondAmt
+        uint bondAmt = 10 * 10**18; // 10 WETH bondAmt
         string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
 
         // Escrow funds first
@@ -902,7 +1012,6 @@ contract EscrowTest is Test {
         escrowContract.initiateDispute(
             bountyAppId, 
             hunter, 
-            address(optimisticOracle),
             bondAmt, 
             ancillaryData,
             weth
@@ -915,7 +1024,7 @@ contract EscrowTest is Test {
         SkinnyOptimisticOracleInterface.Request memory request;
         request.currency = weth;
         request.reward = 0;
-        request.finalFee = 35 * 10^16;
+        request.finalFee = 35 * 10**16;
         request.bond = bondAmt;
         request.customLiveness = 1 weeks;
         request.proposer = creator;
@@ -948,7 +1057,7 @@ contract EscrowTest is Test {
         SkinnyOptimisticOracleInterface.Request memory request2;
         request2.currency = weth;
         request2.reward = 0;
-        request2.finalFee = 35 * 10^16;
+        request2.finalFee = 35 * 10**16;
         request2.bond = bondAmt;
         request2.customLiveness = 1 weeks;
         request2.proposer = creator;
@@ -958,6 +1067,7 @@ contract EscrowTest is Test {
 
         escrowContract.payoutIfDispute(
             bountyAppId, 
+            creator,
             hunter,
             1000001, 
             bytes(ancillaryData), 
@@ -980,7 +1090,7 @@ contract EscrowTest is Test {
         uint expiration = 1 weeks;
 
         // Input variables to initiateDispute function
-        uint bondAmt = 10 * 10^18; // 10 WETH bondAmt
+        uint bondAmt = 10 * 10**18; // 10 WETH bondAmt
         string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
 
         // Escrow funds first
@@ -1006,7 +1116,6 @@ contract EscrowTest is Test {
         escrowContract.initiateDispute(
             bountyAppId, 
             hunter, 
-            address(optimisticOracle),
             bondAmt, 
             ancillaryData,
             weth
@@ -1021,7 +1130,7 @@ contract EscrowTest is Test {
         SkinnyOptimisticOracleInterface.Request memory request;
         request.currency = weth;
         request.reward = 0;
-        request.finalFee = 35 * 10^16;
+        request.finalFee = 35 * 10**16;
         request.bond = bondAmt;
         request.customLiveness = 1 weeks;
         request.proposer = creator;
@@ -1032,6 +1141,7 @@ contract EscrowTest is Test {
 
         escrowContract.payoutIfDispute(
             bountyAppId, 
+            creator,
             hunter,
             1000001, 
             bytes(ancillaryData), 
@@ -1052,16 +1162,16 @@ contract EscrowTest is Test {
         uint expiration = 1 weeks;
 
         // Input variables to initiateDispute function
-        uint bondAmt = 10 * 10^18; // 10 WETH bondAmt
+        uint bondAmt = 10 * 10**18; // 10 WETH bondAmt
         string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
 
         // Escrow funds first
-        token.mint(creator, 100 * 10^18); // Mint 100 Test Token
+        token.mint(creator, 100 * 10**18); // Mint 100 Test Token
         vm.startPrank(creator); // Sets msg.sender = creator for next function call
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        token.approve(address(escrowContract), 1 * 10^18);
-        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10^18);
+        token.approve(address(escrowContract), 1 * 10**18);
+        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10**18);
         vm.stopPrank();
 
         vm.prank(hunter);
@@ -1080,7 +1190,6 @@ contract EscrowTest is Test {
         escrowContract.initiateDispute(
             bountyAppId, 
             hunter, 
-            address(optimisticOracle),
             bondAmt, 
             ancillaryData,
             weth
@@ -1093,7 +1202,7 @@ contract EscrowTest is Test {
         SkinnyOptimisticOracleInterface.Request memory request;
         request.currency = weth;
         request.reward = 0;
-        request.finalFee = 35 * 10^16;
+        request.finalFee = 35 * 10**16;
         request.bond = bondAmt;
         request.customLiveness = 1 weeks;
         request.proposer = creator;
@@ -1126,7 +1235,7 @@ contract EscrowTest is Test {
         SkinnyOptimisticOracleInterface.Request memory request2;
         request2.currency = weth;
         request2.reward = 0;
-        request2.finalFee = 35 * 10^16;
+        request2.finalFee = 35 * 10**16;
         request2.bond = bondAmt;
         request2.customLiveness = 1 weeks;
         request2.proposer = creator;
@@ -1136,13 +1245,14 @@ contract EscrowTest is Test {
 
         escrowContract.payoutIfDispute(
             bountyAppId, 
+            creator, 
             hunter,
             1000001, 
             bytes(ancillaryData), 
             request2
         );
 
-        assertEq(100 * 10^18, token.balanceOf(creator)); // Check that creator paid back the 1 Test Token they escrowed before
+        assertEq(100 * 10**18, token.balanceOf(creator)); // Check that creator paid back the 1 Test Token they escrowed before
         assertEq(bondAmt + finalFee + bondAmt / 2, weth.balanceOf(creator) - creatorWETHBalanceBefore); // Check that the amount of WETH given to dispute winner (creator) is bondAmt + finalFee + bondAmt/2 (last part is unburned part of loser's bond)
         assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Resolved)); // Check that Status enum set to Resolved
         assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that escrowed funds for the contract is now 0
@@ -1156,16 +1266,16 @@ contract EscrowTest is Test {
         uint expiration = 1 weeks;
 
         // Input variables to initiateDispute function
-        uint bondAmt = 10 * 10^18; // 10 WETH bondAmt
+        uint bondAmt = 10 * 10**18; // 10 WETH bondAmt
         string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
 
         // Escrow funds first
-        token.mint(creator, 100 * 10^18); // Mint 100 Test Token
+        token.mint(creator, 100 * 10**18); // Mint 100 Test Token
         vm.startPrank(creator); // Sets msg.sender = creator for next function call
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        token.approve(address(escrowContract), 1 * 10^18);
-        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10^18);
+        token.approve(address(escrowContract), 1 * 10**18);
+        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10**18);
         vm.stopPrank();
 
         vm.prank(hunter);
@@ -1184,7 +1294,6 @@ contract EscrowTest is Test {
         escrowContract.initiateDispute(
             bountyAppId, 
             hunter, 
-            address(optimisticOracle),
             bondAmt, 
             ancillaryData,
             weth
@@ -1197,7 +1306,7 @@ contract EscrowTest is Test {
         SkinnyOptimisticOracleInterface.Request memory request;
         request.currency = weth;
         request.reward = 0;
-        request.finalFee = 35 * 10^16;
+        request.finalFee = 35 * 10**16;
         request.bond = bondAmt;
         request.customLiveness = 1 weeks;
         request.proposer = creator;
@@ -1230,7 +1339,7 @@ contract EscrowTest is Test {
         SkinnyOptimisticOracleInterface.Request memory request2;
         request2.currency = weth;
         request2.reward = 0;
-        request2.finalFee = 35 * 10^16;
+        request2.finalFee = 35 * 10**16;
         request2.bond = bondAmt;
         request2.customLiveness = 1 weeks;
         request2.proposer = creator;
@@ -1240,13 +1349,14 @@ contract EscrowTest is Test {
 
         escrowContract.payoutIfDispute(
             bountyAppId, 
+            creator,
             hunter,
             1000001, 
             bytes(ancillaryData), 
             request2
         );
 
-        assertEq(1 * 10^18, token.balanceOf(hunter)); // Check that hunter was paid the 1 Test Token escrowed
+        assertEq(1 * 10**18, token.balanceOf(hunter)); // Check that hunter was paid the 1 Test Token escrowed
         assertEq(bondAmt + finalFee + bondAmt / 2, weth.balanceOf(hunter) - hunterWETHBalanceBefore); // Check that the amount of WETH given to dispute winner (hunter) is bondAmt + finalFee + bondAmt/2 (last part is unburned part of loser's bond)
         assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Resolved)); // Check that Status enum set to Resolved
         assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that escrowed funds for the contract is now 0
@@ -1260,16 +1370,16 @@ contract EscrowTest is Test {
         uint expiration = 1 weeks;
 
         // Input variables to initiateDispute function
-        uint bondAmt = 10 * 10^18; // 10 WETH bondAmt
+        uint bondAmt = 10 * 10**18; // 10 WETH bondAmt
         string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
 
         // Escrow funds first
-        token.mint(creator, 100 * 10^18); // Mint 100 Test Token
+        token.mint(creator, 100 * 10**18); // Mint 100 Test Token
         vm.startPrank(creator); // Sets msg.sender = creator for next function call
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        token.approve(address(escrowContract), 1 * 10^18);
-        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10^18);
+        token.approve(address(escrowContract), 1 * 10**18);
+        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10**18);
         vm.stopPrank();
 
         vm.prank(hunter);
@@ -1288,7 +1398,6 @@ contract EscrowTest is Test {
         escrowContract.initiateDispute(
             bountyAppId, 
             hunter, 
-            address(optimisticOracle),
             bondAmt, 
             ancillaryData,
             weth
@@ -1301,7 +1410,7 @@ contract EscrowTest is Test {
         SkinnyOptimisticOracleInterface.Request memory request;
         request.currency = weth;
         request.reward = 0;
-        request.finalFee = 35 * 10^16;
+        request.finalFee = 35 * 10**16;
         request.bond = bondAmt;
         request.customLiveness = 1 weeks;
         request.proposer = creator;
@@ -1334,7 +1443,7 @@ contract EscrowTest is Test {
         SkinnyOptimisticOracleInterface.Request memory request2;
         request2.currency = weth;
         request2.reward = 0;
-        request2.finalFee = 35 * 10^16;
+        request2.finalFee = 35 * 10**16;
         request2.bond = bondAmt;
         request2.customLiveness = 1 weeks;
         request2.proposer = creator;
@@ -1344,6 +1453,7 @@ contract EscrowTest is Test {
 
         escrowContract.payoutIfDispute(
             bountyAppId, 
+            creator,
             hunter,
             1000001, 
             bytes(ancillaryData), 
@@ -1351,8 +1461,8 @@ contract EscrowTest is Test {
         );
 
         // Note: even if it's a tie, hunter is still considered the winner so they get the WETH as if the dispute was voted in their favor (price of 1)
-        assertEq((1 * 10^18) / 2, token.balanceOf(hunter)); // Check that hunter was paid 0.5 Test Token (half escrowed amount)
-        assertEq(100 * 10^18 - (1 * 10^18) / 2, token.balanceOf(creator)); // Check that creator was paid 0.5 Test Token (half escrowed amount)
+        assertEq((1 * 10**18) / 2, token.balanceOf(hunter)); // Check that hunter was paid 0.5 Test Token (half escrowed amount)
+        assertEq(100 * 10**18 - (1 * 10**18) / 2, token.balanceOf(creator)); // Check that creator was paid 0.5 Test Token (half escrowed amount)
         assertEq(bondAmt + finalFee + bondAmt / 2, weth.balanceOf(hunter) - hunterWETHBalanceBefore); // Check that the amount of WETH given to dispute winner (hunter) is bondAmt + finalFee + bondAmt/2 (last part is unburned part of loser's bond)
         assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Resolved)); // Check that Status enum set to Resolved
         assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that escrowed funds for the contract is now 0
@@ -1366,16 +1476,16 @@ contract EscrowTest is Test {
         uint expiration = 1 weeks;
 
         // Input variables to initiateDispute function
-        uint bondAmt = 10 * 10^18; // 10 WETH bondAmt
+        uint bondAmt = 10 * 10**18; // 10 WETH bondAmt
         string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
 
         // Escrow funds first
-        token.mint(creator, 100 * 10^18); // Mint 100 Test Token
+        token.mint(creator, 100 * 10**18); // Mint 100 Test Token
         vm.startPrank(creator); // Sets msg.sender = creator for next function call
         vm.warp(1000000); // Sets block.timestamp = 1000000
 
-        token.approve(address(escrowContract), 1 * 10^18);
-        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10^18);
+        token.approve(address(escrowContract), 1 * 10**18);
+        escrowContract.escrow(bountyAppId, hunter, expiration, address(token), 1 * 10**18);
         vm.stopPrank();
 
         vm.prank(hunter);
@@ -1394,7 +1504,6 @@ contract EscrowTest is Test {
         escrowContract.initiateDispute(
             bountyAppId, 
             hunter, 
-            address(optimisticOracle),
             bondAmt, 
             ancillaryData,
             weth
@@ -1409,7 +1518,7 @@ contract EscrowTest is Test {
         SkinnyOptimisticOracleInterface.Request memory request;
         request.currency = weth;
         request.reward = 0;
-        request.finalFee = 35 * 10^16;
+        request.finalFee = 35 * 10**16;
         request.bond = bondAmt;
         request.customLiveness = 1 weeks;
         request.proposer = creator;
@@ -1419,14 +1528,15 @@ contract EscrowTest is Test {
         optimisticOracle.setCurrentTime(1000001 + 1 weeks + 1); // Set timestamp in DVM so that the creator's dispute intiation will be expired 
 
         escrowContract.payoutIfDispute(
-            bountyAppId, 
+            bountyAppId,
+            creator, 
             hunter,
             1000001, 
             bytes(ancillaryData), 
             request
         );
 
-        assertEq(100 * 10^18, token.balanceOf(creator)); // Check that creator paid back the 1 Test Token they escrowed before
+        assertEq(100 * 10**18, token.balanceOf(creator)); // Check that creator paid back the 1 Test Token they escrowed before
         assertEq(bondAmt + finalFee, weth.balanceOf(creator) - creatorWETHBalanceBefore); // Check that the amount of WETH given to dispute default winner (creator) is bondAmt + finalFee 
         assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Resolved)); // Check that Status enum set to Resolved
         assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that escrowed funds for the contract is now 0
@@ -1440,7 +1550,7 @@ contract EscrowTest is Test {
         uint expiration = 1 weeks;
 
         // Input variables to initiateDispute function
-        uint bondAmt = 10 * 10^18; // 10 WETH bondAmt
+        uint bondAmt = 10 * 10**18; // 10 WETH bondAmt
         string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
 
         // Escrow funds first
@@ -1466,7 +1576,6 @@ contract EscrowTest is Test {
         escrowContract.initiateDispute(
             bountyAppId, 
             hunter, 
-            address(optimisticOracle),
             bondAmt, 
             ancillaryData,
             weth
@@ -1479,7 +1588,7 @@ contract EscrowTest is Test {
         SkinnyOptimisticOracleInterface.Request memory request;
         request.currency = weth;
         request.reward = 0;
-        request.finalFee = 35 * 10^16;
+        request.finalFee = 35 * 10**16;
         request.bond = bondAmt;
         request.customLiveness = 1 weeks;
         request.proposer = creator;
@@ -1500,7 +1609,7 @@ contract EscrowTest is Test {
         SkinnyOptimisticOracleInterface.Request memory request2;
         request2.currency = weth;
         request2.reward = 0;
-        request2.finalFee = 35 * 10^16;
+        request2.finalFee = 35 * 10**16;
         request2.bond = bondAmt;
         request2.customLiveness = 1 weeks;
         request2.proposer = creator;
@@ -1511,6 +1620,7 @@ contract EscrowTest is Test {
         vm.expectRevert(bytes("Dispute still live")); // Expect this revert error
         escrowContract.payoutIfDispute(
             bountyAppId, 
+            creator,
             hunter,
             1000001, 
             bytes(ancillaryData), 
@@ -1526,7 +1636,7 @@ contract EscrowTest is Test {
         uint expiration = 1 weeks;
 
         // Input variables to initiateDispute function
-        uint bondAmt = 10 * 10^18; // 10 WETH bondAmt
+        uint bondAmt = 10 * 10**18; // 10 WETH bondAmt
         string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
 
         // Escrow funds first
@@ -1552,7 +1662,6 @@ contract EscrowTest is Test {
         escrowContract.initiateDispute(
             bountyAppId, 
             hunter, 
-            address(optimisticOracle),
             bondAmt, 
             ancillaryData,
             weth
@@ -1562,7 +1671,7 @@ contract EscrowTest is Test {
         SkinnyOptimisticOracleInterface.Request memory request;
         request.currency = weth;
         request.reward = 0;
-        request.finalFee = 35 * 10^16;
+        request.finalFee = 35 * 10**16;
         request.bond = bondAmt;
         request.customLiveness = 1 weeks;
         request.proposer = creator;
@@ -1574,6 +1683,7 @@ contract EscrowTest is Test {
         vm.expectRevert(bytes("Dispute still live")); // Expect this revert error
         escrowContract.payoutIfDispute(
             bountyAppId, 
+            creator,
             hunter,
             1000001, 
             bytes(ancillaryData), 
@@ -1589,7 +1699,6 @@ contract EscrowTest is Test {
         uint expiration = 1 weeks;
 
         // Input variables to initiateDispute function
-        // uint bondAmt = 10 * 10^18; // 10 WETH bondAmt
         string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
 
         // Escrow funds first
@@ -1610,9 +1719,10 @@ contract EscrowTest is Test {
 
         vm.startPrank(creator);
 
-        vm.expectRevert(bytes("Creator hasn't disputed work")); // Expect this revert error
+        vm.expectRevert(bytes("Bounty must be disputed")); // Expect this revert error
         escrowContract.payoutIfDispute(
             bountyAppId, 
+            creator,
             hunter,
             1000001, 
             bytes(ancillaryData), 
@@ -1628,7 +1738,7 @@ contract EscrowTest is Test {
         uint expiration = 1 weeks;
 
         // Input variables to initiateDispute function
-        uint bondAmt = 10 * 10^18; // 10 WETH bondAmt
+        uint bondAmt = 10 * 10**18; // 10 WETH bondAmt
         string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
 
         // Escrow funds first
@@ -1654,7 +1764,6 @@ contract EscrowTest is Test {
         escrowContract.initiateDispute(
             bountyAppId, 
             hunter, 
-            address(optimisticOracle),
             bondAmt, 
             ancillaryData,
             weth
@@ -1667,7 +1776,7 @@ contract EscrowTest is Test {
         SkinnyOptimisticOracleInterface.Request memory request;
         request.currency = weth;
         request.reward = 0;
-        request.finalFee = 35 * 10^16;
+        request.finalFee = 35 * 10**16;
         request.bond = bondAmt;
         request.customLiveness = 1 weeks;
         request.proposer = creator;
@@ -1698,7 +1807,7 @@ contract EscrowTest is Test {
         SkinnyOptimisticOracleInterface.Request memory request2;
         request2.currency = weth;
         request2.reward = 0;
-        request2.finalFee = 35 * 10^16;
+        request2.finalFee = 35 * 10**16;
         request2.bond = bondAmt;
         request2.customLiveness = 1 weeks;
         request2.proposer = creator;
@@ -1708,6 +1817,7 @@ contract EscrowTest is Test {
 
         escrowContract.payoutIfDispute(
             bountyAppId, 
+            creator,
             hunter,
             1000001, 
             bytes(ancillaryData), 
@@ -1715,9 +1825,10 @@ contract EscrowTest is Test {
         );
 
         request2.settled = true; // Set this value to true as this is the new request struct after a dispute has been settled (produced in settle in OO contract)
-        vm.expectRevert(bytes("Bounty has been payed out")); // Expect this revert error
+        vm.expectRevert(bytes("Bounty must be disputed")); // Expect this revert error
         escrowContract.payoutIfDispute(
             bountyAppId, 
+            creator,
             hunter,
             1000001, 
             bytes(ancillaryData), 
@@ -1734,7 +1845,6 @@ contract EscrowTest is Test {
         uint expiration = 1 weeks;
 
         // Input variables to initiateDispute function
-        // uint bondAmt = 10 * 10^18; // 10 WETH bondAmt
         string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
 
         // Escrow funds first
@@ -1757,14 +1867,351 @@ contract EscrowTest is Test {
 
         escrowContract.payout(bountyAppId, hunter);
 
-        vm.expectRevert(bytes("Bounty has been payed out")); // Expect this revert error
+        vm.expectRevert(bytes("Bounty must be disputed")); // Expect this revert error
         escrowContract.payoutIfDispute(
             bountyAppId, 
+            creator,
             hunter,
             1000001, 
             bytes(ancillaryData), 
             request
         );
+        vm.stopPrank();
+    }
+
+    function testWrongCallerPayoutIfDispute() public {
+        string memory bountyAppId = "AppId";
+        address creator = address(0xABCD);
+        address hunter = address(0xBEEF);
+        uint expiration = 1 weeks;
+
+        // Input variables to initiateDispute function
+        string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
+
+        // Escrow funds first
+        vm.deal(creator, 2 ether); // Give creator some eth
+        vm.prank(creator); // Sets msg.sender = creator for next function call
+        vm.warp(1000000); // Sets block.timestamp = 1000000
+
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0);
+
+        vm.prank(hunter);
+        vm.warp(1000001); // Sets block.timestamp = 1000001
+
+        escrowContract.submit(bountyAppId, creator); // Submit work
+
+        setUpUMA(creator, hunter);
+
+        SkinnyOptimisticOracleInterface.Request memory request;
+
+        vm.prank(creator);
+
+        escrowContract.payout(bountyAppId, hunter);
+
+        vm.expectRevert(bytes("Caller must be creator or hunter")); // Expect this revert error
+        escrowContract.payoutIfDispute(
+            bountyAppId, 
+            creator,
+            hunter,
+            1000001, 
+            bytes(ancillaryData), 
+            request
+        );
+    }
+
+    function testWrongRequestPayoutIfDispute() public {
+        string memory bountyAppId = "AppId";
+        address creator = address(0xABCD);
+        address hunter = address(0xBEEF);
+        address other = address(1234);
+        uint expiration = 1 weeks;
+
+        // Input variables to initiateDispute function
+        uint bondAmt = 10 * 10**18; // 10 WETH bondAmt
+        string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
+        string memory ancillaryData2 = "q:Did this bounty other`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
+
+        // Escrow funds first
+        vm.deal(creator, 2 ether); // Give creator some eth
+        vm.prank(creator); // Sets msg.sender = creator for next function call
+        vm.warp(1000000); // Sets block.timestamp = 1000000
+
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0);
+
+
+        vm.prank(hunter);
+        vm.warp(1000001); // Sets block.timestamp = 1000001
+
+        escrowContract.submit(bountyAppId, creator); // Submit work
+
+        // Test calling UMA requestAndProposePriceFor
+        setUpUMA(creator, hunter);
+        weth.mint(other, 100 * 10**18); // Mint 100 WETH to other to test thrid party
+
+        vm.startPrank(creator);
+        weth.approve(address(escrowContract), bondAmt + finalFee); // Approve escrowContract contract to spend on creator's behalf; should use icnreaseAllowance maybe?
+        // issue with allowances as msg.sender is not creator but the Escrow Contract
+        // we have to transfer the creator's assets into the escrow coontract before transferring into UMA
+        // escrow contract needs to call approve then
+        escrowContract.initiateDispute(
+            bountyAppId, 
+            hunter, 
+            bondAmt, 
+            ancillaryData,
+            weth
+        ); // Initiate Dispute
+
+        vm.stopPrank();
+
+        vm.startPrank(hunter);
+        weth.approve(address(escrowContract), bondAmt + finalFee); // Approve escrowContract contract to spend on hunter's behalf; should use icnreaseAllowance maybe?
+
+        SkinnyOptimisticOracleInterface.Request memory request;
+        request.currency = weth;
+        request.reward = 0;
+        request.finalFee = 35 * 10**16;
+        request.bond = bondAmt;
+        request.customLiveness = 1 weeks;
+        request.proposer = creator;
+        request.proposedPrice = 0;
+        request.expirationTime = 1000001 + 1 weeks;
+
+        escrowContract.hunterDisputeResponse(
+            bountyAppId, 
+            creator, 
+            1000001, 
+            bytes(ancillaryData), 
+            request 
+        ); // Hunter responds to dispute
+        vm.stopPrank();
+
+        // Creator and other
+        vm.prank(creator);
+        escrowContract.escrow{value: 1 ether}(bountyAppId, other, expiration, address(0), 0);
+
+        vm.prank(other);
+        escrowContract.submit(bountyAppId, creator); // Submit work
+
+        vm.startPrank(creator);
+        weth.approve(address(escrowContract), bondAmt + finalFee);
+        escrowContract.initiateDispute(
+            bountyAppId, 
+            other, 
+            bondAmt, 
+            ancillaryData2,
+            weth
+        ); // Initiate Dispute 2 
+        vm.stopPrank();
+
+        vm.startPrank(other);
+        weth.approve(address(escrowContract), bondAmt + finalFee); // Approve escrowContract contract to spend on hunter's behalf; should use icnreaseAllowance maybe?
+
+        request.currency = weth;
+        request.reward = 0;
+        request.finalFee = 35 * 10**16;
+        request.bond = bondAmt;
+        request.customLiveness = 1 weeks;
+        request.proposer = creator;
+        request.proposedPrice = 0;
+        request.expirationTime = 1000001 + 1 weeks;
+
+        escrowContract.hunterDisputeResponse(
+            bountyAppId, 
+            creator, 
+            1000001, 
+            bytes(ancillaryData2), 
+            request 
+        ); // Hunter responds to dispute
+        vm.stopPrank();
+
+        vm.startPrank(creator);
+
+        mockDVM.pushPrice(
+            bytes32("YES_OR_NO_QUERY"), 
+            1000001, 
+            optimisticOracle.stampAncillaryData(bytes(ancillaryData), address(escrowContract)),
+            0
+        ); // Push price of 0 so creator wins
+
+        mockDVM.pushPrice(
+            bytes32("YES_OR_NO_QUERY"), 
+            1000001, 
+            optimisticOracle.stampAncillaryData(bytes(ancillaryData2), address(escrowContract)),
+            1
+        ); // Push price of 1 so hunter (other) wins
+        
+
+        SkinnyOptimisticOracleInterface.Request memory request2;
+        request2.currency = weth;
+        request2.reward = 0;
+        request2.finalFee = 35 * 10**16;
+        request2.bond = bondAmt;
+        request2.customLiveness = 1 weeks;
+        request2.proposer = creator;
+        request2.proposedPrice = 0;
+        request2.expirationTime = 1000001 + 1 weeks;
+        request2.disputer = hunter;
+
+        vm.expectRevert(bytes("Incorrect request data")); // Expect this revert error
+        // Pass in hunter struct where creator wins while trying to finish bounty where other wins 
+        escrowContract.payoutIfDispute(
+            bountyAppId, 
+            creator,
+            other,
+            1000001, 
+            bytes(ancillaryData), 
+            request2
+        );
+        
+        vm.stopPrank();
+    }
+
+    function testWrongRequestExpiredPayoutIfDispute() public {
+        string memory bountyAppId = "AppId";
+        address creator = address(0xABCD);
+        address hunter = address(0xBEEF);
+        address other = address(1234);
+        uint expiration = 1 weeks;
+
+        // Input variables to initiateDispute function
+        uint bondAmt = 10 * 10**18; // 10 WETH bondAmt
+        string memory ancillaryData = "q:Did this bounty hunter`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
+        string memory ancillaryData2 = "q:Did this bounty other`'`s work fulfill the bounty specifications? Work: www.github.com Specification: arweave.com/590, p1:0, p2:1, p3:2";
+
+        // Escrow funds first
+        vm.deal(creator, 2 ether); // Give creator some eth
+        vm.prank(creator); // Sets msg.sender = creator for next function call
+        vm.warp(1000000); // Sets block.timestamp = 1000000
+
+        escrowContract.escrow{value: 1 ether}(bountyAppId, hunter, expiration, address(0), 0);
+
+
+        vm.prank(hunter);
+        vm.warp(1000001); // Sets block.timestamp = 1000001
+
+        escrowContract.submit(bountyAppId, creator); // Submit work
+
+        // Test calling UMA requestAndProposePriceFor
+        setUpUMA(creator, hunter);
+        weth.mint(other, 100 * 10**18); // Mint 100 WETH to other to test thrid party
+
+        vm.startPrank(creator);
+        weth.approve(address(escrowContract), bondAmt + finalFee); // Approve escrowContract contract to spend on creator's behalf; should use icnreaseAllowance maybe?
+        // issue with allowances as msg.sender is not creator but the Escrow Contract
+        // we have to transfer the creator's assets into the escrow coontract before transferring into UMA
+        // escrow contract needs to call approve then
+        escrowContract.initiateDispute(
+            bountyAppId, 
+            hunter, 
+            bondAmt, 
+            ancillaryData,
+            weth
+        ); // Initiate Dispute
+
+        vm.stopPrank();
+
+        // vm.startPrank(hunter);
+        // weth.approve(address(escrowContract), bondAmt + finalFee); // Approve escrowContract contract to spend on hunter's behalf; should use icnreaseAllowance maybe?
+
+        // SkinnyOptimisticOracleInterface.Request memory request;
+        // request.currency = weth;
+        // request.reward = 0;
+        // request.finalFee = 35 * 10**16;
+        // request.bond = bondAmt;
+        // request.customLiveness = 1 weeks;
+        // request.proposer = creator;
+        // request.proposedPrice = 0;
+        // request.expirationTime = 1000001 + 1 weeks;
+
+        // escrowContract.hunterDisputeResponse(
+        //     bountyAppId, 
+        //     creator, 
+        //     1000001, 
+        //     bytes(ancillaryData), 
+        //     request 
+        // ); // Hunter responds to dispute
+        // vm.stopPrank();
+
+        // Creator and other
+        vm.prank(creator);
+        escrowContract.escrow{value: 1 ether}(bountyAppId, other, expiration, address(0), 0);
+
+        vm.prank(other);
+        escrowContract.submit(bountyAppId, creator); // Submit work
+
+        vm.startPrank(creator);
+        weth.approve(address(escrowContract), bondAmt + finalFee);
+        escrowContract.initiateDispute(
+            bountyAppId, 
+            other, 
+            bondAmt, 
+            ancillaryData2,
+            weth
+        ); // Initiate Dispute 2 
+        vm.stopPrank();
+
+        vm.startPrank(other);
+        weth.approve(address(escrowContract), bondAmt + finalFee); // Approve escrowContract contract to spend on hunter's behalf; should use icnreaseAllowance maybe?
+        SkinnyOptimisticOracleInterface.Request memory request;
+        request.currency = weth;
+        request.reward = 0;
+        request.finalFee = 35 * 10**16;
+        request.bond = bondAmt;
+        request.customLiveness = 1 weeks;
+        request.proposer = creator;
+        request.proposedPrice = 0;
+        request.expirationTime = 1000001 + 1 weeks;
+
+        escrowContract.hunterDisputeResponse(
+            bountyAppId, 
+            creator, 
+            1000001, 
+            bytes(ancillaryData2), 
+            request 
+        ); // Hunter responds to dispute
+        vm.stopPrank();
+
+        vm.startPrank(creator);
+
+        // mockDVM.pushPrice(
+        //     bytes32("YES_OR_NO_QUERY"), 
+        //     1000001, 
+        //     optimisticOracle.stampAncillaryData(bytes(ancillaryData), address(escrowContract)),
+        //     0
+        // ); // Push price of 0 so creator wins
+
+        mockDVM.pushPrice(
+            bytes32("YES_OR_NO_QUERY"), 
+            1000001, 
+            optimisticOracle.stampAncillaryData(bytes(ancillaryData2), address(escrowContract)),
+            1
+        ); // Push price of 1 so hunter (other) wins
+        
+
+        // SkinnyOptimisticOracleInterface.Request memory request2;
+        // request2.currency = weth;
+        // request2.reward = 0;
+        // request2.finalFee = 35 * 10**16;
+        // request2.bond = bondAmt;
+        // request2.customLiveness = 1 weeks;
+        // request2.proposer = creator;
+        // request2.proposedPrice = 0;
+        // request2.expirationTime = 1000001 + 1 weeks;
+        // request2.disputer = hunter;
+
+        optimisticOracle.setCurrentTime(1000001 + 1 weeks + 1); // Set timestamp in DVM so that the creator's dispute intiation will be expired for creator - hunter
+
+        vm.expectRevert(bytes("Incorrect hunter specified")); // Expect this revert error
+        // Pass in hunter struct where creator wins while trying to finish bounty where other wins 
+        escrowContract.payoutIfDispute(
+            bountyAppId, 
+            creator,
+            other,
+            1000001, 
+            bytes(ancillaryData), 
+            request
+        );
+        
         vm.stopPrank();
     }
 }

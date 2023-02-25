@@ -34,12 +34,12 @@
   ],
   "bytecode": {
     "object": "0x608060405234801561001057600080fd5b504260005560ac806100236000396000f3fe6080604052348015600f57600080fd5b506004361060325760003560e01c806322f8e56614603757806329cb924d146049575b600080fd5b60476042366004605e565b600055565b005b60005460405190815260200160405180910390f35b600060208284031215606f57600080fd5b503591905056fea26469706673582212200d5d53346cd71aad6e6bdb2c14b228f3f4dfed085c2e6323c0cc778c10ce3a2f64736f6c63430008110033",
-    "sourceMap": "152:642:41:-:0;;;207:101;;;;;;;;;-1:-1:-1;245:15:41;231:11;:29;152:642;;;;;;",
+    "sourceMap": "152:642:42:-:0;;;207:101;;;;;;;;;-1:-1:-1;245:15:42;231:11;:29;152:642;;;;;;",
     "linkReferences": {}
   },
   "deployedBytecode": {
     "object": "0x6080604052348015600f57600080fd5b506004361060325760003560e01c806322f8e56614603757806329cb924d146049575b600080fd5b60476042366004605e565b600055565b005b60005460405190815260200160405180910390f35b600060208284031215606f57600080fd5b503591905056fea26469706673582212200d5d53346cd71aad6e6bdb2c14b228f3f4dfed085c2e6323c0cc778c10ce3a2f64736f6c63430008110033",
-    "sourceMap": "152:642:41:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;475:82;;;;;;:::i;:::-;532:11;:18;475:82;;;701:91;748:7;774:11;701:91;;345:25:61;;;333:2;318:18;701:91:41;;;;;;;14:180:61;73:6;126:2;114:9;105:7;101:23;97:32;94:52;;;142:1;139;132:12;94:52;-1:-1:-1;165:23:61;;14:180;-1:-1:-1;14:180:61:o",
+    "sourceMap": "152:642:42:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;475:82;;;;;;:::i;:::-;532:11;:18;475:82;;;701:91;748:7;774:11;701:91;;345:25:62;;;333:2;318:18;701:91:42;;;;;;;14:180:62;73:6;126:2;114:9;105:7;101:23;97:32;94:52;;;142:1;139;132:12;94:52;-1:-1:-1;165:23:62;;14:180;-1:-1:-1;14:180:62:o",
     "linkReferences": {}
   },
   "methodIdentifiers": {
@@ -153,19 +153,19 @@
   },
   "ast": {
     "absolutePath": "lib/protocol/packages/core/contracts/common/implementation/Timer.sol",
-    "id": 31865,
+    "id": 31938,
     "exportedSymbols": {
       "Timer": [
-        31864
+        31937
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "42:753:41",
+    "src": "42:753:42",
     "nodes": [
       {
-        "id": 31831,
+        "id": 31904,
         "nodeType": "PragmaDirective",
-        "src": "42:23:41",
+        "src": "42:23:42",
         "nodes": [],
         "literals": [
           "solidity",
@@ -175,20 +175,20 @@
         ]
       },
       {
-        "id": 31864,
+        "id": 31937,
         "nodeType": "ContractDefinition",
-        "src": "152:642:41",
+        "src": "152:642:42",
         "nodes": [
           {
-            "id": 31834,
+            "id": 31907,
             "nodeType": "VariableDeclaration",
-            "src": "173:27:41",
+            "src": "173:27:42",
             "nodes": [],
             "constant": false,
             "mutability": "mutable",
             "name": "currentTime",
-            "nameLocation": "189:11:41",
-            "scope": 31864,
+            "nameLocation": "189:11:42",
+            "scope": 31937,
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -196,10 +196,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 31833,
+              "id": 31906,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "173:7:41",
+              "src": "173:7:42",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -208,30 +208,30 @@
             "visibility": "private"
           },
           {
-            "id": 31843,
+            "id": 31916,
             "nodeType": "FunctionDefinition",
-            "src": "207:101:41",
+            "src": "207:101:42",
             "nodes": [],
             "body": {
-              "id": 31842,
+              "id": 31915,
               "nodeType": "Block",
-              "src": "221:87:41",
+              "src": "221:87:42",
               "nodes": [],
               "statements": [
                 {
                   "expression": {
-                    "id": 31840,
+                    "id": 31913,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 31837,
+                      "id": 31910,
                       "name": "currentTime",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 31834,
-                      "src": "231:11:41",
+                      "referencedDeclaration": 31907,
+                      "src": "231:11:42",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -241,40 +241,40 @@
                     "operator": "=",
                     "rightHandSide": {
                       "expression": {
-                        "id": 31838,
+                        "id": 31911,
                         "name": "block",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": -4,
-                        "src": "245:5:41",
+                        "src": "245:5:42",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_block",
                           "typeString": "block"
                         }
                       },
-                      "id": 31839,
+                      "id": 31912,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
-                      "memberLocation": "251:9:41",
+                      "memberLocation": "251:9:42",
                       "memberName": "timestamp",
                       "nodeType": "MemberAccess",
-                      "src": "245:15:41",
+                      "src": "245:15:42",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "src": "231:29:41",
+                    "src": "231:29:42",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 31841,
+                  "id": 31914,
                   "nodeType": "ExpressionStatement",
-                  "src": "231:29:41"
+                  "src": "231:29:42"
                 }
               ]
             },
@@ -284,47 +284,47 @@
             "name": "",
             "nameLocation": "-1:-1:-1",
             "parameters": {
-              "id": 31835,
+              "id": 31908,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "218:2:41"
+              "src": "218:2:42"
             },
             "returnParameters": {
-              "id": 31836,
+              "id": 31909,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "221:0:41"
+              "src": "221:0:42"
             },
-            "scope": 31864,
+            "scope": 31937,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
           },
           {
-            "id": 31854,
+            "id": 31927,
             "nodeType": "FunctionDefinition",
-            "src": "475:82:41",
+            "src": "475:82:42",
             "nodes": [],
             "body": {
-              "id": 31853,
+              "id": 31926,
               "nodeType": "Block",
-              "src": "522:35:41",
+              "src": "522:35:42",
               "nodes": [],
               "statements": [
                 {
                   "expression": {
-                    "id": 31851,
+                    "id": 31924,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 31849,
+                      "id": 31922,
                       "name": "currentTime",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 31834,
-                      "src": "532:11:41",
+                      "referencedDeclaration": 31907,
+                      "src": "532:11:42",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -333,33 +333,33 @@
                     "nodeType": "Assignment",
                     "operator": "=",
                     "rightHandSide": {
-                      "id": 31850,
+                      "id": 31923,
                       "name": "time",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 31846,
-                      "src": "546:4:41",
+                      "referencedDeclaration": 31919,
+                      "src": "546:4:42",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "src": "532:18:41",
+                    "src": "532:18:42",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 31852,
+                  "id": 31925,
                   "nodeType": "ExpressionStatement",
-                  "src": "532:18:41"
+                  "src": "532:18:42"
                 }
               ]
             },
             "documentation": {
-              "id": 31844,
+              "id": 31917,
               "nodeType": "StructuredDocumentation",
-              "src": "314:156:41",
+              "src": "314:156:42",
               "text": " @notice Sets the current time.\n @dev Will revert if not running in test mode.\n @param time timestamp to set `currentTime` to."
             },
             "functionSelector": "22f8e566",
@@ -367,20 +367,20 @@
             "kind": "function",
             "modifiers": [],
             "name": "setCurrentTime",
-            "nameLocation": "484:14:41",
+            "nameLocation": "484:14:42",
             "parameters": {
-              "id": 31847,
+              "id": 31920,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 31846,
+                  "id": 31919,
                   "mutability": "mutable",
                   "name": "time",
-                  "nameLocation": "507:4:41",
+                  "nameLocation": "507:4:42",
                   "nodeType": "VariableDeclaration",
-                  "scope": 31854,
-                  "src": "499:12:41",
+                  "scope": 31927,
+                  "src": "499:12:42",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -388,10 +388,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 31845,
+                    "id": 31918,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "499:7:41",
+                    "src": "499:7:42",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -400,54 +400,54 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "498:14:41"
+              "src": "498:14:42"
             },
             "returnParameters": {
-              "id": 31848,
+              "id": 31921,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "522:0:41"
+              "src": "522:0:42"
             },
-            "scope": 31864,
+            "scope": 31937,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 31863,
+            "id": 31936,
             "nodeType": "FunctionDefinition",
-            "src": "701:91:41",
+            "src": "701:91:42",
             "nodes": [],
             "body": {
-              "id": 31862,
+              "id": 31935,
               "nodeType": "Block",
-              "src": "757:35:41",
+              "src": "757:35:42",
               "nodes": [],
               "statements": [
                 {
                   "expression": {
-                    "id": 31860,
+                    "id": 31933,
                     "name": "currentTime",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 31834,
-                    "src": "774:11:41",
+                    "referencedDeclaration": 31907,
+                    "src": "774:11:42",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 31859,
-                  "id": 31861,
+                  "functionReturnParameters": 31932,
+                  "id": 31934,
                   "nodeType": "Return",
-                  "src": "767:18:41"
+                  "src": "767:18:42"
                 }
               ]
             },
             "documentation": {
-              "id": 31855,
+              "id": 31928,
               "nodeType": "StructuredDocumentation",
-              "src": "563:133:41",
+              "src": "563:133:42",
               "text": " @notice Gets the currentTime variable set in the Timer.\n @return uint256 for the current Testable timestamp."
             },
             "functionSelector": "29cb924d",
@@ -455,26 +455,26 @@
             "kind": "function",
             "modifiers": [],
             "name": "getCurrentTime",
-            "nameLocation": "710:14:41",
+            "nameLocation": "710:14:42",
             "parameters": {
-              "id": 31856,
+              "id": 31929,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "724:2:41"
+              "src": "724:2:42"
             },
             "returnParameters": {
-              "id": 31859,
+              "id": 31932,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 31858,
+                  "id": 31931,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 31863,
-                  "src": "748:7:41",
+                  "scope": 31936,
+                  "src": "748:7:42",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -482,10 +482,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 31857,
+                    "id": 31930,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "748:7:41",
+                    "src": "748:7:42",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -494,9 +494,9 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "747:9:41"
+              "src": "747:9:42"
             },
-            "scope": 31864,
+            "scope": 31937,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "public"
@@ -508,22 +508,22 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "documentation": {
-          "id": 31832,
+          "id": 31905,
           "nodeType": "StructuredDocumentation",
-          "src": "67:84:41",
+          "src": "67:84:42",
           "text": " @title Universal store of current contract time for testing environments."
         },
         "fullyImplemented": true,
         "linearizedBaseContracts": [
-          31864
+          31937
         ],
         "name": "Timer",
-        "nameLocation": "161:5:41",
-        "scope": 31865,
+        "nameLocation": "161:5:42",
+        "scope": 31938,
         "usedErrors": []
       }
     ],
     "license": "AGPL-3.0-only"
   },
-  "id": 41
+  "id": 42
 }
