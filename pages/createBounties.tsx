@@ -24,6 +24,8 @@ import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
 import Image from 'next/image';
+import Link from '@mui/material/Link';
+
 
 // Bounty Stages for Creator:
 // 1. Posted (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.NoBounty); CHECK PROGRESS MAPPING
@@ -303,6 +305,13 @@ const CreateBounties: NextPage = () => {
                         <Image alt="" src="/the_fortune_cow.png" height="300px" width="300px"/>
                         <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 13}}>Connect your wallet to get started.</Typography>
                     </Box>
+                    {smallScreen && <h2 className={styles.h2}>Posted</h2>}
+                    {smallScreen && <h2 className={styles.h2}>Applied To</h2>}
+                    {smallScreen && <h2 className={styles.h2}>In Progress</h2>}
+                    {smallScreen && <h2 className={styles.h2}>Submitted: Needs Approval</h2>}
+                    {smallScreen && <h2 className={styles.h2}>Dispute Initiated</h2>}
+                    {smallScreen && <h2 className={styles.h2}>Dispute Responded To</h2>}
+                    {smallScreen && <h2 className={styles.h2}>Finished</h2>}
                 </Box>
 
             </main>

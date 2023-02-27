@@ -27,6 +27,7 @@ import { getEscrowEventData } from '../getEscrowEventData';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import contractAddresses from '../contractAddresses.json';
 import Image from 'next/image';
+import Link from 'next/link';
 
 // Bounty Stages for Hunter:
 // 1. Applied (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.NoBounty); CHECK PROGRESS MAPPING
@@ -522,6 +523,13 @@ const MyBounties: NextPage = () => {
                         <Image alt="" src="/the_cow_scientist.png" height="300px" width="300px"/>
                         <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 13}}>Connect your wallet to get started.</Typography>
                     </Box>
+                    {smallScreen && <h2 className={styles.h2}>Applied</h2>}
+                    {smallScreen && <h2 className={styles.h2}>In Progress</h2>}
+                    {smallScreen && <h2 className={styles.h2}>Submitted</h2>}
+                    {smallScreen && <h2 className={styles.h2}>Dispute Initiated</h2>}
+                    {smallScreen && <h2 className={styles.h2}>Dispute Responded To</h2>}
+                    {smallScreen && <h2 className={styles.h2}>Force Payout</h2>}
+                    {smallScreen && <h2 className={styles.h2}>Finished</h2>}
                 </Box>
             </main>
             // <div className={styles.background}> 
@@ -593,7 +601,7 @@ const MyBounties: NextPage = () => {
                             {(appliedBountyPosts.length + inProgressBountyPosts.length + submittedBountyPosts.length + disputeInitiatedBountyPosts.length + disputeRespondedToBountyPosts.length + creatorNoActionBountyPosts.length + finishedBountyPosts.length) === 0 && stage === 1 && smallScreen &&
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '2vh', paddingBottom: '2.5vh', gap: '2vh', }}> 
                                     <Image alt="" src="/the_cow_scientist.png" height="200px" width="200px"/>
-                                    <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '200px', wordWrap: 'break-word', textAlign: 'center', }}>Go to Open Bounties to apply for a bounty.</Typography>
+                                    <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center', }}>Go to <Link href="/openBounties">Open Bounties</Link>to apply for a bounty.</Typography>
                                 </Box>
                             }
                         </Box>
@@ -610,7 +618,7 @@ const MyBounties: NextPage = () => {
                         {appliedBountyPosts.length === 0 && stage === 1 && largeScreen &&
                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
                                 <Image alt="" src="/the_cow_scientist.png" height="300px" width="300px"/>
-                                <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>Go to Open Bounties to apply for a bounty.</Typography>
+                                <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center', }}>Go to <Link href="/openBounties">Open Bounties</Link> to apply for a bounty.</Typography>
                             </Box>
                         }
                         {largeScreen && stage === 2 && inProgressBountyPosts}

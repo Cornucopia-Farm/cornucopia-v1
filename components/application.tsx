@@ -64,7 +64,7 @@ const Application: React.FC<Props> = props => {
 
   const { data: ensName } = useEnsName({ address: props.person });
   const { chain } = useNetwork();
-  // const { address, isConnected } = useAccount();
+  const { address, isConnected } = useAccount();
   // const { data: signer } = useSigner();
   // const provider = useProvider();
 
@@ -100,7 +100,6 @@ const Application: React.FC<Props> = props => {
 
   const bondAmt = ethers.utils.parseUnits("0.1", "ether"); // Hard-coded (for now) bondAmt
   const finalFee = ethers.utils.parseUnits("0.35", "ether"); // Hard-coded finalFee (Set by UMA)
-  const oracleAddress =  contractAddresses.oracle; // '0xeDc52A961B5Ca2AC7B2e0bc36714dB60E5a115Ab'; 
   const wethContract = useContract({...wethContractConfig});
   const zeroAddress = '0x0000000000000000000000000000000000000000';
 
@@ -110,11 +109,11 @@ const Application: React.FC<Props> = props => {
   const { data: escrowTxData, isLoading: isEscrowTxLoading, isSuccess: isEscrowTxSuccess, error: escrowTxError } = useWaitForTransaction({ hash: escrowData?.hash, enabled: true,});
 
   // Submitted Contract Interactions: Initiate Dispute/Payout If Dispute/Payout
-  const { config: initiateDisputeConfig } = usePrepareContractWrite({...contractConfig, functionName: 'initiateDispute', args: [debouncedBountyAppId, debouncedHunterAddress, oracleAddress, bondAmt, debouncedAncillaryData, wethContract.address], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedAncillaryData) && Boolean(allowanceIncreased), });
+  const { config: initiateDisputeConfig } = usePrepareContractWrite({...contractConfig, functionName: 'initiateDispute', args: [debouncedBountyAppId, debouncedHunterAddress, bondAmt, debouncedAncillaryData, wethContract.address], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedAncillaryData) && Boolean(allowanceIncreased), });
   const { data: initiateDisputeData, error: initiateDisputeError, isLoading: isInitiateDisputeLoading, isSuccess: isInitiateDisputeSuccess, write: initiateDispute } = useContractWrite(initiateDisputeConfig);
   const { data: initiateDisputeTxData, isLoading: isInitiateDisputeTxLoading, isSuccess: isInitiateDisputeTxSuccess, error: initiateDisputeTxError } = useWaitForTransaction({ hash: initiateDisputeData?.hash, enabled: true,});
 
-  const { config: payoutIfDisputeConfig } = usePrepareContractWrite({...contractConfig, functionName: 'payoutIfDispute', args: [debouncedBountyAppId, debouncedHunterAddress, debouncedTimestamp, debouncedAncillaryData, debouncedRequest], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedTimestamp) && Boolean(debouncedAncillaryData) && Boolean(debouncedRequest), });
+  const { config: payoutIfDisputeConfig } = usePrepareContractWrite({...contractConfig, functionName: 'payoutIfDispute', args: [debouncedBountyAppId, address, debouncedHunterAddress, debouncedTimestamp, debouncedAncillaryData, debouncedRequest], enabled: Boolean(debouncedBountyAppId) && Boolean(address) && Boolean(debouncedHunterAddress) && Boolean(debouncedTimestamp) && Boolean(debouncedAncillaryData) && Boolean(debouncedRequest), });
   const { data: payoutIfDisputeData, error: payoutIfDisputeError, isLoading: isPayoutIfDisputeLoading, isSuccess: isPayoutIfDisputeSuccess, write: payoutIfDispute } = useContractWrite(payoutIfDisputeConfig);
   const { data: payoutIfDisputeTxData, isLoading: isPayoutIfDisputeTxLoading, isSuccess: isPayoutIfDisputeTxSuccess, error: payoutIfDisputeTxError } = useWaitForTransaction({ hash: payoutIfDisputeData?.hash, enabled: true,});
 

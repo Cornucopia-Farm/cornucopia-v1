@@ -92,7 +92,7 @@ export default function HeaderTabs() {
               }}
             >
               <MenuItem onClick={handleClose}>
-                <Link href="/openBounties" >
+                <Link href="/openBounties">
                   <Button className={styles.headerFontDropdown} sx={{ fontSize: '16px', }}>Open Bounties</Button>
                 </Link>
               </MenuItem>
