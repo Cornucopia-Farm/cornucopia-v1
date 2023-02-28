@@ -18,6 +18,8 @@ export type { Initializable } from "./lib/openzeppelin-contracts-upgradeable/con
 export { Initializable__factory } from "./factories/lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable__factory";
 export type { UUPSUpgradeable } from "./lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/UUPSUpgradeable";
 export { UUPSUpgradeable__factory } from "./factories/lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/UUPSUpgradeable__factory";
+export type { ReentrancyGuardUpgradeable } from "./lib/openzeppelin-contracts-upgradeable/contracts/security/ReentrancyGuardUpgradeable";
+export { ReentrancyGuardUpgradeable__factory } from "./factories/lib/openzeppelin-contracts-upgradeable/contracts/security/ReentrancyGuardUpgradeable__factory";
 export type { ContextUpgradeable } from "./lib/openzeppelin-contracts-upgradeable/contracts/utils/ContextUpgradeable";
 export { ContextUpgradeable__factory } from "./factories/lib/openzeppelin-contracts-upgradeable/contracts/utils/ContextUpgradeable__factory";
 export type { Ownable } from "./lib/openzeppelin-contracts/contracts/access/Ownable";

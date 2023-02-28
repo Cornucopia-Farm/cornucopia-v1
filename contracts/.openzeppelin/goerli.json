@@ -5,6 +5,11 @@
       "address": "0x951c2836D07C98Be2598f91fFF47985B24c32083",
       "txHash": "0xc93a1b5ac2d00597e124a98fc3fd4af96ab2061e3948abd7260c0f92fcc79bae",
       "kind": "uups"
+    },
+    {
+      "address": "0xAbab45D0c3c58973dc34f7EC343dC2cfF6D1af42",
+      "txHash": "0x2056d06ed5fa97c5d62b0192ac2ab6876bbcbd24329e7621f33b010a232e112d",
+      "kind": "uups"
     }
   ],
   "impls": {
@@ -149,6 +154,193 @@
             "numberOfBytes": "1"
           },
           "t_mapping(t_bytes32,t_enum(Status)7411)": {
+            "label": "mapping(bytes32 => enum Escrow.Status)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "03b64e3cf40d4a6872ade82eb17a80f22e1528368bba7ad5e754833d26c40dca": {
+      "address": "0x2a498Cbe2B9f464b5EBdBF6Af3e76bfBFab90E48",
+      "txHash": "0x5db15a9cd74399ad09c95073346a48aeafb87ed27de6475beca9a1ba3a713ff2",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "lib/openzeppelin-contracts-upgradeable/contracts/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "lib/openzeppelin-contracts-upgradeable/contracts/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "lib/openzeppelin-contracts-upgradeable/contracts/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:211"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol:107"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "lib/openzeppelin-contracts-upgradeable/contracts/security/ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "lib/openzeppelin-contracts-upgradeable/contracts/security/ReentrancyGuardUpgradeable.sol:80"
+          },
+          {
+            "label": "bountyAmounts",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_mapping(t_bytes32,t_uint256)",
+            "contract": "Escrow",
+            "src": "src/Escrow.sol:22"
+          },
+          {
+            "label": "progress",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_mapping(t_bytes32,t_enum(Status)7494)",
+            "contract": "Escrow",
+            "src": "src/Escrow.sol:23"
+          },
+          {
+            "label": "expiration",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_mapping(t_bytes32,t_uint256)",
+            "contract": "Escrow",
+            "src": "src/Escrow.sol:24"
+          },
+          {
+            "label": "payoutExpiration",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_mapping(t_bytes32,t_uint256)",
+            "contract": "Escrow",
+            "src": "src/Escrow.sol:25"
+          },
+          {
+            "label": "bountyToken",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_mapping(t_bytes32,t_address)",
+            "contract": "Escrow",
+            "src": "src/Escrow.sol:26"
+          },
+          {
+            "label": "oracleInterface",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_contract(SkinnyOptimisticOracleInterface)5715",
+            "contract": "Escrow",
+            "src": "src/Escrow.sol:28"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_contract(SkinnyOptimisticOracleInterface)5715": {
+            "label": "contract SkinnyOptimisticOracleInterface",
+            "numberOfBytes": "20"
+          },
+          "t_enum(Status)7494": {
+            "label": "enum Escrow.Status",
+            "members": [
+              "NoBounty",
+              "Submitted",
+              "DisputeInitiated",
+              "DisputeRespondedTo",
+              "Resolved"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_bytes32,t_address)": {
+            "label": "mapping(bytes32 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_enum(Status)7494)": {
             "label": "mapping(bytes32 => enum Escrow.Status)",
             "numberOfBytes": "32"
           },

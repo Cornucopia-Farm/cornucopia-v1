@@ -72,18 +72,20 @@ export declare namespace SkinnyOptimisticOracleInterface {
 
 export interface EscrowInterface extends utils.Interface {
   functions: {
+    "ORACLE_ADDRESS()": FunctionFragment;
     "bountyAmounts(bytes32)": FunctionFragment;
+    "bountyToken(bytes32)": FunctionFragment;
     "escrow(string,address,uint256,address,uint256)": FunctionFragment;
     "expiration(bytes32)": FunctionFragment;
-    "forceHunterPayout(string,address,address)": FunctionFragment;
+    "forceHunterPayout(string,address)": FunctionFragment;
     "hunterDisputeResponse(string,address,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))": FunctionFragment;
     "initialize()": FunctionFragment;
-    "initiateDispute(string,address,address,uint256,string,address)": FunctionFragment;
+    "initiateDispute(string,address,uint256,string,address)": FunctionFragment;
     "oracleInterface()": FunctionFragment;
     "owner()": FunctionFragment;
-    "payout(string,address,address)": FunctionFragment;
+    "payout(string,address)": FunctionFragment;
     "payoutExpiration(bytes32)": FunctionFragment;
-    "payoutIfDispute(string,address,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256),address)": FunctionFragment;
+    "payoutIfDispute(string,address,address,uint32,bytes,(address,address,address,bool,int256,int256,uint256,uint256,uint256,uint256,uint256))": FunctionFragment;
     "progress(bytes32)": FunctionFragment;
     "proxiableUUID()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
@@ -95,7 +97,9 @@ export interface EscrowInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "ORACLE_ADDRESS"
       | "bountyAmounts"
+      | "bountyToken"
       | "escrow"
       | "expiration"
       | "forceHunterPayout"
@@ -117,7 +121,15 @@ export interface EscrowInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(
+    functionFragment: "ORACLE_ADDRESS",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "bountyAmounts",
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "bountyToken",
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
@@ -136,11 +148,7 @@ export interface EscrowInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "forceHunterPayout",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>
-    ]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "hunterDisputeResponse",
@@ -161,7 +169,6 @@ export interface EscrowInterface extends utils.Interface {
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<string>,
-      PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<string>
@@ -174,11 +181,7 @@ export interface EscrowInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "payout",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>
-    ]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "payoutExpiration",
@@ -189,10 +192,10 @@ export interface EscrowInterface extends utils.Interface {
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<string>,
+      PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BytesLike>,
-      SkinnyOptimisticOracleInterface.RequestStruct,
-      PromiseOrValue<string>
+      SkinnyOptimisticOracleInterface.RequestStruct
     ]
   ): string;
   encodeFunctionData(
@@ -225,7 +228,15 @@ export interface EscrowInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(
+    functionFragment: "ORACLE_ADDRESS",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "bountyAmounts",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "bountyToken",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "escrow", data: BytesLike): Result;
@@ -491,10 +502,17 @@ export interface Escrow extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    ORACLE_ADDRESS(overrides?: CallOverrides): Promise<[string]>;
+
     bountyAmounts(
       arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
+
+    bountyToken(
+      arg0: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
 
     escrow(
       _bountyAppId: PromiseOrValue<string>,
@@ -513,7 +531,6 @@ export interface Escrow extends BaseContract {
     forceHunterPayout(
       _bountyAppId: PromiseOrValue<string>,
       _creator: PromiseOrValue<string>,
-      _token: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -533,7 +550,6 @@ export interface Escrow extends BaseContract {
     initiateDispute(
       _bountyAppId: PromiseOrValue<string>,
       _hunter: PromiseOrValue<string>,
-      _oracleAddress: PromiseOrValue<string>,
       _bondAmt: PromiseOrValue<BigNumberish>,
       _ancillaryData: PromiseOrValue<string>,
       _currency: PromiseOrValue<string>,
@@ -547,7 +563,6 @@ export interface Escrow extends BaseContract {
     payout(
       _bountyAppId: PromiseOrValue<string>,
       _hunter: PromiseOrValue<string>,
-      _token: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -558,11 +573,11 @@ export interface Escrow extends BaseContract {
 
     payoutIfDispute(
       _bountyAppId: PromiseOrValue<string>,
+      _creator: PromiseOrValue<string>,
       _hunter: PromiseOrValue<string>,
       _timestamp: PromiseOrValue<BigNumberish>,
       _ancillaryData: PromiseOrValue<BytesLike>,
       _request: SkinnyOptimisticOracleInterface.RequestStruct,
-      _token: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -600,10 +615,17 @@ export interface Escrow extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
+  ORACLE_ADDRESS(overrides?: CallOverrides): Promise<string>;
+
   bountyAmounts(
     arg0: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
+
+  bountyToken(
+    arg0: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides
+  ): Promise<string>;
 
   escrow(
     _bountyAppId: PromiseOrValue<string>,
@@ -622,7 +644,6 @@ export interface Escrow extends BaseContract {
   forceHunterPayout(
     _bountyAppId: PromiseOrValue<string>,
     _creator: PromiseOrValue<string>,
-    _token: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -642,7 +663,6 @@ export interface Escrow extends BaseContract {
   initiateDispute(
     _bountyAppId: PromiseOrValue<string>,
     _hunter: PromiseOrValue<string>,
-    _oracleAddress: PromiseOrValue<string>,
     _bondAmt: PromiseOrValue<BigNumberish>,
     _ancillaryData: PromiseOrValue<string>,
     _currency: PromiseOrValue<string>,
@@ -656,7 +676,6 @@ export interface Escrow extends BaseContract {
   payout(
     _bountyAppId: PromiseOrValue<string>,
     _hunter: PromiseOrValue<string>,
-    _token: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -667,11 +686,11 @@ export interface Escrow extends BaseContract {
 
   payoutIfDispute(
     _bountyAppId: PromiseOrValue<string>,
+    _creator: PromiseOrValue<string>,
     _hunter: PromiseOrValue<string>,
     _timestamp: PromiseOrValue<BigNumberish>,
     _ancillaryData: PromiseOrValue<BytesLike>,
     _request: SkinnyOptimisticOracleInterface.RequestStruct,
-    _token: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -709,10 +728,17 @@ export interface Escrow extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    ORACLE_ADDRESS(overrides?: CallOverrides): Promise<string>;
+
     bountyAmounts(
       arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    bountyToken(
+      arg0: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     escrow(
       _bountyAppId: PromiseOrValue<string>,
@@ -731,7 +757,6 @@ export interface Escrow extends BaseContract {
     forceHunterPayout(
       _bountyAppId: PromiseOrValue<string>,
       _creator: PromiseOrValue<string>,
-      _token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -749,7 +774,6 @@ export interface Escrow extends BaseContract {
     initiateDispute(
       _bountyAppId: PromiseOrValue<string>,
       _hunter: PromiseOrValue<string>,
-      _oracleAddress: PromiseOrValue<string>,
       _bondAmt: PromiseOrValue<BigNumberish>,
       _ancillaryData: PromiseOrValue<string>,
       _currency: PromiseOrValue<string>,
@@ -763,7 +787,6 @@ export interface Escrow extends BaseContract {
     payout(
       _bountyAppId: PromiseOrValue<string>,
       _hunter: PromiseOrValue<string>,
-      _token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -774,11 +797,11 @@ export interface Escrow extends BaseContract {
 
     payoutIfDispute(
       _bountyAppId: PromiseOrValue<string>,
+      _creator: PromiseOrValue<string>,
       _hunter: PromiseOrValue<string>,
       _timestamp: PromiseOrValue<BigNumberish>,
       _ancillaryData: PromiseOrValue<BytesLike>,
       _request: SkinnyOptimisticOracleInterface.RequestStruct,
-      _token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -960,7 +983,14 @@ export interface Escrow extends BaseContract {
   };
 
   estimateGas: {
+    ORACLE_ADDRESS(overrides?: CallOverrides): Promise<BigNumber>;
+
     bountyAmounts(
+      arg0: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    bountyToken(
       arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -982,7 +1012,6 @@ export interface Escrow extends BaseContract {
     forceHunterPayout(
       _bountyAppId: PromiseOrValue<string>,
       _creator: PromiseOrValue<string>,
-      _token: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1002,7 +1031,6 @@ export interface Escrow extends BaseContract {
     initiateDispute(
       _bountyAppId: PromiseOrValue<string>,
       _hunter: PromiseOrValue<string>,
-      _oracleAddress: PromiseOrValue<string>,
       _bondAmt: PromiseOrValue<BigNumberish>,
       _ancillaryData: PromiseOrValue<string>,
       _currency: PromiseOrValue<string>,
@@ -1016,7 +1044,6 @@ export interface Escrow extends BaseContract {
     payout(
       _bountyAppId: PromiseOrValue<string>,
       _hunter: PromiseOrValue<string>,
-      _token: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1027,11 +1054,11 @@ export interface Escrow extends BaseContract {
 
     payoutIfDispute(
       _bountyAppId: PromiseOrValue<string>,
+      _creator: PromiseOrValue<string>,
       _hunter: PromiseOrValue<string>,
       _timestamp: PromiseOrValue<BigNumberish>,
       _ancillaryData: PromiseOrValue<BytesLike>,
       _request: SkinnyOptimisticOracleInterface.RequestStruct,
-      _token: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1070,7 +1097,14 @@ export interface Escrow extends BaseContract {
   };
 
   populateTransaction: {
+    ORACLE_ADDRESS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     bountyAmounts(
+      arg0: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    bountyToken(
       arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -1092,7 +1126,6 @@ export interface Escrow extends BaseContract {
     forceHunterPayout(
       _bountyAppId: PromiseOrValue<string>,
       _creator: PromiseOrValue<string>,
-      _token: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1112,7 +1145,6 @@ export interface Escrow extends BaseContract {
     initiateDispute(
       _bountyAppId: PromiseOrValue<string>,
       _hunter: PromiseOrValue<string>,
-      _oracleAddress: PromiseOrValue<string>,
       _bondAmt: PromiseOrValue<BigNumberish>,
       _ancillaryData: PromiseOrValue<string>,
       _currency: PromiseOrValue<string>,
@@ -1126,7 +1158,6 @@ export interface Escrow extends BaseContract {
     payout(
       _bountyAppId: PromiseOrValue<string>,
       _hunter: PromiseOrValue<string>,
-      _token: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1137,11 +1168,11 @@ export interface Escrow extends BaseContract {
 
     payoutIfDispute(
       _bountyAppId: PromiseOrValue<string>,
+      _creator: PromiseOrValue<string>,
       _hunter: PromiseOrValue<string>,
       _timestamp: PromiseOrValue<BigNumberish>,
       _ancillaryData: PromiseOrValue<BytesLike>,
       _request: SkinnyOptimisticOracleInterface.RequestStruct,
-      _token: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
