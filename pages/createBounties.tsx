@@ -218,7 +218,7 @@ const CreateBounties: NextPage = () => {
         },
         {
             value: 11,
-            label: 'Applied To',
+            label: 'Applications',
         },
         {
             value: 23,
@@ -306,7 +306,7 @@ const CreateBounties: NextPage = () => {
                         <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 13}}>Connect your wallet to get started.</Typography>
                     </Box>
                     {smallScreen && <h2 className={styles.h2}>Posted</h2>}
-                    {smallScreen && <h2 className={styles.h2}>Applied To</h2>}
+                    {smallScreen && <h2 className={styles.h2}>Applications</h2>}
                     {smallScreen && <h2 className={styles.h2}>In Progress</h2>}
                     {smallScreen && <h2 className={styles.h2}>Submitted: Needs Approval</h2>}
                     {smallScreen && <h2 className={styles.h2}>Dispute Initiated</h2>}
@@ -432,7 +432,7 @@ const CreateBounties: NextPage = () => {
                                     <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>Click on create bounty to post a bounty.</Typography>
                                 </Box>
                             }
-                            {smallScreen && <h2 className={styles.h2}>Applied To</h2>}
+                            {smallScreen && <h2 className={styles.h2}>Applications</h2>}
                             {appliedComponents}
                             {appliedComponents.length === 0 && stage === 2 && largeScreen &&
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 

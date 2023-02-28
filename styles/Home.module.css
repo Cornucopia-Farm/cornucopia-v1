@@ -32,7 +32,9 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around; */
-  background: rgb(15, 14, 13) !important;
+  /* background: rgb(15, 14, 13) !important; */
+  /* background-color: #0c0b0a;
+  background-image: linear-gradient(247deg, #0c0b0a 0%, #0f0e0d 100%); */
   /* background: linear-gradient(to bottom, rgb(52, 117, 229), rgb(77, 137, 216)) !important; */
 }
 
@@ -215,11 +217,18 @@
   color:rgb(248, 215, 154) !important;
 }
 
+.alertFont {
+  font-family: 'Space Grotesk' !important;
+  font-weight: 300 !important;
+  text-transform: capitalize !important;
+  /* color:rgb(23, 21, 20) !important; */
+}
+
 .headerFontDropdown {
   font-family: 'Space Grotesk' !important;
   font-weight: 300 !important;
   text-transform: capitalize !important;
-  color:rgb(23, 21, 20) !important;
+  color:rgb(15, 14, 13) !important;
 }
 
 .accordionBackground {
@@ -228,7 +237,8 @@
 }
 
 .cardBackground {
-  background-color: rgb(23, 21, 20) !important;
+  /* background-color: rgb(23, 21, 20) !important; */
+  background-color: rgb(15, 14, 13) !important;
 }
 
 .formHeader {
@@ -236,7 +246,7 @@
   font-weight: 300 !important;
   text-transform: capitalize !important;
   color: rgb(233, 233, 198) !important;
-  background-color: rgb(23, 21, 20) !important;
+  background-color: rgb(15, 14, 13) !important;
   border-top-left-radius: 12px !important;
   border-top-right-radius: 12px !important;
 }
@@ -246,7 +256,7 @@
   font-weight: 300 !important;
   text-transform: capitalize !important;
   color: rgb(233, 233, 198) !important;
-  background-color: rgb(23, 21, 20) !important;
+  background-color: rgb(15, 14, 13) !important;
   border-bottom-left-radius: 12px !important;
   border-bottom-right-radius: 12px !important;
 }

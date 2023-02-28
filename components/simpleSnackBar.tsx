@@ -2,6 +2,7 @@ import * as React from 'react';
 import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
 import MuiAlert, { AlertColor, AlertProps } from '@mui/material/Alert';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import styles from '../styles/Home.module.css';
 
 type Props = {
     msg: string;
@@ -11,10 +12,14 @@ type Props = {
 const theme = createTheme({
     palette: {
       primary: {
-        main: 'rgb(248, 215, 154)',
+        // main: 'rgb(248, 215, 154)',
+        main: 'rgb(23, 21, 20)',
+        // main: 'rgb(248, 215, 154)',
       },
       secondary: {
-        main: 'rgb(255, 69, 0)',
+        // main: 'rgb(255, 69, 0)',
+        // main: '#F04B03',
+        main: 'rgb(255, 255, 255)'
       },
     },
 });
@@ -50,7 +55,9 @@ const SimpleSnackBar: React.FC<Props> = (props) => {
             //     }
             // }}
         >
-            <Alert onClose={handleClose} severity={props.severity} color={props.severity === 'success' ? 'primary' as 'success' : 'secondary' as 'error'} variant="outlined" sx={{ width: '100%', backgroundColor: 'rgb(23, 21, 20)', color: 'rgb(233, 233, 198)', borderRadius: '12px', }}>
+             
+            <Alert onClose={handleClose} severity={props.severity} color={props.severity === 'success' ? 'primary' as 'success' : 'secondary' as 'error'} variant="outlined" sx={{ width: '100%', ...(props.severity === 'success' ? { backgroundColor: 'rgb(233, 233, 198)', color: 'rgb(23, 21, 20)', } : { backgroundColor: 'rgb(240, 75, 3)', color: 'rgb(255, 255, 255)', }), borderRadius: '12px', }}>
+            {/* <Alert className={styles.alertFont} onClose={handleClose} severity={props.severity} color={props.severity === 'success' ? 'primary' as 'success' : 'secondary' as 'error'} sx={{ width: '100%', color: 'rgb(23, 21, 20)', ...(props.severity === 'success' ? { backgroundColor: 'primary', } : { backgroundColor: 'secondary', }), borderRadius: '12px', fontSize: 16, }}>  */}
                 {props.msg}
             </Alert>
         </Snackbar>

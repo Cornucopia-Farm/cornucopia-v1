@@ -36,15 +36,15 @@ export default function HeaderTabs() {
         {largeScreen && 
           <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', gap: '24px', }}> 
             <Link href="/openBounties" >
-              <Button className={styles.headerFont} sx={{ fontSize: '16px', '&:hover': { backgroundColor: 'transparent', }, }}>Open Bounties</Button>
+              <Button disableRipple className={styles.headerFont} sx={{ fontSize: '16px', '&:hover': { backgroundColor: 'transparent', }, }}>Open Bounties</Button>
             </Link>
 
             <Link href="/myBounties">
-                <Button className={styles.headerFont} sx={{ fontSize: '16px', '&:hover': { backgroundColor: 'transparent', }, }}>My Bounties</Button>
+                <Button disableRipple className={styles.headerFont} sx={{ fontSize: '16px', '&:hover': { backgroundColor: 'transparent', }, }}>My Bounties</Button>
             </Link>
             
             <Link href="/createBounties">
-              <Button className={styles.headerFont} sx={{ fontSize: '16px', '&:hover': { backgroundColor: 'transparent', }, }}>Create Bounties</Button>
+              <Button disableRipple className={styles.headerFont} sx={{ fontSize: '16px', '&:hover': { backgroundColor: 'transparent', }, }}>Create Bounties</Button>
             </Link>
           </Box>
         }
