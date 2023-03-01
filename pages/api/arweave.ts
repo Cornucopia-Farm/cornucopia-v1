@@ -16,6 +16,8 @@ const uploadToArweave = async (bountyData: Object, tags: Array<any>) => {
     "qi": process.env.QI
   }
 
+  console.log('pk', privateKey)
+
   const bundlr = new Bundlr("https://node1.bundlr.network", "arweave", privateKey);
 
   const address = bundlr.address;
@@ -23,6 +25,7 @@ const uploadToArweave = async (bountyData: Object, tags: Array<any>) => {
   const data = JSON.stringify(bountyData);
 
   const tx = bundlr.createTransaction(data, { tags: tags });
+  console.log('tx', tx)
 
   await tx.sign();
   
