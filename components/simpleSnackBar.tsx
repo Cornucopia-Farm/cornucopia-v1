@@ -49,15 +49,8 @@ const SimpleSnackBar: React.FC<Props> = (props) => {
             open={open}
             onClose={handleClose}
             message={props.msg}
-            // ContentProps={{
-            //     sx: {
-            //         borderRadius: '12px',
-            //     }
-            // }}
-        >
-             
-            <Alert onClose={handleClose} severity={props.severity} color={props.severity === 'success' ? 'primary' as 'success' : 'secondary' as 'error'} variant="outlined" sx={{ width: '100%', ...(props.severity === 'success' ? { backgroundColor: 'rgb(233, 233, 198)', color: 'rgb(23, 21, 20)', } : { backgroundColor: 'rgb(240, 75, 3)', color: 'rgb(255, 255, 255)', }), borderRadius: '12px', }}>
-            {/* <Alert className={styles.alertFont} onClose={handleClose} severity={props.severity} color={props.severity === 'success' ? 'primary' as 'success' : 'secondary' as 'error'} sx={{ width: '100%', color: 'rgb(23, 21, 20)', ...(props.severity === 'success' ? { backgroundColor: 'primary', } : { backgroundColor: 'secondary', }), borderRadius: '12px', fontSize: 16, }}>  */}
+        > 
+            <Alert className={styles.alertFont} onClose={handleClose} severity={props.severity} color={props.severity === 'success' ? 'primary' as 'success' : 'secondary' as 'error'} variant="outlined" sx={{ width: '100%', ...(props.severity === 'success' ? { backgroundColor: 'rgb(233, 233, 198)', color: 'rgb(23, 21, 20)', } : { backgroundColor: 'rgb(240, 75, 3)', color: 'rgb(255, 255, 255)', }), borderRadius: '12px', fontSize: 14 }}>
                 {props.msg}
             </Alert>
         </Snackbar>

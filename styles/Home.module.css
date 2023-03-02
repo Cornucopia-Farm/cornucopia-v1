@@ -220,7 +220,6 @@
 .alertFont {
   font-family: 'Space Grotesk' !important;
   font-weight: 300 !important;
-  text-transform: capitalize !important;
   /* color:rgb(23, 21, 20) !important; */
 }
 

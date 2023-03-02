@@ -1,9 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import Bundlr from "@bundlr-network/client";
 
-const uploadToArweave = async (bountyData: Object, tags: Array<any>) => {
-  // can't use arweave currency on web
-  
+const uploadToArweave = async (bountyData: Object, tags: Array<any>) => {  
   const privateKey = {
     "kty": process.env.KTY,
     "n": process.env.N,
@@ -16,8 +14,6 @@ const uploadToArweave = async (bountyData: Object, tags: Array<any>) => {
     "qi": process.env.QI
   }
 
-  console.log('pk', privateKey)
-
   const bundlr = new Bundlr("https://node1.bundlr.network", "arweave", privateKey);
 
   const address = bundlr.address;
@@ -25,7 +21,6 @@ const uploadToArweave = async (bountyData: Object, tags: Array<any>) => {
   const data = JSON.stringify(bountyData);
 
   const tx = bundlr.createTransaction(data, { tags: tags });
-  console.log('tx', tx)
 
   await tx.sign();
   
@@ -37,14 +32,13 @@ const uploadToArweave = async (bountyData: Object, tags: Array<any>) => {
   return id;
 };
 
-export default function handler(req: any, res: any) { // Making this a type causes prod issues
+export default async function handler(req: any, res: any) { // Making this a type causes prod issues
   if (req.method === 'POST') {
     try {
-      const id = uploadToArweave(req.body.bountyData, req.body.tags);
-      res.status(200).send(id);
+      const id = await uploadToArweave(req.body.bountyData, req.body.tags);
+      res.status(200).json({id});
     } catch (error) {
       res.status(500).send(error);
     }
-    
   }
 };

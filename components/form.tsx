@@ -255,13 +255,16 @@ const Form: React.FC<Props> = props => {
         setOpenSubmitCheck(false);
     };
 
+    const [arweaveId, setArweaveId] = React.useState('');
+
     React.useEffect(() => {
         const uploadToArweave = async (formValues: ArweaveData, tags: Array<Tags>) => {
             const response: any = await axios.post('api/arweave', {bountyData: formValues, tags: tags });
             if (response.status === 200) {
-                console.log("Uploaded to arweave");
+                console.log('Uploaded to arweave');
                 const txHash = response.data;
-                console.log("Upload Tx result", txHash);
+                console.log('Upload Tx result', txHash.id);
+                setArweaveId(txHash.id);
             } else if (response.status === 500) {
                 console.log("Error", await response);
             }
@@ -987,6 +990,10 @@ const Form: React.FC<Props> = props => {
             {(isSubmitTxSuccess && submitTxData?.status === 0) && 
                 <SimpleSnackBar severity={'error'} msg={'Submit transaction failed!'}/>
             }
+            {arweaveId && 
+                <SimpleSnackBar severity={'success'} msg={`Your post is uploading to Arweave at ${arweaveId}. It will take a few minutes to appear on Cornucopia.`}/>
+            }
+
             <ButtonType />
             <Dialog open={open} onClose={handleClose} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
                 <DialogTitle className={styles.formHeader}>{props.formName}</DialogTitle>
