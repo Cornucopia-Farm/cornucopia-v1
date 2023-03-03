@@ -991,7 +991,7 @@ const Form: React.FC<Props> = props => {
                 <SimpleSnackBar severity={'error'} msg={'Submit transaction failed!'}/>
             }
             {arweaveId && 
-                <SimpleSnackBar severity={'success'} msg={`Your post is uploading to Arweave at ${arweaveId}. It will take a few minutes to appear on Cornucopia.`}/>
+                <SimpleSnackBar severity={'success'} msg={''} arweave={true} arweaveHash={arweaveId}/>
             }
 
             <ButtonType />

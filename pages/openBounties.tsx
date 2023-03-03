@@ -29,7 +29,7 @@ const OpenBounties: NextPage = () => {
 
     const postIds = useMemo(() => {
         return data?.transactions.edges.map((edge: any) => edge.node.id);
-    }, [data?.transactions?.edges]) 
+    }, [data?.transactions?.edges]); 
 
     const getPosts = useCallback(async (openBountyIds?: Array<string>) => {
         let bountyPosts: Array<JSX.Element> = [];

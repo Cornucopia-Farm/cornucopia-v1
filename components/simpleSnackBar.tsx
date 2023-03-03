@@ -3,10 +3,14 @@ import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
 import MuiAlert, { AlertColor, AlertProps } from '@mui/material/Alert';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import styles from '../styles/Home.module.css';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
 
 type Props = {
     msg: string;
     severity: AlertColor;
+    arweave?: boolean;
+    arweaveHash?: string;
 };
 
 const theme = createTheme({
@@ -51,7 +55,12 @@ const SimpleSnackBar: React.FC<Props> = (props) => {
             message={props.msg}
         > 
             <Alert className={styles.alertFont} onClose={handleClose} severity={props.severity} color={props.severity === 'success' ? 'primary' as 'success' : 'secondary' as 'error'} variant="outlined" sx={{ width: '100%', ...(props.severity === 'success' ? { backgroundColor: 'rgb(233, 233, 198)', color: 'rgb(23, 21, 20)', } : { backgroundColor: 'rgb(240, 75, 3)', color: 'rgb(255, 255, 255)', }), borderRadius: '12px', fontSize: 14 }}>
-                {props.msg}
+                {!props.arweave && 
+                    <Typography className={styles.alertFont} sx={{ width: '100%', ...(props.severity === 'success' ? { backgroundColor: 'rgb(233, 233, 198)', color: 'rgb(23, 21, 20)', } : { backgroundColor: 'rgb(240, 75, 3)', color: 'rgb(255, 255, 255)', }), borderRadius: '12px', fontSize: 14 }}>{props.msg}</Typography>
+                }
+                {props.arweave &&
+                    <Typography className={styles.alertFont} sx={{ width: '100%', ...(props.severity === 'success' ? { backgroundColor: 'rgb(233, 233, 198)', color: 'rgb(23, 21, 20)', } : { backgroundColor: 'rgb(240, 75, 3)', color: 'rgb(255, 255, 255)', }), borderRadius: '12px', fontSize: 14 }}>Your {<Link target="_blank" rel="noopener" href={"https://arweave.net/" + props.arweaveHash}>post</Link>} is uploading to Arweave and will take a few minutes to appear on Cornucopia.</Typography>
+                }
             </Alert>
         </Snackbar>
         </ThemeProvider>
