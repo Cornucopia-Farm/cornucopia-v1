@@ -256,11 +256,14 @@ const Form: React.FC<Props> = props => {
     };
 
     const [arweaveId, setArweaveId] = React.useState('');
+    const [arweaveLoading, setArweaveLoading] = React.useState(false);
 
     React.useEffect(() => {
         const uploadToArweave = async (formValues: ArweaveData, tags: Array<Tags>) => {
+            setArweaveLoading(true);
             const response: any = await axios.post('api/arweave', {bountyData: formValues, tags: tags });
             if (response.status === 200) {
+                setArweaveLoading(false);
                 console.log('Uploaded to arweave');
                 const txHash = response.data;
                 console.log('Upload Tx result', txHash.id);
@@ -991,7 +994,10 @@ const Form: React.FC<Props> = props => {
                 <SimpleSnackBar severity={'error'} msg={'Submit transaction failed!'}/>
             }
             {arweaveId && 
-                <SimpleSnackBar severity={'success'} msg={''} arweave={true} arweaveHash={arweaveId}/>
+                <SimpleSnackBar severity={'success'} msg={''} arweave={true} arweaveHash={arweaveId} arweavePostType={props.formType == "createBounty" ? 'post' : (props.formType == "applyBounty" ? 'application' : 'submission')}/>
+            }
+            {arweaveLoading && !arweaveId &&
+                <SimpleSnackBar severity={'success'} msg={'Uploading to Arweave...'}/>
             }
 
             <ButtonType />

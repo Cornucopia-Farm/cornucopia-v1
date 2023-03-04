@@ -11,6 +11,7 @@ type Props = {
     severity: AlertColor;
     arweave?: boolean;
     arweaveHash?: string;
+    arweavePostType?: string;
 };
 
 const theme = createTheme({
@@ -59,7 +60,7 @@ const SimpleSnackBar: React.FC<Props> = (props) => {
                     <Typography className={styles.alertFont} sx={{ width: '100%', ...(props.severity === 'success' ? { backgroundColor: 'rgb(233, 233, 198)', color: 'rgb(23, 21, 20)', } : { backgroundColor: 'rgb(240, 75, 3)', color: 'rgb(255, 255, 255)', }), borderRadius: '12px', fontSize: 14 }}>{props.msg}</Typography>
                 }
                 {props.arweave &&
-                    <Typography className={styles.alertFont} sx={{ width: '100%', ...(props.severity === 'success' ? { backgroundColor: 'rgb(233, 233, 198)', color: 'rgb(23, 21, 20)', } : { backgroundColor: 'rgb(240, 75, 3)', color: 'rgb(255, 255, 255)', }), borderRadius: '12px', fontSize: 14 }}>Your {<Link target="_blank" rel="noopener" href={"https://arweave.net/" + props.arweaveHash}>post</Link>} is uploading to Arweave and will take a few minutes to appear on Cornucopia.</Typography>
+                    <Typography className={styles.alertFont} sx={{ width: '100%', ...(props.severity === 'success' ? { backgroundColor: 'rgb(233, 233, 198)', color: 'rgb(23, 21, 20)', } : { backgroundColor: 'rgb(240, 75, 3)', color: 'rgb(255, 255, 255)', }), borderRadius: '12px', fontSize: 14 }}>Your {<Link target="_blank" rel="noopener" href={"https://arweave.net/" + props.arweaveHash}>{props.arweavePostType}</Link>} is uploaded to Arweave and will soon appear on Cornucopia.</Typography>
                 }
             </Alert>
         </Snackbar>

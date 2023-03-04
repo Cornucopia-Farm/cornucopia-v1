@@ -317,6 +317,7 @@ const CreateBounties: NextPage = () => {
             </main>
         );
     } else if (data || !isValidating) {
+        console.log('applied compoonents', appliedComponents)
         return (
             <div>
                 <Head>
