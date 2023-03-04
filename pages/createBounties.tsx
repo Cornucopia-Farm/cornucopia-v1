@@ -24,8 +24,6 @@ import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
 import Image from 'next/image';
-import Link from '@mui/material/Link';
-
 
 // Bounty Stages for Creator:
 // 1. Posted (progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == Status.NoBounty); CHECK PROGRESS MAPPING
@@ -317,7 +315,6 @@ const CreateBounties: NextPage = () => {
             </main>
         );
     } else if (data || !isValidating) {
-        console.log('applied compoonents', appliedComponents)
         return (
             <div>
                 <Head>
@@ -443,7 +440,7 @@ const CreateBounties: NextPage = () => {
                             }
                             {smallScreen && <h2 className={styles.h2}>In Progress</h2>}
                             {inProgressComponents}
-                            {inProgressComponents.length === 0 && stage === 3 && largeScreen &&
+                            {!inProgressComponents.length && stage === 3 && largeScreen && 
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
                                     <Image alt="" src="/the_fortune_cow.png" height="300px" width="300px"/>
                                     <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>Approve hunters&apos; applications.</Typography>

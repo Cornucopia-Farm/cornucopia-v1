@@ -31,6 +31,9 @@ import { BigNumber, ethers } from 'ethers';
 import contractAddresses from '../contractAddresses.json';
 import { lt } from 'lodash';
 import { useSyncExternalStoreWithTracked } from 'wagmi/dist/declarations/src/hooks/utils';
+import Autocomplete from '@mui/material/Autocomplete';
+import Paper from '@mui/material/Paper';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 type Props = {
     creatorAddress: string;
@@ -133,6 +136,23 @@ const Form: React.FC<Props> = props => {
     //     tokenList = GoerliTokenList['tokens']
     // } else if (chain?.network === 'polygon') {
 
+    const theme = createTheme({
+        components: {
+            MuiAutocomplete: {
+                styleOverrides: {
+                option: {
+                    '&[data-focus="true"]': {
+                        backgroundColor: 'transparent !important',
+                    },
+                    '&[aria-selected="true"]': {
+                        backgroundColor: 'transparent !important',
+                    },
+                },
+                },
+            },
+        },
+    });
+
     const [notEnoughError, setNotEnoughError] = React.useState("");
     const [endDateBeforeError, setEndDateBeforeError] = React.useState("");
 
@@ -157,7 +177,7 @@ const Form: React.FC<Props> = props => {
                 balance = 0;
             }
 
-            if (balance.lt(amountBN)) {
+            if (balance?.lt(amountBN)) {
                 setNotEnoughError("Insufficient balance to pay this bounty");
             } else {
                 setNotEnoughError("");
@@ -207,16 +227,21 @@ const Form: React.FC<Props> = props => {
         });
     };
 
-    const handleInputChangeToken = (e: any) => {
-        const tokenAddress = e.target.value;
+    const handleInputChangeToken = (val: any) => {
+        // console.log(e)
+        // console.log('input token hit')
+        // console.log('val', val)
+        console.log('val obj', val)
+        const tokenAddress = val;
+        console.log('token address', tokenAddress)
         const tokenObj = tokenList.filter((obj: any) => {
             return obj.address === tokenAddress;
         }); // Returns Array of matches so we take first one as there will only be one match
         setFormValues({
           ...formValues,
           ["tokenAddress"]: tokenAddress,
-          ["tokenSymbol"]: tokenObj[0].symbol,
-          ["tokenDecimals"]: tokenObj[0].decimals,
+          ["tokenSymbol"]: tokenObj[0]?.symbol,
+          ["tokenDecimals"]: tokenObj[0]?.decimals,
         });
     };
 
@@ -306,6 +331,7 @@ const Form: React.FC<Props> = props => {
         }
     };
 
+    console.log(formValues)
     const dialogBoxes = (formType: string) => {
         if (formType == "createBounty") { // Creator Creates Bounty
             return (
@@ -384,82 +410,110 @@ const Form: React.FC<Props> = props => {
                             },
                         }} 
                     />
-                    <TextField 
-                        autoFocus
-                        margin="dense"
-                        id="token-input"
-                        name="tokenAddress"
-                        label="Token"
-                        value={formValues.tokenAddress}
-                        onChange={handleInputChangeToken}
-                        select
-                        fullWidth
-                        variant="standard"
-                        inputProps={{ autoComplete: 'off' }}
-                        SelectProps={{
-                            MenuProps: {
-                                sx: { 
-                                    maxHeight: '50%', 
-                                    '& .MuiMenu-paper': { 
-                                        borderBottomLeftRadius: '12px',
-                                        borderBottomRightRadius: '12px',
-                                        backgroundColor: 'transparent', 
-                                        boxShadow: 'none',
-                                        scrollbarWidth: 'none', 
-                                        '&::-webkit-scrollbar': { 
-                                            display: 'none', 
-                                        },
-                                    } 
+                    <Autocomplete
+                        options={tokenList}
+                        disableClearable
+                        onChange={(e, value) => typeof value === 'string' ? handleInputChangeToken(value) : handleInputChangeToken(value.address)}
+                        getOptionLabel={(option) => typeof option === 'string' ? option : option.symbol}
+                        renderOption={(props, option) => (                    
+                                <Box component="li" sx={{ display: 'flex', gap: '12px', }} {...props}> 
+                                    <ListItemIcon sx={{ minWidth: '25px !important'}} >
+                                        <img alt="" width="25px" height="25px" src={option.logoURI} />
+                                    </ListItemIcon>
+                                    <Typography sx={{color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk'}}>{option.symbol}</Typography>
+                                </Box>
+                        )}
+                        sx={{
+                            '& .MuiAutocomplete-endAdornment': {
+                                '& .MuiSvgIcon-root': {
+                                    color: 'rgb(233, 233, 198)', 
+                                    fontSize: '16',
                                 },
-                                MenuListProps: {
-                                    sx: { 
-                                        backgroundColor: 'rgb(23, 21, 20)',
-                                        '& .MuiMenuItem-root.Mui-selected': {
-                                            backgroundColor: 'transparent',
-                                        },
+                            },
+                        }}
+                        
+                        PaperComponent={({ children }) => (
+                            <Paper
+                                sx={{ 
+                                    backgroundColor: 'rgb(23, 21, 20)',
+                                    
+                                    borderBottomLeftRadius: '12px',
+                                    borderBottomRightRadius: '12px',
+                                    boxShadow: 'none',
+                                    scrollbarWidth: 'none',
+                                    '& .MuiInputBase-input': { 
+                                        color: 'rgb(248, 215, 154)', 
+                                        fontFamily: 'Space Grotesk'
+                                    }, 
+                                    '& .MuiInputLabel-root': { 
+                                        color: 'rgb(233, 233, 198)', 
+                                        fontFamily: 'Space Grotesk'
+                                    }, 
+                                    '& label.Mui-focused': {
+                                        color: 'rgb(248, 215, 154)',
+                                    }, 
+                                    '& .MuiInput-underline:after': {
+                                        borderBottomColor: 'rgb(248, 215, 154)',
+                                    }, 
+                                    '& .MuiInput-underline:before': {
+                                        borderBottomColor: 'rgb(233, 233, 198)',
+                                    }, 
+                                    '& .MuiInput-underline': {
+                                        '&:hover:before': {
+                                            borderBottomColor: 'rgb(248, 215, 154) !important',
+                                        }
+                                    }
+                                }}
+                            >
+                                {children}
+                            </Paper>
+                        )}
+                        renderInput={(params) => (
+                            <TextField
+                            {...params}
+                            value={formValues.tokenSymbol}
+                            onChange={(e) => handleInputChangeToken(e.target.value)}
+                            autoFocus
+                            margin="dense"
+                            id="token-input"
+                            name="tokenAddress"
+                            label="Token"
+                            inputProps={{
+                                ...params.inputProps,
+                                autoComplete: 'off', // disable autocomplete and autofill
+                            }}
+                            fullWidth
+                            variant="standard"
+                            sx={{ 
+                                '& .MuiSelect-icon': {
+                                    color: 'rgb(233, 233, 198)'
+                                },
+                                '& .MuiInputBase-input': { 
+                                    color: 'rgb(248, 215, 154)', 
+                                    fontFamily: 'Space Grotesk'
+                                }, 
+                                '& .MuiInputLabel-root': { 
+                                    color: 'rgb(233, 233, 198)', 
+                                    fontFamily: 'Space Grotesk'
+                                }, 
+                                '& label.Mui-focused': {
+                                    color: 'rgb(248, 215, 154)',
+                                }, 
+                                '& .MuiInput-underline:after': {
+                                    borderBottomColor: 'rgb(248, 215, 154)',
+                                }, 
+                                '& .MuiInput-underline:before': {
+                                    borderBottomColor: 'rgb(233, 233, 198)',
+                                }, 
+                                '& .MuiInput-underline': {
+                                    '&:hover:before': {
+                                        borderBottomColor: 'rgb(248, 215, 154) !important',
                                     }
                                 },
-                            },   
-                        }}
-                        sx={{ 
-                            '& .MuiInputBase-input': { 
-                                color: 'rgb(248, 215, 154)', 
-                                fontFamily: 'Space Grotesk'
-                            }, 
-                            '& .MuiInputLabel-root': { 
-                                color: 'rgb(233, 233, 198)', 
-                                fontFamily: 'Space Grotesk'
-                            }, 
-                            '& label.Mui-focused': {
-                                color: 'rgb(248, 215, 154)',
-                            }, 
-                            '& .MuiInput-underline:after': {
-                                borderBottomColor: 'rgb(248, 215, 154)',
-                            }, 
-                            '& .MuiInput-underline:before': {
-                                borderBottomColor: 'rgb(233, 233, 198)',
-                            }, 
-                            '& .MuiInput-underline': {
-                                '&:hover:before': {
-                                    borderBottomColor: 'rgb(248, 215, 154) !important',
-                                }
-                            },
-                            '& .MuiSelect-icon': {
-                                color: 'rgb(233, 233, 198)'
-                            },
-                        }}
-                    >
-                        {tokenList.map((token) => (
-                            <MenuItem key={token.address} value={token.address}>
-                                <Box sx={{ display: 'flex', gap: '12px' }}> 
-                                    <ListItemIcon sx={{ minWidth: '25px !important'}} >
-                                        <img alt="" width="25px" height="25px" src={token.logoURI} />
-                                    </ListItemIcon>
-                                    <Typography sx={{color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk'}}>{token.symbol}</Typography>
-                                </Box>
-                            </MenuItem>
-                        ))}
-                    </TextField>
+                            }}
+                            />
+                        )}
+                    />
                     <TextField
                         autoFocus
                         margin="dense"
@@ -986,6 +1040,7 @@ const Form: React.FC<Props> = props => {
     };
 
     return (
+        <ThemeProvider theme={theme}> 
         <div>
             {(isSubmitTxLoading || (isSubmitTxSuccess && submitTxData?.status === 1)) && 
                 <SimpleSnackBar severity={'success'} msg={isSubmitTxLoading ? 'Submitting work...' : 'Submitted work!'}/>
@@ -1007,7 +1062,10 @@ const Form: React.FC<Props> = props => {
                     <DialogContentText className={styles.h2}>
                     {props.summary}
                     </DialogContentText>
-                    {dialogBoxes(props.formType)}
+                    
+                        {dialogBoxes(props.formType)}
+               
+                    
                 </DialogContent>
                 <DialogActions className={styles.formFooter}>
                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleClose}>{props.formButtons[0]}</Button>
@@ -1043,6 +1101,7 @@ const Form: React.FC<Props> = props => {
                 </DialogActions>
             </Dialog>
         </div>
+        </ThemeProvider>
     );
 };
 
