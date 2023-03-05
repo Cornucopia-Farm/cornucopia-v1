@@ -1,7 +1,6 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 
-// Add nice @dev, etc. comments for contract to make it extra clear
 import "uma-oracle-interface/SkinnyOptimisticOracleInterface.sol";
 import "uma-oracle-implementation/previous-versions/SkinnyOptimisticOracle.sol";
 import "uma-dvm-implementation/Constants.sol";
@@ -15,7 +14,9 @@ import "@openzeppelin-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin-upgradeable/contracts/access/OwnableUpgradeable.sol";
 import "@openzeppelin-upgradeable/contracts/security/ReentrancyGuardUpgradeable.sol";
 
-contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgradeable {
+/// @title Cornucopia contract
+/// @notice Cornucopia bounty protocol
+contract Cornucopia is Initializable, OwnableUpgradeable, UUPSUpgradeable, ReentrancyGuardUpgradeable {
 
     using SafeERC20 for IERC20;
 
@@ -26,7 +27,11 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reentranc
     mapping(bytes32 => address) public bountyToken;
 
     SkinnyOptimisticOracleInterface public oracleInterface;
-    address public constant ORACLE_ADDRESS = 0xeDc52A961B5Ca2AC7B2e0bc36714dB60E5a115Ab; // Goerli
+    address public constant ORACLE_ADDRESS = 0xeE3Afe347D5C74317041E2618C49534dAf887c24;
+    address public constant ORACLE_STORE_ADDRESS = 0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF;
+    address public constant WETH_ADDRESS = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
+    address public constant DAI_ADDRESS = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
+    address public constant USDC_ADDRESS = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
 
     enum Status {
         NoBounty,
@@ -58,11 +63,17 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reentranc
     // Only the owner can upgrade the implementation.
     function _authorizeUpgrade(address) internal override onlyOwner {}
 
-    // Mapping arweave bounty address => bounty amount 
+    /// @notice Escrows creator's ERC-20 or ETH for a given bounty and hunter
+    /// @dev Check if creator using ETH via msg.value and explicitly checks progress and _amount to prevent creator setting bountyAmounts twice
+    /// @param _bountyAppId The bountyId for the given bounty
+    /// @param _hunter The hunter's address
+    /// @param _expiration How long the hunter has to submit their work before the creator can refund themselves
+    /// @param _token The token's address (zero address if ETH)
+    /// @param _amount The token amount (zero if ETH)
     function escrow(string memory _bountyAppId, address _hunter, uint _expiration, address _token, uint _amount) external payable nonReentrant {
         require(bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] == 0, "Funds already escrowed");
-        // check that state is no bounty 
-
+        require(progress[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] == Status.NoBounty, "State must be No Bounty");
+ 
         if (msg.value > 0) { // User sends ETH
             bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = msg.value; 
         } else { // Creator escrows ERC20 
@@ -76,16 +87,27 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reentranc
         emit Escrowed(msg.sender, _hunter, _bountyAppId, "Escrowed!"); 
     }
 
-    // Hunter submitting work
+    /// @notice Hunter submits work for a given bounty and creator 
+    /// @dev Sets payoutExpiration to be 2 weeks, giving creator two weeks to pay or dispute the hunter's work
+    /// @param _bountyAppId The bountyId for the given bounty
+    /// @param _creator The creator's address
     function submit(string memory _bountyAppId, address _creator) external nonReentrant {
         require(bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] != 0, "Funds not escrowed");
         require(progress[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] == Status.NoBounty, "Work already submitted");
         progress[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] = Status.Submitted;
-        payoutExpiration[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] = block.timestamp + 2 weeks; // Creator has 2 weeks to pay 
+        payoutExpiration[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] = block.timestamp + 2 weeks; // Creator has 2 weeks to pay. 
         emit Submitted(_creator, msg.sender, _bountyAppId, "Submitted!"); 
     }
 
-    // one function for bounty creator to initiate dispute, user's input is bond amt
+    /// @notice Creator initiates dispute for a given bounty and hunter
+    /// @dev Currency can only be WETH, DAI, or USDC 
+    /// @dev Creator is the proposer but Cornucopia contract is the requester
+    /// @param _bountyAppId The bountyId for the given bounty
+    /// @param _hunter The hunter's address
+    /// @param _bondAmt The UMA bond the creator posts to initiate the dispute
+    /// @param _ancillaryData The dispute data UMA holders use to judge the dispute
+    /// @param _currency The currency the creator wants to use for the bond 
+    /// @return creatorBondAmt The creator's bond plus UMA's finalFee
     function initiateDispute(
         string memory _bountyAppId, 
         address _hunter,
@@ -94,17 +116,19 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reentranc
         IERC20 _currency
     ) external nonReentrant returns (uint) {
         require(progress[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] == Status.Submitted, "Work not Submitted");
+        require(address(_currency) == WETH_ADDRESS || address(_currency) == DAI_ADDRESS || address(_currency) == USDC_ADDRESS, "Bond can only be in WETH, DAI, or USDC");
         bytes memory ancillaryData = bytes(_ancillaryData);
         
-        _currency.safeTransferFrom(msg.sender, address(this), _bondAmt + 35 * 10**16); // Transfer WETH from creator to contract to then send to OO
-        _currency.safeIncreaseAllowance(ORACLE_ADDRESS, _bondAmt + 35 * 10**16); // Need to approve OO contract to transfer tokens from here to OO of bondAmt + 0.35 WETH
+        uint256 finalFee = StoreInterface(ORACLE_STORE_ADDRESS).computeFinalFee(address(_currency)).rawValue;
+        _currency.safeTransferFrom(msg.sender, address(this), _bondAmt + finalFee); // Transfer bond token from creator to contract to then send to OO.
+        _currency.safeIncreaseAllowance(ORACLE_ADDRESS, _bondAmt + finalFee); // Need to approve OO contract to transfer tokens from here to OO of bondAmt + finalFee.
 
         oracleInterface = SkinnyOptimisticOracleInterface(ORACLE_ADDRESS);
         uint creatorBondAmt = oracleInterface.requestAndProposePriceFor(
-            bytes32("YES_OR_NO_QUERY"), // bytes32 identifier 
-            uint32(block.timestamp), // uint32
+            bytes32("YES_OR_NO_QUERY"), // bytes32, identifier 
+            uint32(block.timestamp), // uint32, timestamp
             ancillaryData, // bytes memory, github link
-            _currency, // WETH 
+            _currency, // ERC-20, WETH, DAI, or USDC 
             0, // uint256, reward 
             _bondAmt, // uint256, bounty creator determines bond
             1 weeks, // uint256, customLiveness
@@ -113,11 +137,19 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reentranc
         ); 
     
         progress[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = Status.DisputeInitiated; 
-        emit Disputed(msg.sender, _hunter, _bountyAppId, uint32(block.timestamp), "Disputed!"); // rethink flow
-        return creatorBondAmt; // Creator bond plus finalFee
+        emit Disputed(msg.sender, _hunter, _bountyAppId, uint32(block.timestamp), "Disputed!");
+        return creatorBondAmt; 
     }
 
-    // second function for bounty hunter to dispute or not 
+    /// @notice Hunter responds to dispute for a given bounty and creator
+    /// @dev Checks that bounty has been disputed 
+    /// @dev Request can be found from events emitted when initiateDispute is called
+    /// @param _bountyAppId The bountyId for the given bounty
+    /// @param _creator The creator's address
+    /// @param _timestamp The timestamp when the creator called initiateDispute and the dispute was created in UMA
+    /// @param _ancillaryData The dispute data UMA holders use to judge the dispute
+    /// @param _request The UMA request struct representing the dispute
+    /// @return hunterBondAmt The hunter's bond plus UMA's finalFee
     function hunterDisputeResponse(
         string memory _bountyAppId, 
         address _creator, 
@@ -127,25 +159,31 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reentranc
     ) external nonReentrant returns (uint) {
         require(progress[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] == Status.DisputeInitiated, "Bounty creator has not disputed");
 
-        _request.currency.safeTransferFrom(msg.sender, address(this), _request.bond + 35 * 10**16); // Transfer WETH from hunter to contract to then send to OO
-        _request.currency.safeIncreaseAllowance(address(oracleInterface), _request.bond + 35 * 10**16); // Need to approve OO contract to transfer tokens from here to OO of bondAmt + 0.35 WETH
+        uint256 finalFee = StoreInterface(ORACLE_STORE_ADDRESS).computeFinalFee(address(_request.currency)).rawValue;
+        _request.currency.safeTransferFrom(msg.sender, address(this), _request.bond + finalFee); // Transfer bond token from hunter to contract to then send to OO.
+        _request.currency.safeIncreaseAllowance(address(oracleInterface), _request.bond + finalFee); // Need to approve OO contract to transfer tokens from here to OO of bondAmt + finalFee.
 
         uint hunterBondAmt = oracleInterface.disputePriceFor(
             bytes32("YES_OR_NO_QUERY"),
             _timestamp,
             _ancillaryData,
-            _request, //struct
-            msg.sender, // setting hunter to disputer
-            address(this) // Note: EscrowContract is actually the requester not the creator as EscrowContract calls UMA contract 
+            _request,
+            msg.sender, // Setting hunter to disputer
+            address(this) // EscrowContract is actually the requester not the creator as EscrowContract calls UMA contract.
         ); 
 
         progress[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] = Status.DisputeRespondedTo;
         emit DisputeRespondedTo(_creator, msg.sender, _bountyAppId, "Dispute Responded To!");
-        return hunterBondAmt; // Hunter bond plus finalFee 
+        return hunterBondAmt;  
     }
     
+    /// @notice Hunter forces the payout of escrowed funds for a given bounty and creator if creator ignores work submission
+    /// @dev Checks that hunter has submitted their work
+    /// @dev Checks that creator can still pay or dispute the bounty
+    /// @param _bountyAppId The bountyId for the given bounty
+    /// @param _creator The creator's address
     function forceHunterPayout(string memory _bountyAppId, address _creator) external nonReentrant {
-        // Case 4: Bounty creator did not pay or dispute within 2 weeks following hunter submitting work.
+        // Bounty creator did not pay or dispute within 2 weeks following hunter submitting work.
         require(progress[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] == Status.Submitted, "Work not Submitted");
         require(payoutExpiration[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] <= block.timestamp, "Creator can still pay or dispute");
         
@@ -165,6 +203,17 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reentranc
         progress[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] = Status.Resolved;
     }
 
+    /// @notice Creator or hunter settles an outstanding UMA dispute 
+    /// @dev Checks that caller is either the creator or hunter to ensure correct payout data
+    /// @dev Checks that the bounty was disputed in Cornucopia 
+    /// @dev Handles the cases where dispute is settled, still live, expired, or hunter hasn't responded to the dispute
+    /// @dev Handles the cases where the creator wins the dispute, hunter wins the dispute, or they tie. 
+    /// @param _bountyAppId The bountyId for the given bounty
+    /// @param _creator The creator's address
+    /// @param _hunter The hunter's address
+    /// @param _timestamp The timestamp when the creator called initiateDispute and the dispute was created in UMA
+    /// @param _ancillaryData The dispute data UMA holders use to judge the dispute
+    /// @param _request The UMA request struct representing the dispute
     function payoutIfDispute(
         string memory _bountyAppId, 
         address _creator,
@@ -184,16 +233,17 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reentranc
         address token = bountyToken[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))];
 
         if (status != Status.Resolved && 
-            (state == OptimisticOracleInterface.State.Resolved || state == OptimisticOracleInterface.State.Expired)) { // Case 2 or Case 3
-            // Hunter disputes and it's resolved by DVM or Hunter doesn't dispute and it expires after 1 week; returns how much dvm pays winner and "price" (0, 1, 2)
+            (state == OptimisticOracleInterface.State.Resolved || state == OptimisticOracleInterface.State.Expired)) {
+            // Hunter disputes and it's resolved by DVM or Hunter doesn't dispute and it expires after 1 week.
+            // Settle returns how much dvm pays winner and "price" (0, 1, 2).
    
-            if (state == OptimisticOracleInterface.State.Resolved) { // Check here b/c expired state has no disputer field set in request. Prevents creator from submitting a request for a different creator and/or hunter, forcing an incorrect payout. 
+            if (state == OptimisticOracleInterface.State.Resolved) { // Check here b/c expired state has no disputer field set in request. This prevents creator from submitting a request for a different creator and/or hunter, forcing an incorrect payout. 
                 require(_request.proposer == _creator && _request.disputer == _hunter, "Incorrect request data");
-            } else if (state == OptimisticOracleInterface.State.Expired) { // Prevents creator from submitting request, ancillary data for an expired dispute for a given hunter with an active/resolved dispute.
+            } else if (state == OptimisticOracleInterface.State.Expired) { // Prevents creator from submitting request and ancillary data for an expired dispute for a given hunter with an active/resolved dispute.
                 require(status == Status.DisputeInitiated, "Incorrect hunter specified");
             }
 
-            (, int256 winner) = oracleInterface.settle(address(this), bytes32("YES_OR_NO_QUERY"), _timestamp, _ancillaryData, _request); // Note: EscrowContract is actually the requester not the creator
+            (, int256 winner) = oracleInterface.settle(address(this), bytes32("YES_OR_NO_QUERY"), _timestamp, _ancillaryData, _request); // EscrowContract is actually the requester not the creator.
             if (winner == 0) { // Send funds to creator
                 bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] -= value;
                 if (token != address(0)) { // If ERC-20 token
@@ -228,16 +278,22 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reentranc
             progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] = Status.Resolved;
         } else if (status != Status.Resolved && 
             (state == OptimisticOracleInterface.State.Proposed || state == OptimisticOracleInterface.State.Disputed)) {
-            // Creator dispute still live: Hunter hasn't disputed yet or hunter dispute hasn't been settled by dvm yet
+            // Creator dispute still live: Hunter hasn't disputed yet or hunter dispute hasn't been settled by DVM yet
             revert("Dispute still live");
         } 
     }
 
+    /// @notice Creator pays out a bounty for a given hunter 
+    /// @dev Handles the case where the bounty hunter doesn't submit work in time so creator can get a refund
+    /// @dev Handles cases where bounty was disputed or hunter didn't submit their work yet
+    /// @dev Handles both ERC-20 and ETH bounties   
+    /// @param _bountyAppId The bountyId for the given bounty
+    /// @param _hunter The hunter's address
     function payout(string memory _bountyAppId, address _hunter) external nonReentrant {
         uint value = bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))];
         address token = bountyToken[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))];
 
-        // Case 5: Bounty Hunter doesn't submit work within specified time
+        // Bounty Hunter doesn't submit work within specified time
         if(progress[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] == Status.NoBounty 
             && expiration[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] <= block.timestamp) {
                 bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] -= value;
@@ -252,7 +308,7 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reentranc
         } 
 
         Status status = progress[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))];
-        // Case 1: Bounty creator doesn't dispute and pays out normal amount
+        // Bounty creator doesn't dispute and pays out normal amount
         if (status == Status.Submitted) {
             bountyAmounts[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] -= value;
             if (token != address(0)) { // If ERC-20 token
@@ -270,46 +326,3 @@ contract Escrow is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reentranc
         }  
     }
 }
-
-// UMA States
-
-// Invalid, // Never requested.
-// Requested, // Requested, no other actions taken.
-// Proposed, // Proposed, but not expired or disputed yet.
-// Expired, // Proposed, not disputed, past liveness.
-// Disputed, // Disputed, but no DVM price returned yet.
-// Resolved, // Disputed and DVM price is available.
-// Settled // Final price has been set in the contract (can get here from Expired or Resolved). 
-
-// case 1
-// funds are sent from creator (contract) -> hunter
-// creator calls payout()
-// payout can only be called by creator 
-
-// case 2
-// dispute! creator disputes -> hunter disputes -> settled and winner is paid
-// creator calls initiateDispute (check that creator is the one calling this or is this not necessary?)
-// hunter calls hunterDisputeResponse (check that hunter is the one calling this)
-// contract calls settle to get the outcome (where is settle called? in a seperate function or no?)
-// we pay based off of outcome in payout 
-
-// case 3
-// dispute! creator disputes -> hunter does not dispute -> settled and creator is paid
-// is settle function called if hunter does not dispute (ie we only need to code for 2 cases)
-// creator calls initiateDispute 
-// hunterDisputeResponse is never called
-// contract calls settle to get outcome (this can be automatic after a week or so?) 
-// we pay based off of outcome in payout (creator is paid + refunded bond from Uma) (we only need to pay the creator the escrow amount?)
-
-// case 4 
-// Creator doesn't call pay or dispute
-// Need to have some sort of timeout of maybe a week? to then auto pay hunter 
-
-// case 5
-// Creator doesn't submit their work
-// Need a timeline for when the work needs to be submitted by and if this is not hit then they get a refund
-
-// Structure:
-// dispute and hunter response should be seperate functions
-// have an enum to represent bounty state (i.e., disputed, hunterResponse, etc.?)
-// depending on enum state, payout function will either call settle and then payout funds to creator or hunter or will payout to hunter

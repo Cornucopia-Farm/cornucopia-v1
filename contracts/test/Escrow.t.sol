@@ -2,7 +2,7 @@
 pragma solidity 0.8.17;
 
 import "forge-std/Test.sol";
-import "../src/Escrow.sol";
+import "../src/Cornucopia.sol";
 import "../lib/protocol/packages/core/contracts/data-verification-mechanism/test/MockOracleAncillary.sol";
 import "../lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol";
 import "../lib/protocol/packages/core/contracts/optimistic-oracle/interfaces/SkinnyOptimisticOracleInterface.sol";
@@ -14,8 +14,8 @@ import "../lib/protocol/packages/core/contracts/common/implementation/AddressWhi
 import "../lib/protocol/packages/core/contracts/common/implementation/FixedPoint.sol";
 import "../lib/protocol/packages/core/contracts/common/implementation/ExpandedERC20.sol";
 
-contract EscrowTest is Test {
-    Escrow public escrowContract;
+contract CornucopiaTest is Test {
+    Cornucopia public escrowContract;
     ExpandedERC20 public token;
     SkinnyOptimisticOracle public optimisticOracle;
     Finder public finderContract;
@@ -40,7 +40,7 @@ contract EscrowTest is Test {
     event ProposePrice(address indexed requester, bytes32 indexed identifier, uint32 timestamp, bytes ancillaryData, SkinnyOptimisticOracleInterface.Request request);
 
     function setUp() public {
-        escrowContract = new Escrow();
+        escrowContract = new Cornucopia();
         token = new ExpandedERC20("Test Token", "TEST", 18);
         token.addMinter(address(this)); // Allow testContract to mint tokens;
     }
