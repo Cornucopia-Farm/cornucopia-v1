@@ -25,6 +25,7 @@ contract Cornucopia is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reent
     mapping(bytes32 => uint) public expiration;
     mapping(bytes32 => uint) public payoutExpiration;
     mapping(bytes32 => address) public bountyToken;
+    mapping(bytes32 => bytes32) public bountyAncillaryData;
 
     SkinnyOptimisticOracleInterface public oracleInterface;
     address public constant ORACLE_ADDRESS = 0xeE3Afe347D5C74317041E2618C49534dAf887c24;
@@ -136,6 +137,7 @@ contract Cornucopia is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reent
             0 // int256, p1:0 = no
         ); 
     
+        bountyAncillaryData[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = keccak256(abi.encode(ancillaryData));
         progress[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = Status.DisputeInitiated; 
         emit Disputed(msg.sender, _hunter, _bountyAppId, uint32(block.timestamp), "Disputed!");
         return creatorBondAmt; 
@@ -158,7 +160,8 @@ contract Cornucopia is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reent
         SkinnyOptimisticOracleInterface.Request memory _request
     ) external nonReentrant returns (uint) {
         require(progress[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] == Status.DisputeInitiated, "Bounty creator has not disputed");
-
+        require(bountyAncillaryData[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] == keccak256(abi.encode(_ancillaryData)), "Incorrect ancillaryData");
+        
         uint256 finalFee = StoreInterface(ORACLE_STORE_ADDRESS).computeFinalFee(address(_request.currency)).rawValue;
         _request.currency.safeTransferFrom(msg.sender, address(this), _request.bond + finalFee); // Transfer bond token from hunter to contract to then send to OO.
         _request.currency.safeIncreaseAllowance(address(oracleInterface), _request.bond + finalFee); // Need to approve OO contract to transfer tokens from here to OO of bondAmt + finalFee.
@@ -223,6 +226,7 @@ contract Cornucopia is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reent
         SkinnyOptimisticOracleInterface.Request memory _request
     ) external nonReentrant {
         require(msg.sender == _creator || msg.sender == _hunter, "Caller must be creator or hunter");
+        require(bountyAncillaryData[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == keccak256(abi.encode(_ancillaryData)), "Incorrect ancillaryData");
 
         Status status = progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))];
         require(status == Status.DisputeInitiated || status == Status.DisputeRespondedTo, "Bounty must be disputed");
