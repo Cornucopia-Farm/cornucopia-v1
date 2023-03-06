@@ -29,8 +29,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { BigNumber, ethers } from 'ethers';
 import contractAddresses from '../contractAddresses.json';
-import { lt } from 'lodash';
-import { useSyncExternalStoreWithTracked } from 'wagmi/dist/declarations/src/hooks/utils';
 import Autocomplete from '@mui/material/Autocomplete';
 import Paper from '@mui/material/Paper';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -101,13 +99,23 @@ const defaultValues: ArweaveData = {
     tokenDecimals: undefined
 };
 
-// Escrow Contract Config
-const contractConfig = {
-    addressOrName: contractAddresses.escrow, // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', 
-    contractInterface: escrowABI['abi'], // contract abi in json or JS format
-};
-
 const Form: React.FC<Props> = props => {
+    const { address, isConnected } = useAccount();
+    const provider = useProvider();
+    const { chain } = useNetwork();
+    const network = chain?.network! ? chain?.network! : 'goerli';
+    let addresses: any;
+    if (network === 'goerli') {
+        addresses = contractAddresses.goerli;
+    } else if (network === 'mainnet') {
+        addresses = contractAddresses.mainnet;
+    }
+    // Escrow Contract Config
+    const contractConfig = {
+        addressOrName: addresses.escrow,  
+        contractInterface: escrowABI['abi'], 
+    };
+
     const [open, setOpen] = React.useState(false);
     const [openSubmitCheck, setOpenSubmitCheck] = React.useState(false);
     const [formValues, setFormValues] = React.useState(defaultValues);
@@ -124,9 +132,6 @@ const Form: React.FC<Props> = props => {
     const { data: submitData, error: submitError, isLoading: isSubmitLoading, isSuccess: isSubmitSuccess, write: submit } = useContractWrite(submitConfig);
     const { data: submitTxData, isLoading: isSubmitTxLoading, isSuccess: isSubmitTxSuccess, error: submitTxError } = useWaitForTransaction({ hash: submitData?.hash, enabled: true, });
 
-    const { address, isConnected } = useAccount();
-    const provider = useProvider();
-    const { chain } = useNetwork();
     const zeroAddress = '0x0000000000000000000000000000000000000000';
     let tokenList = EthTokenList['tokens']; // Ethereum Default
     if (chain?.network === 'goerli') {
@@ -228,12 +233,7 @@ const Form: React.FC<Props> = props => {
     };
 
     const handleInputChangeToken = (val: any) => {
-        // console.log(e)
-        // console.log('input token hit')
-        // console.log('val', val)
-        console.log('val obj', val)
         const tokenAddress = val;
-        console.log('token address', tokenAddress)
         const tokenObj = tokenList.filter((obj: any) => {
             return obj.address === tokenAddress;
         }); // Returns Array of matches so we take first one as there will only be one match
@@ -331,7 +331,6 @@ const Form: React.FC<Props> = props => {
         }
     };
 
-    console.log(formValues)
     const dialogBoxes = (formType: string) => {
         if (formType == "createBounty") { // Creator Creates Bounty
             return (
@@ -341,7 +340,7 @@ const Form: React.FC<Props> = props => {
                         margin="dense"
                         id="title-input"
                         name="title"
-                        label= "Title" //"Title (5 words)"
+                        label= "Title" 
                         value={formValues.title}
                         onChange={handleInputChange}
                         type="text"

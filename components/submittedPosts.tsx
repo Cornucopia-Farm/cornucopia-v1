@@ -7,6 +7,8 @@ import escrowABI from '../contracts/out/Escrow.sol/Escrow.json'; // add in actua
 import { useAccount, useContract, useSigner, useNetwork, useProvider } from 'wagmi';
 import erc20ABI from '../contracts/out/ERC20.sol/ERC20.json';
 import wethABI from '../WETH9.json';
+import daiABI from '../DAI.json';
+import usdcABI from '../USDC.json';
 import useSWR from 'swr';
 import gqlFetcher from '../swrFetchers';
 import { gql } from 'graphql-request';
@@ -20,29 +22,51 @@ type Props = {
     smallScreen: boolean;
 };
 
-// Escrow Contract Config
-const contractConfig = {
-    addressOrName: contractAddresses.escrow, // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', 
-    contractInterface: escrowABI['abi'], // contract abi in json or JS format
-};
-
-// WETH Contract Config (For UMA Bonds)
-const wethContractConfig = {
-    addressOrName: contractAddresses.weth, // '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6',
-    contractInterface: wethABI as ContractInterface, // contract abi in json or JS format
-};
-
 const SubmittedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSubmittedHits, stage, smallScreen, })  => {
     const { address, isConnected } = useAccount();
 
     const { data: signer, isError, isLoading } = useSigner();
     const { chain } = useNetwork();
     const zeroAddress = '0x0000000000000000000000000000000000000000';
-    const escrowAddress = contractAddresses.escrow; // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4'; 
+    const network = chain?.network! ? chain?.network! : 'goerli';
+    let addresses: any;
+    if (network === 'goerli') {
+        addresses = contractAddresses.goerli;
+    } else if (network === 'mainnet') {
+        addresses = contractAddresses.mainnet;
+    }
+
+    // Escrow Contract Config
+    const contractConfig = {
+        addressOrName: addresses.escrow, 
+        contractInterface: escrowABI['abi'], 
+    };
+
+    // WETH Contract Config (For UMA Bonds)
+    const wethContractConfig = {
+        addressOrName: addresses.weth, 
+        contractInterface: wethABI as ContractInterface, 
+    };
+
+    // DAI Contract Config (For UMA Bonds)
+    const daiContractConfig = {
+        addressOrName: addresses.dai, 
+        contractInterface: daiABI as ContractInterface, 
+    };
+
+    // USDC Contract Config (For UMA Bonds)
+    const usdcContractConfig = {
+        addressOrName: addresses.usdc, 
+        contractInterface: usdcABI as ContractInterface, 
+    };
+    
+    const escrowAddress = addresses.escrow; 
 
     const provider = useProvider();
     const escrowContract = useContract({...contractConfig, signerOrProvider: provider, });
     const wethContract = useContract({...wethContractConfig, signerOrProvider: provider, });
+    const daiContract = useContract({...daiContractConfig, signerOrProvider: provider, });
+    const usdcContract = useContract({...usdcContractConfig, signerOrProvider: provider, });
 
     const [submittedBountyPosts, setSubmittedBountyPosts] = React.useState(Array<JSX.Element>);
     const [thisPostData, setThisPostData] = React.useState(Array<any>);
@@ -112,7 +136,21 @@ const SubmittedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSub
             try {
                 wethAllowance = await wethContract.allowance(address, escrowAddress);
             } catch (e) {
-                console.log('Submitted posts weth allowance fetch error', e);
+                console.log('Submitted posts WETH allowance fetch error', e);
+                return Promise.resolve([]);
+            }
+            let daiAllowance;
+            try {
+                daiAllowance = await daiContract.allowance(address, escrowAddress);
+            } catch (e) {
+                console.log('Submitted posts DAI allowance fetch error', e);
+                return Promise.resolve([]);
+            }
+            let usdcAllowance;
+            try {
+                usdcAllowance = await usdcContract.allowance(address, escrowAddress);
+            } catch (e) {
+                console.log('Submitted posts USDC allowance fetch error', e);
                 return Promise.resolve([]);
             }
             // const wethAllowance = await wethContract.allowance(address, escrowAddress);
@@ -134,6 +172,8 @@ const SubmittedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSub
                     tokenDecimals={postData.data.tokenDecimals}
                     allowance={allowance}
                     wethAllowance={wethAllowance}
+                    daiAllowance={daiAllowance}
+                    usdcAllowance={usdcAllowance}
                 />,
                 postData
             ]);
@@ -151,7 +191,7 @@ const SubmittedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSub
                 setThisPostData(postDataArr);
             });
         }
-    }, [address, provider, wethContract, escrowContract, escrowAddress]);
+    }, [address, provider, wethContract, daiContract, usdcContract, escrowContract, escrowAddress]);
 
     React.useEffect(() => {
         if (bountyIds && bountyIds.length > 0 && !isValidating) {

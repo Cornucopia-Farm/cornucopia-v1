@@ -1,0 +1,70 @@
+{
+    "tokens": [
+        {
+            "name": "Wrapped Ether",
+            "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+            "symbol": "WETH",
+            "decimals": 18,
+            "chainId": 1,
+            "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
+            "extensions": {
+                "bridgeInfo": {
+                "10": {
+                    "tokenAddress": "0x4200000000000000000000000000000000000006"
+                },
+                "137": {
+                    "tokenAddress": "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
+                },
+                "42161": {
+                    "tokenAddress": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+                },
+                "42220": {
+                    "tokenAddress": "0x2DEf4285787d58a2f811AF24755A8150622f4361"
+                }
+                }
+            }
+        },
+        {
+            "name": "USDCoin",
+            "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "symbol": "USDC",
+            "decimals": 6,
+            "chainId": 1,
+            "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png",
+            "extensions": {
+              "bridgeInfo": {
+                "10": {
+                  "tokenAddress": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607"
+                },
+                "137": {
+                  "tokenAddress": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
+                },
+                "42161": {
+                  "tokenAddress": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"
+                }
+              }
+            }
+        },
+        {
+            "name": "Dai Stablecoin",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "symbol": "DAI",
+            "decimals": 18,
+            "chainId": 1,
+            "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x6B175474E89094C44Da98b954EedeAC495271d0F/logo.png",
+            "extensions": {
+              "bridgeInfo": {
+                "10": {
+                  "tokenAddress": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
+                },
+                "137": {
+                  "tokenAddress": "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063"
+                },
+                "42161": {
+                  "tokenAddress": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
+                }
+              }
+            }
+        }
+    ]
+}

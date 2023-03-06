@@ -1,15 +1,15 @@
 import { upgrades } from 'hardhat';
 import { ethers } from 'ethers';
-import escrowABI from '../out/Escrow.sol/Escrow.json'; 
+import cornucopiaABI from '../out/Cornucopia.sol/Cornucopia.json'; 
 
 async function main() {
     const bytecode = ''; // Get contract bytecode by forge inspect Escrow bytecode > ../escrowBytecode.txt and read-in from file
     const signer = new ethers.Wallet(process.env.DEPLOYER!); // set sk for deployer address in env
-    const escrowFactoryUpgrade = new ethers.ContractFactory(escrowABI['abi'], bytecode, signer);
-    const escrowAddress = ''; // Fill this in
+    const cornucopiaFactoryUpgrade = new ethers.ContractFactory(cornucopiaABI['abi'], bytecode, signer);
+    const cornucopiaAddress = ''; // Fill this in
 
-    const escrowContractUpgrade = await upgrades.upgradeProxy(escrowAddress, escrowFactoryUpgrade);
-    console.log("Escrow upgrade");
+    const cornucopiaContractUpgrade = await upgrades.upgradeProxy(cornucopiaAddress, cornucopiaFactoryUpgrade);
+    console.log("Cornucopia upgrade");
 }
 
 main();

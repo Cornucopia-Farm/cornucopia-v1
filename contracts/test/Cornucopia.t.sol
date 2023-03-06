@@ -15,7 +15,7 @@ import "../lib/protocol/packages/core/contracts/common/implementation/FixedPoint
 import "../lib/protocol/packages/core/contracts/common/implementation/ExpandedERC20.sol";
 
 contract CornucopiaTest is Test {
-    Cornucopia public escrowContract;
+    Cornucopia public cornucopiaContract;
     ExpandedERC20 public token;
     SkinnyOptimisticOracle public optimisticOracle;
     Finder public finderContract;

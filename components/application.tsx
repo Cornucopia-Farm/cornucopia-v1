@@ -19,10 +19,19 @@ import useDebounce from './useDebounce';
 import SimpleSnackBar from './simpleSnackBar';
 import { Request } from '../getUMAEventData';
 import wethABI from '../WETH9.json';
+import daiABI from '../DAI.json';
+import usdcABI from '../USDC.json';
 import styles from '../styles/Home.module.css';
 import erc20ABI from '../contracts/out/ERC20.sol/ERC20.json';
 import { BountyOutcome } from '../getEscrowEventData';
 import contractAddresses from '../contractAddresses.json';
+import EthTokenList from '../ethTokenListDispute.json';
+import GoerliTokenList from '../goerliTokenListDispute.json';
+import Autocomplete from '@mui/material/Autocomplete';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import ListItemIcon from '@mui/material/ListItemIcon';
 
 type Props = {
     person: string;
@@ -42,22 +51,12 @@ type Props = {
     tokenDecimals?: number; 
     allowance?: BigNumber;
     wethAllowance?: BigNumber;
+    daiAllowance?: BigNumber;
+    usdcAllowance?: BigNumber;
     expirationTime?: number;
     creatorRefund?: boolean;
     disputeStatus?: number;
     finishedStatus?: BountyOutcome;
-};
-
-// Escrow Contract Config
-const contractConfig = {
-  addressOrName: contractAddresses.escrow, // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', 
-  contractInterface: escrowABI['abi'], // contract abi in json or JS format
-};
-
-// WETH Contract Config
-const wethContractConfig = {
-  addressOrName: contractAddresses.weth, // '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6', 
-  contractInterface: wethABI as ContractInterface, // contract abi in json or JS format
 };
 
 const Application: React.FC<Props> = props => {
@@ -65,6 +64,40 @@ const Application: React.FC<Props> = props => {
   const { data: ensName } = useEnsName({ address: props.person });
   const { chain } = useNetwork();
   const { address, isConnected } = useAccount();
+  const provider = useProvider();
+
+  const network = chain?.network! ? chain?.network! : 'goerli';
+  let addresses: any;
+  if (network === 'goerli') {
+      addresses = contractAddresses.goerli;
+  } else if (network === 'mainnet') {
+      addresses = contractAddresses.mainnet;
+  }
+
+  // Escrow Contract Config
+  const contractConfig = {
+    addressOrName: addresses.escrow, 
+    contractInterface: escrowABI['abi'], 
+  };
+
+  // WETH Contract Config (For UMA Bonds)
+  const wethContractConfig = {
+      addressOrName: addresses.weth, 
+      contractInterface: wethABI as ContractInterface, 
+  };
+
+  // DAI Contract Config (For UMA Bonds)
+  const daiContractConfig = {
+      addressOrName: addresses.dai, 
+      contractInterface: daiABI as ContractInterface, 
+  };
+
+  // USDC Contract Config (For UMA Bonds)
+  const usdcContractConfig = {
+      addressOrName: addresses.usdc, 
+      contractInterface: usdcABI as ContractInterface, 
+  };
+
   // const { data: signer } = useSigner();
   // const provider = useProvider();
 
@@ -98,9 +131,20 @@ const Application: React.FC<Props> = props => {
   const [request, setRequest] = React.useState({} as Request);
   const debouncedRequest = useDebounce(request, 10);
 
-  const bondAmt = ethers.utils.parseUnits("0.1", "ether"); // Hard-coded (for now) bondAmt
-  const finalFee = ethers.utils.parseUnits("0.35", "ether"); // Hard-coded finalFee (Set by UMA)
+  const [disputeTokenAddress, setDisputeTokenAddress] = React.useState('' as unknown as BigNumber);
+  const debouncedDisputeTokenAddress = useDebounce(disputeTokenAddress, 10);
+  const [bondAmt, setBondAmt] = React.useState('' as unknown as BigNumber);
+  const debouncedBondAmt = useDebounce(bondAmt, 10);
+  const [finalFee, setFinalFee] = React.useState('' as unknown as BigNumber);
+  const debouncedFinalFee = useDebounce(finalFee, 10);
+  const [tokenSymbol, setTokenSymbol] = React.useState('');
+
+  // const bondAmt = ethers.utils.parseUnits("0.1", "ether"); // Hard-coded (for now) bondAmt
+  // const finalFee = ethers.utils.parseUnits("0.35", "ether"); // Hard-coded finalFee (Set by UMA)
+
   const wethContract = useContract({...wethContractConfig});
+  const daiContract = useContract({...daiContractConfig});
+  const usdcContract = useContract({...usdcContractConfig});
   const zeroAddress = '0x0000000000000000000000000000000000000000';
 
   // Applied Contract Interactions
@@ -203,7 +247,6 @@ const Application: React.FC<Props> = props => {
     setRequest(request);
     // setTokenAddressERC20(tokenAddress);
   };
-
   
   const [openAllowance, setOpenAllowance] = React.useState(false);
   const [allowanceAmtOnce, setAllowanceAmtOnce] = React.useState('' as unknown as BigNumber);
@@ -212,11 +255,11 @@ const Application: React.FC<Props> = props => {
   const debouncedAllowanceAmtAlways = useDebounce(allowanceAmtAlways, 10);
 
   const erc20ContractConfig = {
-    addressOrName: debouncedTokenAddressERC20, // contract address
-    contractInterface: erc20ABI['abi'], // contract abi in json or JS format
+    addressOrName: debouncedTokenAddressERC20,
+    contractInterface: erc20ABI['abi'],
   };
 
-  const escrowAddress = contractAddresses.escrow; // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4'; 
+  const escrowAddress = addresses.escrow; 
   const hexAlwaysApprove = '0x8000000000000000000000000000000000000000000000000000000000000000';
 
   const { config: increaseAllowanceOnceConfig } = usePrepareContractWrite({...erc20ContractConfig, functionName: 'increaseAllowance', args: [escrowAddress, debouncedAllowanceAmtOnce], enabled: Boolean(debouncedAllowanceAmtOnce), });
@@ -311,6 +354,220 @@ const Application: React.FC<Props> = props => {
   };
 
   const blockExplorerURL = blockExplorer(chain?.network);
+
+  const handleUpdateTokenInfo = (val: any) => {
+    const tokenAddress = val;
+    const tokenObj = tokenList.filter((obj: any) => {
+        return obj.address === tokenAddress;
+    }); 
+
+    setDisputeTokenAddress(tokenAddress);
+    setTokenSymbol(tokenObj[0]?.symbol);
+    
+    if (tokenAddress === addresses.weth) {
+      setFinalFee(ethers.utils.parseUnits('0.35', 18))
+    } else if (tokenAddress === addresses.dai) {
+      setFinalFee(ethers.utils.parseUnits('500', 18))
+    } else if (tokenAddress === addresses.usdc) {
+      setFinalFee(ethers.utils.parseUnits('500', 6))
+    }
+  };
+
+  let tokenList = EthTokenList['tokens']; // Ethereum Default
+    if (chain?.network === 'goerli') {
+        tokenList = GoerliTokenList['tokens'];
+    }
+    const [notEnoughError, setNotEnoughError] = React.useState("");
+
+    const enoughTokens = React.useCallback(async (amount?: number, tokenAddress?: string, tokenDecimals?: number) => {
+        let balance;
+
+        if (!tokenAddress || !amount) {
+            setNotEnoughError("");
+        } else {
+            const amountBN = ethers.utils.parseUnits(amount.toString(), tokenDecimals);
+
+            if (tokenAddress !== zeroAddress) {
+                const erc20Contract = new ethers.Contract(tokenAddress, erc20ABI['abi'], provider!);
+                try { 
+                    balance = await erc20Contract.balanceOf(address); 
+                } catch (e) {
+                    console.log('Form balance fetch error', e);
+                }   
+            } else if (tokenAddress === zeroAddress) {
+                balance = await provider.getBalance(address!);
+            } else {
+                balance = 0;
+            }
+
+            if (balance?.lt(amountBN)) {
+                setNotEnoughError("Insufficient balance to pay this bounty");
+            } else {
+                setNotEnoughError("");
+            }
+        }    
+    }, [address, provider]);
+  
+    const dialogBoxes = () => {
+      return (
+          <div>
+              <Autocomplete
+                  options={tokenList}
+                  disableClearable
+                  onChange={(e, value) => typeof value === 'string' ? handleUpdateTokenInfo(value) : handleUpdateTokenInfo(value.address)}
+                  getOptionLabel={(option) => typeof option === 'string' ? option : option.symbol}
+                  renderOption={(props, option) => (                    
+                          <Box component="li" sx={{ display: 'flex', gap: '12px', }} {...props}> 
+                              <ListItemIcon sx={{ minWidth: '25px !important'}} >
+                                  <img alt="" width="25px" height="25px" src={option.logoURI} />
+                              </ListItemIcon>
+                              <Typography sx={{color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk'}}>{option.symbol}</Typography>
+                          </Box>
+                  )}
+                  sx={{
+                      '& .MuiAutocomplete-endAdornment': {
+                          '& .MuiSvgIcon-root': {
+                              color: 'rgb(233, 233, 198)', 
+                              fontSize: '16',
+                          },
+                      },
+                  }}
+                  
+                  PaperComponent={({ children }) => (
+                      <Paper
+                          sx={{ 
+                              backgroundColor: 'rgb(23, 21, 20)',
+                              
+                              borderBottomLeftRadius: '12px',
+                              borderBottomRightRadius: '12px',
+                              boxShadow: 'none',
+                              scrollbarWidth: 'none',
+                              '& .MuiInputBase-input': { 
+                                  color: 'rgb(248, 215, 154)', 
+                                  fontFamily: 'Space Grotesk'
+                              }, 
+                              '& .MuiInputLabel-root': { 
+                                  color: 'rgb(233, 233, 198)', 
+                                  fontFamily: 'Space Grotesk'
+                              }, 
+                              '& label.Mui-focused': {
+                                  color: 'rgb(248, 215, 154)',
+                              }, 
+                              '& .MuiInput-underline:after': {
+                                  borderBottomColor: 'rgb(248, 215, 154)',
+                              }, 
+                              '& .MuiInput-underline:before': {
+                                  borderBottomColor: 'rgb(233, 233, 198)',
+                              }, 
+                              '& .MuiInput-underline': {
+                                  '&:hover:before': {
+                                      borderBottomColor: 'rgb(248, 215, 154) !important',
+                                  }
+                              }
+                          }}
+                      >
+                          {children}
+                      </Paper>
+                  )}
+                  renderInput={(params) => (
+                      <TextField
+                      {...params}
+                      value={tokenSymbol}
+                      onChange={(e) => handleUpdateTokenInfo(e.target.value)}
+                      autoFocus
+                      margin="dense"
+                      id="token-input"
+                      name="tokenAddress"
+                      label="Token"
+                      inputProps={{
+                          ...params.inputProps,
+                          autoComplete: 'off', // disable autocomplete and autofill
+                      }}
+                      fullWidth
+                      variant="standard"
+                      sx={{ 
+                          '& .MuiSelect-icon': {
+                              color: 'rgb(233, 233, 198)'
+                          },
+                          '& .MuiInputBase-input': { 
+                              color: 'rgb(248, 215, 154)', 
+                              fontFamily: 'Space Grotesk'
+                          }, 
+                          '& .MuiInputLabel-root': { 
+                              color: 'rgb(233, 233, 198)', 
+                              fontFamily: 'Space Grotesk'
+                          }, 
+                          '& label.Mui-focused': {
+                              color: 'rgb(248, 215, 154)',
+                          }, 
+                          '& .MuiInput-underline:after': {
+                              borderBottomColor: 'rgb(248, 215, 154)',
+                          }, 
+                          '& .MuiInput-underline:before': {
+                              borderBottomColor: 'rgb(233, 233, 198)',
+                          }, 
+                          '& .MuiInput-underline': {
+                              '&:hover:before': {
+                                  borderBottomColor: 'rgb(248, 215, 154) !important',
+                              }
+                          },
+                      }}
+                      />
+                  )}
+              />
+              <TextField
+                  autoFocus
+                  margin="dense"
+                  id="amount-input"
+                  name="amount"
+                  label="Amount"
+                  value={bondAmt}
+                  onChange={(e: any) => setBondAmt(e.target.value)}
+                  error={Boolean(notEnoughError)}
+                  helperText={notEnoughError}
+                  type="number"
+                  fullWidth
+                  variant="standard"
+                  inputProps={{ autoComplete: 'off', inputMode: 'decimal', pattern: '[0-9]*', }} 
+                  sx={{ 
+                      '& .MuiInputBase-input': { 
+                          color: 'rgb(248, 215, 154)', 
+                          fontFamily: 'Space Grotesk',
+                          '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+                              '-webkit-appearance': 'none',
+                          },
+                      }, 
+                      '& .MuiFormHelperText-root.Mui-error': {
+                          color: 'rgb(255, 69, 0)',
+                          fontFamily: 'Space Grotesk',
+                      },
+                      '& .MuiInputLabel-root': { 
+                          color: 'rgb(233, 233, 198)', 
+                          fontFamily: 'Space Grotesk',
+                      }, 
+                      '& .MuiInputLabel-root.Mui-error': { 
+                          color: 'rgb(255, 69, 0)', 
+                          fontFamily: 'Space Grotesk',
+                      },
+                      '& label.Mui-focused': {
+                          color: 'rgb(248, 215, 154)',
+                      }, 
+                      '& .MuiInput-underline:after': {
+                          borderBottomColor: 'rgb(248, 215, 154)',
+                      }, 
+                      '& .MuiInput-underline:before': {
+                          borderBottomColor: 'rgb(233, 233, 198)',
+                      }, 
+                      '& .MuiInput-underline': {
+                          '&:hover:before': {
+                              borderBottomColor: 'rgb(248, 215, 154) !important',
+                          },
+                      },
+                  }}
+              />
+          </div>
+      );
+  };
 
   if (props.person) {
     return(
