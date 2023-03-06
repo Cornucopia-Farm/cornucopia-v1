@@ -137,7 +137,7 @@ contract Cornucopia is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reent
             0 // int256, p1:0 = no
         ); 
     
-        bountyAncillaryData[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = keccak256(abi.encode(ancillaryData));
+        bountyAncillaryData[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = keccak256(abi.encode(ancillaryData, block.timestamp));
         progress[keccak256(abi.encodePacked(_bountyAppId, msg.sender, _hunter))] = Status.DisputeInitiated; 
         emit Disputed(msg.sender, _hunter, _bountyAppId, uint32(block.timestamp), "Disputed!");
         return creatorBondAmt; 
@@ -160,7 +160,7 @@ contract Cornucopia is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reent
         SkinnyOptimisticOracleInterface.Request memory _request
     ) external nonReentrant returns (uint) {
         require(progress[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] == Status.DisputeInitiated, "Bounty creator has not disputed");
-        require(bountyAncillaryData[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] == keccak256(abi.encode(_ancillaryData)), "Incorrect ancillaryData");
+        require(bountyAncillaryData[keccak256(abi.encodePacked(_bountyAppId, _creator, msg.sender))] == keccak256(abi.encode(_ancillaryData, _timestamp)), "Incorrect ancillaryData/timestamp");
         
         uint256 finalFee = StoreInterface(ORACLE_STORE_ADDRESS).computeFinalFee(address(_request.currency)).rawValue;
         _request.currency.safeTransferFrom(msg.sender, address(this), _request.bond + finalFee); // Transfer bond token from hunter to contract to then send to OO.
@@ -226,7 +226,7 @@ contract Cornucopia is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reent
         SkinnyOptimisticOracleInterface.Request memory _request
     ) external nonReentrant {
         require(msg.sender == _creator || msg.sender == _hunter, "Caller must be creator or hunter");
-        require(bountyAncillaryData[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == keccak256(abi.encode(_ancillaryData)), "Incorrect ancillaryData");
+        require(bountyAncillaryData[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))] == keccak256(abi.encode(_ancillaryData, _timestamp)), "Incorrect ancillaryData/timestamp");
 
         Status status = progress[keccak256(abi.encodePacked(_bountyAppId, _creator, _hunter))];
         require(status == Status.DisputeInitiated || status == Status.DisputeRespondedTo, "Bounty must be disputed");
