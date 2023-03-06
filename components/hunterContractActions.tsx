@@ -27,24 +27,6 @@ type Props = {
     request?: Request; 
 };
 
-// Escrow Contract Config
-const contractConfig = {
-    addressOrName: contractAddresses.escrow, // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', 
-    contractInterface: escrowABI['abi'], // contract abi in json or JS format
-};
-
-// // UMA Skinny OO Contract Config
-// const umaContractConfig = {
-//     addressOrName: '0xeDc52A961B5Ca2AC7B2e0bc36714dB60E5a115Ab', 
-//     contractInterface: umaABI['abi'],
-// };
-
-// WETH Contract Config (For UMA Bonds)
-const wethContractConfig = {
-    addressOrName: contractAddresses.weth, // '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6', 
-    contractInterface: wethABI as ContractInterface, // contract abi in json or JS format
-};
-
 const HunterContractActions: React.FC<Props> = props => {
 
     const { address, isConnected } = useAccount();
@@ -52,8 +34,27 @@ const HunterContractActions: React.FC<Props> = props => {
     const { data: signer, isError, isLoading } = useSigner();
     const provider = useProvider();
     const { chain } = useNetwork();
+    const network = chain?.network! ? chain?.network! : 'goerli';
+    let addresses: any;
+    if (network === 'goerli') {
+        addresses = contractAddresses.goerli;
+    } else if (network === 'mainnet') {
+        addresses = contractAddresses.mainnet;
+    }
 
-    const escrowAddress = contractAddresses.escrow; // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4'; 
+    // Escrow Contract Config
+    const contractConfig = {
+        addressOrName: addresses.escrow, // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', 
+        contractInterface: escrowABI['abi'], // contract abi in json or JS format
+    };
+
+    // WETH Contract Config (For UMA Bonds)
+    const wethContractConfig = {
+        addressOrName: addresses.weth, // '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6', 
+        contractInterface: wethABI as ContractInterface, // contract abi in json or JS format
+    };
+
+    const escrowAddress = addresses.escrow; // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4'; 
 
     // const escrowContract = useContract({...contractConfig, signerOrProvider: signer, });
     // const umaContract = useContract({...umaContractConfig, signerOrProvider: signer, });

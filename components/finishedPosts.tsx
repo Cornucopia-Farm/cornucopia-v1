@@ -22,12 +22,6 @@ type Props = {
     smallScreen: boolean;
 };
 
-// Escrow Contract Config
-const contractConfig = {
-    addressOrName: contractAddresses.escrow, // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', 
-    contractInterface: escrowABI['abi'], // contract abi in json or JS format
-};
-
 const FinishedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSubmittedHits, stage, smallScreen, }) => {
 
     // Wagmi address/contract info
@@ -35,6 +29,19 @@ const FinishedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSubm
 
     const { data: signer, isError, isLoading } = useSigner();
     const { chain } = useNetwork();
+    const network = chain?.network! ? chain?.network! : 'goerli';
+    let addresses: any;
+    if (network === 'goerli') {
+        addresses = contractAddresses.goerli;
+    } else if (network === 'mainnet') {
+        addresses = contractAddresses.mainnet;
+    }
+
+    // Escrow Contract Config
+    const contractConfig = {
+        addressOrName: addresses.escrow, // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', 
+        contractInterface: escrowABI['abi'], // contract abi in json or JS format
+    };
 
     const provider = useProvider();
     const escrowContract = useContract({...contractConfig, signerOrProvider: provider, });

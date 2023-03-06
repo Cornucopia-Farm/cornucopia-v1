@@ -21,17 +21,6 @@ type Props = {
     smallScreen: boolean;
 };
 
-// Escrow Contract Config
-const contractConfig = {
-    addressOrName: contractAddresses.escrow, // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', 
-    contractInterface: escrowABI['abi'], // contract abi in json or JS format
-};
-
-// UMA Skinny OO Contract Config
-const umaContractConfig = {
-    addressOrName: contractAddresses.oracle, // '0xeDc52A961B5Ca2AC7B2e0bc36714dB60E5a115Ab', 
-    contractInterface: umaABI['abi'],
-};
 
 const DisputeRespondedToPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSubmittedHits, stage, smallScreen, }) => {
 
@@ -40,10 +29,29 @@ const DisputeRespondedToPosts: React.FC<Props> = ({ postId, setSubmittedMap, inc
     const { data: signer, isError, isLoading } = useSigner();
     const provider = useProvider();
     const { chain } = useNetwork();
+    const network = chain?.network! ? chain?.network! : 'goerli';
+    let addresses: any;
+    if (network === 'goerli') {
+        addresses = contractAddresses.goerli;
+    } else if (network === 'mainnet') {
+        addresses = contractAddresses.mainnet;
+    }
+
+    // Escrow Contract Config
+    const contractConfig = {
+        addressOrName: addresses.escrow, // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', 
+        contractInterface: escrowABI['abi'], // contract abi in json or JS format
+    };
+
+    // UMA Skinny OO Contract Config
+    const umaContractConfig = {
+        addressOrName: addresses.oracle, // '0xeDc52A961B5Ca2AC7B2e0bc36714dB60E5a115Ab', 
+        contractInterface: umaABI['abi'],
+    };
 
     const escrowContract = useContract({...contractConfig, signerOrProvider: provider,});
     const umaContract = useContract({...umaContractConfig, signerOrProvider: provider, });
-    const escrowAddress = contractAddresses.escrow; // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4'; 
+    const escrowAddress = addresses.escrow; // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4'; 
     const identifier = "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000";
 
     const [disputeRespondedToBountyPosts, setDisputeRespondedToBountyPosts] = React.useState(Array<JSX.Element>);

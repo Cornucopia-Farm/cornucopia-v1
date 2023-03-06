@@ -21,11 +21,6 @@ type Props = {
     smallScreen: boolean;
 };
 
-// Escrow Contract Config
-const contractConfig = {
-    addressOrName: contractAddresses.escrow, // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', 
-    contractInterface: escrowABI['abi'], // contract abi in json or JS format
-};
 
 const AppliedPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedMap, incrementAppliedHits, stage, smallScreen, }) => {
  
@@ -33,7 +28,21 @@ const AppliedPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedMap,
     const { data: signer, isError, isLoading } = useSigner();
     const { chain } = useNetwork();
     const zeroAddress = '0x0000000000000000000000000000000000000000';
-    const escrowAddress =  contractAddresses.escrow// '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4';
+    const network = chain?.network! ? chain?.network! : 'goerli';
+    let addresses: any;
+    if (network === 'goerli') {
+        addresses = contractAddresses.goerli;
+    } else if (network === 'mainnet') {
+        addresses = contractAddresses.mainnet;
+    }
+
+    // Escrow Contract Config
+    const contractConfig = {
+        addressOrName: addresses.escrow, // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4', 
+        contractInterface: escrowABI['abi'], // contract abi in json or JS format
+    };
+
+    const escrowAddress =  addresses.escrow// '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4';
 
     const provider = useProvider();
     const escrowContract = useContract({...contractConfig, signerOrProvider: provider,});

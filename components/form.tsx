@@ -307,11 +307,8 @@ const Form: React.FC<Props> = props => {
     }, [arweaveTrigger]);
 
     const ButtonType = () => {
-        if (props.formType == "createBounty") { // TODO: Change color of create new bounty icon
+        if (props.formType == "createBounty") { 
             return (
-                // <Fab sx={{ backgroundColor: 'rgba(6, 72, 41, 0.85)', color: '#FFFFFF' }} aria-label="add" onClick={handleClickOpen}> 
-                //     <AddIcon />
-                // </Fab>
                 <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleClickOpen}>
                     Create Bounty
                 </Button>
@@ -1061,10 +1058,7 @@ const Form: React.FC<Props> = props => {
                     <DialogContentText className={styles.h2}>
                     {props.summary}
                     </DialogContentText>
-                    
-                        {dialogBoxes(props.formType)}
-               
-                    
+                    {dialogBoxes(props.formType)}  
                 </DialogContent>
                 <DialogActions className={styles.formFooter}>
                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleClose}>{props.formButtons[0]}</Button>

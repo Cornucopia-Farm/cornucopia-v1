@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import * as React from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -131,20 +132,24 @@ const Application: React.FC<Props> = props => {
   const [request, setRequest] = React.useState({} as Request);
   const debouncedRequest = useDebounce(request, 10);
 
-  const [disputeTokenAddress, setDisputeTokenAddress] = React.useState('' as unknown as BigNumber);
+  const [disputeTokenAddress, setDisputeTokenAddress] = React.useState('');
   const debouncedDisputeTokenAddress = useDebounce(disputeTokenAddress, 10);
   const [bondAmt, setBondAmt] = React.useState('' as unknown as BigNumber);
   const debouncedBondAmt = useDebounce(bondAmt, 10);
   const [finalFee, setFinalFee] = React.useState('' as unknown as BigNumber);
   const debouncedFinalFee = useDebounce(finalFee, 10);
   const [tokenSymbol, setTokenSymbol] = React.useState('');
+  const [disputeTokenDecimals, setDisputeTokenDecimals] = React.useState(0);
+  const [openDisputeToken, setOpenDisputeToken] = React.useState(false);
+  const [disputeContractConfig, setDisputeContractConfig] = React.useState(wethContractConfig);
+  
 
   // const bondAmt = ethers.utils.parseUnits("0.1", "ether"); // Hard-coded (for now) bondAmt
   // const finalFee = ethers.utils.parseUnits("0.35", "ether"); // Hard-coded finalFee (Set by UMA)
 
-  const wethContract = useContract({...wethContractConfig});
-  const daiContract = useContract({...daiContractConfig});
-  const usdcContract = useContract({...usdcContractConfig});
+  const wethContract = useContract({...wethContractConfig, signerOrProvider: provider,});
+  const daiContract = useContract({...daiContractConfig, signerOrProvider: provider,});
+  const usdcContract = useContract({...usdcContractConfig, signerOrProvider: provider,});
   const zeroAddress = '0x0000000000000000000000000000000000000000';
 
   // Applied Contract Interactions
@@ -153,7 +158,7 @@ const Application: React.FC<Props> = props => {
   const { data: escrowTxData, isLoading: isEscrowTxLoading, isSuccess: isEscrowTxSuccess, error: escrowTxError } = useWaitForTransaction({ hash: escrowData?.hash, enabled: true,});
 
   // Submitted Contract Interactions: Initiate Dispute/Payout If Dispute/Payout
-  const { config: initiateDisputeConfig } = usePrepareContractWrite({...contractConfig, functionName: 'initiateDispute', args: [debouncedBountyAppId, debouncedHunterAddress, bondAmt, debouncedAncillaryData, wethContract.address], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedAncillaryData) && Boolean(allowanceIncreased), });
+  const { config: initiateDisputeConfig } = usePrepareContractWrite({...contractConfig, functionName: 'initiateDispute', args: [debouncedBountyAppId, debouncedHunterAddress, bondAmt, debouncedAncillaryData, debouncedDisputeTokenAddress], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedAncillaryData) && Boolean(debouncedDisputeTokenAddress) && Boolean(allowanceIncreased), });
   const { data: initiateDisputeData, error: initiateDisputeError, isLoading: isInitiateDisputeLoading, isSuccess: isInitiateDisputeSuccess, write: initiateDispute } = useContractWrite(initiateDisputeConfig);
   const { data: initiateDisputeTxData, isLoading: isInitiateDisputeTxLoading, isSuccess: isInitiateDisputeTxSuccess, error: initiateDisputeTxError } = useWaitForTransaction({ hash: initiateDisputeData?.hash, enabled: true,});
 
@@ -270,13 +275,29 @@ const Application: React.FC<Props> = props => {
   const { data: increaseAllowanceAlwaysData, error: increaseAllowanceAlwaysError, isLoading: isIncreaseAllowanceAlwaysLoading, isSuccess: isIncreaseAllowanceAlwaysSuccess, write: increaseAllowanceAlways } = useContractWrite(increaseAllowanceAlwaysConfig);
   const { data: increaseAllowanceAlwaysTxData, isLoading: isIncreaseAllowanceAlwaysTxLoading, isSuccess: isIncreaseAllowanceAlwaysTxSuccess, error: increaseAllowanceAlwaysTxError } = useWaitForTransaction({ hash: increaseAllowanceAlwaysData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
 
-  const { config: approveOnceConfig } = usePrepareContractWrite({...wethContractConfig, functionName: 'approve', args: [escrowAddress, debouncedAllowanceAmtOnce], enabled: Boolean(debouncedAllowanceAmtOnce), });
+  const { config: approveOnceConfig } = usePrepareContractWrite({...disputeContractConfig, functionName: 'approve', args: [escrowAddress, debouncedAllowanceAmtOnce], enabled: Boolean(debouncedAllowanceAmtOnce), });
   const { data: approveOnceData, error: approveOnceError, isLoading: isApproveOnceLoading, isSuccess: isApproveOnceSuccess, write: approveOnce } = useContractWrite(approveOnceConfig);
   const { data: approveOnceTxData, isLoading: isApproveOnceTxLoading, isSuccess: isApproveOnceTxSuccess, error: approveOnceTxError } = useWaitForTransaction({ hash: approveOnceData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
 
-  const { config: approveAlwaysConfig } = usePrepareContractWrite({...wethContractConfig, functionName: 'approve', args: [escrowAddress, debouncedAllowanceAmtAlways], enabled: Boolean(debouncedAllowanceAmtAlways), });
+  const { config: approveAlwaysConfig } = usePrepareContractWrite({...disputeContractConfig, functionName: 'approve', args: [escrowAddress, debouncedAllowanceAmtAlways], enabled: Boolean(debouncedAllowanceAmtAlways), });
   const { data: approveAlwaysData, error: approveAlwaysError, isLoading: isApproveAlwaysLoading, isSuccess: isApproveAlwaysSuccess, write: approveAlways } = useContractWrite(approveAlwaysConfig);
   const { data: approveAlwaysTxData, isLoading: isApproveAlwaysTxLoading, isSuccess: isApproveAlwaysTxSuccess, error: approveAlwaysTxError } = useWaitForTransaction({ hash: approveAlwaysData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
+
+  // const { config: approveOnceDaiConfig } = usePrepareContractWrite({...daiContractConfig, functionName: 'approve', args: [escrowAddress, debouncedAllowanceAmtOnce], enabled: Boolean(debouncedAllowanceAmtOnce), });
+  // const { data: approveOnceDaiData, error: approveOnceDaiError, isLoading: isApproveOnceDaiLoading, isSuccess: isApproveOnceDaiSuccess, write: approveDaiOnce } = useContractWrite(approveOnceDaiConfig);
+  // const { data: approveOnceDaiTxData, isLoading: isApproveOnceDaiTxLoading, isSuccess: isApproveOnceDaiTxSuccess, error: approveOnceDaiTxError } = useWaitForTransaction({ hash: approveOnceDaiData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
+
+  // const { config: approveAlwaysDaiConfig } = usePrepareContractWrite({...daiContractConfig, functionName: 'approve', args: [escrowAddress, debouncedAllowanceAmtAlways], enabled: Boolean(debouncedAllowanceAmtAlways), });
+  // const { data: approveAlwaysDaiData, error: approveAlwaysDaiError, isLoading: isApproveAlwaysDaiLoading, isSuccess: isApproveAlwaysDaiSuccess, write: approveDaiAlways } = useContractWrite(approveAlwaysDaiConfig);
+  // const { data: approveAlwaysDaiTxData, isLoading: isApproveAlwaysDaiTxLoading, isSuccess: isApproveAlwaysDaiTxSuccess, error: approveAlwaysDaiTxError } = useWaitForTransaction({ hash: approveAlwaysDaiData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
+
+  // const { config: approveOnceUsdcConfig } = usePrepareContractWrite({...usdcContractConfig, functionName: 'approve', args: [escrowAddress, debouncedAllowanceAmtOnce], enabled: Boolean(debouncedAllowanceAmtOnce), });
+  // const { data: approveOnceUsdcData, error: approveOnceUsdcError, isLoading: isApproveOnceUsdcLoading, isSuccess: isApproveOnceUsdcSuccess, write: approveUsdcOnce } = useContractWrite(approveOnceUsdcConfig);
+  // const { data: approveOnceUsdcTxData, isLoading: isApproveOnceUsdcTxLoading, isSuccess: isApproveOnceUsdcTxSuccess, error: approveOnceUsdcTxError } = useWaitForTransaction({ hash: approveOnceUsdcData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
+
+  // const { config: approveAlwaysUsdcConfig } = usePrepareContractWrite({...usdcContractConfig, functionName: 'approve', args: [escrowAddress, debouncedAllowanceAmtAlways], enabled: Boolean(debouncedAllowanceAmtAlways), });
+  // const { data: approveAlwaysUsdcData, error: approveAlwaysUsdcError, isLoading: isApproveAlwaysUsdcLoading, isSuccess: isApproveAlwaysUsdcSuccess, write: approveUsdcAlways } = useContractWrite(approveAlwaysUsdcConfig);
+  // const { data: approveAlwaysUsdcTxData, isLoading: isApproveAlwaysUsdcTxLoading, isSuccess: isApproveAlwaysUsdcTxSuccess, error: approveAlwaysUsdcTxError } = useWaitForTransaction({ hash: approveAlwaysUsdcData?.hash, enabled: true, onSuccess() {setAllowanceIncreased(true)}});
 
   const handleCloseIncreaseAllowanceFalse = () => {
     setOpenAllowance(false);
@@ -310,9 +331,18 @@ const Application: React.FC<Props> = props => {
     }
   };
 
-  const handleCloseIncreaseAllowanceDisputeOnceTrue = (amount: string, decimals: number, wethAllowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string, workLinks: string, postLinks: string) => {
+  const handleCloseIncreaseAllowanceDisputeOnceTrue = (disputeTokenAddress: string, bountyAppId: string, hunterAddress: string, workLinks: string, postLinks: string) => {
+    let allowance: BigNumber = BigNumber.from(0);
+    if (disputeTokenAddress === wethContract.address) {
+      allowance = props.wethAllowance!;
+    } else if (disputeTokenAddress === daiContract.address) {
+      allowance = props.daiAllowance!;
+    } else if (disputeTokenAddress === usdcContract.address) {
+      allowance = props.usdcAllowance!;
+    }
+
     const total = bondAmt.add(finalFee);
-    if (total.gt(wethAllowance)) {
+    if (total.gt(allowance)) {
       setAllowanceAmtOnce(total);
       setOpenAllowance(true);
     } else {
@@ -322,9 +352,18 @@ const Application: React.FC<Props> = props => {
     }
   };
 
-  const handleCloseIncreaseAllowanceDisputeAlwaysTrue = (amount: string, decimals: number, wethAllowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string, workLinks: string, postLinks: string) => {
+  const handleCloseIncreaseAllowanceDisputeAlwaysTrue = (disputeTokenAddress: string, bountyAppId: string, hunterAddress: string, workLinks: string, postLinks: string) => {
+    let allowance: BigNumber = BigNumber.from(0);
+    if (disputeTokenAddress === wethContract.address) {
+      allowance = props.wethAllowance!;
+    } else if (disputeTokenAddress === daiContract.address) {
+      allowance = props.daiAllowance!;
+    } else if (disputeTokenAddress === usdcContract.address) {
+      allowance = props.usdcAllowance!;
+    }
+
     const total = bondAmt.add(finalFee);
-    if (total.gt(wethAllowance)) {
+    if (total.gt(allowance)) {
       setAllowanceAmtAlways(BigNumber.from(hexAlwaysApprove));
       setOpenAllowance(true);
     } else {
@@ -362,15 +401,27 @@ const Application: React.FC<Props> = props => {
     }); 
 
     setDisputeTokenAddress(tokenAddress);
+    setDisputeTokenDecimals(tokenObj[0]?.decimals);
     setTokenSymbol(tokenObj[0]?.symbol);
-    
+
     if (tokenAddress === addresses.weth) {
-      setFinalFee(ethers.utils.parseUnits('0.35', 18))
+      setFinalFee(ethers.utils.parseUnits('0.35', tokenObj[0]?.decimals));
+      setDisputeContractConfig(wethContractConfig);
     } else if (tokenAddress === addresses.dai) {
-      setFinalFee(ethers.utils.parseUnits('500', 18))
+      setFinalFee(ethers.utils.parseUnits('500', tokenObj[0]?.decimals));
+      setDisputeContractConfig(daiContractConfig);
     } else if (tokenAddress === addresses.usdc) {
-      setFinalFee(ethers.utils.parseUnits('500', 6))
+      setFinalFee(ethers.utils.parseUnits('500', tokenObj[0]?.decimals));
+      setDisputeContractConfig(usdcContractConfig);
     }
+  };
+
+  const handleClickOpenDisputeToken = () => {
+    setOpenDisputeToken(true);
+  };
+
+  const handleCloseDisputeToken = () => {
+    setOpenDisputeToken(false);
   };
 
   let tokenList = EthTokenList['tokens']; // Ethereum Default
@@ -410,163 +461,163 @@ const Application: React.FC<Props> = props => {
   
     const dialogBoxes = () => {
       return (
-          <div>
-              <Autocomplete
-                  options={tokenList}
-                  disableClearable
-                  onChange={(e, value) => typeof value === 'string' ? handleUpdateTokenInfo(value) : handleUpdateTokenInfo(value.address)}
-                  getOptionLabel={(option) => typeof option === 'string' ? option : option.symbol}
-                  renderOption={(props, option) => (                    
-                          <Box component="li" sx={{ display: 'flex', gap: '12px', }} {...props}> 
-                              <ListItemIcon sx={{ minWidth: '25px !important'}} >
-                                  <img alt="" width="25px" height="25px" src={option.logoURI} />
-                              </ListItemIcon>
-                              <Typography sx={{color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk'}}>{option.symbol}</Typography>
-                          </Box>
-                  )}
-                  sx={{
-                      '& .MuiAutocomplete-endAdornment': {
-                          '& .MuiSvgIcon-root': {
-                              color: 'rgb(233, 233, 198)', 
-                              fontSize: '16',
-                          },
-                      },
-                  }}
-                  
-                  PaperComponent={({ children }) => (
-                      <Paper
-                          sx={{ 
-                              backgroundColor: 'rgb(23, 21, 20)',
-                              
-                              borderBottomLeftRadius: '12px',
-                              borderBottomRightRadius: '12px',
-                              boxShadow: 'none',
-                              scrollbarWidth: 'none',
-                              '& .MuiInputBase-input': { 
-                                  color: 'rgb(248, 215, 154)', 
-                                  fontFamily: 'Space Grotesk'
-                              }, 
-                              '& .MuiInputLabel-root': { 
-                                  color: 'rgb(233, 233, 198)', 
-                                  fontFamily: 'Space Grotesk'
-                              }, 
-                              '& label.Mui-focused': {
-                                  color: 'rgb(248, 215, 154)',
-                              }, 
-                              '& .MuiInput-underline:after': {
-                                  borderBottomColor: 'rgb(248, 215, 154)',
-                              }, 
-                              '& .MuiInput-underline:before': {
-                                  borderBottomColor: 'rgb(233, 233, 198)',
-                              }, 
-                              '& .MuiInput-underline': {
-                                  '&:hover:before': {
-                                      borderBottomColor: 'rgb(248, 215, 154) !important',
-                                  }
-                              }
-                          }}
-                      >
-                          {children}
-                      </Paper>
-                  )}
-                  renderInput={(params) => (
-                      <TextField
-                      {...params}
-                      value={tokenSymbol}
-                      onChange={(e) => handleUpdateTokenInfo(e.target.value)}
-                      autoFocus
-                      margin="dense"
-                      id="token-input"
-                      name="tokenAddress"
-                      label="Token"
-                      inputProps={{
-                          ...params.inputProps,
-                          autoComplete: 'off', // disable autocomplete and autofill
-                      }}
-                      fullWidth
-                      variant="standard"
-                      sx={{ 
-                          '& .MuiSelect-icon': {
-                              color: 'rgb(233, 233, 198)'
-                          },
-                          '& .MuiInputBase-input': { 
-                              color: 'rgb(248, 215, 154)', 
-                              fontFamily: 'Space Grotesk'
-                          }, 
-                          '& .MuiInputLabel-root': { 
-                              color: 'rgb(233, 233, 198)', 
-                              fontFamily: 'Space Grotesk'
-                          }, 
-                          '& label.Mui-focused': {
-                              color: 'rgb(248, 215, 154)',
-                          }, 
-                          '& .MuiInput-underline:after': {
-                              borderBottomColor: 'rgb(248, 215, 154)',
-                          }, 
-                          '& .MuiInput-underline:before': {
-                              borderBottomColor: 'rgb(233, 233, 198)',
-                          }, 
-                          '& .MuiInput-underline': {
-                              '&:hover:before': {
-                                  borderBottomColor: 'rgb(248, 215, 154) !important',
-                              }
-                          },
-                      }}
-                      />
-                  )}
-              />
-              <TextField
-                  autoFocus
-                  margin="dense"
-                  id="amount-input"
-                  name="amount"
-                  label="Amount"
-                  value={bondAmt}
-                  onChange={(e: any) => setBondAmt(e.target.value)}
-                  error={Boolean(notEnoughError)}
-                  helperText={notEnoughError}
-                  type="number"
-                  fullWidth
-                  variant="standard"
-                  inputProps={{ autoComplete: 'off', inputMode: 'decimal', pattern: '[0-9]*', }} 
-                  sx={{ 
-                      '& .MuiInputBase-input': { 
-                          color: 'rgb(248, 215, 154)', 
-                          fontFamily: 'Space Grotesk',
-                          '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-                              '-webkit-appearance': 'none',
-                          },
-                      }, 
-                      '& .MuiFormHelperText-root.Mui-error': {
-                          color: 'rgb(255, 69, 0)',
-                          fontFamily: 'Space Grotesk',
-                      },
-                      '& .MuiInputLabel-root': { 
-                          color: 'rgb(233, 233, 198)', 
-                          fontFamily: 'Space Grotesk',
-                      }, 
-                      '& .MuiInputLabel-root.Mui-error': { 
-                          color: 'rgb(255, 69, 0)', 
-                          fontFamily: 'Space Grotesk',
-                      },
-                      '& label.Mui-focused': {
-                          color: 'rgb(248, 215, 154)',
-                      }, 
-                      '& .MuiInput-underline:after': {
-                          borderBottomColor: 'rgb(248, 215, 154)',
-                      }, 
-                      '& .MuiInput-underline:before': {
-                          borderBottomColor: 'rgb(233, 233, 198)',
-                      }, 
-                      '& .MuiInput-underline': {
-                          '&:hover:before': {
-                              borderBottomColor: 'rgb(248, 215, 154) !important',
-                          },
-                      },
-                  }}
-              />
-          </div>
-      );
+        <div>
+            <Autocomplete
+                options={tokenList}
+                disableClearable
+                onChange={(e, value) => typeof value === 'string' ? handleUpdateTokenInfo(value) : handleUpdateTokenInfo(value.address)}
+                getOptionLabel={(option) => typeof option === 'string' ? option : option.symbol}
+                renderOption={(props, option) => (                    
+                        <Box component="li" sx={{ display: 'flex', gap: '12px', }} {...props}> 
+                            <ListItemIcon sx={{ minWidth: '25px !important'}} >
+                                <img alt="" width="25px" height="25px" src={option.logoURI} />
+                            </ListItemIcon>
+                            <Typography sx={{color: 'rgb(233, 233, 198)', fontFamily: 'Space Grotesk'}}>{option.symbol}</Typography>
+                        </Box>
+                )}
+                sx={{
+                    '& .MuiAutocomplete-endAdornment': {
+                        '& .MuiSvgIcon-root': {
+                            color: 'rgb(233, 233, 198)', 
+                            fontSize: '16',
+                        },
+                    },
+                }}
+                
+                PaperComponent={({ children }) => (
+                    <Paper
+                        sx={{ 
+                            backgroundColor: 'rgb(23, 21, 20)',
+                            
+                            borderBottomLeftRadius: '12px',
+                            borderBottomRightRadius: '12px',
+                            boxShadow: 'none',
+                            scrollbarWidth: 'none',
+                            '& .MuiInputBase-input': { 
+                                color: 'rgb(248, 215, 154)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& .MuiInputLabel-root': { 
+                                color: 'rgb(233, 233, 198)', 
+                                fontFamily: 'Space Grotesk'
+                            }, 
+                            '& label.Mui-focused': {
+                                color: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:after': {
+                                borderBottomColor: 'rgb(248, 215, 154)',
+                            }, 
+                            '& .MuiInput-underline:before': {
+                                borderBottomColor: 'rgb(233, 233, 198)',
+                            }, 
+                            '& .MuiInput-underline': {
+                                '&:hover:before': {
+                                    borderBottomColor: 'rgb(248, 215, 154) !important',
+                                }
+                            }
+                        }}
+                    >
+                        {children}
+                    </Paper>
+                )}
+                renderInput={(params) => (
+                    <TextField
+                    {...params}
+                    value={tokenSymbol}
+                    onChange={(e) => handleUpdateTokenInfo(e.target.value)}
+                    autoFocus
+                    margin="dense"
+                    id="token-input"
+                    name="tokenAddress"
+                    label="Token"
+                    inputProps={{
+                        ...params.inputProps,
+                        autoComplete: 'off', // disable autocomplete and autofill
+                    }}
+                    fullWidth
+                    variant="standard"
+                    sx={{ 
+                        '& .MuiSelect-icon': {
+                            color: 'rgb(233, 233, 198)'
+                        },
+                        '& .MuiInputBase-input': { 
+                            color: 'rgb(248, 215, 154)', 
+                            fontFamily: 'Space Grotesk'
+                        }, 
+                        '& .MuiInputLabel-root': { 
+                            color: 'rgb(233, 233, 198)', 
+                            fontFamily: 'Space Grotesk'
+                        }, 
+                        '& label.Mui-focused': {
+                            color: 'rgb(248, 215, 154)',
+                        }, 
+                        '& .MuiInput-underline:after': {
+                            borderBottomColor: 'rgb(248, 215, 154)',
+                        }, 
+                        '& .MuiInput-underline:before': {
+                            borderBottomColor: 'rgb(233, 233, 198)',
+                        }, 
+                        '& .MuiInput-underline': {
+                            '&:hover:before': {
+                                borderBottomColor: 'rgb(248, 215, 154) !important',
+                            }
+                        },
+                    }}
+                    />
+                )}
+            />
+            <TextField
+                autoFocus
+                margin="dense"
+                id="amount-input"
+                name="amount"
+                label="Amount"
+                value={bondAmt}
+                onChange={(e: any) => { setBondAmt(e.target.value); enoughTokens(e.target.value, disputeTokenAddress, disputeTokenDecimals); }}
+                error={Boolean(notEnoughError)}
+                helperText={notEnoughError}
+                type="number"
+                fullWidth
+                variant="standard"
+                inputProps={{ autoComplete: 'off', inputMode: 'decimal', pattern: '[0-9]*', }} 
+                sx={{ 
+                    '& .MuiInputBase-input': { 
+                        color: 'rgb(248, 215, 154)', 
+                        fontFamily: 'Space Grotesk',
+                        '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+                            '-webkit-appearance': 'none',
+                        },
+                    }, 
+                    '& .MuiFormHelperText-root.Mui-error': {
+                        color: 'rgb(255, 69, 0)',
+                        fontFamily: 'Space Grotesk',
+                    },
+                    '& .MuiInputLabel-root': { 
+                        color: 'rgb(233, 233, 198)', 
+                        fontFamily: 'Space Grotesk',
+                    }, 
+                    '& .MuiInputLabel-root.Mui-error': { 
+                        color: 'rgb(255, 69, 0)', 
+                        fontFamily: 'Space Grotesk',
+                    },
+                    '& label.Mui-focused': {
+                        color: 'rgb(248, 215, 154)',
+                    }, 
+                    '& .MuiInput-underline:after': {
+                        borderBottomColor: 'rgb(248, 215, 154)',
+                    }, 
+                    '& .MuiInput-underline:before': {
+                        borderBottomColor: 'rgb(233, 233, 198)',
+                    }, 
+                    '& .MuiInput-underline': {
+                        '&:hover:before': {
+                            borderBottomColor: 'rgb(248, 215, 154) !important',
+                        },
+                    },
+                }}
+            />
+      </div>
+    );
   };
 
   if (props.person) {
@@ -729,12 +780,26 @@ const Application: React.FC<Props> = props => {
             }
             {props.appStatus === "submitted" &&  
               <div>      
-                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={() => {handleCloseIncreaseAllowanceDisputeOnceTrue(props.amount!, props.tokenDecimals!, props.wethAllowance!, props.postId!, props.person, props.tokenAddress!, props.workLinks!, props.postLinks!); handleCloseIncreaseAllowanceDisputeAlwaysTrue(props.amount!, props.tokenDecimals!, props.wethAllowance!, props.postId!, props.person, props.tokenAddress!, props.workLinks!, props.postLinks!);}}>Contest</Button>
+                <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleClickOpenDisputeToken}>Contest</Button>
+                <Dialog open={openDisputeToken} onClose={handleCloseDisputeToken} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
+                  <DialogTitle className={styles.formHeader}>Dispute</DialogTitle>
+                  <DialogContent className={styles.cardBackground}>
+                    <DialogContentText className={styles.dialogBody}>
+                    To initiate a dispute as a creator, you must put up a bond in WETH, DAI, or USDC plus an UMA protocol fee of 0.35 WETH, 500 DAI, or 500 USDC respectively.
+                    Please select a bond token and amount below.     
+                    </DialogContentText> 
+                    {dialogBoxes()}   
+                  </DialogContent>
+                  <DialogActions className={styles.formFooter}>
+                    <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', }} onClick={() => {handleCloseDisputeToken(); handleCloseIncreaseAllowanceDisputeOnceTrue(disputeTokenAddress, props.postId!, props.person, props.workLinks!, props.postLinks!); handleCloseIncreaseAllowanceDisputeAlwaysTrue(disputeTokenAddress, props.postId!, props.person, props.workLinks!, props.postLinks!);}} autoFocus>Contest</Button>
+                  </DialogActions>
+                </Dialog>
+                
                 <Dialog open={openAllowance} onClose={handleCloseIncreaseAllowanceFalse} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
                   <DialogTitle className={styles.formHeader}>Approve</DialogTitle>
                   <DialogContent className={styles.cardBackground}>
                       <DialogContentText className={styles.dialogBody}>
-                      To initiate a dispute as a creator, you must put up a bond of 0.1 WETH plus an UMA protocol fee of 0.35 WETH. To put up this bond, you must first allow 
+                      To put up your UMA bond, you must first allow 
                       Cornucopia to transfer tokens from your wallet to the protocol contract, which are then transferred into the UMA Optimistic Oracle contract.
                       <br />
                       <br />
