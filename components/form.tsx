@@ -1038,19 +1038,21 @@ const Form: React.FC<Props> = props => {
     return (
         <ThemeProvider theme={theme}> 
         <div>
-            {(isSubmitTxLoading || (isSubmitTxSuccess && submitTxData?.status === 1)) && 
-                <SimpleSnackBar severity={'success'} msg={isSubmitTxLoading ? 'Submitting work...' : 'Submitted work!'}/>
-            }
             {(isSubmitTxSuccess && submitTxData?.status === 0) && 
                 <SimpleSnackBar severity={'error'} msg={'Submit transaction failed!'}/>
             }
-            {arweaveId && 
-                <SimpleSnackBar severity={'success'} msg={''} arweave={true} arweaveHash={arweaveId} arweavePostType={props.formType == "createBounty" ? 'post' : (props.formType == "applyBounty" ? 'application' : 'submission')}/>
+            {isSubmitTxLoading && 
+                <SimpleSnackBar severity={'success'} msg={'Submitting work...'}/>
             }
-            {arweaveLoading && !arweaveId &&
+            {(isSubmitTxSuccess && submitTxData?.status === 1) && arweaveId && 
+                <SimpleSnackBar severity={'success'} msg={'Submitted work!'} arweave={true} arweaveHash={arweaveId} arweavePostType={'submission'} arweaveAndOnchain={true}/>
+            }
+            {arweaveId && (props.formType == "createBounty" || props.formType == "applyBounty") &&
+                <SimpleSnackBar severity={'success'} msg={''} arweave={true} arweaveHash={arweaveId} arweavePostType={props.formType == "createBounty" ? 'post' : 'application'}/>
+            }
+            {arweaveLoading && !arweaveId && (props.formType == "createBounty" || props.formType == "applyBounty") &&
                 <SimpleSnackBar severity={'success'} msg={'Uploading to Arweave...'}/>
             }
-
             <ButtonType />
             <Dialog open={open} onClose={handleClose} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
                 <DialogTitle className={styles.formHeader}>{props.formName}</DialogTitle>

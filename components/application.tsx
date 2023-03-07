@@ -134,12 +134,13 @@ const Application: React.FC<Props> = props => {
 
   const [disputeTokenAddress, setDisputeTokenAddress] = React.useState('');
   const debouncedDisputeTokenAddress = useDebounce(disputeTokenAddress, 10);
-  const [bondAmt, setBondAmt] = React.useState('' as unknown as BigNumber);
-  const debouncedBondAmt = useDebounce(bondAmt, 10);
+  const [bondAmt, setBondAmt] = React.useState(0 as unknown as number);
+  const [bondAmtBN, setBondAmtBN] = React.useState('' as unknown as BigNumber);
+  const debouncedBondAmtBN = useDebounce(bondAmtBN, 10);
   const [finalFee, setFinalFee] = React.useState('' as unknown as BigNumber);
   const debouncedFinalFee = useDebounce(finalFee, 10);
   const [tokenSymbol, setTokenSymbol] = React.useState('');
-  const [disputeTokenDecimals, setDisputeTokenDecimals] = React.useState(0);
+  const [disputeTokenDecimals, setDisputeTokenDecimals] = React.useState(18); // Default to 18
   const [openDisputeToken, setOpenDisputeToken] = React.useState(false);
   const [disputeContractConfig, setDisputeContractConfig] = React.useState(wethContractConfig);
   
@@ -158,7 +159,7 @@ const Application: React.FC<Props> = props => {
   const { data: escrowTxData, isLoading: isEscrowTxLoading, isSuccess: isEscrowTxSuccess, error: escrowTxError } = useWaitForTransaction({ hash: escrowData?.hash, enabled: true,});
 
   // Submitted Contract Interactions: Initiate Dispute/Payout If Dispute/Payout
-  const { config: initiateDisputeConfig } = usePrepareContractWrite({...contractConfig, functionName: 'initiateDispute', args: [debouncedBountyAppId, debouncedHunterAddress, bondAmt, debouncedAncillaryData, debouncedDisputeTokenAddress], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedAncillaryData) && Boolean(debouncedDisputeTokenAddress) && Boolean(allowanceIncreased), });
+  const { config: initiateDisputeConfig } = usePrepareContractWrite({...contractConfig, functionName: 'initiateDispute', args: [debouncedBountyAppId, debouncedHunterAddress, debouncedBondAmtBN, debouncedAncillaryData, debouncedDisputeTokenAddress], enabled: Boolean(debouncedBountyAppId) && Boolean(debouncedHunterAddress) && Boolean(debouncedBondAmtBN) && Boolean(debouncedAncillaryData) && Boolean(debouncedDisputeTokenAddress) && Boolean(allowanceIncreased), });
   const { data: initiateDisputeData, error: initiateDisputeError, isLoading: isInitiateDisputeLoading, isSuccess: isInitiateDisputeSuccess, write: initiateDispute } = useContractWrite(initiateDisputeConfig);
   const { data: initiateDisputeTxData, isLoading: isInitiateDisputeTxLoading, isSuccess: isInitiateDisputeTxSuccess, error: initiateDisputeTxError } = useWaitForTransaction({ hash: initiateDisputeData?.hash, enabled: true,});
 
@@ -341,8 +342,10 @@ const Application: React.FC<Props> = props => {
       allowance = props.usdcAllowance!;
     }
 
-    const total = bondAmt.add(finalFee);
+    const bondAmtBN = ethers.utils.parseUnits(bondAmt.toString(), disputeTokenDecimals);
+    const total = bondAmtBN.add(finalFee);
     if (total.gt(allowance)) {
+      setBondAmtBN(bondAmtBN);
       setAllowanceAmtOnce(total);
       setOpenAllowance(true);
     } else {
@@ -362,8 +365,10 @@ const Application: React.FC<Props> = props => {
       allowance = props.usdcAllowance!;
     }
 
-    const total = bondAmt.add(finalFee);
+    const bondAmtBN = ethers.utils.parseUnits(bondAmt.toString(), disputeTokenDecimals);
+    const total = bondAmtBN.add(finalFee);
     if (total.gt(allowance)) {
+      setBondAmtBN(bondAmtBN);
       setAllowanceAmtAlways(BigNumber.from(hexAlwaysApprove));
       setOpenAllowance(true);
     } else {
@@ -452,7 +457,7 @@ const Application: React.FC<Props> = props => {
             }
 
             if (balance?.lt(amountBN)) {
-                setNotEnoughError("Insufficient balance to pay this bounty");
+                setNotEnoughError("Insufficient balance to put up this bond");
             } else {
                 setNotEnoughError("");
             }
