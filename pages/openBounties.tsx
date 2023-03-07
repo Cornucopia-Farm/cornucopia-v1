@@ -83,7 +83,7 @@ const OpenBounties: NextPage = () => {
                                         },
                                         {
                                             name: "App-Name",
-                                            value: "Cornucopia-test5"
+                                            value: "Cornucopia-prod1"
                                         },
                                         {
                                             name: "Form-Type",
@@ -136,22 +136,22 @@ const OpenBounties: NextPage = () => {
                 <main> 
                 <Box sx={{ display: 'flex', flexDirection: 'column', ...(largeScreen ? { paddingLeft: '16vw', } : { paddingLeft: '12vw', }), ...(largeScreen ? { paddingRight: '16vw', } : { paddingRight: '12vw', }), color: 'rgba(6, 72, 41, 0.85)', }}> 
                     <h2 className={styles.h2}>Open Bounties</h2>
-                    {openBountyPosts.length === 0 &&
-                                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
-                                    <Image alt="" src="/the_fortune_cow.png" height="300px" width="300px"/>
-                                    <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>No bounties posted yet on this chain.</Typography>
-                                </Box>
-                    }
                     {openBountyPosts.length > 0 &&
                     <Card className={styles.accordionBackground} sx={{ backgroundColor: 'rgba(6, 72, 41, 0.05)', borderRadius: '12px', paddingTop: '12px', paddingLeft: '12px', paddingRight: '12px', paddingBottom: '12px', }}> 
                         {openBountyPosts}
                     </Card>
                     }
+                    {openBountyPosts.length === 0 &&
+                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
+                            <Image alt="" src="/the_fortune_cow.png" height="300px" width="300px"/>
+                            <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>No bounties posted yet on this chain.</Typography>
+                        </Box>
+                    }
                 </Box>
                 </main>
             </div>
         );
-    }
+    } 
     return (
         <div className={styles.background}>
             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', }}> 
@@ -171,7 +171,7 @@ const OPENBOUNTIES = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test5"]
+                    values: ["Cornucopia-prod1"]
                 },
                 {
                     name: "Form-Type",

@@ -44,11 +44,9 @@ const MyBounties: NextPage = () => {
     const provider = useProvider();
     const { chain } = useNetwork();
     const network = chain?.network! ? chain?.network! : 'goerli';
-    let addresses: any;
+    let addresses = contractAddresses.mainnet;
     if (network === 'goerli') {
         addresses = contractAddresses.goerli;
-    } else if (network === 'mainnet') {
-        addresses = contractAddresses.mainnet;
     }
 
     // Escrow Contract Config
@@ -212,7 +210,7 @@ const MyBounties: NextPage = () => {
                                             },
                                             {
                                                 name: "App-Name",
-                                                value: "Cornucopia-test5"
+                                                value: "Cornucopia-prod1"
                                             },
                                             {
                                                 name: "Form-Type",
@@ -713,7 +711,7 @@ const MYBOUNTIES = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test5"]
+                    values: ["Cornucopia-prod1"]
                 },
                 {
                     name: "Form-Type",
@@ -749,7 +747,7 @@ const MYSUBMITTEDBOUNTIES = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test5"]
+                    values: ["Cornucopia-prod1"]
                 },
                 {
                     name: "Form-Type",

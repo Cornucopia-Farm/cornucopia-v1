@@ -35,11 +35,9 @@ const HunterContractActions: React.FC<Props> = props => {
     const provider = useProvider();
     const { chain } = useNetwork();
     const network = chain?.network! ? chain?.network! : 'goerli';
-    let addresses: any;
+    let addresses = contractAddresses.mainnet;
     if (network === 'goerli') {
         addresses = contractAddresses.goerli;
-    } else if (network === 'mainnet') {
-        addresses = contractAddresses.mainnet;
     }
 
     // Escrow Contract Config

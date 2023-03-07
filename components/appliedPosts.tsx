@@ -29,11 +29,9 @@ const AppliedPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedMap,
     const { chain } = useNetwork();
     const zeroAddress = '0x0000000000000000000000000000000000000000';
     const network = chain?.network! ? chain?.network! : 'goerli';
-    let addresses: any;
+    let addresses = contractAddresses.mainnet;
     if (network === 'goerli') {
         addresses = contractAddresses.goerli;
-    } else if (network === 'mainnet') {
-        addresses = contractAddresses.mainnet;
     }
 
     // Escrow Contract Config
@@ -204,7 +202,7 @@ const GETAPPLIEDTOPOSTS = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test5"]
+                    values: ["Cornucopia-prod1"]
                 },
                 {
                     name: "Form-Type",

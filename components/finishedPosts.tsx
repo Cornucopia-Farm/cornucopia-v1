@@ -30,11 +30,9 @@ const FinishedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incrementSubm
     const { data: signer, isError, isLoading } = useSigner();
     const { chain } = useNetwork();
     const network = chain?.network! ? chain?.network! : 'goerli';
-    let addresses: any;
+    let addresses = contractAddresses.mainnet;
     if (network === 'goerli') {
         addresses = contractAddresses.goerli;
-    } else if (network === 'mainnet') {
-        addresses = contractAddresses.mainnet;
     }
 
     // Escrow Contract Config
@@ -185,7 +183,7 @@ const GETWORKSUBMITTEDPOSTS = gql`
                 },
                 {
                     name: "App-Name",
-                    values: ["Cornucopia-test5"]
+                    values: ["Cornucopia-prod1"]
                 },
                 {
                     name: "Form-Type",
