@@ -10,6 +10,11 @@
       "address": "0xAbab45D0c3c58973dc34f7EC343dC2cfF6D1af42",
       "txHash": "0x2056d06ed5fa97c5d62b0192ac2ab6876bbcbd24329e7621f33b010a232e112d",
       "kind": "uups"
+    },
+    {
+      "address": "0x27212cce5AE7F6D82C594d374940b13b89D670fc",
+      "txHash": "0xd44c5bff17ffb593d34c6c33b1ee96697a77b1fd3adf3a7e6a599e736592cff3",
+      "kind": "uups"
     }
   ],
   "impls": {
@@ -342,6 +347,205 @@
           },
           "t_mapping(t_bytes32,t_enum(Status)7494)": {
             "label": "mapping(bytes32 => enum Escrow.Status)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "ff371407063cd7973243e51b21bc19470b3d8d51afd30566cc9fa84035f40183": {
+      "address": "0xC23a31708846C21Db001F99Ad117cE4aE4d80833",
+      "txHash": "0x04d5d4a98b525a38306f9143693077c4294c6812520ced21b92c3a989c160e26",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "lib/openzeppelin-contracts-upgradeable/contracts/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "lib/openzeppelin-contracts-upgradeable/contracts/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "lib/openzeppelin-contracts-upgradeable/contracts/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:211"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol:107"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "lib/openzeppelin-contracts-upgradeable/contracts/security/ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "lib/openzeppelin-contracts-upgradeable/contracts/security/ReentrancyGuardUpgradeable.sol:80"
+          },
+          {
+            "label": "bountyAmounts",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_mapping(t_bytes32,t_uint256)",
+            "contract": "Cornucopia",
+            "src": "src/Cornucopia.sol:23"
+          },
+          {
+            "label": "progress",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_mapping(t_bytes32,t_enum(Status)7511)",
+            "contract": "Cornucopia",
+            "src": "src/Cornucopia.sol:24"
+          },
+          {
+            "label": "expiration",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_mapping(t_bytes32,t_uint256)",
+            "contract": "Cornucopia",
+            "src": "src/Cornucopia.sol:25"
+          },
+          {
+            "label": "payoutExpiration",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_mapping(t_bytes32,t_uint256)",
+            "contract": "Cornucopia",
+            "src": "src/Cornucopia.sol:26"
+          },
+          {
+            "label": "bountyToken",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_mapping(t_bytes32,t_address)",
+            "contract": "Cornucopia",
+            "src": "src/Cornucopia.sol:27"
+          },
+          {
+            "label": "bountyAncillaryData",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_mapping(t_bytes32,t_bytes32)",
+            "contract": "Cornucopia",
+            "src": "src/Cornucopia.sol:28"
+          },
+          {
+            "label": "oracleInterface",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_contract(SkinnyOptimisticOracleInterface)5715",
+            "contract": "Cornucopia",
+            "src": "src/Cornucopia.sol:30"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_contract(SkinnyOptimisticOracleInterface)5715": {
+            "label": "contract SkinnyOptimisticOracleInterface",
+            "numberOfBytes": "20"
+          },
+          "t_enum(Status)7511": {
+            "label": "enum Cornucopia.Status",
+            "members": [
+              "NoBounty",
+              "Submitted",
+              "DisputeInitiated",
+              "DisputeRespondedTo",
+              "Resolved"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_bytes32,t_address)": {
+            "label": "mapping(bytes32 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_bytes32)": {
+            "label": "mapping(bytes32 => bytes32)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_enum(Status)7511)": {
+            "label": "mapping(bytes32 => enum Cornucopia.Status)",
             "numberOfBytes": "32"
           },
           "t_mapping(t_bytes32,t_uint256)": {

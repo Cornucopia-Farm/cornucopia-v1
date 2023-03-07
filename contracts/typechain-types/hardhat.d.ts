@@ -121,9 +121,9 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.SkinnyOptimisticOracleProd__factory>;
     getContractFactory(
-      name: "Escrow",
+      name: "Cornucopia",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.Escrow__factory>;
+    ): Promise<Contracts.Cornucopia__factory>;
 
     getContractAt(
       name: "OwnableUpgradeable",
@@ -261,10 +261,10 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.SkinnyOptimisticOracleProd>;
     getContractAt(
-      name: "Escrow",
+      name: "Cornucopia",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.Escrow>;
+    ): Promise<Contracts.Cornucopia>;
 
     // default types
     getContractFactory(

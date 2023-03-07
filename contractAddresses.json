@@ -1,17 +1,16 @@
 {
     "goerli": {
-        "escrow": "0xAbab45D0c3c58973dc34f7EC343dC2cfF6D1af42", 
+        "escrow": "0x27212cce5AE7F6D82C594d374940b13b89D670fc", 
         "oracle": "0xeDc52A961B5Ca2AC7B2e0bc36714dB60E5a115Ab",
         "weth": "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
         "dai": "0x11fE4B6AE13d2a6055C8D9cF65c55bac32B5d844",
-        "usdc": ""
+        "usdc": "0x2f3A40A3db8a7e3D09B0adfEfbCe4f6F81927557"
     },
     "mainnet": {
-        "escrow": "0xfillin", 
+        "escrow": "0xCe73E16FA3fC52824c090FE8E13a570fAA15Bf27", 
         "oracle": "0xeE3Afe347D5C74317041E2618C49534dAf887c24",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "dai": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
     }
-    
 }

@@ -28,11 +28,16 @@ contract Cornucopia is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reent
     mapping(bytes32 => bytes32) public bountyAncillaryData;
 
     SkinnyOptimisticOracleInterface public oracleInterface;
-    address public constant ORACLE_ADDRESS = 0xeE3Afe347D5C74317041E2618C49534dAf887c24;
-    address public constant ORACLE_STORE_ADDRESS = 0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF;
-    address public constant WETH_ADDRESS = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
-    address public constant DAI_ADDRESS = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
-    address public constant USDC_ADDRESS = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
+    // address public constant ORACLE_ADDRESS = 0xeE3Afe347D5C74317041E2618C49534dAf887c24; // mainnet
+    address public constant ORACLE_ADDRESS = 0xeDc52A961B5Ca2AC7B2e0bc36714dB60E5a115Ab; // goerli
+    // address public constant ORACLE_STORE_ADDRESS = 0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF; // mainnet
+    address public constant ORACLE_STORE_ADDRESS = 0x07417cA264170Fc5bD3568f93cFb956729752B61; // goerli
+    // address public constant WETH_ADDRESS = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2; // mainnet
+    address public constant WETH_ADDRESS = 0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6; // goerli
+    // address public constant DAI_ADDRESS = 0x6B175474E89094C44Da98b954EedeAC495271d0F; // mainnet
+    address public constant DAI_ADDRESS = 0x11fE4B6AE13d2a6055C8D9cF65c55bac32B5d844; // goerli
+    // address public constant USDC_ADDRESS = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48; // mainnet
+    address public constant USDC_ADDRESS = 0x2f3A40A3db8a7e3D09B0adfEfbCe4f6F81927557; //goerli
 
     enum Status {
         NoBounty,
