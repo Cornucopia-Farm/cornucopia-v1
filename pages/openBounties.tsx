@@ -20,11 +20,10 @@ import Typography from '@mui/material/Typography';
 const OpenBounties: NextPage = () => {
     const { address, isConnected } = useAccount();
     const { chain } = useNetwork();
-
     const [openBountyPosts, setOpenBountyPosts] = React.useState(Array<JSX.Element>);
 
-    const { data, error, isValidating } = useSWR([OPENBOUNTIES, { chain: chain?.network! ? chain?.network! : 'ethereum' },], gqlFetcher);
-
+    const { data, error, isValidating } = useSWR([OPENBOUNTIES, { chain: chain?.network! ? chain?.network! : 'homestead' },], gqlFetcher);
+    console.log(data)
     if (error) {
         console.error(error); 
     }
