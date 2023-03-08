@@ -30,9 +30,11 @@ export default function HeaderTabs() {
   return ( 
     <Box className={styles.header} sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', borderColor: 'divider', justifyContent: 'space-between', }}>
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', gap: '12px', }}> 
+        <Link href="/openBounties" >
         <Box sx={{ minWidth:'100px', minHeight:'100px', }}>
             <Image alt="" src="/corn_logo.png" height="100px" width="100px"/>
         </Box>
+        </Link>
         {largeScreen && 
           <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', gap: '24px', }}> 
             <Link href="/openBounties" >
