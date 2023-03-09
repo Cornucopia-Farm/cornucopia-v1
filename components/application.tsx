@@ -304,7 +304,6 @@ const Application: React.FC<Props> = props => {
 
   const handleCloseIncreaseAllowanceEscrowOnceTrue = (amount: string, decimals: number, allowance: BigNumber, bountyAppId: string, hunterAddress: string, tokenAddress: string, expirationTime: number) => {
     const amountBN = ethers.utils.parseUnits(amount, decimals);
-
     if (amountBN.gt(allowance)) {
       setAllowanceAmtOnce(amountBN);
       setTokenAddressERC20(tokenAddress);
@@ -623,6 +622,7 @@ const Application: React.FC<Props> = props => {
     );
   };
 
+    console.log(props.tokenAddress!)
   if (props.person) {
     return(
       <div>

@@ -5,8 +5,6 @@ import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import  { useEffect } from 'react';
 import Layout from '../components/layout';
-import { ApolloProvider } from "@apollo/client";
-import client from "../apollo-client";
 import '@rainbow-me/rainbowkit/styles.css';
 import { connectorsForWallets, getDefaultWallets, RainbowKitProvider, wallet, darkTheme, midnightTheme, Theme, Chain } from '@rainbow-me/rainbowkit';
 import {
@@ -20,14 +18,24 @@ import { publicProvider } from 'wagmi/providers/public';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { makeStyles } from '@mui/styles';
 import merge from 'lodash.merge';
+import { SessionProvider } from 'next-auth/react';
+import { Session } from 'next-auth';
 
-type NextPageWithLayout = NextPage & {
-  getLayout?: (page: ReactElement) => ReactNode
-}
+// type NextPageWithLayout = NextPage & {
+//   getLayout?: (page: ReactElement) => ReactNode
+// };
 
-type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout
-}
+// type AppPropsWithLayout = AppProps & {
+//   Component: NextPageWithLayout
+// };
+
+type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout<P> = AppProps<P> & { 
+  Component: NextPageWithLayout<P>; 
+};
 
 const aurora: Chain = {
   id: 1313161554,
@@ -92,14 +100,14 @@ const wagmiClient = createClient({
 
 const myTheme = merge(midnightTheme(), {
   fonts: {
-    body: 'Space Grotesk',
+    body: 'Space Grotesk !important',
   },
   colors: {
-    connectButtonText: 'rgb(233, 233, 198)',
-    connectButtonTextError: 'rgb(233, 233, 198)',
-    modalText: 'rgb(233, 233, 198)',
-    accentColor: 'rgb(248, 215, 154)', // Connect Wallet Color
-    accentColorForeground: 'rgb(23, 21, 20)', // Connect Wallet Font
+    connectButtonText: 'rgb(233, 233, 198) !important',
+    connectButtonTextError: 'rgb(233, 233, 198) !important',
+    modalText: 'rgb(233, 233, 198) !important',
+    accentColor: 'rgb(248, 215, 154) !important', // Connect Wallet Color
+    accentColorForeground: 'rgb(23, 21, 20) !important', // Connect Wallet Font
     // actionButtonSecondaryBackground: 'rgb(233, 233, 198)',
     // selectedOptionBorder: 'rgb(248, 215, 154)',
     // connectButtonInnerBackground: 'rgb(233, 233, 198)',
@@ -109,7 +117,7 @@ const myTheme = merge(midnightTheme(), {
   },
 } as Theme);
 
-export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+export default function MyApp({ Component, pageProps }: AppPropsWithLayout<{ session: Session; }>) {
   
     useEffect(() => {
       const jssStyles = document.querySelector('#jss-server-side')
@@ -119,13 +127,15 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     }, []);
 
     return (
-      <WagmiConfig client={wagmiClient}> 
-        <RainbowKitProvider theme={myTheme} chains={chains} >
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-        </RainbowKitProvider>
-      </WagmiConfig>
+      <SessionProvider session={pageProps.session}> 
+        <WagmiConfig client={wagmiClient}> 
+          <RainbowKitProvider theme={myTheme} chains={chains} >
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+          </RainbowKitProvider>
+        </WagmiConfig>
+      </SessionProvider>
     );
 };
 
