@@ -161,8 +161,7 @@ const HunterContractActions: React.FC<Props> = props => {
     const handleCloseIncreaseAllowanceDisputeResponseOnceTrue = (allowance: BigNumber, bountyAppId: string, creatorAddress: string, timestamp: number, ancillaryData: string, request: Request) => {
         // const amountBN = ethers.utils.parseUnits(amount, decimals);
         const total = bondAmt.add(finalFee);
-        console.log('request', request)
-        console.log('allowance', allowance)
+      
         if (total.gt(allowance)) {
             setAllowanceAmtOnce(total);
             // setTokenAddressERC20(tokenAddress);

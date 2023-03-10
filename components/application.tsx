@@ -622,7 +622,6 @@ const Application: React.FC<Props> = props => {
     );
   };
 
-    console.log(props.tokenAddress!)
   if (props.person) {
     return(
       <div>

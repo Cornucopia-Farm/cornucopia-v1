@@ -81,16 +81,8 @@ const DisputeInitiatedPosts: React.FC<Props> = ({ postId, setSubmittedMap, incre
             const postData = await axios.get(`https://arweave.net/${openBountyId}`);
             
             const postId = postData?.config?.url?.split("https://arweave.net/")[1];
-            // postDataArr.push(postData);
             const bountyIdentifierInput = ethers.utils.solidityKeccak256([ "string", "address", "address" ], [ postData.data.postId, address, postData.data.hunterAddress ]);
-            // setBountyIdentifier(bountyIdentifierInput);
-            // bountyProgress();
-            // let progress = 0;
-            // try {
-            //     progress = await escrowContract.progress(bountyIdentifierInput);
-            // } catch (e) {
-            //     console.log('Dispute Initated Posts Progress Error', e)
-            // }
+            
             let progress;
             try {
                 progress = await escrowContract.progress(bountyIdentifierInput);

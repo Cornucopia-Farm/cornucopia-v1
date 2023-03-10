@@ -33,7 +33,6 @@ const AppliedPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedMap,
     if (network === 'goerli') {
         addresses = contractAddresses.goerli;
     }
-    console.log(addresses.escrow)
 
     // Escrow Contract Config
     const contractConfig = {
@@ -109,7 +108,6 @@ const AppliedPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedMap,
 
             // Allowance Data
             let allowance = BigNumber.from(0);
-            console.log('escrowAddress', escrowAddress)
             if (postData.data.tokenAddress !== zeroAddress && postData.data.tokenAddress) {
                 const erc20Contract = new ethers.Contract(postData.data.tokenAddress, erc20ABI['abi'], provider!);
                 try { 
@@ -147,9 +145,6 @@ const AppliedPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedMap,
         if (promises) {
             await Promise.all(promises).then(results => {
                 results.forEach(result => {
-                    // console.log('post data', result[3].data.title)
-                    // console.log('progress', result[0])
-                    // console.log('is escrowed', result[1])
                     if (result.length) {
                         if (result[0] === 0 && result[1].length === 0) {
                             appliedToBountiesApps.push(result[2]);

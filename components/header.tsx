@@ -10,8 +10,14 @@ import MenuItem from "@mui/material/MenuItem";
 import MenuIcon from "@mui/icons-material/Menu";
 import DragHandleIcon from '@mui/icons-material/DragHandle';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { signIn, signOut, useSession } from 'next-auth/react';
+
 
 export default function HeaderTabs() {
+
+  const { data: session, status } = useSession();
+
+  console.log(JSON.stringify(session, null, 2));
 
   const smallScreen = useMediaQuery('(max-width: 950px)');
   const largeScreen = useMediaQuery('(min-width: 951px)');
@@ -55,6 +61,7 @@ export default function HeaderTabs() {
         <Box sx={{ paddingRight: '20px'}}> 
           <ConnectButton />
         </Box>
+        <Button onClick={(e) => { !session ? signIn('github') : signOut(); }}>Sign In</Button>
         {/* <Box>
           <Image alt="" src="/corn_logo.png" height="100px" width="100px"/>
         </Box> */}

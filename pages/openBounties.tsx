@@ -23,7 +23,7 @@ const OpenBounties: NextPage = () => {
     const [openBountyPosts, setOpenBountyPosts] = React.useState(Array<JSX.Element>);
 
     const { data, error, isValidating } = useSWR([OPENBOUNTIES, { chain: chain?.network! ? chain?.network! : 'homestead' },], gqlFetcher);
-    console.log(data)
+
     if (error) {
         console.error(error); 
     }

@@ -19,7 +19,7 @@ import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { makeStyles } from '@mui/styles';
 import merge from 'lodash.merge';
 import { SessionProvider } from 'next-auth/react';
-import { Session } from 'next-auth';
+import type { Session } from 'next-auth';
 
 // type NextPageWithLayout = NextPage & {
 //   getLayout?: (page: ReactElement) => ReactNode
@@ -117,7 +117,7 @@ const myTheme = merge(midnightTheme(), {
   },
 } as Theme);
 
-export default function MyApp({ Component, pageProps }: AppPropsWithLayout<{ session: Session; }>) {
+export default function MyApp({ Component, pageProps, }: AppPropsWithLayout<{ session: Session }>) {
   
     useEffect(() => {
       const jssStyles = document.querySelector('#jss-server-side')
@@ -127,15 +127,15 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout<{ ses
     }, []);
 
     return (
-      <SessionProvider session={pageProps.session}> 
-        <WagmiConfig client={wagmiClient}> 
+      <WagmiConfig client={wagmiClient}> 
+        <SessionProvider session={pageProps.session}> 
           <RainbowKitProvider theme={myTheme} chains={chains} >
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
           </RainbowKitProvider>
-        </WagmiConfig>
-      </SessionProvider>
+        </SessionProvider>
+      </WagmiConfig>
     );
 };
 
