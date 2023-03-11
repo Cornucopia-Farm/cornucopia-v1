@@ -14,6 +14,7 @@ import { BountyOutcome } from '../getEscrowEventData';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useSession } from 'next-auth/react';
 import Tooltip from '@mui/material/Tooltip';
+import Avatar from '@mui/material/Avatar';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 type Props = { // need to change bounty card to specify which component it is for!
@@ -101,10 +102,13 @@ const BasicAccordion: React.FC<Props> = props => {
                 {!session && 
                   <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
                 }
-                {session && 
-                  <Tooltip placement="top-start" title={<><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></>}>
-                    <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={session.user.url}>{session.user.login}</Link></Typography>
-                  </Tooltip>
+                {session &&
+                  <Box sx={{ display: 'flex', gap: '6px'}} > 
+                    <Avatar alt="" src={session.user.image!} sx={{ width: 24, height: 24 }} /> 
+                    <Tooltip placement="top-start" title={<><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></>}>
+                      <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={session.user.url}>{session.user.login}</Link></Typography>
+                    </Tooltip>
+                  </Box>
                 }
                 
               </Box>
@@ -119,9 +123,12 @@ const BasicAccordion: React.FC<Props> = props => {
                   <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
                 }
                 {session && 
-                  <Tooltip placement="top-start" title={<><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></>}>
-                    <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={session.user.url}>{session.user.login}</Link></Typography>
-                  </Tooltip>
+                  <Box sx={{ display: 'flex', gap: '6px'}} >
+                    <Avatar alt="" src={session.user.image!} sx={{ width: 24, height: 24 }} /> 
+                    <Tooltip placement="top-start" title={<><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></>}>
+                      <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={session.user.url}>{session.user.login}</Link></Typography>
+                    </Tooltip>
+                  </Box>
                 }
                 <Typography className={styles.h2} sx={{ color: '#064829', paddingTop: '5px' }}>{props.amount} {props.tokenSymbol}</Typography> 
               </Box>

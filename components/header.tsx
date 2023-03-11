@@ -80,7 +80,7 @@ export default function HeaderTabs() {
         <Box> 
           <ConnectButton />
         </Box>
-        <Button className={styles.farmer} sx={{ paddingRight: '20px'}} onClick={handleOpenLogin}>
+        <Button disableRipple className={styles.farmer} sx={{ ...(largeScreen ? { paddingRight: '20px' } : { paddingRight: '5px' })}} onClick={handleOpenLogin}>
           <Image alt="" src="/farmer_crop1.png" height="45px" width="45px"/>
         </Button>
         <Dialog open={openLogin} onClose={handleCloseLogin} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
