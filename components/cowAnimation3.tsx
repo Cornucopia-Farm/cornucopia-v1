@@ -2,6 +2,7 @@ import React, { RefObject } from 'react';
 import { gsap } from 'gsap';
 import Cow from '../images/cow.svg';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { max } from 'lodash';
 
 function Icon() {
     const cow = React.useRef<gsap.TweenTarget>();
@@ -11,15 +12,18 @@ function Icon() {
     const legUpper2 = React.useRef<gsap.TweenTarget>();
     const tail = React.useRef<gsap.TweenTarget>();
 
+    const smallScreen = useMediaQuery('(min-width: 581px) and (max-width: 900px)');
+    const mobileScreen = useMediaQuery('(max-width: 580px)');
+    
     React.useEffect(() => {
 
         gsap.fromTo(cow.current!, {
             paused: true,
-            x: -50, // -300
+            x: mobileScreen ? 100 : (smallScreen ? -30 : -50), // -300
             repeat: -1,
             ease:"linear.out"
           },{
-            x: 1500,
+            x: mobileScreen ? 580 : (smallScreen ? 900: 1500),
             repeat: -1,
             ease:"linear.out",
             duration: 100
@@ -97,18 +101,16 @@ function Icon() {
 
     }, []);
 
-    const smallScreen = useMediaQuery('(max-width: 900px)');
-
     return (
         <svg
         xmlns="http://www.w3.org/2000/svg"
         // width="100%"
-        width={smallScreen ? "900px" : "100%"}
+        width={(mobileScreen || smallScreen) ? "900px" : "100%"}
         height="100%"
         display="block"
         version="1.1"
         viewBox="0 828.166 1332.014 118.841"
-        style={{ width: smallScreen ? "900px" : "100%", height: "100%", overflow: 'hidden', }}
+        style={{ width: (mobileScreen || smallScreen) ? "900px" : "100%", height: "100%", overflow: 'hidden', }}
         // style={{ width: "100%", height: "100%", }}
       >
         <g

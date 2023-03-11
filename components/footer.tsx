@@ -37,7 +37,7 @@ export default function Footer() {
               <Image alt="" src="/corn_text.png" height="24px" width="121px"/>
             </Box>
             {largeScreen && 
-              <Box sx={{ display: 'flex', gap: '2vw', }}> 
+              <Box sx={{ display: 'flex', gap: '2vw', alignItems: 'center', justifyContent: 'center', }}> 
                 <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 12, textAlign: 'center', }}><Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://osec.io/"}>Audited by Ottersec</Link></Typography>
                 <Button variant="text" className={styles.h2} sx={{ '&:hover': {backgroundColor: 'transparent'}, fontSize: 12, p: 0, m: 0, minWidth: 0}} onClick={() => setOpenTeam(true)}>About</Button>
                 <Dialog open={openTeam} onClose={() => setOpenTeam(false)} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
