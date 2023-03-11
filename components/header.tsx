@@ -11,13 +11,17 @@ import MenuIcon from "@mui/icons-material/Menu";
 import DragHandleIcon from '@mui/icons-material/DragHandle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { signIn, signOut, useSession } from 'next-auth/react';
-
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 export default function HeaderTabs() {
 
   const { data: session, status } = useSession();
 
-  console.log(JSON.stringify(session, null, 2));
+  console.log(session)
 
   const smallScreen = useMediaQuery('(max-width: 950px)');
   const largeScreen = useMediaQuery('(min-width: 951px)');
@@ -32,6 +36,16 @@ export default function HeaderTabs() {
   const handleClose = React.useCallback(() => {
     setAnchorEl(null);
   }, []);
+
+  const [openLogin, setOpenLogin] = React.useState(false);
+
+  const handleOpenLogin = () => {
+    setOpenLogin(true);
+  };
+
+  const handleCloseLogin = () => {
+    setOpenLogin(false);
+  };
 
   return ( 
     <Box className={styles.header} sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', borderColor: 'divider', justifyContent: 'space-between', }}>
@@ -58,10 +72,39 @@ export default function HeaderTabs() {
         }
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', }}> 
-        <Box sx={{ paddingRight: '20px'}}> 
+        {/* <Box sx={{ paddingRight: '20px'}}> 
+          <ConnectButton />
+        </Box> */}
+
+        {/* <Button onClick={() => setOpenLogin(true)}>Sign In</Button> */}
+        <Box> 
           <ConnectButton />
         </Box>
-        <Button onClick={(e) => { !session ? signIn('github') : signOut(); }}>Sign In</Button>
+        <Button className={styles.farmer} sx={{ paddingRight: '20px'}} onClick={handleOpenLogin}>
+          <Image alt="" src="/farmer_crop1.png" height="45px" width="45px"/>
+        </Button>
+        <Dialog open={openLogin} onClose={handleCloseLogin} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
+          <DialogTitle className={styles.formHeader}>Link your Account</DialogTitle>
+          <DialogContent className={styles.cardBackground}>
+              <DialogContentText className={styles.dialogBody}>
+              You can use your Github or Twitter account as your identity on Cornucopia or just use your Ens/address.
+              </DialogContentText>
+          </DialogContent>
+          <DialogActions className={styles.formFooter}>
+          <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', '&:disabled': { backgroundColor: 'grey', }, }} onClick={() => {!session ? signIn('github') : signOut({redirect: false}); handleCloseLogin(); }} autoFocus>
+            <Box sx={{ display: 'flex', gap: '6px', }}> 
+              <Image alt="" src="/github-mark.png" height="25px" width="25px"/>
+              {!session ? 'sign in' : 'sign out'}
+            </Box>
+          </Button>
+          <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', '&:disabled': { backgroundColor: 'grey', }, }} onClick={() => {!session ? signIn('twitter') : signOut({redirect: false}); handleCloseLogin(); }} autoFocus>
+            <Box sx={{ display: 'flex', gap: '6px', }}> 
+              <Image alt="" src="/twitter.png" height="25px" width="25px"/>
+              {!session ? 'sign in' : 'sign out'}
+            </Box>
+          </Button>
+          </DialogActions>
+        </Dialog>
         {/* <Box>
           <Image alt="" src="/corn_logo.png" height="100px" width="100px"/>
         </Box> */}

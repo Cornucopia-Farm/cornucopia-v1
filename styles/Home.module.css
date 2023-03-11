@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&family=Roboto+Flex:opsz,wght@8..144,100;8..144,200&family=Rokkitt:wght@100&family=Space+Grotesk:wght@300&family=Zen+Kaku+Gothic+New:wght@300;400&display=swap');
 
+.farmer {
+  filter: invert(96%) sepia(16%) saturate(378%) hue-rotate(4deg) brightness(98%) contrast(88%);
+}
+
 .subHeadings {
   padding-left: 400px !important;;
   color: #D77D13 !important;;

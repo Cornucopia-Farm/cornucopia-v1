@@ -12,6 +12,9 @@ import { Dayjs } from 'dayjs';
 import styles from '../styles/Home.module.css';
 import { BountyOutcome } from '../getEscrowEventData';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useSession } from 'next-auth/react';
+import Tooltip from '@mui/material/Tooltip';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 type Props = { // need to change bounty card to specify which component it is for!
   company: string;
@@ -30,6 +33,7 @@ type Props = { // need to change bounty card to specify which component it is fo
 };
 
 const BasicAccordion: React.FC<Props> = props => {
+  const { data: session } = useSession();
 
   const { data: ensName } = useEnsName({ address: props.company });
   const { chain } = useNetwork();
@@ -67,8 +71,23 @@ const BasicAccordion: React.FC<Props> = props => {
   const mediumScreen = useMediaQuery('(min-width: 761px) and (max-width: 900px)');
   const largeScreen = useMediaQuery('(min-width: 761px)');
 
+  const theme = createTheme({
+    components: {
+        MuiTooltip: {
+            styleOverrides: {
+              tooltip: {
+                backgroundColor: 'rgb(15, 14, 13)',
+                fontFamily: 'Space Grotesk',
+                fontWeight: 300,
+                color: 'rgb(233, 233, 198)',
+              },
+            },
+        },
+    },
+  });
 
   return (
+    <ThemeProvider theme={theme}>  
     <div>
       <Accordion className={styles.accordionBackground} square={true} sx={{ borderRadius: '12px', backgroundColor: 'rgba(6, 72, 41, 0.05)' }} >
         <AccordionSummary 
@@ -79,7 +98,15 @@ const BasicAccordion: React.FC<Props> = props => {
           {largeScreen && 
             <> 
               <Box sx={{ borderRadius: '12px', width: '43%', flexShrink: 0 }}> 
-                <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
+                {!session && 
+                  <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
+                }
+                {session && 
+                  <Tooltip placement="top-start" title={<><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></>}>
+                    <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={session.user.url}>{session.user.login}</Link></Typography>
+                  </Tooltip>
+                }
+                
               </Box>
               <Typography className={styles.h2} sx={{  color: '#064829', ...(mediumScreen ? { width: '36%', } : { width: '40%', }), flexShrink: 0, maxHeight: '50px', marginRight: '40px', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', }, }}>{props.bountyName}</Typography> 
               <Typography className={styles.h2} sx={{ color: '#064829', marginTop: 'auto', marginBottom: 'auto', }}>{props.amount} {props.tokenSymbol}</Typography> 
@@ -88,7 +115,14 @@ const BasicAccordion: React.FC<Props> = props => {
           {smallScreen && 
             <> 
               <Box sx={{ borderRadius: '12px', width: '53%', flexShrink: 0, }}> 
-                <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
+                {!session && 
+                  <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
+                }
+                {session && 
+                  <Tooltip placement="top-start" title={<><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></>}>
+                    <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={session.user.url}>{session.user.login}</Link></Typography>
+                  </Tooltip>
+                }
                 <Typography className={styles.h2} sx={{ color: '#064829', paddingTop: '5px' }}>{props.amount} {props.tokenSymbol}</Typography> 
               </Box>
               <Typography className={styles.h2} sx={{ marginLeft: '2vw !important', marginRight: '4vw !important', color: '#064829', width: '45%', flexShrink: 0, maxHeight: '50px', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', }, }}>{props.bountyName}</Typography> 
@@ -113,6 +147,7 @@ const BasicAccordion: React.FC<Props> = props => {
         </AccordionDetails>
       </Accordion>
     </div>
+  </ThemeProvider>
   );
 };
 

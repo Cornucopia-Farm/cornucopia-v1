@@ -33,6 +33,9 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import { useSession } from 'next-auth/react';
+import Tooltip from '@mui/material/Tooltip';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 type Props = {
     person: string;
@@ -61,7 +64,7 @@ type Props = {
 };
 
 const Application: React.FC<Props> = props => {
-
+  const { data: session } = useSession();
   const { data: ensName } = useEnsName({ address: props.person });
   const { chain } = useNetwork();
   const { address, isConnected } = useAccount();
@@ -622,8 +625,24 @@ const Application: React.FC<Props> = props => {
     );
   };
 
+  const theme = createTheme({
+    components: {
+        MuiTooltip: {
+            styleOverrides: {
+              tooltip: {
+                backgroundColor: 'rgb(15, 14, 13)',
+                fontFamily: 'Space Grotesk',
+                fontWeight: 300,
+                color: 'rgb(233, 233, 198)',
+              },
+            },
+        },
+    },
+  });
+
   if (props.person) {
     return(
+      <ThemeProvider theme={theme}>  
       <div>
         {(isEscrowTxLoading || (isEscrowTxSuccess && escrowTxData?.status === 1)) && 
           <SimpleSnackBar severity={'success'} msg={isEscrowTxLoading ? 'Escrowing funds...' : 'Funds escrowed!'}/>
@@ -674,9 +693,16 @@ const Application: React.FC<Props> = props => {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography className={styles.h2} sx={{ color: '#064829', fontSize: '15px', }}>
-            <Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.person)}>{ensName ? ensName : (props.person.slice(0,4) + '...' + props.person.slice(-4))}</Link>
-          </Typography>
+          {!session && 
+            <Typography className={styles.h2} sx={{ color: '#064829', fontSize: '15px', }}>
+              <Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.person)}>{ensName ? ensName : (props.person.slice(0,4) + '...' + props.person.slice(-4))}</Link>
+            </Typography>
+          }
+          {session && 
+            <Tooltip placement="top-start" title={<><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.person)}>{ensName ? ensName : (props.person.slice(0,4) + '...' + props.person.slice(-4))}</Link></>}>
+              <Typography className={styles.h2} sx={{ color: '#064829', fontSize: '15px', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={session.user.url}>{session.user.login}</Link></Typography>
+            </Tooltip>
+          }
         </AccordionSummary>
         <AccordionDetails>
           <AppCard  
@@ -920,6 +946,7 @@ const Application: React.FC<Props> = props => {
         </AccordionDetails>
       </Accordion>
       </div>
+      </ThemeProvider>
     );
   } 
   return <> </>;
