@@ -24,23 +24,22 @@ export default function Footer() {
     const largeScreen = useMediaQuery('(min-width: 620px)'); 
 
     return ( 
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px', position: 'relative', bottom: 0, width: '100vw', marginTop: '3vh', overflow: 'hidden', }}> 
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '12px', position: 'absolute', bottom: 0, width: '100vw', overflow: 'hidden', }}> 
         <CowAnimation3 />
-        <Box sx={{ display: 'flex', justifyContent: 'center'}}> 
-          <Box sx={{ display: 'flex', justifyContent: 'center'}}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', }}> 
+          <Box sx={{ display: 'flex', justifyContent: 'center', }}>
             <Image alt="" src={tripleGrass} height="24px" width="121px"/>
             <Image alt="" src={twoBlades} height="24px" width="121px"/>          
             <Image alt="" src={threeBlades} height="24px" width="121px"/>
           </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'column', minHeight:'24px', minWidth:'121px', alignItems: 'center', gap: '3px'}}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', minHeight:'24px', minWidth:'121px', alignItems: 'center', gap: '3px', justifyContent: 'center',}}>
             <Box> 
-            <Image alt="" src="/corn_text.png" height="24px" width="121px"/>
+              <Image alt="" src="/corn_text.png" height="24px" width="121px"/>
             </Box>
             {largeScreen && 
-              <Box sx={{ display: 'flex', gap: '2vw'}}>
-                <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 10, textAlign: 'center', }}><Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://osec.io/"}>Audited by Ottersec</Link></Typography>
-                <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 10, textAlign: 'center', }}>Supported by Uniswap Foundation</Typography>
-                <Button variant="text" className={styles.h2} sx={{ '&:hover': {backgroundColor: 'transparent'}, fontSize: 10, p: 0, m: 0, minWidth: 0}} onClick={() => setOpenTeam(true)}>About</Button>
+              <Box sx={{ display: 'flex', gap: '2vw', }}> 
+                <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 12, textAlign: 'center', }}><Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://osec.io/"}>Audited by Ottersec</Link></Typography>
+                <Button variant="text" className={styles.h2} sx={{ '&:hover': {backgroundColor: 'transparent'}, fontSize: 12, p: 0, m: 0, minWidth: 0}} onClick={() => setOpenTeam(true)}>About</Button>
                 <Dialog open={openTeam} onClose={() => setOpenTeam(false)} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
                   <DialogTitle className={styles.formHeader}>About</DialogTitle>
                   <DialogContent className={styles.cardBackground}>
@@ -66,13 +65,15 @@ export default function Footer() {
                     </DialogContentText>
                   </DialogContent>
                 </Dialog>
+                <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 12, textAlign: 'center', }}><Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://www.unigrants.org/"}>Supported by Uniswap Foundation</Link></Typography>
+                
               </Box>
             }
             {smallScreen && 
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5vw'}}>
                 {/* <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 8, wordWrap: 'break-word', textAlign: 'center'}}><Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://osec.io/"}>Audited by Ottersec</Link></Typography>
                 <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 8, wordWrap: 'break-word', textAlign: 'center'}}>Supported by Uniswap Foundation</Typography> */}
-                <Button variant="text" className={styles.h2} sx={{ '&:hover': {backgroundColor: 'transparent'}, fontSize: 8, p: 0, m: 0, minWidth: 0}} onClick={() => setOpenTeam(true)}>About</Button>
+                <Button variant="text" className={styles.h2} sx={{ '&:hover': {backgroundColor: 'transparent'}, fontSize: 10, p: 0, m: 0, minWidth: 0}} onClick={() => setOpenTeam(true)}>About</Button>
                 <Dialog open={openTeam} onClose={() => setOpenTeam(false)} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
                   <DialogTitle className={styles.formHeader}>About Us</DialogTitle>
                   <DialogContent className={styles.cardBackground}>

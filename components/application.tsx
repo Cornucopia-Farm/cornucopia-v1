@@ -14,7 +14,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Link from '@mui/material/Link';
 import escrowABI from '../contracts/out/Escrow.sol/Escrow.json'; 
-import { useContractWrite, usePrepareContractWrite, useWaitForTransaction, useContract, useEnsName, useNetwork, useAccount, useSigner, useProvider } from 'wagmi';
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction, useContract, useEnsName, useNetwork, useAccount, useSigner, useProvider, useEnsAvatar } from 'wagmi';
 import { BigNumber, ContractInterface, ethers } from 'ethers';
 import useDebounce from './useDebounce';
 import SimpleSnackBar from './simpleSnackBar';
@@ -35,6 +35,7 @@ import TextField from '@mui/material/TextField';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { useSession } from 'next-auth/react';
 import Tooltip from '@mui/material/Tooltip';
+import Avatar from '@mui/material/Avatar';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 type Props = {
@@ -66,6 +67,7 @@ type Props = {
 const Application: React.FC<Props> = props => {
   const { data: session } = useSession();
   const { data: ensName } = useEnsName({ address: props.person });
+  const { data: ensAvatar } = useEnsAvatar({ addressOrName: props.person });
   const { chain } = useNetwork();
   const { address, isConnected } = useAccount();
   const provider = useProvider();
@@ -694,14 +696,20 @@ const Application: React.FC<Props> = props => {
           id="panel1a-header"
         >
           {!session && 
-            <Typography className={styles.h2} sx={{ color: '#064829', fontSize: '15px', }}>
-              <Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.person)}>{ensName ? ensName : (props.person.slice(0,4) + '...' + props.person.slice(-4))}</Link>
-            </Typography>
+            <Box sx={{ display: 'flex', gap: '6px', }}> 
+              <Avatar alt="" src={ensAvatar ? ensAvatar : '/farmer_crop_color.png'} sx={{ width: 24, height: 24 }} /> 
+              <Typography className={styles.h2} sx={{ color: '#064829', fontSize: '15px', }}>
+                <Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.person)}>{ensName ? ensName : (props.person.slice(0,4) + '...' + props.person.slice(-4))}</Link>
+              </Typography>
+            </Box>
           }
           {session && 
-            <Tooltip placement="top-start" title={<><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.person)}>{ensName ? ensName : (props.person.slice(0,4) + '...' + props.person.slice(-4))}</Link></>}>
-              <Typography className={styles.h2} sx={{ color: '#064829', fontSize: '15px', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={session.user.url}>{session.user.login}</Link></Typography>
-            </Tooltip>
+            <Box sx={{ display: 'flex', gap: '6px', }}> 
+              <Avatar alt="" src={session.user.image!} sx={{ width: 24, height: 24 }} /> 
+              <Tooltip placement="top-start" title={<><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.person)}>{ensName ? ensName : (props.person.slice(0,4) + '...' + props.person.slice(-4))}</Link></>}>
+                <Typography className={styles.h2} sx={{ color: '#064829', fontSize: '15px', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={session.user.url}>{session.user.login}</Link></Typography>
+              </Tooltip>
+            </Box>
           }
         </AccordionSummary>
         <AccordionDetails>

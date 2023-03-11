@@ -7,7 +7,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import BountyCard from './bountyCard';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
-import { useEnsName, useNetwork } from 'wagmi';
+import { useEnsAvatar, useEnsName, useNetwork } from 'wagmi';
 import { Dayjs } from 'dayjs';
 import styles from '../styles/Home.module.css';
 import { BountyOutcome } from '../getEscrowEventData';
@@ -37,6 +37,8 @@ const BasicAccordion: React.FC<Props> = props => {
   const { data: session } = useSession();
 
   const { data: ensName } = useEnsName({ address: props.company });
+  const { data: ensAvatar } = useEnsAvatar({ addressOrName: props.company });
+
   const { chain } = useNetwork();
 
   const dispute = () => {
@@ -84,7 +86,7 @@ const BasicAccordion: React.FC<Props> = props => {
               },
             },
         },
-    },
+    }, 
   });
 
   return (
@@ -100,10 +102,13 @@ const BasicAccordion: React.FC<Props> = props => {
             <> 
               <Box sx={{ borderRadius: '12px', width: '43%', flexShrink: 0 }}> 
                 {!session && 
-                  <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
+                  <Box sx={{ display: 'flex', gap: '6px', }}>  
+                      <Avatar alt="" src={ensAvatar ? ensAvatar : '/farmer_crop_color.png'} sx={{ width: 24, height: 24 }} /> 
+                      <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
+                  </Box>
                 }
                 {session &&
-                  <Box sx={{ display: 'flex', gap: '6px'}} > 
+                  <Box sx={{ display: 'flex', gap: '6px', }}> 
                     <Avatar alt="" src={session.user.image!} sx={{ width: 24, height: 24 }} /> 
                     <Tooltip placement="top-start" title={<><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></>}>
                       <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={session.user.url}>{session.user.login}</Link></Typography>
@@ -120,10 +125,13 @@ const BasicAccordion: React.FC<Props> = props => {
             <> 
               <Box sx={{ borderRadius: '12px', width: '53%', flexShrink: 0, }}> 
                 {!session && 
-                  <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
+                  <Box sx={{ display: 'flex', gap: '6px', }}> 
+                    <Avatar alt="" src={ensAvatar ? ensAvatar : '/farmer_crop_color.png'} sx={{ width: 24, height: 24 }} /> 
+                    <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
+                  </Box>
                 }
                 {session && 
-                  <Box sx={{ display: 'flex', gap: '6px'}} >
+                  <Box sx={{ display: 'flex', gap: '6px', }}>
                     <Avatar alt="" src={session.user.image!} sx={{ width: 24, height: 24 }} /> 
                     <Tooltip placement="top-start" title={<><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></>}>
                       <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={session.user.url}>{session.user.login}</Link></Typography>
