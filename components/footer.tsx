@@ -20,8 +20,11 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 export default function Footer() {
     const [openTeam, setOpenTeam] = React.useState(false); 
 
-    const smallScreen = useMediaQuery('(max-width: 619px)'); 
-    const largeScreen = useMediaQuery('(min-width: 620px)'); 
+    // const smallScreen = useMediaQuery('(max-width: 619px)'); 
+    // const largeScreen = useMediaQuery('(min-width: 620px)'); 
+
+    const smallScreen = useMediaQuery('(max-width: 1190px)'); 
+    const largeScreen = useMediaQuery('(min-width: 1191px)');
 
     return ( 
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '12px', position: 'absolute', bottom: 0, width: '100vw', overflow: 'hidden', }}> 
@@ -39,7 +42,8 @@ export default function Footer() {
             {largeScreen && 
               <Box sx={{ display: 'flex', gap: '2vw', alignItems: 'center', justifyContent: 'center', }}> 
                 <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 12, textAlign: 'center', }}><Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://osec.io/"}>Audited by Ottersec</Link></Typography>
-                <Button variant="text" className={styles.h2} sx={{ '&:hover': {backgroundColor: 'transparent'}, fontSize: 12, p: 0, m: 0, minWidth: 0}} onClick={() => setOpenTeam(true)}>About</Button>
+                <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 12, textAlign: 'center', }}><Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://docs.cornucopia.farm/"}>Docs</Link></Typography>
+                <Button variant="text" className={styles.h2} sx={{ '&:hover': {backgroundColor: 'transparent'}, fontSize: 12, p: 0, m: 0, minWidth: 0, }} onClick={() => setOpenTeam(true)}>About</Button>
                 <Dialog open={openTeam} onClose={() => setOpenTeam(false)} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
                   <DialogTitle className={styles.formHeader}>About</DialogTitle>
                   <DialogContent className={styles.cardBackground}>
@@ -66,21 +70,23 @@ export default function Footer() {
                   </DialogContent>
                 </Dialog>
                 <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 12, textAlign: 'center', }}><Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://www.unigrants.org/"}>Supported by Uniswap Foundation</Link></Typography>
-                
+        
               </Box>
             }
             {smallScreen && 
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5vw'}}>
                 {/* <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 8, wordWrap: 'break-word', textAlign: 'center'}}><Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://osec.io/"}>Audited by Ottersec</Link></Typography>
                 <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 8, wordWrap: 'break-word', textAlign: 'center'}}>Supported by Uniswap Foundation</Typography> */}
+                <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 11, textAlign: 'center', }}><Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://docs.cornucopia.farm/"}>Docs</Link></Typography>
+
                 <Button variant="text" className={styles.h2} sx={{ '&:hover': {backgroundColor: 'transparent'}, fontSize: 10, p: 0, m: 0, minWidth: 0}} onClick={() => setOpenTeam(true)}>About</Button>
                 <Dialog open={openTeam} onClose={() => setOpenTeam(false)} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
                   <DialogTitle className={styles.formHeader}>About Us</DialogTitle>
                   <DialogContent className={styles.cardBackground}>
                     <DialogContentText className={styles.dialogBody}>
                       Cornucopia is audited by 
-                      <Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://osec.io/"}> Ottersec </Link>
-                      and supported by the Uniswap Foundation.
+                      <Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={"https://osec.io/"}> Ottersec </Link>
+                      and supported by the <Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={"https://www.unigrants.org/"}> Uniswap Foundation</Link>.
                       <br />
                       <br />
                       Alex and Shreya founded Cornucopia to provide a public forum for anyone to get involved in crypto with real, tangible contributions to the community.
@@ -94,7 +100,7 @@ export default function Footer() {
                       <br />
                       The freelancer then has 1 week to respond to the dispute: they can 
                       either dispute the creator&apos;s dispute or leave it and loose any chance of recuperating some of the bounty amount. If they choose to dispute, then the dispute 
-                      is escalated to UMA token holders (using <Link target="_blank" rel="noopener" href="https://umaproject.org/products/optimistic-oracle">UMAs Optimistic Oracle</Link>) who then vote whether they think the freelancer did the work, did not do the work, or unclear whether the freelancer did the work.
+                      is escalated to UMA token holders (using <Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href="https://umaproject.org/products/optimistic-oracle">UMAs Optimistic Oracle</Link>) who then vote whether they think the freelancer did the work, did not do the work, or unclear whether the freelancer did the work.
                       In the first case, the freelancer gets paid the bounty amount plus half the bond the creator put up to dispute the work. In the second case, the creator gets their 
                       escrowed funds back plus half the bond the freelancer put up to dispute the creator&apos;s dispute. In the third case, the freelancer gets paid half the bounty amount and 
                       half the bond the creator put up to dispute the work while the creator gets half the bount amount back. 

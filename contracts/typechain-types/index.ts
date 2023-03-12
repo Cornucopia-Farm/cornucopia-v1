@@ -62,3 +62,5 @@ export type { SkinnyOptimisticOracleProd } from "./lib/protocol/packages/core/co
 export { SkinnyOptimisticOracleProd__factory } from "./factories/lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol/SkinnyOptimisticOracleProd__factory";
 export type { Cornucopia } from "./src/Cornucopia";
 export { Cornucopia__factory } from "./factories/src/Cornucopia__factory";
+export type { Escrow } from "./src/Escrow";
+export { Escrow__factory } from "./factories/src/Escrow__factory";

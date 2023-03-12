@@ -43,6 +43,7 @@
     "react-dom": "^18.2.0",
     "react-loader-spinner": "^5.1.7-beta.1",
     "sharp": "^0.31.2",
+    "solidity-docgen": "^0.6.0-beta.35",
     "swr": "^1.3.0",
     "wagmi": "^0.6.2",
     "winston": "^3.8.1"

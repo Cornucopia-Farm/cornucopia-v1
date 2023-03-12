@@ -49,9 +49,9 @@ const CreateBountiesInfo: React.FC<Props> = props => {
                 now resolved by UMA.
                 </DialogContentText>
             </DialogContent>
-            <DialogActions className={styles.formFooter}>
+            {/* <DialogActions className={styles.formFooter}>
                     <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => props.setOpen(false)}>Got it!</Button>
-            </DialogActions>
+            </DialogActions> */}
         </Dialog>
     );
 };

@@ -137,7 +137,7 @@ const Application: React.FC<Props> = props => {
 
   const [disputeTokenAddress, setDisputeTokenAddress] = React.useState('');
   const debouncedDisputeTokenAddress = useDebounce(disputeTokenAddress, 10);
-  const [bondAmt, setBondAmt] = React.useState(0 as unknown as number);
+  const [bondAmt, setBondAmt] = React.useState(null as unknown as number);
   const [bondAmtBN, setBondAmtBN] = React.useState('' as unknown as BigNumber);
   const debouncedBondAmtBN = useDebounce(bondAmtBN, 10);
   const [finalFee, setFinalFee] = React.useState('' as unknown as BigNumber);
@@ -254,7 +254,6 @@ const Application: React.FC<Props> = props => {
     setTimestamp(timestamp);
     setAncillaryData(ancillaryData);
     setRequest(request);
-    // setTokenAddressERC20(tokenAddress);
   };
   
   const [openAllowance, setOpenAllowance] = React.useState(false);
@@ -898,7 +897,7 @@ const Application: React.FC<Props> = props => {
             }
             {props.appStatus === "settle" &&
               <div> 
-                <Dialog
+                {/* <Dialog
                   open={openReject!}
                   onClose={handleCloseSettleFalse} 
                   aria-labelledby="alert-dialog-title"
@@ -912,7 +911,7 @@ const Application: React.FC<Props> = props => {
                       <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(233, 233, 198)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', marginRight: '8px' }} onClick={handleCloseSettleFalse}>No I want to settle</Button>
                       <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={handleCloseSettleFalse} autoFocus>Yes I don&apos;t want to</Button> 
                   </DialogActions>
-                </Dialog>
+                </Dialog> */}
                 <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px' }} onClick={() => {handleClickOpenSettle(); handleCloseSettleTrue(props.postId!, props.person, props.timestamp!, props.ancillaryData!, props.request!);}}>Settle</Button>
                 <Dialog
                   open={openSettle}
@@ -927,7 +926,7 @@ const Application: React.FC<Props> = props => {
                   <DialogContent className={styles.cardBackground}>
                     {(props.disputeStatus !== 3 && props.disputeStatus !== 5) &&
                       <DialogContentText className={styles.dialogBody} id="alert-dialog-description">
-                        Dispute still live or not settled yet.
+                        Dispute still live.
                       </DialogContentText>
                     }
                     {(props.disputeStatus === 3 || props.disputeStatus === 5) &&

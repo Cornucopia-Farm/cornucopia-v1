@@ -13,6 +13,8 @@ import { ethers, ContractInterface } from 'ethers';
 import escrowABI from '../contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
 import umaABI from '../contracts/out/SkinnyOptimisticOracle.sol/SkinnyOptimisticOracle.json';
 import wethABI from '../WETH9.json';
+import daiABI from '../DAI.json';
+import usdcABI from '../USDC.json';
 import { getUMAEventData } from '../getUMAEventData';
 import styles from '../styles/Home.module.css';
 import Slider from '@mui/material/Slider';
@@ -67,10 +69,25 @@ const MyBounties: NextPage = () => {
         contractInterface: wethABI as ContractInterface, // contract abi in json or JS format
     };
 
-    const escrowAddress = addresses.escrow; // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4'; 
+    // DAI Contract Config (For UMA Bonds)
+    const daiContractConfig = {
+        addressOrName: addresses.dai, 
+        contractInterface: daiABI as ContractInterface, 
+    };
+
+    // USDC Contract Config (For UMA Bonds)
+    const usdcContractConfig = {
+        addressOrName: addresses.usdc, 
+        contractInterface: usdcABI as ContractInterface, 
+    };
+
+    const escrowAddress = addresses.escrow; // '0x94B9f298982393673d6041Bc9D419A2e1f7e14b4';
+    const identifier = "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000"; 
     const escrowContract = useContract({...contractConfig, signerOrProvider: provider, });
     const umaContract = useContract({...umaContractConfig, signerOrProvider: provider, });
     const wethContract = useContract({...wethContractConfig, signerOrProvider: provider, });
+    const daiContract = useContract({...daiContractConfig, signerOrProvider: provider,});
+    const usdcContract = useContract({...usdcContractConfig, signerOrProvider: provider,});
 
     const [appliedBountyPosts, setAppliedBountyPosts] = React.useState(Array<JSX.Element>);
     const [inProgressBountyPosts, setInProgressBountyPosts] = React.useState(Array<JSX.Element>);
@@ -263,13 +280,34 @@ const MyBounties: NextPage = () => {
             const payoutExpirationTime = await escrowContract.payoutExpiration(bountyIdentifierInput);
             const currentBlockInfo = await provider.getBlock("latest");
             const currentBlocktime = currentBlockInfo.timestamp;
-
-            const wethAllowance = await wethContract.allowance(address, escrowAddress);
            
             let umaEventData;
+            let disputeTokenAddress;
+            let disputeAllowance;
+            let disputeTokenSymbol;
+            let disputeTokenDecimals;
             if (progress === 2) {
                 umaEventData = await getUMAEventData(umaContract, escrowContract, provider, 'propose', postData.data.creatorAddress, address!, postData.data.postId);
+                disputeTokenAddress = umaEventData?.request.currency;
+                if (disputeTokenAddress === wethContract.address) {
+                    disputeAllowance = await wethContract.allowance(address, escrowAddress);
+                    disputeTokenSymbol = 'WETH';
+                    disputeTokenDecimals = 18;
+                } else if (disputeTokenAddress === daiContract.address) {
+                    disputeAllowance = await daiContract.allowance(address, escrowAddress);
+                    disputeTokenSymbol = 'DAI';
+                    disputeTokenDecimals = 18;
+                } else if (disputeTokenAddress === usdcContract.address) {
+                    disputeAllowance = await usdcContract.allowance(address, escrowAddress);
+                    disputeTokenSymbol = 'USDC';
+                    disputeTokenDecimals = 6;
+                }
+            }
 
+            let disputeStatus;
+            if (progress == 3) {
+                umaEventData = await getUMAEventData(umaContract, escrowContract, provider, 'dispute', postData.data.creatorAddress, address!, postData.data.postId);
+                disputeStatus = await umaContract.getState(escrowAddress, identifier, umaEventData.timestamp, umaEventData.ancillaryData, umaEventData.request);
             }
 
             let finishedStatus;
@@ -286,7 +324,11 @@ const MyBounties: NextPage = () => {
                 finishedStatus,
                 currentBlocktime,
                 payoutExpirationTime,
-                wethAllowance
+                disputeAllowance,
+                disputeTokenAddress,
+                disputeTokenSymbol,
+                disputeTokenDecimals,
+                disputeStatus
             ]);
         });
 
@@ -302,7 +344,11 @@ const MyBounties: NextPage = () => {
                         const finishedStatus = result[5];
                         const currentBlocktime = result[6];
                         const payoutExpirationTime = result[7];
-                        const wethAllowance = result[8];
+                        const disputeTokenAllowance = result[8];
+                        const disputeTokenAddress = result[9];
+                        const disputeTokenSymbol = result[10];
+                        const disputeTokenDecimals = result[11];
+                        const disputeStatus = result[12];
 
                         if (progress === 1) { // Case 3: Submitted.
                             submittedBounties.push(
@@ -337,7 +383,10 @@ const MyBounties: NextPage = () => {
                                     tokenSymbol={postData.data.tokenSymbol}
                                 >
                                     <HunterContractActions key={postId}
-                                        allowance={wethAllowance}
+                                        disputeTokenAllowance={disputeTokenAllowance}
+                                        disputeTokenAddress={disputeTokenAddress}
+                                        disputeTokenSymbol={disputeTokenSymbol}
+                                        disputeTokenDecimals={disputeTokenDecimals}
                                         postId={postData.data.postId}
                                         creatorAddress={postData.data.creatorAddress}
                                         appStatus={"disputeResponse"}
@@ -361,7 +410,17 @@ const MyBounties: NextPage = () => {
                                     workLinks={postData.data.workLinks}
                                     disputes={false} 
                                     tokenSymbol={postData.data.tokenSymbol}
-                                />
+                                >
+                                    <HunterContractActions key={postId}
+                                        disputeStatus={disputeStatus}
+                                        postId={postData.data.postId}
+                                        creatorAddress={postData.data.creatorAddress}
+                                        appStatus={"settle"}
+                                        timestamp={umaEventData.timestamp}
+                                        ancillaryData={umaEventData.ancillaryData}
+                                        request={umaEventData.request}
+                                    />
+                                </BasicAccordian>
                             );
                         } else if (currentBlocktime && payoutExpirationTime <= currentBlocktime && progress === 1) {  // Case 6: Creator hasn't payed or disputed work within 2 weeks after work submission.
                             creatorNoActionBounties.push(
@@ -412,7 +471,7 @@ const MyBounties: NextPage = () => {
                 setFinishedBountyPosts(finishedBounties);
             }); 
         }
-    }, [address, provider, escrowContract, wethContract, umaContract, escrowAddress, setSubmittedMap, incrementSubmittedHits]);
+    }, [address, provider, escrowContract, wethContract, umaContract, daiContract, usdcContract, escrowAddress, setSubmittedMap, incrementSubmittedHits]);
 
     useEffect(() => { 
         if (!isSubmittedValidating && postSubmittedIds?.length > 0) {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 // import { useQuery, gql } from '@apollo/client';
 import axios from 'axios';
-import { ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 import NestedAccordian from './nestedAccordion';
 import Application from './application';
 import escrowABI from '../contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
@@ -108,7 +108,8 @@ const InProgressPosts: React.FC<Props> = ({ postId, existsSubmitted, setAppliedM
             // const expirationTime = await escrowContract.expiration(bountyIdentifierInput);
 
             const currentBlocktime = await provider.getBlock("latest");
-            const creatorRefund = expirationTime < currentBlocktime ? true : false;
+            const creatorRefund = expirationTime.lt(BigNumber.from(currentBlocktime.number)) ? true : false;
+            
             /*if ( isEscrowed.length > 0 ) { // Case 3: In Progress
                 inProgressBountiesApps.push(
                     <Application key={postId} 

@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { Cornucopia } from "./Cornucopia";
+export type { Escrow } from "./Escrow";

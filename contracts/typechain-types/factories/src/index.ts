@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export { Cornucopia__factory } from "./Cornucopia__factory";
+export { Escrow__factory } from "./Escrow__factory";

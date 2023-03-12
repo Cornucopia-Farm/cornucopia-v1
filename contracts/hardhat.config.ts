@@ -8,6 +8,7 @@ import 'hardhat-preprocessor';
 import '@openzeppelin/hardhat-upgrades';
 import '@nomicfoundation/hardhat-chai-matchers';
 import '@nomiclabs/hardhat-ethers';
+import 'solidity-docgen';
 import { HardhatUserConfig } from 'hardhat/config';
 
 function getRemappings() {

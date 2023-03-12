@@ -124,6 +124,10 @@ declare module "hardhat/types/runtime" {
       name: "Cornucopia",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Cornucopia__factory>;
+    getContractFactory(
+      name: "Escrow",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Escrow__factory>;
 
     getContractAt(
       name: "OwnableUpgradeable",
@@ -265,6 +269,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.Cornucopia>;
+    getContractAt(
+      name: "Escrow",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Escrow>;
 
     // default types
     getContractFactory(
