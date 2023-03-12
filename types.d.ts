@@ -6,23 +6,13 @@ declare module 'next-auth' {
       login: string;
       url: string;
     };
-  }
-};
-
-declare module 'next-auth/jwt/types' {
-  interface JWT {
-    profile: Profile & {
-        login: string;
-        html_url: string;
-    }
-  }
-};
-
-declare module 'next-auth/profile/types' {
-    interface Profile {
-      profile: Profile & {
-          login: string;
-          html_url: string;
-      }
-    }
   };
+  interface Profile extends Profile {
+      login: string;
+      html_url: string;
+  };
+};
+
+
+
+

@@ -87,7 +87,8 @@ export default function HeaderTabs() {
           <DialogTitle className={styles.formHeader}>Link your Account</DialogTitle>
           <DialogContent className={styles.cardBackground}>
               <DialogContentText className={styles.dialogBody}>
-              You can use your Github or Twitter account as your identity on Cornucopia or just use your Ens/address.
+              {/* You can use your Github or Twitter account as your identity on Cornucopia or just use your Ens/address. */}
+              You can use your Github account as your identity on Cornucopia or just use your Ens/address.
               </DialogContentText>
           </DialogContent>
           <DialogActions className={styles.formFooter}>
@@ -97,12 +98,12 @@ export default function HeaderTabs() {
               {!session ? 'sign in' : 'sign out'}
             </Box>
           </Button>
-          <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', '&:disabled': { backgroundColor: 'grey', }, }} onClick={() => {!session ? signIn('twitter') : signOut({redirect: false}); handleCloseLogin(); }} autoFocus>
+          {/* <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', '&:disabled': { backgroundColor: 'grey', }, }} onClick={() => {!session ? signIn('twitter') : signOut({redirect: false}); handleCloseLogin(); }} autoFocus>
             <Box sx={{ display: 'flex', gap: '6px', }}> 
               <Image alt="" src="/twitter.png" height="25px" width="25px"/>
               {!session ? 'sign in' : 'sign out'}
             </Box>
-          </Button>
+          </Button> */}
           </DialogActions>
         </Dialog>
         {/* <Box>
