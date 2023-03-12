@@ -41,8 +41,6 @@ export default function Footer() {
             </Box>
             {largeScreen && 
               <Box sx={{ display: 'flex', gap: '2vw', alignItems: 'center', justifyContent: 'center', }}> 
-                <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 12, textAlign: 'center', }}><Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://osec.io/"}>Audited by Ottersec</Link></Typography>
-                <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 12, textAlign: 'center', }}><Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://docs.cornucopia.farm/"}>Docs</Link></Typography>
                 <Button variant="text" className={styles.h2} sx={{ '&:hover': {backgroundColor: 'transparent'}, fontSize: 12, p: 0, m: 0, minWidth: 0, }} onClick={() => setOpenTeam(true)}>About</Button>
                 <Dialog open={openTeam} onClose={() => setOpenTeam(false)} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
                   <DialogTitle className={styles.formHeader}>About</DialogTitle>
@@ -69,12 +67,13 @@ export default function Footer() {
                     </DialogContentText>
                   </DialogContent>
                 </Dialog>
+                <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 12, textAlign: 'center', }}><Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://docs.cornucopia.farm/"}>Docs</Link></Typography>
                 <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 12, textAlign: 'center', }}><Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://www.unigrants.org/"}>Supported by Uniswap Foundation</Link></Typography>
-        
+                <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 12, textAlign: 'center', }}><Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://osec.io/"}>Audited by Ottersec</Link></Typography>
               </Box>
             }
             {smallScreen && 
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5vw'}}>
+              <Box sx={{ display: 'flex', gap: '2vw'}}>
                 {/* <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 8, wordWrap: 'break-word', textAlign: 'center'}}><Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://osec.io/"}>Audited by Ottersec</Link></Typography>
                 <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 8, wordWrap: 'break-word', textAlign: 'center'}}>Supported by Uniswap Foundation</Typography> */}
                 <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 11, textAlign: 'center', }}><Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://docs.cornucopia.farm/"}>Docs</Link></Typography>
