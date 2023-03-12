@@ -80,35 +80,31 @@ export default function HeaderTabs() {
         <Box> 
           <ConnectButton />
         </Box>
-        {/* <Button disableRipple className={styles.farmer} sx={{ ...(largeScreen ? { paddingRight: '20px' } : { paddingRight: '5px' })}} onClick={handleOpenLogin}>
+        <Button disableRipple className={styles.farmer} sx={{ ...(largeScreen ? { paddingRight: '20px' } : { paddingRight: '5px' })}} onClick={handleOpenLogin}>
           <Image alt="" src="/farmer_crop1.png" height="38px" width="38px"/>
-        </Button> */}
-        {/* <Dialog open={openLogin} onClose={handleCloseLogin} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
-          <DialogTitle className={styles.formHeader}>Link your Account</DialogTitle> */}
-          {/* <DialogContent className={styles.cardBackground}>
+        </Button>
+        <Dialog open={openLogin} onClose={handleCloseLogin} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
+          <DialogTitle className={styles.formHeader}>Link your Account</DialogTitle>
+          <DialogContent className={styles.cardBackground}>
               <DialogContentText className={styles.dialogBody}>
               You can use your Github account as your identity on Cornucopia or just use your Ens/address.
               </DialogContentText>
-          </DialogContent> */}
-          {/* <DialogActions className={styles.formFooter}> */}
-          {/* <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', '&:disabled': { backgroundColor: 'grey', }, }} onClick={() => {!session ? signIn('github') : signOut({redirect: false}); handleCloseLogin(); }} autoFocus>
+          </DialogContent>
+          <DialogActions className={styles.formFooter}>
+          <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', '&:disabled': { backgroundColor: 'grey', }, }} onClick={() => {!session ? signIn('github') : signOut({redirect: false}); handleCloseLogin(); }} autoFocus>
             <Box sx={{ display: 'flex', gap: '6px', }}> 
               <Image alt="" src="/github-mark.png" height="25px" width="25px"/>
               {!session ? 'sign in' : 'sign out'}
             </Box>
-          </Button> */}
+          </Button>
           {/* <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', '&:disabled': { backgroundColor: 'grey', }, }} onClick={() => {!session ? signIn('twitter') : signOut({redirect: false}); handleCloseLogin(); }} autoFocus>
             <Box sx={{ display: 'flex', gap: '6px', }}> 
               <Image alt="" src="/twitter.png" height="25px" width="25px"/>
               {!session ? 'sign in' : 'sign out'}
             </Box>
           </Button> */}
-          {/* </DialogActions>
-        </Dialog> */}
-        {/* <Box>
-          <Image alt="" src="/corn_logo.png" height="100px" width="100px"/>
-        </Box> */}
-      {/* </Box> */}
+          </DialogActions>
+        </Dialog>
       {smallScreen &&
           <>  
             <Button

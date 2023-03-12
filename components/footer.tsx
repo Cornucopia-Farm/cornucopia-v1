@@ -27,20 +27,20 @@ export default function Footer() {
     const largeScreen = useMediaQuery('(min-width: 1191px)');
 
     return ( 
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '12px', position: 'absolute', bottom: 0, width: '100vw', overflow: 'hidden', }}> 
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', position: 'absolute', bottom: 0, width: '100vw', overflow: 'hidden', }}> 
         <CowAnimation3 />
         <Box sx={{ display: 'flex', justifyContent: 'center', }}> 
-          <Box sx={{ display: 'flex', justifyContent: 'center', }}>
-            <Image alt="" src={tripleGrass} height="24px" width="121px"/>
-            <Image alt="" src={twoBlades} height="24px" width="121px"/>          
-            <Image alt="" src={threeBlades} height="24px" width="121px"/>
+          <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: '-18px', }}>
+            <Image alt="" src={tripleGrass} height="20px" width="80px"/>
+            <Image alt="" src={twoBlades} height="20px" width="80px"/>          
+            <Image alt="" src={threeBlades} height="20px" width="80px"/>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', minHeight:'24px', minWidth:'121px', alignItems: 'center', gap: '3px', justifyContent: 'center',}}>
             <Box> 
               <Image alt="" src="/corn_text.png" height="24px" width="121px"/>
             </Box>
             {largeScreen && 
-              <Box sx={{ display: 'flex', gap: '2vw', alignItems: 'center', justifyContent: 'center', }}> 
+              <Box sx={{ display: 'flex', gap: '2vw', alignItems: 'center', justifyContent: 'center', paddingBottom: '12px', }}> 
                 <Button variant="text" className={styles.h2} sx={{ '&:hover': {backgroundColor: 'transparent'}, fontSize: 12, p: 0, m: 0, minWidth: 0, }} onClick={() => setOpenTeam(true)}>About</Button>
                 <Dialog open={openTeam} onClose={() => setOpenTeam(false)} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
                   <DialogTitle className={styles.formHeader}>About</DialogTitle>
@@ -112,10 +112,10 @@ export default function Footer() {
               </Box>
           }
           </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'center'}}>
-            <Image alt="" src={threeBlades} height="24px" width="121px"/>
-            <Image alt="" src={twoBlades} height="24px" width="121px"/>
-            <Image alt="" src={fourGrass} height="24px" width="121px"/>
+          <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: '-18px', }}>
+            <Image alt="" src={threeBlades} height="20px" width="80px"/>
+            <Image alt="" src={twoBlades} height="20px" width="80px"/>
+            <Image alt="" src={fourGrass} height="20px" width="80px"/>
           </Box>
         </Box>
       </Box>   
