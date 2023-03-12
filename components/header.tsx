@@ -81,7 +81,7 @@ export default function HeaderTabs() {
           <ConnectButton />
         </Box>
         <Button disableRipple className={styles.farmer} sx={{ ...(largeScreen ? { paddingRight: '20px' } : { paddingRight: '5px' })}} onClick={handleOpenLogin}>
-          <Image alt="" src="/farmer_crop1.png" height="45px" width="45px"/>
+          <Image alt="" src="/farmer_crop1.png" height="38px" width="38px"/>
         </Button>
         <Dialog open={openLogin} onClose={handleCloseLogin} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
           <DialogTitle className={styles.formHeader}>Link your Account</DialogTitle>
