@@ -43,7 +43,7 @@ const NestedAccordion: React.FC<Props> = props => {
             } 
             {smallScreen && 
             <>
-            <Typography className={styles.h2} sx={{ width: '60%', flexShrink: 0, color: '#064829', maxHeight: '50px', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', },}}>{props.bountyName}</Typography>
+            <Typography className={styles.h2} sx={{ width: '60%', flexShrink: 0, color: '#064829', }}>{props.bountyName}</Typography>
             <Typography className={styles.h2} sx={{ marginLeft: '8vw !important', marginTop: 'auto', marginBottom: 'auto', color: '#064829', }}>{props.amount} {props.tokenSymbol}</Typography>  
             </>
             }   

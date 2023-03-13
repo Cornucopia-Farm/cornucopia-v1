@@ -51,7 +51,7 @@ export default function HeaderTabs() {
 
   return ( 
     <Box className={styles.header} sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', borderColor: 'divider', ...(mobileScreen ?  {justifyContent: 'space-between', } : {justifyContent: 'space-between'}), }}>
-      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', gap: '0px', alignItems: 'center' }}> 
+      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', ...(mobileScreen ?  { gap: '0px', } : { gap: '12px', }) }}> 
         <Link href="/openBounties" >
         <Box sx={{ minWidth:'100px', minHeight:'100px', ...(mobileScreen ? {marginRight: '-12px', marginLeft: '-10px'} : {})}}>
             <Image alt="" src="/corn_logo.png" height="100px" width="100px"/>

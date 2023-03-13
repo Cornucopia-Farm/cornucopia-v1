@@ -73,7 +73,7 @@ export default function Footer() {
               </Box>
             }
             {smallScreen && 
-              <Box sx={{ display: 'flex', gap: '2vw'}}>
+              <Box sx={{ display: 'flex', gap: '2vw', }}>
                 {/* <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 8, wordWrap: 'break-word', textAlign: 'center'}}><Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://osec.io/"}>Audited by Ottersec</Link></Typography>
                 <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 8, wordWrap: 'break-word', textAlign: 'center'}}>Supported by Uniswap Foundation</Typography> */}
                 <Typography className={styles.h2} sx={{ color: '#064829', fontSize: 11, textAlign: 'center', }}><Link sx= {{ color: 'rgb(233, 233, 198)', textDecoration: 'none'}} target="_blank" rel="noopener" href={"https://docs.cornucopia.farm/"}>Docs</Link></Typography>

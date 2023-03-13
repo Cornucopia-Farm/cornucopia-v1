@@ -70,7 +70,8 @@ const BasicAccordion: React.FC<Props> = props => {
 
   const blockExplorerURL = blockExplorer(chain?.network);
   // 733
-  const smallScreen = useMediaQuery('(max-width: 760px)');
+  const mobileScreen = useMediaQuery('(max-width: 380px)');
+  const smallScreen = useMediaQuery('(min-width: 381px) and (max-width: 760px)');
   const mediumScreen = useMediaQuery('(min-width: 761px) and (max-width: 900px)');
   const largeScreen = useMediaQuery('(min-width: 761px)');
 
@@ -121,13 +122,13 @@ const BasicAccordion: React.FC<Props> = props => {
               <Typography className={styles.h2} sx={{ color: '#064829', marginTop: 'auto', marginBottom: 'auto', }}>{props.amount} {props.tokenSymbol}</Typography> 
             </>
           } 
-          {smallScreen && 
+          {(smallScreen || mobileScreen) && 
             <> 
               <Box sx={{ borderRadius: '12px', width: '53%', flexShrink: 0, }}> 
                 {!session && 
                   <Box sx={{ display: 'flex', gap: '6px', }}> 
                     <Avatar alt="" src={ensAvatar ? ensAvatar : '/farmer_crop_color.png'} sx={{ width: 24, height: 24 }} /> 
-                    <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
+                    <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (mobileScreen ? props.company.slice(0,4) + '...' : props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
                   </Box>
                 }
                 {session && 
@@ -140,7 +141,7 @@ const BasicAccordion: React.FC<Props> = props => {
                 }
                 <Typography className={styles.h2} sx={{ color: '#064829', paddingTop: '5px' }}>{props.amount} {props.tokenSymbol}</Typography> 
               </Box>
-              <Typography className={styles.h2} sx={{ marginLeft: '2vw !important', marginRight: '4vw !important', color: '#064829', width: '45%', flexShrink: 0, maxHeight: '50px', overflow: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none', }, }}>{props.bountyName}</Typography> 
+              <Typography className={styles.h2} sx={{ marginLeft: '2vw !important', marginRight: '4vw !important', color: '#064829', width: '45%', flexShrink: 0, }}>{props.bountyName}</Typography> 
             </>
           } 
         </AccordionSummary>

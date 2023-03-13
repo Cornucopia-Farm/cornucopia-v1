@@ -341,7 +341,8 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
-                        inputProps={{ autoComplete: 'off'}}
+                        inputProps={{ autoComplete: 'off', maxLength: 30, }}
+                        helperText={formValues.title ? `${formValues.title.length}/30` : ''}
                         sx={{ 
                             '& .MuiInputBase-input': { 
                                 color: 'rgb(248, 215, 154)', 
@@ -364,6 +365,10 @@ const Form: React.FC<Props> = props => {
                                 '&:hover:before': {
                                     borderBottomColor: 'rgb(248, 215, 154) !important',
                                 }
+                            },
+                            '& .MuiFormHelperText-root': {
+                                color: 'rgb(233, 233, 198)',
+                                fontFamily: 'Space Grotesk',
                             },
                         }} 
                     />
