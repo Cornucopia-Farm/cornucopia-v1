@@ -23,8 +23,10 @@ export default function HeaderTabs() {
 
   console.log(session)
 
-  const smallScreen = useMediaQuery('(max-width: 950px)');
+  const smallScreen = useMediaQuery('(min-width: 481px) and (max-width: 950px)');
   const largeScreen = useMediaQuery('(min-width: 951px)');
+  const mobileScreen = useMediaQuery('(max-width: 380px)');
+  const largeMobileScreen = useMediaQuery('(min-width: 381px) and (max-width: 480px)');
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -48,10 +50,10 @@ export default function HeaderTabs() {
   };
 
   return ( 
-    <Box className={styles.header} sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', borderColor: 'divider', justifyContent: 'space-between', }}>
-      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', gap: '12px', }}> 
+    <Box className={styles.header} sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', borderColor: 'divider', ...(mobileScreen ?  {justifyContent: 'space-between', } : {justifyContent: 'space-between'}), }}>
+      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', gap: '0px', alignItems: 'center' }}> 
         <Link href="/openBounties" >
-        <Box sx={{ minWidth:'100px', minHeight:'100px', }}>
+        <Box sx={{ minWidth:'100px', minHeight:'100px', ...(mobileScreen ? {marginRight: '-12px', marginLeft: '-10px'} : {})}}>
             <Image alt="" src="/corn_logo.png" height="100px" width="100px"/>
         </Box>
         </Link>
@@ -70,17 +72,34 @@ export default function HeaderTabs() {
             </Link>
           </Box>
         }
+        {mobileScreen && 
+          <Box> 
+            <ConnectButton 
+              accountStatus={{
+                smallScreen: 'avatar',
+                largeScreen: 'full',
+              }}
+            />
+          </Box>
+        }
       </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', }}> 
-        {/* <Box sx={{ paddingRight: '20px'}}> 
-          <ConnectButton />
-        </Box> */}
-
-        {/* <Button onClick={() => setOpenLogin(true)}>Sign In</Button> */}
-        <Box> 
-          <ConnectButton />
-        </Box>
-        <Button disableRipple className={styles.farmer} sx={{ ...(largeScreen ? { paddingRight: '20px' } : { paddingRight: '5px' })}} onClick={handleOpenLogin}>
+        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', }}> 
+        {(!mobileScreen && !largeMobileScreen) && 
+          <Box> 
+            <ConnectButton />
+          </Box>
+        }
+        {largeMobileScreen && 
+          <Box> 
+            <ConnectButton 
+              accountStatus={{
+                smallScreen: 'avatar',
+                largeScreen: 'full',
+              }}
+            />
+          </Box>
+        }
+        <Button disableRipple className={styles.farmer} sx={{ ...(largeScreen ? { paddingRight: '20px' } : (mobileScreen ? { paddingRight: '0px',  } : { paddingRight: '5px', })), }} onClick={handleOpenLogin}>
           <Image alt="" src="/farmer_crop1.png" height="38px" width="38px"/>
         </Button>
         <Dialog open={openLogin} onClose={handleCloseLogin} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
@@ -105,17 +124,16 @@ export default function HeaderTabs() {
           </Button> */}
           </DialogActions>
         </Dialog>
-      {smallScreen &&
-          <>  
+      {(smallScreen || mobileScreen || largeMobileScreen) &&
+          <Box sx={{ ...(mobileScreen ? { marginLeft: '-20px' } : {})}}>  
             <Button
               id="basic-button"
               aria-controls={open ? 'basic-menu' : undefined}
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
               onClick={handleClick}
-              sx={{ color: 'rgb(248, 215, 154)', paddingRight: '24px'}}
+              sx={{ color: 'rgb(248, 215, 154)', ...(mobileScreen ? { paddingRight: '0px', } : { paddingRight: '25px', })}}
             >
-              {/* <MenuIcon fontSize="large" /> */}
               <DragHandleIcon fontSize="large" />
             </Button>
             <Menu
@@ -129,7 +147,6 @@ export default function HeaderTabs() {
               }}
               sx={{ 
                 '& .MuiMenu-list': {
-                  // backgroundColor: 'rgb(23, 21, 20)',
                   backgroundColor: 'rgb(248, 215, 154) !important',
                 }, 
                 '& .MuiMenu-paper': {
@@ -155,9 +172,9 @@ export default function HeaderTabs() {
                 </Link>
               </MenuItem>
             </Menu>
-          </>
-        }
-        </Box>
+          </Box>
+      }
+      </Box>
     </Box>   
   );
 };
