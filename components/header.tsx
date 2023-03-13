@@ -85,7 +85,7 @@ export default function HeaderTabs() {
       </Box>
         <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', }}> 
         {(!mobileScreen && !largeMobileScreen) && 
-          <Box> 
+          <Box sx={{ paddingRight: '25px', }}> 
             <ConnectButton />
           </Box>
         }
@@ -99,11 +99,11 @@ export default function HeaderTabs() {
             />
           </Box>
         }
-        <Button disableRipple className={styles.farmer} sx={{ ...(largeScreen ? { paddingRight: '20px' } : (mobileScreen ? { paddingRight: '0px',  } : { paddingRight: '5px', })), }} onClick={handleOpenLogin}>
+        {/* <Button disableRipple className={styles.farmer} sx={{ ...(largeScreen ? { paddingRight: '20px' } : (mobileScreen ? { paddingRight: '0px',  } : { paddingRight: '5px', })), }} onClick={handleOpenLogin}>
           <Image alt="" src="/farmer_crop1.png" height="38px" width="38px"/>
-        </Button>
-        <Dialog open={openLogin} onClose={handleCloseLogin} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
-          <DialogTitle className={styles.formHeader}>Link your Account</DialogTitle>
+        </Button> */}
+        {/* <Dialog open={openLogin} onClose={handleCloseLogin} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}> */}
+          {/* <DialogTitle className={styles.formHeader}>Link your Account</DialogTitle>
           <DialogContent className={styles.cardBackground}>
               <DialogContentText className={styles.dialogBody}>
               You can use your Github account as your identity on Cornucopia or just use your Ens/address.
@@ -115,15 +115,15 @@ export default function HeaderTabs() {
               <Image alt="" src="/github-mark.png" height="25px" width="25px"/>
               {!session ? 'sign in' : 'sign out'}
             </Box>
-          </Button>
+          </Button> */}
           {/* <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', '&:disabled': { backgroundColor: 'grey', }, }} onClick={() => {!session ? signIn('twitter') : signOut({redirect: false}); handleCloseLogin(); }} autoFocus>
             <Box sx={{ display: 'flex', gap: '6px', }}> 
               <Image alt="" src="/twitter.png" height="25px" width="25px"/>
               {!session ? 'sign in' : 'sign out'}
             </Box>
           </Button> */}
-          </DialogActions>
-        </Dialog>
+          {/* </DialogActions>
+        </Dialog> */}
       {(smallScreen || mobileScreen || largeMobileScreen) &&
           <Box sx={{ ...(mobileScreen ? { marginLeft: '-20px' } : {})}}>  
             <Button
