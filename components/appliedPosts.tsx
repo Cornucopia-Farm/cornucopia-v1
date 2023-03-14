@@ -8,7 +8,7 @@ import { BigNumber, ethers } from 'ethers';
 import dayjs from 'dayjs';
 import erc20ABI from '../contracts/out/ERC20.sol/ERC20.json';
 import useSWR from 'swr';
-import gqlFetcher from '../swrFetchers';
+import { gqlFetcher } from '../swrFetchers';
 import { gql } from 'graphql-request';
 import contractAddresses from '../contractAddresses.json';
 

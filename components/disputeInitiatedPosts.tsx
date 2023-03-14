@@ -6,7 +6,7 @@ import Application from './application';
 import escrowABI from '../contracts/out/Escrow.sol/Escrow.json'; // add in actual path later
 import { useAccount, useContract, useSigner, useNetwork, useProvider } from 'wagmi';
 import useSWR from 'swr';
-import gqlFetcher from '../swrFetchers';
+import { gqlFetcher } from '../swrFetchers';
 import { gql } from 'graphql-request';
 import contractAddresses from '../contractAddresses.json';
 

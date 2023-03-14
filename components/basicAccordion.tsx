@@ -16,6 +16,7 @@ import { useSession } from 'next-auth/react';
 import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useSocial } from './useSocial';
 
 type Props = { // need to change bounty card to specify which component it is for!
   company: string;
@@ -34,7 +35,12 @@ type Props = { // need to change bounty card to specify which component it is fo
 };
 
 const BasicAccordion: React.FC<Props> = props => {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
+  const addressSocialData = useSocial(props.company);
+  console.log(addressSocialData)
+  const username = addressSocialData?.github.username ? addressSocialData?.github.username : addressSocialData?.twitter.username;
+  const profilePic = addressSocialData?.github.username ? addressSocialData?.github.profilePic : addressSocialData?.twitter.profilePic;
+  const userLink = addressSocialData?.github.username ? addressSocialData?.github.userLink : addressSocialData?.twitter.userLink;
 
   const { data: ensName } = useEnsName({ address: props.company });
   const { data: ensAvatar } = useEnsAvatar({ addressOrName: props.company });
@@ -103,17 +109,17 @@ const BasicAccordion: React.FC<Props> = props => {
           {largeScreen && 
             <> 
               <Box sx={{ borderRadius: '12px', width: '43%', flexShrink: 0 }}> 
-                {!session && 
+                {!username && 
                   <Box sx={{ display: 'flex', gap: '6px', }}>  
                       <Avatar alt="" src={ensAvatar ? ensAvatar : '/farmer_crop_color.png'} sx={{ width: 24, height: 24 }} /> 
                       <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
                   </Box>
                 }
-                {session &&
+                {username &&
                   <Box sx={{ display: 'flex', gap: '6px', }}> 
-                    <Avatar alt="" src={session.user.image!} sx={{ width: 24, height: 24 }} /> 
+                    <Avatar alt="" src={profilePic!} sx={{ width: 24, height: 24 }} /> 
                     <Tooltip placement="top-start" title={<><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></>}>
-                      <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={session.user.url}>{session.user.login}</Link></Typography>
+                      <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={userLink}>{username}</Link></Typography>
                     </Tooltip>
                   </Box>
                 }
@@ -126,17 +132,17 @@ const BasicAccordion: React.FC<Props> = props => {
           {(smallScreen || mobileScreen) && 
             <> 
               <Box sx={{ borderRadius: '12px', width: '53%', flexShrink: 0, }}> 
-                {!session && 
+                {!username && 
                   <Box sx={{ display: 'flex', gap: '6px', }}> 
                     <Avatar alt="" src={ensAvatar ? ensAvatar : '/farmer_crop_color.png'} sx={{ width: 24, height: 24 }} /> 
                     <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)', }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (mobileScreen ? props.company.slice(0,4) + '...' : props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></Typography>
                   </Box>
                 }
-                {session && 
+                {username && 
                   <Box sx={{ display: 'flex', gap: '6px', }}>
-                    <Avatar alt="" src={session.user.image!} sx={{ width: 24, height: 24 }} /> 
+                    <Avatar alt="" src={profilePic!} sx={{ width: 24, height: 24 }} /> 
                     <Tooltip placement="top-start" title={<><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.company)}>{ensName ? ensName : (props.company.slice(0,4) + '...' + props.company.slice(-4))}</Link></>}>
-                      <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={session.user.url}>{session.user.login}</Link></Typography>
+                      <Typography className={styles.h2} sx={{ color: '#064829', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={userLink}>{username}</Link></Typography>
                     </Tooltip>
                   </Box>
                 }

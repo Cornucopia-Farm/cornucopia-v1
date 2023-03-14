@@ -1,30 +1,34 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import axios from 'axios';
+import { Octokit } from 'octokit';
 
 const getSocialData = async () => {
-    const response = await axios.get(`https://api.github.com/gists/${process.env.GIST_ID}`);
-    const gist = response.data;
-    return JSON.parse(gist.files[process.env.GIST_FILENAME!].content);
+  const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN, });
+  
+  const response = await octokit.request(`GET /gists/${process.env.GIST_ID}`, {
+    gist_id: process.env.GIST_ID,
+    headers: {
+      'X-GitHub-Api-Version': '2022-11-28'
+    }
+  });
+
+  return JSON.parse(response.data.files[process.env.GIST_FILENAME!].content);
 };
 
-const updateSocialData = async (updatedData: Object) => {
-  const response = await axios.patch(
-    `https://api.github.com/gists/${process.env.GIST_ID}`, 
-    [
-        JSON.stringify({
-            files: {
-              [process.env.GIST_FILENAME!]: {
-                content: JSON.stringify(updatedData),
-              },
-            },
-        }),
-    ],
-    {
-        headers: {
-            Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-        },
+const updateSocialData = async (updatedData: any) => {
+  const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN, });
+
+  const response = await octokit.request(`PATCH /gists/${process.env.GIST_ID}`, {
+    gist_id: process.env.GIST_ID,
+    description: 'updated mapping',
+    files: {
+      [process.env.GIST_FILENAME!]: {
+        content: JSON.stringify(updatedData)
+      }
+    },
+    headers: {
+      'X-GitHub-Api-Version': '2022-11-28'
     }
-  );
+  });
 
   return response.data;
 };

@@ -23,7 +23,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import MyBountiesInfo from '../components/myBountiesInfo';
 import HunterContractActions from '../components/hunterContractActions';
 import useSWR from 'swr';
-import gqlFetcher from '../swrFetchers';
+import { gqlFetcher } from '../swrFetchers';
 import { gql } from 'graphql-request';
 import { getEscrowEventData } from '../getEscrowEventData';
 import useMediaQuery from '@mui/material/useMediaQuery';

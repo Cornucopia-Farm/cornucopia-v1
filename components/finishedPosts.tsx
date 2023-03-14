@@ -7,7 +7,7 @@ import Application from './application';
 import escrowABI from '../contracts/out/Escrow.sol/Escrow.json'; 
 import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransaction, useContractRead, useBlockNumber, useContract, usePrepareContractWrite, useContractEvent, useSigner, useNetwork, useProvider } from 'wagmi';
 import useSWR from 'swr';
-import gqlFetcher from '../swrFetchers';
+import { gqlFetcher } from '../swrFetchers';
 import { gql } from 'graphql-request';
 import { getEscrowEventData } from '../getEscrowEventData';
 import contractAddresses from '../contractAddresses.json';

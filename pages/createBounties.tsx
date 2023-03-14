@@ -21,7 +21,7 @@ import WelcomeCard from '../components/welcomeCard';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import CreateBountiesInfo from '../components/createBountiesInfo';
 import useSWR from 'swr';
-import gqlFetcher from '../swrFetchers';
+import { gqlFetcher } from '../swrFetchers';
 import { gql } from 'graphql-request';
 import Image from 'next/image';
 

@@ -10,7 +10,7 @@ import { useAccount, useNetwork } from 'wagmi';
 import { TailSpin } from 'react-loader-spinner';
 import styles from '../styles/Home.module.css';
 import useSWR from 'swr';
-import gqlFetcher from '../swrFetchers';
+import { gqlFetcher } from '../swrFetchers';
 import { gql } from 'graphql-request';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { ConnectButton } from '@rainbow-me/rainbowkit';

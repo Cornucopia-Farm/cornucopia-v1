@@ -10,7 +10,7 @@ import wethABI from '../WETH9.json';
 import daiABI from '../DAI.json';
 import usdcABI from '../USDC.json';
 import useSWR from 'swr';
-import gqlFetcher from '../swrFetchers';
+import { gqlFetcher } from '../swrFetchers';
 import { gql } from 'graphql-request';
 import contractAddresses from '../contractAddresses.json';
 

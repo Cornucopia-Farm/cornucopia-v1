@@ -9,7 +9,7 @@ import umaABI from '../contracts/out/SkinnyOptimisticOracle.sol/SkinnyOptimistic
 import { useAccount, useConnect, useEnsName, useContractWrite, useWaitForTransaction, useContractRead, useBlockNumber, useContract, usePrepareContractWrite, useContractEvent, useSigner, useProvider, ProviderRpcError, useNetwork } from 'wagmi';
 import { Request, getUMAEventData } from '../getUMAEventData';
 import useSWR from 'swr';
-import gqlFetcher from '../swrFetchers';
+import { gqlFetcher } from '../swrFetchers';
 import { gql } from 'graphql-request';
 import contractAddresses from '../contractAddresses.json';
 

@@ -16,12 +16,14 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useAccount } from 'wagmi';
+import { useUpdateSocial } from './useSocial';
 
 export default function HeaderTabs() {
-
   const { data: session, status } = useSession();
+  const { address } = useAccount();
+  useUpdateSocial(session, address);
 
-  console.log(session)
 
   const smallScreen = useMediaQuery('(min-width: 481px) and (max-width: 950px)');
   const largeScreen = useMediaQuery('(min-width: 951px)');
@@ -48,6 +50,11 @@ export default function HeaderTabs() {
   const handleCloseLogin = () => {
     setOpenLogin(false);
   };
+
+  // const handleClickLogin = () => {
+  //   signIn('github');
+  //   trigger({updatedData});
+  // };
 
   return ( 
     <Box className={styles.header} sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', borderColor: 'divider', ...(mobileScreen ?  {justifyContent: 'space-between', } : {justifyContent: 'space-between'}), }}>
@@ -99,11 +106,11 @@ export default function HeaderTabs() {
             />
           </Box>
         }
-        {/* <Button disableRipple className={styles.farmer} sx={{ ...(largeScreen ? { paddingRight: '20px' } : (mobileScreen ? { paddingRight: '0px',  } : { paddingRight: '5px', })), }} onClick={handleOpenLogin}>
+        <Button disableRipple className={styles.farmer} sx={{ ...(largeScreen ? { paddingRight: '20px' } : (mobileScreen ? { paddingRight: '0px',  } : { paddingRight: '5px', })), }} onClick={handleOpenLogin}>
           <Image alt="" src="/farmer_crop1.png" height="38px" width="38px"/>
-        </Button> */}
-        {/* <Dialog open={openLogin} onClose={handleCloseLogin} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}> */}
-          {/* <DialogTitle className={styles.formHeader}>Link your Account</DialogTitle>
+        </Button>
+        <Dialog open={openLogin} onClose={handleCloseLogin} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
+          <DialogTitle className={styles.formHeader}>Link your Account</DialogTitle>
           <DialogContent className={styles.cardBackground}>
               <DialogContentText className={styles.dialogBody}>
               You can use your Github account as your identity on Cornucopia or just use your Ens/address.
@@ -115,15 +122,15 @@ export default function HeaderTabs() {
               <Image alt="" src="/github-mark.png" height="25px" width="25px"/>
               {!session ? 'sign in' : 'sign out'}
             </Box>
-          </Button> */}
+          </Button>
           {/* <Button variant="contained" sx={{ '&:hover': {backgroundColor: 'rgb(182, 182, 153)'}, backgroundColor: 'rgb(248, 215, 154)', color: 'black', fontFamily: 'Space Grotesk', borderRadius: '12px', '&:disabled': { backgroundColor: 'grey', }, }} onClick={() => {!session ? signIn('twitter') : signOut({redirect: false}); handleCloseLogin(); }} autoFocus>
             <Box sx={{ display: 'flex', gap: '6px', }}> 
               <Image alt="" src="/twitter.png" height="25px" width="25px"/>
               {!session ? 'sign in' : 'sign out'}
             </Box>
           </Button> */}
-          {/* </DialogActions>
-        </Dialog> */}
+          </DialogActions>
+        </Dialog>
       {(smallScreen || mobileScreen || largeMobileScreen) &&
           <Box sx={{ ...(mobileScreen ? { marginLeft: '-20px' } : {})}}>  
             <Button

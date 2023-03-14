@@ -33,10 +33,10 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import { useSession } from 'next-auth/react';
 import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useSocial } from './useSocial';
 
 type Props = {
     person: string;
@@ -65,7 +65,12 @@ type Props = {
 };
 
 const Application: React.FC<Props> = props => {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
+  const addressSocialData = useSocial(props.person);
+  const username = addressSocialData?.github.username ? addressSocialData?.github.username : addressSocialData?.twitter.username;
+  const profilePic = addressSocialData?.github.username ? addressSocialData?.github.profilePic : addressSocialData?.twitter.profilePic;
+  const userLink = addressSocialData?.github.username ? addressSocialData?.github.userLink : addressSocialData?.twitter.userLink;
+
   const { data: ensName } = useEnsName({ address: props.person });
   const { data: ensAvatar } = useEnsAvatar({ addressOrName: props.person });
   const { chain } = useNetwork();
@@ -694,7 +699,7 @@ const Application: React.FC<Props> = props => {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          {!session && 
+          {!username && 
             <Box sx={{ display: 'flex', gap: '6px', }}> 
               <Avatar alt="" src={ensAvatar ? ensAvatar : '/farmer_crop_color.png'} sx={{ width: 24, height: 24 }} /> 
               <Typography className={styles.h2} sx={{ color: '#064829', fontSize: '15px', }}>
@@ -702,11 +707,11 @@ const Application: React.FC<Props> = props => {
               </Typography>
             </Box>
           }
-          {session && 
+          {username && 
             <Box sx={{ display: 'flex', gap: '6px', }}> 
-              <Avatar alt="" src={session.user.image!} sx={{ width: 24, height: 24 }} /> 
+              <Avatar alt="" src={profilePic!} sx={{ width: 24, height: 24 }} /> 
               <Tooltip placement="top-start" title={<><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={blockExplorerURL + (ensName ? ensName : props.person)}>{ensName ? ensName : (props.person.slice(0,4) + '...' + props.person.slice(-4))}</Link></>}>
-                <Typography className={styles.h2} sx={{ color: '#064829', fontSize: '15px', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={session.user.url}>{session.user.login}</Link></Typography>
+                <Typography className={styles.h2} sx={{ color: '#064829', fontSize: '15px', }}><Link sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={userLink}>{username}</Link></Typography>
               </Tooltip>
             </Box>
           }
