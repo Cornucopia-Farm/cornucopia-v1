@@ -110,10 +110,10 @@ export default function HeaderTabs() {
           <Image alt="" src="/farmer_crop1.png" height="38px" width="38px"/>
         </Button>
         <Dialog open={openLogin} onClose={handleCloseLogin} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
-          <DialogTitle className={styles.formHeader}>Link your Account</DialogTitle>
+          <DialogTitle className={styles.formHeader}>{!session ? 'Link your Account' : 'Sign out of your account'}</DialogTitle>
           <DialogContent className={styles.cardBackground}>
               <DialogContentText className={styles.dialogBody}>
-              You can use your Github account as your identity on Cornucopia or just use your Ens/address.
+              {!session ? 'You can use your Github account as your identity on Cornucopia or just use your Ens/address.' : 'Sign out of your account to just use your Ens/address as your identity'}
               </DialogContentText>
           </DialogContent>
           <DialogActions className={styles.formFooter}>
