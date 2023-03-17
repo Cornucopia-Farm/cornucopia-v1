@@ -17,7 +17,7 @@ type SocialData = {
     };
 };
 
-const useSocial = (companyOrPerson: string) => {
+const useSocial = (companyOrPerson?: string) => {
     const [addressSocialData, setAddressSocialData] = useState<SocialData>();
 
     const getSocial = useCallback(async (address: string) => {

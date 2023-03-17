@@ -17,12 +17,19 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useAccount } from 'wagmi';
-import { useUpdateSocial } from './useSocial';
+import { useSocial, useUpdateSocial } from './useSocial';
+import Typography from '@mui/material/Typography';
+import MuiLink from '@mui/material/Link';
+
 
 export default function HeaderTabs() {
   const { data: session, status } = useSession();
   const { address } = useAccount();
   useUpdateSocial(session, address);
+  const addressSocialData = useSocial(address);
+  const username = addressSocialData?.github.username ? addressSocialData?.github.username : addressSocialData?.twitter.username;
+  const profilePic = addressSocialData?.github.username ? addressSocialData?.github.profilePic : addressSocialData?.twitter.profilePic;
+  const userLink = addressSocialData?.github.username ? addressSocialData?.github.userLink : addressSocialData?.twitter.userLink;
 
 
   const smallScreen = useMediaQuery('(min-width: 481px) and (max-width: 950px)');
@@ -113,7 +120,10 @@ export default function HeaderTabs() {
           <DialogTitle className={styles.formHeader}>{!session ? 'Link your Account' : 'Sign out of your account'}</DialogTitle>
           <DialogContent className={styles.cardBackground}>
               <DialogContentText className={styles.dialogBody}>
-              {!session ? 'You can use your Github account as your identity on Cornucopia or just use your Ens/address.' : 'Sign out of your account to just use your Ens/address as your identity'}
+              {!session ? 
+                'You can use your Github account as your identity on Cornucopia or just use your Ens/address.' : 
+                <Typography className={styles.dialogBody} sx={{ color: '#064829', }}>Sign out of <MuiLink sx= {{ color: 'rgb(233, 233, 198)' }} target="_blank" rel="noopener" href={userLink!}>{username}</MuiLink> to just use your Ens/address as your identity</Typography>
+              }
               </DialogContentText>
           </DialogContent>
           <DialogActions className={styles.formFooter}>
