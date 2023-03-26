@@ -1,10 +1,10 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/src/Cornucopia.sol": {
-      "lastModificationDate": 1678204695557,
-      "contentHash": "3548cf77ccba1d5a4ce2b49d1443204f",
-      "sourceName": "src/Cornucopia.sol",
+    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/src/Escrow.sol": {
+      "lastModificationDate": 1673133456863,
+      "contentHash": "674c4039286771117b8e779e78dc803a",
+      "sourceName": "src/Escrow.sol",
       "solcConfig": {
         "version": "0.8.17",
         "settings": {
@@ -29,7 +29,7 @@
           },
           "libraries": {
             "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
             }
           }
         }
@@ -45,14 +45,13 @@
         "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
         "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol",
         "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol",
-        "lib/openzeppelin-contracts-upgradeable/contracts/access/OwnableUpgradeable.sol",
-        "lib/openzeppelin-contracts-upgradeable/contracts/security/ReentrancyGuardUpgradeable.sol"
+        "lib/openzeppelin-contracts-upgradeable/contracts/access/OwnableUpgradeable.sol"
       ],
       "versionPragmas": [
         "0.8.17"
       ],
       "artifacts": [
-        "Cornucopia"
+        "Escrow"
       ]
     },
     "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/openzeppelin-contracts-upgradeable/contracts/access/OwnableUpgradeable.sol": {
@@ -83,7 +82,7 @@
           },
           "libraries": {
             "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
             }
           }
         }
@@ -127,7 +126,7 @@
           },
           "libraries": {
             "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
             }
           }
         }
@@ -140,90 +139,6 @@
       ],
       "artifacts": [
         "Initializable"
-      ]
-    },
-    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol": {
-      "lastModificationDate": 1672363303463,
-      "contentHash": "ad7c2d0af148c8f9f097d65deeb4da6b",
-      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
-      "solcConfig": {
-        "version": "0.8.17",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          },
-          "libraries": {
-            "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IERC20"
-      ]
-    },
-    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/openzeppelin-contracts-upgradeable/contracts/security/ReentrancyGuardUpgradeable.sol": {
-      "lastModificationDate": 1672363347824,
-      "contentHash": "1453fc85149da6598faf08c46b88182d",
-      "sourceName": "lib/openzeppelin-contracts-upgradeable/contracts/security/ReentrancyGuardUpgradeable.sol",
-      "solcConfig": {
-        "version": "0.8.17",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          },
-          "libraries": {
-            "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
-            }
-          }
-        }
-      },
-      "imports": [
-        "../proxy/utils/Initializable.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "ReentrancyGuardUpgradeable"
       ]
     },
     "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol": {
@@ -254,7 +169,7 @@
           },
           "libraries": {
             "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
             }
           }
         }
@@ -269,111 +184,6 @@
       ],
       "artifacts": [
         "UUPSUpgradeable"
-      ]
-    },
-    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol": {
-      "lastModificationDate": 1672363303524,
-      "contentHash": "0320a90f714843ca19373ed143fc4466",
-      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
-      "solcConfig": {
-        "version": "0.8.17",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          },
-          "libraries": {
-            "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
-            }
-          }
-        }
-      },
-      "imports": [
-        "../IERC20.sol",
-        "../extensions/draft-IERC20Permit.sol",
-        "../../../utils/Address.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "SafeERC20"
-      ]
-    },
-    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol": {
-      "lastModificationDate": 1672363647147,
-      "contentHash": "54f516ce175228b8d09b2bd6b9255e33",
-      "sourceName": "lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol",
-      "solcConfig": {
-        "version": "0.8.17",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          },
-          "libraries": {
-            "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
-            }
-          }
-        }
-      },
-      "imports": [
-        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
-        "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
-        "lib/openzeppelin-contracts/contracts/utils/math/SafeMath.sol",
-        "lib/openzeppelin-contracts/contracts/utils/Address.sol",
-        "../interfaces/OptimisticOracleInterface.sol",
-        "../interfaces/SkinnyOptimisticOracleInterface.sol",
-        "../../data-verification-mechanism/interfaces/StoreInterface.sol",
-        "../../data-verification-mechanism/interfaces/OracleAncillaryInterface.sol",
-        "../../data-verification-mechanism/interfaces/FinderInterface.sol",
-        "../../data-verification-mechanism/interfaces/IdentifierWhitelistInterface.sol",
-        "../../data-verification-mechanism/implementation/Constants.sol",
-        "../../common/implementation/Testable.sol",
-        "../../common/implementation/Lockable.sol",
-        "../../common/implementation/FixedPoint.sol",
-        "../../common/implementation/AncillaryData.sol",
-        "../../common/implementation/AddressWhitelist.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "OptimisticRequester",
-        "SkinnyOptimisticOracle",
-        "SkinnyOptimisticOracleProd"
       ]
     },
     "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/optimistic-oracle/interfaces/SkinnyOptimisticOracleInterface.sol": {
@@ -404,7 +214,7 @@
           },
           "libraries": {
             "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
             }
           }
         }
@@ -418,48 +228,6 @@
       ],
       "artifacts": [
         "SkinnyOptimisticOracleInterface"
-      ]
-    },
-    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/data-verification-mechanism/implementation/Constants.sol": {
-      "lastModificationDate": 1672363645340,
-      "contentHash": "90ce2f6dbd8a6b5f7e3887312c2c2f4b",
-      "sourceName": "lib/protocol/packages/core/contracts/data-verification-mechanism/implementation/Constants.sol",
-      "solcConfig": {
-        "version": "0.8.17",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          },
-          "libraries": {
-            "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "OptimisticOracleConstraints",
-        "OracleInterfaces"
       ]
     },
     "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/optimistic-oracle/interfaces/OptimisticOracleInterface.sol": {
@@ -490,7 +258,7 @@
           },
           "libraries": {
             "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
             }
           }
         }
@@ -534,7 +302,7 @@
           },
           "libraries": {
             "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
             }
           }
         }
@@ -548,6 +316,48 @@
       ],
       "artifacts": [
         "StoreInterface"
+      ]
+    },
+    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/data-verification-mechanism/implementation/Constants.sol": {
+      "lastModificationDate": 1672363645340,
+      "contentHash": "90ce2f6dbd8a6b5f7e3887312c2c2f4b",
+      "sourceName": "lib/protocol/packages/core/contracts/data-verification-mechanism/implementation/Constants.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "libraries": {
+            "": {
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "OptimisticOracleConstraints",
+        "OracleInterfaces"
       ]
     },
     "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/FinderInterface.sol": {
@@ -578,7 +388,7 @@
           },
           "libraries": {
             "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
             }
           }
         }
@@ -589,6 +399,152 @@
       ],
       "artifacts": [
         "FinderInterface"
+      ]
+    },
+    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol": {
+      "lastModificationDate": 1672363647147,
+      "contentHash": "54f516ce175228b8d09b2bd6b9255e33",
+      "sourceName": "lib/protocol/packages/core/contracts/optimistic-oracle/previous-versions/SkinnyOptimisticOracle.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "libraries": {
+            "": {
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
+            }
+          }
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
+        "lib/openzeppelin-contracts/contracts/utils/math/SafeMath.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol",
+        "../interfaces/OptimisticOracleInterface.sol",
+        "../interfaces/SkinnyOptimisticOracleInterface.sol",
+        "../../data-verification-mechanism/interfaces/StoreInterface.sol",
+        "../../data-verification-mechanism/interfaces/OracleAncillaryInterface.sol",
+        "../../data-verification-mechanism/interfaces/FinderInterface.sol",
+        "../../data-verification-mechanism/interfaces/IdentifierWhitelistInterface.sol",
+        "../../data-verification-mechanism/implementation/Constants.sol",
+        "../../common/implementation/Testable.sol",
+        "../../common/implementation/Lockable.sol",
+        "../../common/implementation/FixedPoint.sol",
+        "../../common/implementation/AncillaryData.sol",
+        "../../common/implementation/AddressWhitelist.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "OptimisticRequester",
+        "SkinnyOptimisticOracle",
+        "SkinnyOptimisticOracleProd"
+      ]
+    },
+    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol": {
+      "lastModificationDate": 1672363303463,
+      "contentHash": "ad7c2d0af148c8f9f097d65deeb4da6b",
+      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "libraries": {
+            "": {
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC20"
+      ]
+    },
+    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol": {
+      "lastModificationDate": 1672363303524,
+      "contentHash": "0320a90f714843ca19373ed143fc4466",
+      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "libraries": {
+            "": {
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC20.sol",
+        "../extensions/draft-IERC20Permit.sol",
+        "../../../utils/Address.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "SafeERC20"
       ]
     },
     "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/openzeppelin-contracts-upgradeable/contracts/utils/ContextUpgradeable.sol": {
@@ -619,7 +575,7 @@
           },
           "libraries": {
             "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
             }
           }
         }
@@ -662,7 +618,7 @@
           },
           "libraries": {
             "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
             }
           }
         }
@@ -703,7 +659,7 @@
           },
           "libraries": {
             "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
             }
           }
         }
@@ -744,7 +700,7 @@
           },
           "libraries": {
             "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
             }
           }
         }
@@ -791,7 +747,7 @@
           },
           "libraries": {
             "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
             }
           }
         }
@@ -832,7 +788,7 @@
           },
           "libraries": {
             "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
             }
           }
         }
@@ -843,213 +799,6 @@
       ],
       "artifacts": [
         "IBeaconUpgradeable"
-      ]
-    },
-    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/openzeppelin-contracts/contracts/utils/Address.sol": {
-      "lastModificationDate": 1672363303707,
-      "contentHash": "f31ad6fc4bbf9c06203987220156a6ba",
-      "sourceName": "lib/openzeppelin-contracts/contracts/utils/Address.sol",
-      "solcConfig": {
-        "version": "0.8.17",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          },
-          "libraries": {
-            "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.1"
-      ],
-      "artifacts": [
-        "Address"
-      ]
-    },
-    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/openzeppelin-contracts/contracts/token/ERC20/extensions/draft-IERC20Permit.sol": {
-      "lastModificationDate": 1672363303511,
-      "contentHash": "fb77f144244b9ab12533aa6ce85ef8c5",
-      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/draft-IERC20Permit.sol",
-      "solcConfig": {
-        "version": "0.8.17",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          },
-          "libraries": {
-            "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IERC20Permit"
-      ]
-    },
-    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/OracleAncillaryInterface.sol": {
-      "lastModificationDate": 1672363645610,
-      "contentHash": "0a80d49492aa782a8fa2366a501f5b7e",
-      "sourceName": "lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/OracleAncillaryInterface.sol",
-      "solcConfig": {
-        "version": "0.8.17",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          },
-          "libraries": {
-            "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "OracleAncillaryInterface"
-      ]
-    },
-    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/common/implementation/Testable.sol": {
-      "lastModificationDate": 1672363631372,
-      "contentHash": "534d1f25cc7fbe77cc4493621cce244a",
-      "sourceName": "lib/protocol/packages/core/contracts/common/implementation/Testable.sol",
-      "solcConfig": {
-        "version": "0.8.17",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          },
-          "libraries": {
-            "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
-            }
-          }
-        }
-      },
-      "imports": [
-        "./Timer.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "Testable"
-      ]
-    },
-    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/common/implementation/Lockable.sol": {
-      "lastModificationDate": 1672363631371,
-      "contentHash": "e24e4db843dedf786dc2e25a70590a7e",
-      "sourceName": "lib/protocol/packages/core/contracts/common/implementation/Lockable.sol",
-      "solcConfig": {
-        "version": "0.8.17",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          },
-          "libraries": {
-            "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "Lockable"
       ]
     },
     "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/common/implementation/FixedPoint.sol": {
@@ -1080,7 +829,7 @@
           },
           "libraries": {
             "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
             }
           }
         }
@@ -1094,133 +843,6 @@
       ],
       "artifacts": [
         "FixedPoint"
-      ]
-    },
-    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/common/implementation/AncillaryData.sol": {
-      "lastModificationDate": 1672363644864,
-      "contentHash": "925000c6f3e453f7ba8a0332e5c123a5",
-      "sourceName": "lib/protocol/packages/core/contracts/common/implementation/AncillaryData.sol",
-      "solcConfig": {
-        "version": "0.8.17",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          },
-          "libraries": {
-            "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "AncillaryData"
-      ]
-    },
-    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/common/implementation/AddressWhitelist.sol": {
-      "lastModificationDate": 1672363631370,
-      "contentHash": "d0271e024dcc6ece8d44d0bf6172604e",
-      "sourceName": "lib/protocol/packages/core/contracts/common/implementation/AddressWhitelist.sol",
-      "solcConfig": {
-        "version": "0.8.17",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          },
-          "libraries": {
-            "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
-            }
-          }
-        }
-      },
-      "imports": [
-        "../interfaces/AddressWhitelistInterface.sol",
-        "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
-        "./Lockable.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "AddressWhitelist"
-      ]
-    },
-    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/IdentifierWhitelistInterface.sol": {
-      "lastModificationDate": 1672363645604,
-      "contentHash": "cb5009017f24230e0132da3fcc70d78c",
-      "sourceName": "lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/IdentifierWhitelistInterface.sol",
-      "solcConfig": {
-        "version": "0.8.17",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          },
-          "libraries": {
-            "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IdentifierWhitelistInterface"
       ]
     },
     "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/openzeppelin-contracts/contracts/utils/math/SafeMath.sol": {
@@ -1251,7 +873,7 @@
           },
           "libraries": {
             "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
             }
           }
         }
@@ -1292,7 +914,7 @@
           },
           "libraries": {
             "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
             }
           }
         }
@@ -1305,10 +927,10 @@
         "SignedSafeMath"
       ]
     },
-    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/common/implementation/Timer.sol": {
-      "lastModificationDate": 1672363631373,
-      "contentHash": "3b069029e651f6d904cdf5afce811d32",
-      "sourceName": "lib/protocol/packages/core/contracts/common/implementation/Timer.sol",
+    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/OracleAncillaryInterface.sol": {
+      "lastModificationDate": 1672363645610,
+      "contentHash": "0a80d49492aa782a8fa2366a501f5b7e",
+      "sourceName": "lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/OracleAncillaryInterface.sol",
       "solcConfig": {
         "version": "0.8.17",
         "settings": {
@@ -1333,7 +955,7 @@
           },
           "libraries": {
             "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
             }
           }
         }
@@ -1343,7 +965,300 @@
         "^0.8.0"
       ],
       "artifacts": [
-        "Timer"
+        "OracleAncillaryInterface"
+      ]
+    },
+    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/IdentifierWhitelistInterface.sol": {
+      "lastModificationDate": 1672363645604,
+      "contentHash": "cb5009017f24230e0132da3fcc70d78c",
+      "sourceName": "lib/protocol/packages/core/contracts/data-verification-mechanism/interfaces/IdentifierWhitelistInterface.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "libraries": {
+            "": {
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IdentifierWhitelistInterface"
+      ]
+    },
+    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/common/implementation/AncillaryData.sol": {
+      "lastModificationDate": 1672363644864,
+      "contentHash": "925000c6f3e453f7ba8a0332e5c123a5",
+      "sourceName": "lib/protocol/packages/core/contracts/common/implementation/AncillaryData.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "libraries": {
+            "": {
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "AncillaryData"
+      ]
+    },
+    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/common/implementation/AddressWhitelist.sol": {
+      "lastModificationDate": 1672363631370,
+      "contentHash": "d0271e024dcc6ece8d44d0bf6172604e",
+      "sourceName": "lib/protocol/packages/core/contracts/common/implementation/AddressWhitelist.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "libraries": {
+            "": {
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/AddressWhitelistInterface.sol",
+        "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        "./Lockable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "AddressWhitelist"
+      ]
+    },
+    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/common/implementation/Lockable.sol": {
+      "lastModificationDate": 1672363631371,
+      "contentHash": "e24e4db843dedf786dc2e25a70590a7e",
+      "sourceName": "lib/protocol/packages/core/contracts/common/implementation/Lockable.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "libraries": {
+            "": {
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Lockable"
+      ]
+    },
+    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/common/implementation/Testable.sol": {
+      "lastModificationDate": 1672363631372,
+      "contentHash": "534d1f25cc7fbe77cc4493621cce244a",
+      "sourceName": "lib/protocol/packages/core/contracts/common/implementation/Testable.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "libraries": {
+            "": {
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
+            }
+          }
+        }
+      },
+      "imports": [
+        "./Timer.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Testable"
+      ]
+    },
+    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/openzeppelin-contracts/contracts/utils/Address.sol": {
+      "lastModificationDate": 1672363303707,
+      "contentHash": "f31ad6fc4bbf9c06203987220156a6ba",
+      "sourceName": "lib/openzeppelin-contracts/contracts/utils/Address.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "libraries": {
+            "": {
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.1"
+      ],
+      "artifacts": [
+        "Address"
+      ]
+    },
+    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/openzeppelin-contracts/contracts/token/ERC20/extensions/draft-IERC20Permit.sol": {
+      "lastModificationDate": 1672363303511,
+      "contentHash": "fb77f144244b9ab12533aa6ce85ef8c5",
+      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/draft-IERC20Permit.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "libraries": {
+            "": {
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC20Permit"
       ]
     },
     "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/openzeppelin-contracts/contracts/access/Ownable.sol": {
@@ -1374,7 +1289,7 @@
           },
           "libraries": {
             "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
             }
           }
         }
@@ -1417,7 +1332,7 @@
           },
           "libraries": {
             "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
             }
           }
         }
@@ -1458,7 +1373,7 @@
           },
           "libraries": {
             "": {
-              "__CACHE_BREAKER__": "0x0000000000000031363738353734343230313038"
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
             }
           }
         }
@@ -1469,6 +1384,47 @@
       ],
       "artifacts": [
         "Context"
+      ]
+    },
+    "/Users/alextoberoff/Desktop/Cornucopia/cornucopia-v1/contracts/lib/protocol/packages/core/contracts/common/implementation/Timer.sol": {
+      "lastModificationDate": 1672363631373,
+      "contentHash": "3b069029e651f6d904cdf5afce811d32",
+      "sourceName": "lib/protocol/packages/core/contracts/common/implementation/Timer.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "libraries": {
+            "": {
+              "__CACHE_BREAKER__": "0x0000000000000031363733353735303537373530"
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Timer"
       ]
     }
   }

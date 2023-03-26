@@ -30,10 +30,10 @@ export default function Footer() {
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', position: 'absolute', bottom: 0, width: '100vw', overflow: 'hidden', }}> 
         <CowAnimation3 />
         <Box sx={{ display: 'flex', justifyContent: 'center', }}> 
-          <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: '-18px', }}>
-            <Image alt="" src={tripleGrass} height="20px" width="80px"/>
-            <Image alt="" src={twoBlades} height="20px" width="80px"/>          
-            <Image alt="" src={threeBlades} height="20px" width="80px"/>
+          <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: '-30px', marginRight: '5px', }}>
+            <Image alt="" src={tripleGrass} height="12px" width="48px"/>
+            <Image alt="" src={twoBlades} height="12px" width="48px"/>          
+            <Image alt="" src={threeBlades} height="12px" width="48px"/>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', minHeight:'24px', minWidth:'121px', alignItems: 'center', gap: '3px', justifyContent: 'center',}}>
             <Box> 
@@ -112,10 +112,10 @@ export default function Footer() {
               </Box>
           }
           </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: '-18px', }}>
-            <Image alt="" src={threeBlades} height="20px" width="80px"/>
-            <Image alt="" src={twoBlades} height="20px" width="80px"/>
-            <Image alt="" src={fourGrass} height="20px" width="80px"/>
+          <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: '-30px', marginLeft: '5px' }}>
+            <Image alt="" src={threeBlades} height="12px" width="48px"/>
+            <Image alt="" src={twoBlades} height="12px" width="48px"/>
+            <Image alt="" src={fourGrass} height="12px" width="48px"/>
           </Box>
         </Box>
       </Box>   
