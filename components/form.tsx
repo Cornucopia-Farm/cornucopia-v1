@@ -341,6 +341,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        InputLabelProps={{ required: true }}
                         inputProps={{ autoComplete: 'off', maxLength: 30, }}
                         helperText={formValues.title ? `${formValues.title.length}/30` : ''}
                         sx={{ 
@@ -383,6 +384,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        InputLabelProps={{ required: true }}
                         inputProps={{ autoComplete: 'off'}}
                         sx={{ 
                             '& .MuiInputBase-input': { 
@@ -477,6 +479,7 @@ const Form: React.FC<Props> = props => {
                             id="token-input"
                             name="tokenAddress"
                             label="Token"
+                            InputLabelProps={{ required: true }}
                             inputProps={{
                                 ...params.inputProps,
                                 autoComplete: 'off', // disable autocomplete and autofill
@@ -526,6 +529,7 @@ const Form: React.FC<Props> = props => {
                         type="number"
                         fullWidth
                         variant="standard"
+                        InputLabelProps={{ required: true }}
                         inputProps={{ autoComplete: 'off', inputMode: 'decimal', pattern: '[0-9]*', }} 
                         sx={{ 
                             '& .MuiInputBase-input': { 
@@ -625,6 +629,7 @@ const Form: React.FC<Props> = props => {
                                     margin="dense"
                                     fullWidth
                                     variant="standard"
+                                    InputLabelProps={{ required: true }}
                                     sx={{ 
                                         '& .MuiInputBase-input': { 
                                             color: 'rgb(248, 215, 154)', 
@@ -763,6 +768,7 @@ const Form: React.FC<Props> = props => {
                                     variant="standard"
                                     error={Boolean(endDateBeforeError)}
                                     helperText={endDateBeforeError}
+                                    InputLabelProps={{ required: true }}
                                     sx={{ 
                                         '& .MuiInputBase-input': { 
                                             color: 'rgb(248, 215, 154)', 
@@ -849,6 +855,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard" 
+                        InputLabelProps={{ required: true }}
                         inputProps={{ autoComplete: 'off'}}
                         sx={{ 
                             '& .MuiInputBase-input': { 
@@ -891,6 +898,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        InputLabelProps={{ required: true }}
                         inputProps={{ autoComplete: 'off'}}
                         sx={{ 
                             '& .MuiInputBase-input': { 
@@ -928,6 +936,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        InputLabelProps={{ required: true }}
                         inputProps={{ autoComplete: 'off'}}
                         sx={{ 
                             '& .MuiInputBase-input': { 
@@ -965,6 +974,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        InputLabelProps={{ required: true }}
                         inputProps={{ autoComplete: 'off'}}
                         sx={{ 
                             '& .MuiInputBase-input': { 
@@ -1007,6 +1017,7 @@ const Form: React.FC<Props> = props => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        InputLabelProps={{ required: true }}
                         inputProps={{ autoComplete: 'off'}}
                         sx={{ 
                             '& .MuiInputBase-input': { 

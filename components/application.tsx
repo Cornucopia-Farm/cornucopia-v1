@@ -541,6 +541,7 @@ const Application: React.FC<Props> = props => {
                     id="token-input"
                     name="tokenAddress"
                     label="Token"
+                    InputLabelProps={{ required: true }}
                     inputProps={{
                         ...params.inputProps,
                         autoComplete: 'off', // disable autocomplete and autofill
@@ -590,6 +591,7 @@ const Application: React.FC<Props> = props => {
                 type="number"
                 fullWidth
                 variant="standard"
+                InputLabelProps={{ required: true }}
                 inputProps={{ autoComplete: 'off', inputMode: 'decimal', pattern: '[0-9]*', }} 
                 sx={{ 
                     '& .MuiInputBase-input': { 
