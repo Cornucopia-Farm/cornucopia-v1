@@ -52,7 +52,6 @@ const useUpdateSocial = (session: Session | null, address?: string) => {
     }
 
     const setSocialData = (session: Session, address: string, socialData: any) => {
-        console.log('socialData', socialData)
         const addressData = { 
             [address]: {
                 "github": {
@@ -69,8 +68,8 @@ const useUpdateSocial = (session: Session | null, address?: string) => {
         };
     
         let updatedData;
-        if (socialData.length > 0) {
-            updatedData = { ...socialData, ...addressData };
+        if (Object.keys(socialData).length > 0) {
+            updatedData = { ...socialData.socialData, ...addressData };
         } else {
             updatedData = {...addressData}
         }
@@ -88,9 +87,7 @@ const useUpdateSocial = (session: Session | null, address?: string) => {
         //     console.log(await response.data)
         // };
         if (!isValidating && data && address && session) {
-            console.log('sesh')
             if (!(address in data)) {
-                console.log('the data', data)
                 const updatedData = setSocialData(session, address, data);
                 updateData(updatedData);
             }

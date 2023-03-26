@@ -1056,6 +1056,9 @@ const Form: React.FC<Props> = props => {
             {arweaveLoading && !arweaveId && (props.formType == "createBounty" || props.formType == "applyBounty") &&
                 <SimpleSnackBar severity={'success'} msg={'Uploading to Arweave...'}/>
             }
+            {!arweaveLoading && arweaveId && (props.formType == "createBounty" || props.formType == "applyBounty") &&
+                <SimpleSnackBar severity={'success'} msg={'Uploaded to Arweave!'}/>
+            }
             <ButtonType />
             <Dialog open={open} onClose={handleClose} PaperProps={{ style: { backgroundColor: "transparent", boxShadow: "none" }, }}>
                 <DialogTitle className={styles.formHeader}>{props.formName}</DialogTitle>

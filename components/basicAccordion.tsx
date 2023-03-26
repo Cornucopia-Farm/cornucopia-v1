@@ -35,9 +35,7 @@ type Props = { // need to change bounty card to specify which component it is fo
 };
 
 const BasicAccordion: React.FC<Props> = props => {
-  // const { data: session } = useSession();
   const addressSocialData = useSocial(props.company);
-  console.log(addressSocialData)
   const username = addressSocialData?.github.username ? addressSocialData?.github.username : addressSocialData?.twitter.username;
   const profilePic = addressSocialData?.github.username ? addressSocialData?.github.profilePic : addressSocialData?.twitter.profilePic;
   const userLink = addressSocialData?.github.username ? addressSocialData?.github.userLink : addressSocialData?.twitter.userLink;
