@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.17;
+pragma solidity ^0.8.20;
 
 import "forge-std/Test.sol";
 import "../src/Cornucopia.sol";
+import "./TestERC20.sol";
 
 contract CornucopiaTest is Test {
-    Cornucopia public cornucopiaContract;
-    ExpandedERC20 public token;
-    ExpandedERC20 public weth;
+    Cornucopia public escrowContract;
+    TestERC20 public token;
+    TestERC20 public weth;
     
     // Escrow Events
     event Escrowed(address indexed creator, address indexed hunter, string indexed bountyAppId, string message);
@@ -18,8 +19,7 @@ contract CornucopiaTest is Test {
 
     function setUp() public {
         escrowContract = new Cornucopia();
-        token = new ExpandedERC20("Test Token", "TEST", 18);
-        token.addMinter(address(this)); // Allow testContract to mint tokens;
+        token = new TestERC20("Test Token", "TEST");
     }
 
     // Test Escrow Function W/ ETH
@@ -123,7 +123,7 @@ contract CornucopiaTest is Test {
 
         escrowContract.submit(bountyAppId, creator);
         
-        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Submitted)); // Check that Status enum set to submitted; have to cast to uint to use assertEq
+        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Cornucopia.Status.Submitted)); // Check that Status enum set to submitted; have to cast to uint to use assertEq
         assertEq(escrowContract.payoutExpiration(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 1000000 + 2 weeks);
         vm.stopPrank();
     }
@@ -191,7 +191,7 @@ contract CornucopiaTest is Test {
         assertEq(escrowContractBalanceBefore - address(escrowContract).balance, hunter.balance - hunterBalanceBefore); // Check that same amount paid out to hunter was deducted from the contract
         assertEq(hunter.balance - hunterBalanceBefore, valueToBePaidToHunter); // Check that the value paid out to the hunter was the expected amount 
         assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that the bountyAmount corresponding to this bountyAppId, creator, hunter is set to 0
-        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Resolved)); // Check that Status enum set to Resolved 
+        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Cornucopia.Status.Resolved)); // Check that Status enum set to Resolved 
         vm.stopPrank();
     }
 
@@ -228,7 +228,7 @@ contract CornucopiaTest is Test {
         assertEq(escrowContractBalanceBefore - token.balanceOf(address(escrowContract)), token.balanceOf(hunter) - hunterBalanceBefore); // Check that same amount paid out to hunter was deducted from the contract
         assertEq(token.balanceOf(hunter) - hunterBalanceBefore, valueToBePaidToHunter); // Check that the value paid out to the hunter was the expected amount 
         assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that the bountyAmount corresponding to this bountyAppId, creator, hunter is set to 0
-        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Resolved)); // Check that Status enum set to Resolved 
+        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Cornucopia.Status.Resolved)); // Check that Status enum set to Resolved 
         vm.stopPrank();
     }
 
@@ -255,14 +255,14 @@ contract CornucopiaTest is Test {
         vm.expectEmit(true, true, true, true); // Want to check the first 3 indexed event params, and the last non-indexed param
         emit FundsWithdrawnToCreator(creator, hunter, bountyAppId, "Funds withdrawn to creator!"); // This is the event we expect to be emitted
 
-        assertEq(uint(progress), uint(Escrow.Status.NoBounty)); // Check that Status enum set to NoBounty as hunter hasn't submitted work yet
+        assertEq(uint(progress), uint(Cornucopia.Status.NoBounty)); // Check that Status enum set to NoBounty as hunter hasn't submitted work yet
 
         escrowContract.payout(bountyAppId, hunter);
 
         assertEq(escrowContractBalanceBefore - address(escrowContract).balance, creator.balance -  creatorBalanceBefore); // Check that same amount paid out to creator was deducted from the contract
         assertEq(creator.balance - creatorBalanceBefore, valueToBePaidToCreator); // Check that the value paid out to the hunter was the expected amount 
         assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that the bountyAmount corresponding to this bountyAppId, creator, hunter is set to 0
-        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Resolved)); // Check that Status enum set to Resolved
+        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Cornucopia.Status.Resolved)); // Check that Status enum set to Resolved
         vm.stopPrank();
     }
 
@@ -290,14 +290,14 @@ contract CornucopiaTest is Test {
         vm.expectEmit(true, true, true, true); // Want to check the first 3 indexed event params, and the last non-indexed param
         emit FundsWithdrawnToCreator(creator, hunter, bountyAppId, "Funds withdrawn to creator!"); // This is the event we expect to be emitted
 
-        assertEq(uint(progress), uint(Escrow.Status.NoBounty)); // Check that Status enum set to NoBounty as hunter hasn't submitted work yet
+        assertEq(uint(progress), uint(Cornucopia.Status.NoBounty)); // Check that Status enum set to NoBounty as hunter hasn't submitted work yet
 
         escrowContract.payout(bountyAppId, hunter);
 
         assertEq(escrowContractBalanceBefore - token.balanceOf(address(escrowContract)), token.balanceOf(creator) -  creatorBalanceBefore); // Check that same amount paid out to creator was deducted from the contract
         assertEq(token.balanceOf(creator) - creatorBalanceBefore, valueToBePaidToCreator); // Check that the value paid out to the hunter was the expected amount 
         assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that the bountyAmount corresponding to this bountyAppId, creator, hunter is set to 0
-        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Resolved)); // Check that Status enum set to Resolved
+        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Cornucopia.Status.Resolved)); // Check that Status enum set to Resolved
         vm.stopPrank();
     }
 
@@ -332,7 +332,7 @@ contract CornucopiaTest is Test {
         assertEq(escrowContractBalanceBefore - address(escrowContract).balance, hunter.balance -  hunterBalanceBefore); // Check that same amount paid out to hunter was deducted from the contract
         assertEq(hunter.balance - hunterBalanceBefore, valueToBePaidToHunter); // Check that the value paid out to the hunter was the expected amount 
         assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that the bountyAmount corresponding to this bountyAppId, creator, hunter is set to 0
-        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Resolved)); // Check that Status enum set to Resolved
+        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Cornucopia.Status.Resolved)); // Check that Status enum set to Resolved
         vm.stopPrank();
     }
 
@@ -370,7 +370,7 @@ contract CornucopiaTest is Test {
         assertEq(escrowContractBalanceBefore - token.balanceOf(address(escrowContract)), token.balanceOf(hunter) - hunterBalanceBefore); // Check that same amount paid out to hunter was deducted from the contract
         assertEq(token.balanceOf(hunter) - hunterBalanceBefore, valueToBePaidToHunter); // Check that the value paid out to the hunter was the expected amount 
         assertEq(escrowContract.bountyAmounts(keccak256(abi.encodePacked(bountyAppId, creator, hunter))), 0); // Check that the bountyAmount corresponding to this bountyAppId, creator, hunter is set to 0
-        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Escrow.Status.Resolved)); // Check that Status enum set to Resolved
+        assertEq(uint(escrowContract.progress(keccak256(abi.encodePacked(bountyAppId, creator, hunter)))), uint(Cornucopia.Status.Resolved)); // Check that Status enum set to Resolved
         vm.stopPrank();
     }
 

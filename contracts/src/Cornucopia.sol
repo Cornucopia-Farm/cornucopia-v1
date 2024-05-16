@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.17;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin-upgradeable/contracts/proxy/utils/Initializable.sol";
 import "@openzeppelin-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin-upgradeable/contracts/access/OwnableUpgradeable.sol";
-import "@openzeppelin-upgradeable/contracts/security/ReentrancyGuardUpgradeable.sol";
+import "@openzeppelin-upgradeable/contracts/utils/ReentrancyGuardUpgradeable.sol";
 
 /// @title Cornucopia contract
 /// @notice Cornucopia bounty protocol
@@ -37,8 +37,8 @@ contract Cornucopia is Initializable, OwnableUpgradeable, UUPSUpgradeable, Reent
         _disableInitializers();
     }
 
-    function initialize() public initializer {
-        __Ownable_init();
+    function initialize(address _owner) public initializer {
+        __Ownable_init(_owner);
         __UUPSUpgradeable_init();
     }
 
