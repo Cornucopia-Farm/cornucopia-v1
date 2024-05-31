@@ -584,7 +584,6 @@ const MyBounties: NextPage = () => {
                     }
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
-                        <Image alt="" src="/the_cow_scientist.png" height="300px" width="300px"/>
                         <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 13}}>Connect your wallet to get started.</Typography>
                     </Box>
                     {smallScreen && <h2 className={styles.h2}>Applied</h2>}
@@ -664,7 +663,6 @@ const MyBounties: NextPage = () => {
                         <Box>
                             {(appliedBountyPosts.length + inProgressBountyPosts.length + submittedBountyPosts.length + disputeInitiatedBountyPosts.length + disputeRespondedToBountyPosts.length + creatorNoActionBountyPosts.length + finishedBountyPosts.length) === 0 && stage === 1 && smallScreen &&
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '2vh', paddingBottom: '2.5vh', gap: '2vh', }}> 
-                                    <Image alt="" src="/the_cow_scientist.png" height="200px" width="200px"/>
                                     <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center', }}>Go to <Link href="/openBounties">Open Bounties</Link> to apply for a bounty.</Typography>
                                 </Box>
                             }
@@ -681,49 +679,42 @@ const MyBounties: NextPage = () => {
                         {largeScreen && stage === 1 && appliedBountyPosts}
                         {appliedBountyPosts.length === 0 && stage === 1 && largeScreen &&
                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
-                                <Image alt="" src="/the_cow_scientist.png" height="300px" width="300px"/>
                                 <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center', }}>Go to <Link href="/openBounties">Open Bounties</Link> to apply for a bounty.</Typography>
                             </Box>
                         }
                         {largeScreen && stage === 2 && inProgressBountyPosts}
                         {inProgressBountyPosts.length === 0 && stage === 2 && largeScreen &&
                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
-                                <Image alt="" src="/the_cow_scientist.png" height="300px" width="300px"/>
                                 <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>Wait for creators to escrow funds.</Typography>
                             </Box>
                         }
                         {largeScreen && stage === 3 && submittedBountyPosts}
                         {submittedBountyPosts.length === 0 && stage === 3 && largeScreen &&
                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
-                                <Image alt="" src="/the_cow_scientist.png" height="300px" width="300px"/>
                                 <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>Submit your work.</Typography>
                             </Box>
                         }
                         {largeScreen && stage === 4 && disputeInitiatedBountyPosts}
                         {disputeInitiatedBountyPosts.length === 0 && stage === 4 && largeScreen &&
                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
-                                <Image alt="" src="/the_cow_scientist.png" height="300px" width="300px"/>
                                 <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>Creators have not disputed any of your work.</Typography>
                             </Box>
                         }
                         {largeScreen && stage === 5 && disputeRespondedToBountyPosts}
                         {disputeRespondedToBountyPosts.length === 0 && stage === 5 && largeScreen &&
                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
-                                <Image alt="" src="/the_cow_scientist.png" height="300px" width="300px"/>
                                 <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>You haven&apos;t disputed any creators&apos; disputes.</Typography>
                             </Box>
                         }
                         {largeScreen && stage === 6 && creatorNoActionBountyPosts}
                         {creatorNoActionBountyPosts.length === 0 && stage === 6 && largeScreen &&
                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
-                                <Image alt="" src="/the_cow_scientist.png" height="300px" width="300px"/>
                                 <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>Creators can still payout or dispute your work.</Typography>
                             </Box>
                         }
                         {largeScreen && stage === 7 && finishedBountyPosts}
                         {finishedBountyPosts.length === 0 && stage === 7 && largeScreen &&
                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
-                                <Image alt="" src="/the_cow_scientist.png" height="300px" width="300px"/>
                                 <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>None of your bounties are finished.</Typography>
                             </Box>
                         }

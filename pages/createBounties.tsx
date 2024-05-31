@@ -300,7 +300,6 @@ const CreateBounties: NextPage = () => {
                     }
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
-                        <Image alt="" src="/the_fortune_cow.png" height="300px" width="300px"/>
                         <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 13}}>Connect your wallet to get started.</Typography>
                     </Box>
                     {smallScreen && <h2 className={styles.h2}>Posted</h2>}
@@ -377,7 +376,6 @@ const CreateBounties: NextPage = () => {
                         <Box>
                             {(postedComponents.length + appliedComponents.length + inProgressComponents.length + submittedComponents.length + disputeInitiatedComponents.length + disputeRespondedToComponents.length + finishedComponents.length) === 0 && stage === 1 && smallScreen &&
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '2vh', paddingBottom: '2.5vh', gap: '2vh', }}> 
-                                    <Image alt="" src="/the_fortune_cow.png" height="200px" width="200px"/>
                                     <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '200px', wordWrap: 'break-word', textAlign: 'center'}}>Click on create bounty to post a bounty.</Typography>
                                 </Box>
                             }
@@ -426,7 +424,6 @@ const CreateBounties: NextPage = () => {
                             {postedComponents}
                             {postedComponents.length === 0 && stage === 1 && largeScreen &&
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
-                                    <Image alt="" src="/the_fortune_cow.png" height="300px" width="300px"/>
                                     <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>Click on create bounty to post a bounty.</Typography>
                                 </Box>
                             }
@@ -434,7 +431,6 @@ const CreateBounties: NextPage = () => {
                             {appliedComponents}
                             {appliedComponents.length === 0 && stage === 2 && largeScreen &&
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
-                                    <Image alt="" src="/the_fortune_cow.png" height="300px" width="300px"/>
                                     <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>No hunters have applied to your bounties yet.</Typography>
                                 </Box>
                             }
@@ -442,7 +438,6 @@ const CreateBounties: NextPage = () => {
                             {inProgressComponents}
                             {!inProgressComponents.length && stage === 3 && largeScreen && 
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
-                                    <Image alt="" src="/the_fortune_cow.png" height="300px" width="300px"/>
                                     <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>Approve hunters&apos; applications.</Typography>
                                 </Box>
                             }
@@ -450,7 +445,6 @@ const CreateBounties: NextPage = () => {
                             {submittedComponents}
                             {submittedComponents.length === 0 && stage === 4 && largeScreen &&
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
-                                    <Image alt="" src="/the_fortune_cow.png" height="300px" width="300px"/>
                                     <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>No hunters have submitted work yet.</Typography>
                                 </Box>
                             }
@@ -458,7 +452,6 @@ const CreateBounties: NextPage = () => {
                             {disputeInitiatedComponents}
                             {disputeInitiatedComponents.length === 0 && stage === 5 && largeScreen &&
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
-                                    <Image alt="" src="/the_fortune_cow.png" height="300px" width="300px"/>
                                     <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>You haven&apos;t disputed any hunters&apos; work.</Typography>
                                 </Box>
                             }
@@ -466,7 +459,6 @@ const CreateBounties: NextPage = () => {
                             {disputeRespondedToComponents}
                             {disputeRespondedToComponents.length === 0 && stage === 6 && largeScreen &&
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
-                                    <Image alt="" src="/the_fortune_cow.png" height="300px" width="300px"/>
                                     <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>No hunters have responded to any existing disputes yet.</Typography>
                                 </Box>
                             }
@@ -474,7 +466,6 @@ const CreateBounties: NextPage = () => {
                             {finishedComponents}
                             {finishedComponents.length === 0 && stage === 7 && largeScreen &&
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
-                                    <Image alt="" src="/the_fortune_cow.png" height="300px" width="300px"/>
                                     <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>None of your bounties are finished.</Typography>
                                 </Box>
                             }

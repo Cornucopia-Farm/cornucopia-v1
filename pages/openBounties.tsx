@@ -142,7 +142,6 @@ const OpenBounties: NextPage = () => {
                     }
                     {openBountyPosts.length === 0 &&
                         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10vh', gap: '2vh', }}> 
-                            <Image alt="" src="/the_fortune_cow.png" height="300px" width="300px"/>
                             <Typography className={styles.noBounty} sx={{ color: '#064829', fontSize: 14, maxWidth: '300px', wordWrap: 'break-word', textAlign: 'center'}}>No bounties posted yet on this chain.</Typography>
                         </Box>
                     }
